@@ -63,3 +63,5 @@ Kthulhu-Wants-Me-Project/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 # Temporary auto-generated Android Assets
 Kthulhu-Wants-Me-Project/[Aa]ssets/[Ss]treamingAssets/aa.meta
 Kthulhu-Wants-Me-Project/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+.github/workflows/.idea
