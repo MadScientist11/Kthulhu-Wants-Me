@@ -253,7 +253,6 @@ GameObject:
   - component: {fileID: 807582732}
   - component: {fileID: 807582731}
   - component: {fileID: 807582730}
-  - component: {fileID: 807582734}
   - component: {fileID: 807582729}
   m_Layer: 0
   m_Name: Player
@@ -282,6 +281,7 @@ MonoBehaviour:
   GroundDetectionExtraDistance: 0
   MaxStableSlopeAngle: 60
   StableGroundLayers:
+    serializedVersion: 2
     m_Bits: 4294967295
   DiscreteCollisionEvents: 0
   StepHandling: 1
@@ -303,57 +303,6 @@ MonoBehaviour:
   CheckMovementInitialOverlaps: 1
   KillVelocityWhenExceedMaxMovementIterations: 1
   KillRemainingMovementWhenExceedMaxMovementIterations: 1
-  _transform: {fileID: 0}
-  _transientPosition: {x: 0, y: 0, z: 0}
-  _characterUp: {x: 0, y: 0, z: 0}
-  _characterForward: {x: 0, y: 0, z: 0}
-  _characterRight: {x: 0, y: 0, z: 0}
-  _initialSimulationPosition: {x: 0, y: 0, z: 0}
-  _initialSimulationRotation: {x: 0, y: 0, z: 0, w: 0}
-  _attachedRigidbody: {fileID: 0}
-  _characterTransformToCapsuleCenter: {x: 0, y: 0, z: 0}
-  _characterTransformToCapsuleBottom: {x: 0, y: -1, z: 0}
-  _characterTransformToCapsuleTop: {x: 0, y: 1, z: 0}
-  _characterTransformToCapsuleBottomHemi: {x: 0, y: -0.5, z: 0}
-  _characterTransformToCapsuleTopHemi: {x: 0, y: 0.5, z: 0}
-  _attachedRigidbodyVelocity: {x: 0, y: 0, z: 0}
-  _overlapsCount: 0
-  _internalProbedColliders:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _rigidbodiesPushedThisMove: []
-  _lastAttachedRigidbody: {fileID: 0}
-  _solveMovementCollisions: 1
-  _solveGrounding: 1
-  _movePositionDirty: 0
-  _movePositionTarget: {x: 0, y: 0, z: 0}
-  _moveRotationDirty: 0
-  _moveRotationTarget: {x: 0, y: 0, z: 0, w: 1}
-  _lastSolvedOverlapNormalDirty: 0
-  _lastSolvedOverlapNormal: {x: 0, y: 0, z: 1}
-  _rigidbodyProjectionHitCount: 0
-  _isMovingFromAttachedRigidbody: 0
-  _mustUnground: 0
-  _mustUngroundTimeCounter: 0
-  _cachedWorldUp: {x: 0, y: 1, z: 0}
-  _cachedWorldForward: {x: 0, y: 0, z: 1}
-  _cachedWorldRight: {x: 1, y: 0, z: 0}
-  _cachedZeroVector: {x: 0, y: 0, z: 0}
-  _transientRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!136 &807582730
 CapsuleCollider:
   m_ObjectHideFlags: 8
@@ -442,19 +391,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &807582734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807582728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a35a4744fb147044869883ab55f0524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KinematicCharacterMotor: {fileID: 807582729}
 --- !u!1 &1900567893
 GameObject:
   m_ObjectHideFlags: 0
