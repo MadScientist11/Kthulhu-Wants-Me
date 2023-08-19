@@ -4,7 +4,7 @@ using UnityEngine;
 namespace KthulhuWantsMe.Source.Tentacle
 {
     [ExecuteInEditMode]
-    public class TentacleInteract : MonoBehaviour {
+    public class TentacleInteractTest : MonoBehaviour {
 
         public Material material;
         public Transform obj;
@@ -13,6 +13,9 @@ namespace KthulhuWantsMe.Source.Tentacle
 
         private void Start()
         {
+            material.SetInt("_EnableTentacleGrab", 1);
+            Debug.Log("Soemg");
+
         }
 
         public void Update() {

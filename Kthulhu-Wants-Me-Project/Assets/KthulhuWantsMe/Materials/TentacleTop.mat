@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2299127354627984082
+--- !u!114 &-5160989913536402139
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Tentacle
-  m_Shader: {fileID: -6465566751694194690, guid: ebe5974ee96521041861175559d37470,
+  m_Name: TentacleTop
+  m_Shader: {fileID: -6465566751694194690, guid: 5002ec4a90c2b944896295c807bc3aeb,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
