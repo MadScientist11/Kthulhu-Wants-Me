@@ -51,14 +51,6 @@ namespace KthulhuWantsMe.Source.Player
                 //_locomotion.Motor.ForceUnground(0.1f);
                 _locomotion.AddVelocity(transform.forward * 100f);
             }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                sphere.transform.position = transform.position + transform.forward;
-                sphere.transform.localScale = Vector3.one * .25f;
-                sphere.AddComponent<Rigidbody>().AddForce(transform.forward * 2000);
-            }
         }
     }
 }
