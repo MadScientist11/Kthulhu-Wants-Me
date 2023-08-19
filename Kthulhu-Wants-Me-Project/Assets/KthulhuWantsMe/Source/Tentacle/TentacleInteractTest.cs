@@ -10,19 +10,19 @@ namespace KthulhuWantsMe.Source.Tentacle
         public Transform obj;
         public Vector3 offset;
         public float test;
+        public float scaleOffset;
 
         private void Start()
         {
             material.SetInt("_EnableTentacleGrab", 1);
-            Debug.Log("Soemg");
 
         }
 
         public void Update() {
             if (material == null || obj == null) return;
-            float radius = obj.localScale.x - 2f;
+            float radius = obj.localScale.x - scaleOffset;
             material.SetFloat("_Radius", radius);
-            material.SetVector("_InteractPos", transform.InverseTransformPoint(obj.position + offset * radius));
+            material.SetVector("_InteractPos", obj.localPosition + offset * radius);
         }
     }
 }
