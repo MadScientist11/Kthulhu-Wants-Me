@@ -55,5 +55,5 @@ Material:
     - _QueueOffset: 0
     - _Radius: 0.31999993
     m_Colors:
-    - _InteractPos: {r: 0.9512, g: 3.98, b: 17.23, a: 0}
+    - _InteractPos: {r: 0.9512, g: 3.98, b: 14.6, a: 0}
   m_BuildTextureStacks: []
