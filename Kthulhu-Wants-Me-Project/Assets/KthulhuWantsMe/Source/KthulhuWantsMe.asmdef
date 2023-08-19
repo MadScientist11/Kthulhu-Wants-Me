@@ -1,3 +1,17 @@
 {
-	"name": "KthulhuWantsMe"
+    "name": "KthulhuWantsMe",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5fc52a94575e82e45a040ce63eaa10ae",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

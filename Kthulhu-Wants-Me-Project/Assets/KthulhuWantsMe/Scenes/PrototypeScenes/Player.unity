@@ -253,6 +253,7 @@ GameObject:
   - component: {fileID: 807582732}
   - component: {fileID: 807582731}
   - component: {fileID: 807582730}
+  - component: {fileID: 807582734}
   - component: {fileID: 807582729}
   m_Layer: 0
   m_Name: Player
@@ -391,6 +392,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &807582734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807582728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a35a4744fb147044869883ab55f0524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KinematicCharacterMotor: {fileID: 807582729}
 --- !u!1 &1900567893
 GameObject:
   m_ObjectHideFlags: 0
