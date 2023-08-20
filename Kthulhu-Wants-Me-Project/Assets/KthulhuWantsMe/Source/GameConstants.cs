@@ -1,4 +1,4 @@
-﻿namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
+﻿namespace KthulhuWantsMe.Source
 {
     public static class GameConstants
     {

@@ -3,7 +3,12 @@ using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
-    public class CoroutineRunner : MonoBehaviour
+    public interface ICoroutineRunner
+    {
+        Coroutine StartRoutine(IEnumerator routine);
+    }
+
+    public class CoroutineRunner : MonoBehaviour, ICoroutineRunner
     {
         public Coroutine StartRoutine(IEnumerator routine)
         {

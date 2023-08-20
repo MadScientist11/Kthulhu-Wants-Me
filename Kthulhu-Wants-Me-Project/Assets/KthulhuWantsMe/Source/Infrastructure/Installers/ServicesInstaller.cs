@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using VContainer;
 using VContainer.Unity;
 
@@ -13,7 +14,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
             builder
                 .Register<SceneLoader>(Lifetime.Singleton)
-                .AsImplementedInterfaces();;
+                .AsImplementedInterfaces();
             builder
                 .RegisterComponentOnNewGameObject<CoroutineRunner>(Lifetime.Singleton, "CoroutineRunner")
                 .AsImplementedInterfaces();

@@ -1,8 +1,6 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Tentacle
+namespace KthulhuWantsMe.Source.Gameplay.Tentacle
 {
     [RequireComponent(typeof(Renderer))]
     public class TentacleController : MonoBehaviour
