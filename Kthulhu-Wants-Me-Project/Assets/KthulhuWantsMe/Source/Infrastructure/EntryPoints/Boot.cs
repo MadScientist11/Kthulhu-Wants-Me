@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Infrastructure.Installers;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
@@ -14,8 +15,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
     {
         private readonly IReadOnlyList<IInitializableService> _services;
         private IReadOnlyList<IPreInitializableService> _preInitializableServices;
-        private ISceneLoader _sceneLoader;
-        private AppLifetimeScope _appLifetimeScope;
+        private readonly ISceneLoader _sceneLoader;
+        private readonly AppLifetimeScope _appLifetimeScope;
 
         public Boot(AppLifetimeScope appLifetimeScope, IReadOnlyList<IInitializableService> services,
             ISceneLoader sceneLoader)
@@ -29,8 +30,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
         {
             List<UniTask> initializationTasks = Enumerable.Select(_services, service => service.Initialize()).ToList();
             await UniTask.WhenAll(initializationTasks);
-            await _sceneLoader.LoadSceneInjected(GameConstants.Scenes.GamePath, LoadSceneMode.Additive, _appLifetimeScope,
-                new GameInstaller());
+            await _sceneLoader
+                .LoadSceneInjected(GameConstants.Scenes.GamePath, LoadSceneMode.Additive, _appLifetimeScope, new GameInstaller());
         }
     }
 }

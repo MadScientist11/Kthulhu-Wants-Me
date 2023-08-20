@@ -12,9 +12,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
     public class ResourcesManager : IResourceManager
     {
+        public ResourcesManager()
+        {
+            Debug.Log("Resource");
+        }
         public async UniTask Initialize()
         {
-            await UniTask.Yield();
+            await UniTask.CompletedTask;
         }
 
         public async UniTask<T> ProvideAsset<T>(string path) where T : Object

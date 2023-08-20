@@ -9,7 +9,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            Enqueue(new ServicesInstaller());
+            builder.Install(new ServicesInstaller());
             builder.RegisterEntryPoint<Boot>();
         }
     }

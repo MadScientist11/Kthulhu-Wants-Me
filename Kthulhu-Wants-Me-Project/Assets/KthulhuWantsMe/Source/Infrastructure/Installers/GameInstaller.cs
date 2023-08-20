@@ -1,7 +1,7 @@
 ﻿using VContainer;
 using VContainer.Unity;
 
-namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
+namespace KthulhuWantsMe.Source.Infrastructure.Installers
 {
     public class GameInstaller : IInstaller
     {

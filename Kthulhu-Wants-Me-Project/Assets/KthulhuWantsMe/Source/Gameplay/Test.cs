@@ -1,4 +1,6 @@
+using System;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
 using VContainer;
 
@@ -8,10 +10,12 @@ namespace KthulhuWantsMe.Source.Gameplay
     {
         private IResourceManager _resourceManager;
         private ICoroutineRunner _coroutineRunner;
+        private IInputService _inputService;
 
         [Inject]
-        public void Construct(ICoroutineRunner coroutineRunner, IResourceManager resourceManager)
+        public void Construct(ICoroutineRunner coroutineRunner, IResourceManager resourceManager, IInputService inputService)
         {
+            _inputService = inputService;
             _coroutineRunner = coroutineRunner;
             _resourceManager = resourceManager;
         }
@@ -20,6 +24,12 @@ namespace KthulhuWantsMe.Source.Gameplay
         {
             Debug.Log(_resourceManager);
             Debug.Log(_coroutineRunner);
+            _inputService.SwitchInputScenario(InputScenario.Gameplay);
+        }
+
+        private void Update()
+        {
+            Debug.Log(_inputService.GameplayScenario?.MovementInput);
         }
     }
 }
