@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source
+namespace KthulhuWantsMe.Source.Gameplay
 {
     [RequireComponent(typeof(Collider))]
     public class TriggerZone : MonoBehaviour
     {
         public event Action OnTrigger;
-        
+
         private void OnValidate()
         {
             if (TryGetComponent(out Collider col)) 
@@ -18,10 +18,10 @@ namespace KthulhuWantsMe.Source
         {
             OnTrigger?.Invoke();
         }
-        
+
         private void OnTriggerExit(Collider other)
         {
-            
+
         }
     }
 }

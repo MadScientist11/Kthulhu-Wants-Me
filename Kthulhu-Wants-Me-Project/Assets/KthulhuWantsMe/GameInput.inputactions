@@ -1,0 +1,62 @@
+{
+    "name": "GameInput",
+    "maps": [
+        {
+            "name": "InGame",
+            "id": "efe59dc3-0092-4659-9263-69858b97f8f8",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "0316821e-fe7f-474c-a20d-d102cb170170",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2e2b68f2-a22d-4488-b8fd-3556a2f23a25",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "b6986af2-74a9-4c03-bd4b-6fc52a789e49",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "fbac540d-3f1b-4326-bcb0-204599e5e1ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b1d83cb7-52ee-41ee-843c-212247294f52",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

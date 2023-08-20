@@ -8,7 +8,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
     {
         public void Install(IContainerBuilder builder)
         {
-            builder.Register<IResourceManager, ResourcesManager>(Lifetime.Singleton);
+            builder
+                .Register<ResourcesManager>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            builder
+                .Register<SceneLoader>(Lifetime.Singleton)
+                .AsImplementedInterfaces();;
+            builder
+                .RegisterComponentOnNewGameObject<CoroutineRunner>(Lifetime.Singleton, "CoroutineRunner")
+                .AsImplementedInterfaces();
         }
     }
 }
