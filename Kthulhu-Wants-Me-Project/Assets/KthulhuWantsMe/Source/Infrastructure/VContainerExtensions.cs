@@ -8,19 +8,16 @@ namespace KthulhuWantsMe.Source.Infrastructure
 {
     public static class VContainerExtensions
     {
-        public static void Install(this IContainerBuilder builder, IInstaller installer) => 
+        public static void Install(this IContainerBuilder builder, IInstaller installer) =>
             installer.Install(builder);
-        
+
         public static async UniTask LoadSceneInjected(this ISceneLoader sceneLoader,
             string path, LoadSceneMode loadSceneMode,
-            LifetimeScope sceneParentScope, IInstaller sceneInstaller)
+            LifetimeScope sceneParentScope)
         {
             using (LifetimeScope.EnqueueParent(sceneParentScope))
             {
-                using (LifetimeScope.Enqueue(sceneInstaller))
-                {
-                    await sceneLoader.LoadScene(path, loadSceneMode);
-                }
+                await sceneLoader.LoadScene(path, loadSceneMode);
             }
         }
     }

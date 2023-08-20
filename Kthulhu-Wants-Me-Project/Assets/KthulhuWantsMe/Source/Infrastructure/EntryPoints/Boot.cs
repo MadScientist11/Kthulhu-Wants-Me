@@ -31,7 +31,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             List<UniTask> initializationTasks = Enumerable.Select(_services, service => service.Initialize()).ToList();
             await UniTask.WhenAll(initializationTasks);
             await _sceneLoader
-                .LoadSceneInjected(GameConstants.Scenes.GamePath, LoadSceneMode.Additive, _appLifetimeScope, new GameInstaller());
+                .LoadSceneInjected(GameConstants.Scenes.GamePath, LoadSceneMode.Additive, _appLifetimeScope);
         }
     }
 }
