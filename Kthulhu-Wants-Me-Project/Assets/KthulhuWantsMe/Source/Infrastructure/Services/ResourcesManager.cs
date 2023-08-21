@@ -12,10 +12,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
     public class ResourcesManager : IResourceManager
     {
-        public ResourcesManager()
-        {
-            Debug.Log("Resource");
-        }
         public async UniTask Initialize()
         {
             await UniTask.CompletedTask;

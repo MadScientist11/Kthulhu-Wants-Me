@@ -1,4 +1,5 @@
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Infrastructure.EntryPoints;
 using KthulhuWantsMe.Source.Infrastructure.Installers;
 using UnityEngine;
 using VContainer;
@@ -13,6 +14,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Install(new GameInstaller(_playerSpawnPoint));
+            builder.RegisterEntryPoint<GameEntryPoint>();
         }
 
     }

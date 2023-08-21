@@ -6,7 +6,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
 {
     public class GameInstaller : IInstaller
     {
-        private PlayerSpawnPoint _playerSpawnPoint;
+        private readonly PlayerSpawnPoint _playerSpawnPoint;
 
         public GameInstaller(PlayerSpawnPoint playerSpawnPoint)
         {
