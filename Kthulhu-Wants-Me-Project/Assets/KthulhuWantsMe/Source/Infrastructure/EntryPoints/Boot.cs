@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Infrastructure.Installers;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
@@ -14,7 +13,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
     public class Boot : IAsyncStartable
     {
         private readonly IReadOnlyList<IInitializableService> _services;
-        private IReadOnlyList<IPreInitializableService> _preInitializableServices;
         private readonly ISceneLoader _sceneLoader;
         private readonly AppLifetimeScope _appLifetimeScope;
 
