@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a35a4744fb147044869883ab55f0524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KinematicCharacterMotor: {fileID: 807582729}
+  _kinematicCharacterMotor: {fileID: 807582729}
 --- !u!1 &1900567893
 GameObject:
   m_ObjectHideFlags: 0
