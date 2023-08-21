@@ -6,17 +6,25 @@ namespace KthulhuWantsMe.Source.Player
 {
     public class PlayerLocomotion : MonoBehaviour
     {
-        public KinematicCharacterMotor KinematicCharacterMotor;
+        [SerializeField] private KinematicCharacterMotor _kinematicCharacterMotor;
         private KinematicLocomotion _locomotion;
+        private PlayerConfiguration _playerConfiguration;
+        
         private const string MouseXInput = "Mouse X";
         private const string MouseYInput = "Mouse Y";
         private const string MouseScrollInput = "Mouse ScrollWheel";
         private const string HorizontalInput = "Horizontal";
         private const string VerticalInput = "Vertical";
 
+        public void Construct(PlayerConfiguration playerConfiguration)
+        {
+            _playerConfiguration = playerConfiguration;
+        }
+
         private void Awake()
         {
-            _locomotion = new KinematicLocomotion(KinematicCharacterMotor);
+            Construct(_playerConfiguration);
+            _locomotion = new KinematicLocomotion(_kinematicCharacterMotor);
         }
 
         public void SetGravity(float gravity)
