@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Tentacle
+namespace KthulhuWantsMe.Source.Gameplay.Tentacle
 {
     [ExecuteInEditMode]
     public class TentacleInteractTest : MonoBehaviour {

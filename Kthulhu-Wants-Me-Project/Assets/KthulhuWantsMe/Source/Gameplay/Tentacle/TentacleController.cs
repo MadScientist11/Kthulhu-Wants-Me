@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Tentacle
+namespace KthulhuWantsMe.Source.Gameplay.Tentacle
 {
     [RequireComponent(typeof(Renderer))]
     public class TentacleController : MonoBehaviour
@@ -21,14 +20,14 @@ namespace KthulhuWantsMe.Source.Tentacle
         }
 
         private void Update()
-        {
-            float radius = _player.localScale.x - 2f;
+        {                                                           
+            float radius = _player.localScale.x - 2f;   
             _tentacleMaterial.SetFloat("_Radius", radius);
             _tentacleMaterial.SetVector("_InteractPos", transform.InverseTransformPoint(_player.position + _offset * radius));
         }
 
         private void EnableTentacleGrab()
-        {
+        {           
             _tentacleMaterial.SetInt("_EnableTentacleGrab", 1);
         }
     }

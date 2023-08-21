@@ -2,8 +2,11 @@
     "name": "KthulhuWantsMe",
     "rootNamespace": "",
     "references": [
-        "GUID:5fc52a94575e82e45a040ce63eaa10ae",
-        "GUID:d8b63aba1907145bea998dd612889d6b"
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:5c01796d064528144a599661eaab93a6",
+        "GUID:dc47925d1a5fa2946bdd37746b2b5d48",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
