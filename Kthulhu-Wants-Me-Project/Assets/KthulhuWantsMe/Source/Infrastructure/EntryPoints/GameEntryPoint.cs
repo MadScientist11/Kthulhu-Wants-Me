@@ -1,28 +1,23 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
-using UnityEngine;
+﻿using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
 {
     public class GameEntryPoint : IInitializable
     {
-        private readonly PlayerSpawnPoint _playerSpawnPoint;
-        private readonly IGameFactory _gameFactory;
-        private readonly IInputService _inputService;
+        private readonly GameStateMachine _gameStateMachine;
 
-        public GameEntryPoint(IGameFactory gameFactory, IInputService inputService, PlayerSpawnPoint playerSpawnPoint)
+        public GameEntryPoint(GameStateMachine gameStateMachine)
         {
-            _inputService = inputService;
-            _gameFactory = gameFactory;
-            _playerSpawnPoint = playerSpawnPoint;
+            _gameStateMachine = gameStateMachine;
+        
         }
         
         public void Initialize()
         {
-            _gameFactory.CreatePlayer(_playerSpawnPoint.Position, Quaternion.identity);
-            _inputService.SwitchInputScenario(InputScenario.Gameplay);
+            _gameStateMachine.SwitchState<StartGameState>();
+           
         }
     }
 }

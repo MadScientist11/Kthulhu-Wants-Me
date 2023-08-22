@@ -1,4 +1,6 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Player;
+﻿using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using VContainer;
 using VContainer.Unity;
 
@@ -16,6 +18,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
         public void Install(IContainerBuilder builder)
         {
             builder.RegisterComponent(_playerSpawnPoint);
+            RegisterGameplayFactory(builder);
+        }
+
+        private static void RegisterGameplayFactory(IContainerBuilder builder)
+        {
+            builder.Register<StatesFactory>(Lifetime.Singleton);
+            builder.Register<GameStateMachine>(Lifetime.Singleton);
+            builder.Register<StartGameState>(Lifetime.Singleton);
         }
     }
 }
