@@ -1,42 +1,50 @@
 using KinematicCharacterController;
+using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
+using VContainer;
 
-namespace KthulhuWantsMe.Source.Player
+namespace KthulhuWantsMe.Source.Gameplay.Player
 {
     public class PlayerLocomotion : MonoBehaviour
     {
         [SerializeField] private KinematicCharacterMotor _kinematicCharacterMotor;
-        private KinematicLocomotion _locomotion;
+        private PlayerKinematicLocomotion _kinematicLocomotion;
         private PlayerConfiguration _playerConfiguration;
+        private IInputService _inputService;
+        private PlayerConfiguration _playerConfig;
+
+        [Inject]
+        public void Construct(IInputService inputService, IDataProvider dataProvider)
+        {
+             _playerConfig = dataProvider.PlayerConfig;
+             _inputService = inputService;
+             _kinematicLocomotion = new PlayerKinematicLocomotion(_kinematicCharacterMotor, _playerConfig);
+        }
+
+        private void Update() => 
+            ProcessInput();
         
-        private const string MouseXInput = "Mouse X";
-        private const string MouseYInput = "Mouse Y";
-        private const string MouseScrollInput = "Mouse ScrollWheel";
-        private const string HorizontalInput = "Horizontal";
-        private const string VerticalInput = "Vertical";
-
-        public void Construct(PlayerConfiguration playerConfiguration)
+        private void ProcessInput()
         {
-            _playerConfiguration = playerConfiguration;
+            Vector3 vectorToHit = GetLookDirection();
+            Vector2 movementInput = _inputService.GameplayScenario.MovementInput;
+
+            _kinematicLocomotion.SetInputs(movementInput, vectorToHit.normalized);
+            
+            
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                //_locomotion.Motor.ForceUnground(0.1f);
+                _kinematicLocomotion.AddVelocity(transform.forward * 100f);
+            }
         }
 
-        private void Awake()
-        {
-            Construct(_playerConfiguration);
-            _locomotion = new KinematicLocomotion(_kinematicCharacterMotor);
-        }
-
-        public void SetGravity(float gravity)
-        {
-            _locomotion.KillVelocity = true;
-            _locomotion.Gravity = new Vector3(0, gravity, 0);
-        }
-
-        private void Update()
+        private Vector3 GetLookDirection()
         {
             Ray ray = MousePointer.GetWorldRay(Camera.main);
-            var vectorToHit = Vector3.zero;
+            Vector3 vectorToHit = Vector3.zero;
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(ray, out float enter))
             {
@@ -44,21 +52,9 @@ namespace KthulhuWantsMe.Source.Player
 
                 Vector3 hitPointXZ = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
                 vectorToHit = (hitPointXZ - transform.position);
-                //_playerTransform.forward = _vectorToHit.normalized;
             }
 
-
-            Debug.DrawRay(Vector3.zero, vectorToHit.normalized * 5);
-
-            _locomotion.SetInputs(new Vector2(Input.GetAxisRaw(HorizontalInput), Input.GetAxisRaw(VerticalInput)),
-                vectorToHit.normalized);
-
-            // Apply impulse
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                //_locomotion.Motor.ForceUnground(0.1f);
-                _locomotion.AddVelocity(transform.forward * 100f);
-            }
+            return vectorToHit;
         }
     }
 }

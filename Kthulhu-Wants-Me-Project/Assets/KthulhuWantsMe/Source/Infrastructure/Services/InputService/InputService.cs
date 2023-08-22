@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
@@ -27,8 +28,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
 
         public GameplayScenario GameplayScenario { get; private set; }
         public UIScenario UIScenario { get; private set; }
-
-
+        
+        
         public UniTask Initialize()
         {
             _input = new GameInput();
@@ -48,10 +49,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
 
         public void SwitchInputScenario(InputScenario inputScenario)
         {
-            Debug.Log("Switch");
             _activeInputScenario?.Disable();
             _activeInputScenario = _inputScenarios[inputScenario];
             _activeInputScenario.Enable();
         }
+
+      
     }
 }

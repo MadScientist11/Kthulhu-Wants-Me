@@ -1,5 +1,4 @@
-﻿using KthulhuWantsMe.Source.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {

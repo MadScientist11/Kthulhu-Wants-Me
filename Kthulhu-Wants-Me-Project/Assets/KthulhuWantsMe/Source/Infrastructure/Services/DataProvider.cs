@@ -1,5 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Player;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services
