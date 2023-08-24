@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
@@ -6,6 +7,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
     public class PlayerConfiguration : ScriptableObject
     {
         public PlayerFacade PlayerPrefab;
+        public CinemachineVirtualCamera PlayerFPSCameraPrefab;
         
         public float MaxStableMoveSpeed = 10f;
         public float StableMovementSharpness = 15;

@@ -1,4 +1,6 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Player;
+﻿using Cinemachine;
+using KthulhuWantsMe.Source.Gameplay.Camera;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -23,7 +25,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         
         public PlayerFacade CreatePlayer(Vector3 position, Quaternion rotation)
         {
-           return _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerPrefab, position, rotation);
+            PlayerFacade playerFacade = _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerPrefab, position, rotation);
+            CinemachineVirtualCamera playerVirtualCamera = _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerFPSCameraPrefab);
+            playerVirtualCamera.Follow = playerFacade.CameraFollowTarget;
+            playerFacade.PlayerVirtualCamera = playerVirtualCamera;
+            return playerFacade;
         } 
         
     }

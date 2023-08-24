@@ -11,7 +11,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine
         {
             _statesFactory = statesFactory;
         }
-        public void SwitchState<TState>() where TState : IGameplayState
+        public void SwitchState<TState>() 
+            where TState : IGameplayState
         {
             _activeState?.Exit();
             _activeState = _statesFactory.GetOrCreate<TState>();

@@ -7,6 +7,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
     {
         private GameInput.GameplayActions _gameplayActions;
         public Vector2 MovementInput { get; private set; }
+        public Vector2 LookInput { get; private set; }
 
         public GameplayScenario(GameInput.GameplayActions gameplayActions)
         {
@@ -16,6 +17,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         public void OnMovement(InputAction.CallbackContext context)
         {
             MovementInput = context.ReadValue<Vector2>();
+        }
+
+        public void OnLook(InputAction.CallbackContext context)
+        {
+            LookInput = context.ReadValue<Vector2>();
         }
 
         public void Enable() =>

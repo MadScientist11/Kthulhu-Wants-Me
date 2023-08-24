@@ -14,3 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: -5172653069112829316, guid: 31e400d6a849a5a4baaa2f5ca4f48386,
     type: 3}
+  PlayerFPSCameraPrefab: {fileID: 6843986045684515988, guid: 0326cc12476ef5845b6d23d3849d0cda,
+    type: 3}
+  MaxStableMoveSpeed: 10
+  StableMovementSharpness: 15
+  OrientationSharpness: 10
+  MaxAirMoveSpeed: 10
+  AirAccelerationSpeed: 5
+  Drag: 0.1
+  Gravity: {x: 0, y: -30, z: 0}
