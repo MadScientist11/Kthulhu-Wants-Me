@@ -7,7 +7,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
     {
         public PlayerFacade PlayerPrefab;
         
-        
         public float MaxStableMoveSpeed = 10f;
         public float StableMovementSharpness = 15;
         public float OrientationSharpness = 10;
@@ -16,6 +15,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float AirAccelerationSpeed = 5f;
         public float Drag = 0.1f;
         
-        public Vector3 Gravity = new Vector3(0, -30f, 0);
+        public Vector3 Gravity = new(0, -30f, 0);
     }
 }
