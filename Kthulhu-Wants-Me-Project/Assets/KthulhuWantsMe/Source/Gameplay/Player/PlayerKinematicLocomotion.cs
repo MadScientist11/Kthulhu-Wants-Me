@@ -12,7 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private Vector3 _lookInputVector;
         private Vector3 _internalVelocityAdd;
         private bool _killVelocity;
-        
+
         public PlayerKinematicLocomotion(KinematicCharacterMotor motor, PlayerConfiguration playerConfiguration)
         {
             _playerConfiguration = playerConfiguration;
@@ -20,22 +20,28 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             motor.CharacterController = this;
         }
 
-        public void SetInputs(Vector2 moveInput, Vector3 lookDirection)
+        public void SetInputs(Vector2 moveInput, Quaternion cameraRotation)
         {
+            // Clamp input
             Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(moveInput.x, 0f, moveInput.y), 1f);
 
-            Vector3 cameraPlanarDirection = lookDirection;
-            //if (cameraPlanarDirection.sqrMagnitude == 0f)
-            //{
-            //    cameraPlanarDirection = Vector3.ProjectOnPlane(cameraRotation * Vector3.up, _motor.CharacterUp).normalized;
-            //}
-            //Quaternion cameraPlanarRotation = Quaternion.LookRotation(lookDirection, _motor.CharacterUp);
+            Debug.Log(cameraRotation);
+            // Calculate camera direction and rotation on the character plane
+            Vector3 cameraPlanarDirection =
+                Vector3.ProjectOnPlane(cameraRotation * Vector3.forward, _motor.CharacterUp).normalized;
+            if (cameraPlanarDirection.sqrMagnitude == 0f)
+            {
+                cameraPlanarDirection =
+                    Vector3.ProjectOnPlane(cameraRotation * Vector3.up, _motor.CharacterUp).normalized;
+            }
 
-            _moveInputVector = moveInputVector;
+            Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, _motor.CharacterUp);
+            _moveInputVector = cameraPlanarRotation * moveInputVector;
             _lookInputVector = cameraPlanarDirection;
+            //_lookInputVector = _moveInputVector.normalized;
         }
 
-        public void KillVelocity() => 
+        public void KillVelocity() =>
             _killVelocity = true;
 
         public void BeforeCharacterUpdate(float deltaTime)
@@ -98,7 +104,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                             Vector3.ProjectOnPlane(targetMovementVelocity, perpenticularObstructionNormal);
                     }
 
-                    Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity, _playerConfiguration.Gravity);
+                    Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity,
+                        _playerConfiguration.Gravity);
                     currentVelocity += velocityDiff * _playerConfiguration.AirAccelerationSpeed * deltaTime;
                 }
 

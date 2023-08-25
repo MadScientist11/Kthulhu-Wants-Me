@@ -12,7 +12,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly PlayerSpawnPoint _playerSpawnPoint;
         private readonly IInputService _inputService;
 
-        public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory,IInputService inputService, PlayerSpawnPoint playerSpawnPoint)
+        public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IInputService inputService,
+            PlayerSpawnPoint playerSpawnPoint)
         {
             _inputService = inputService;
             _playerSpawnPoint = playerSpawnPoint;
@@ -24,8 +25,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             _gameFactory.CreatePlayer(_playerSpawnPoint.Position, Quaternion.identity);
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
             //_gameStateMachine.SwitchState(GameFlow.StartGameState);
         }
+
+      
 
         public void Exit()
         {

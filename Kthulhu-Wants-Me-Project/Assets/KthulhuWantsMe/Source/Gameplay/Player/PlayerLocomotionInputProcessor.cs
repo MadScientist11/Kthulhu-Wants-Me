@@ -1,3 +1,4 @@
+using Cinemachine;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -7,7 +8,7 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    public class PlayerLocomotion : MonoBehaviour
+    public class PlayerLocomotionInputProcessor : MonoBehaviour
     {
         [SerializeField] private KinematicCharacterMotor _kinematicCharacterMotor;
         private PlayerKinematicLocomotion _kinematicLocomotion;
@@ -28,11 +29,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         private void ProcessInput()
         {
-            Vector3 vectorToHit = GetLookDirection();
+            Vector3 lookDirection = new Vector3(_inputService.GameplayScenario.LookInput.x, 0, _inputService.GameplayScenario.LookInput.y);
             Vector2 movementInput = _inputService.GameplayScenario.MovementInput;
 
-            _kinematicLocomotion.SetInputs(movementInput, vectorToHit.normalized);
-            
+            _kinematicLocomotion.SetInputs(movementInput, UnityEngine.Camera.main.transform.rotation);
+          
             
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -41,20 +42,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             }
         }
 
-        private Vector3 GetLookDirection()
-        {
-            Ray ray = MousePointer.GetWorldRay(Camera.main);
-            Vector3 vectorToHit = Vector3.zero;
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
-            if (plane.Raycast(ray, out float enter))
-            {
-                Vector3 hitPoint = ray.GetPoint(enter);
-
-                Vector3 hitPointXZ = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
-                vectorToHit = (hitPointXZ - transform.position);
-            }
-
-            return vectorToHit;
-        }
+        
     }
 }
