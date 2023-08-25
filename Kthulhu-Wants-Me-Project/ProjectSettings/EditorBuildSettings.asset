@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/KthulhuWantsMe/Scenes/Game.unity
+    guid: fb53bbc961baf1f40a4fadbe9c9e8c7c
+  - enabled: 1
     path: Assets/KthulhuWantsMe/Scenes/StartUp.unity
     guid: ffbe00834d165814c8ff890787dfef71
   - enabled: 1
-    path: Assets/KthulhuWantsMe/Scenes/Game.unity
-    guid: fb53bbc961baf1f40a4fadbe9c9e8c7c
+    path: Assets/KthulhuWantsMe/Scenes/PrototypeScenes/TentacleIK.unity
+    guid: 2fbf3db686dcb904897d14ee8c5101a8
   m_configObjects: {}
