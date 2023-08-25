@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: -5172653069112829316, guid: 31e400d6a849a5a4baaa2f5ca4f48386,
     type: 3}
-  PlayerFPSCameraPrefab: {fileID: 6843986045684515988, guid: 0326cc12476ef5845b6d23d3849d0cda,
+  PlayerFPSCameraPrefab: {fileID: 6843986045684515988, guid: 008178a2bc0d35c46a6ee79cbc05111a,
     type: 3}
   MaxStableMoveSpeed: 10
   StableMovementSharpness: 15

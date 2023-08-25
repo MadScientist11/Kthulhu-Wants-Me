@@ -8,7 +8,7 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    public class PlayerLocomotion : MonoBehaviour
+    public class PlayerLocomotionInputProcessor : MonoBehaviour
     {
         [SerializeField] private KinematicCharacterMotor _kinematicCharacterMotor;
         private PlayerKinematicLocomotion _kinematicLocomotion;
