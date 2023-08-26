@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using FSM;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -38,93 +37,40 @@ namespace KthulhuWantsMe.Source.Gameplay.TentacleIK
         private void Start()
         {
             _tentacleFsm = new StateMachine();
-            _tentacleFsm.AddState("Idle", new State(onEnter: state =>
-            {
-                Debug.Log("Idle");
-
-                _tentacleAnimator.PlayIdleAnimation();
-                _playerLocomotionController.SetFollowTarget(null);
-            }));
-            _tentacleFsm.AddState("GrabPlayer", new State(onEnter: state =>
-            {
-                Debug.Log("Grab");
-                _tentacleAnimator.PlayGrabPlayerAnimation(_playerFollowTarget);
-                _playerLocomotionController.SetFollowTarget(_playerFollowTarget);
-            }));
-            _tentacleFsm.AddState("Stunned", new CoState(this,onEnter: state =>
-            {
-                _tentacleAnimator.PlayIdleAnimation();
-                _playerLocomotionController.SetFollowTarget(null);
-                Debug.Log("Stunned");
-            }, onLogic: Stun, needsExitTime:true));
-            _tentacleFsm.SetStartState("Idle");
+            _tentacleFsm.AddState(TentacleState.Idle.ToString(), new TentacleIdleState(_tentacleAnimator, _playerLocomotionController));
+            _tentacleFsm.AddState(TentacleState.GrabPlayer.ToString(), new TentacleGrabPlayerState(_tentacleAnimator, _playerLocomotionController, _playerFollowTarget));
+            _tentacleFsm.AddState(TentacleState.Stunned.ToString(), new TentacleStunnedState(this, _tentacleAnimator, _playerLocomotionController));
+            
+            _tentacleFsm.SetStartState(TentacleState.Idle.ToString());
 
             _tentacleFsm.AddTransition(new Transition(
-                "Idle",
-                "GrabPlayer",
+                TentacleState.Idle.ToString(),
+                TentacleState.GrabPlayer.ToString(),
                 (transition) => DistanceToPlayer() < 5f
             ));
 
             _tentacleFsm.AddTransition(new Transition(
-                "GrabPlayer",
-                "Stunned",
+                TentacleState.GrabPlayer.ToString(),
+                TentacleState.Stunned.ToString(),
                 (transition) => Input.GetKeyDown(KeyCode.Space)
             ));
 
             _tentacleFsm.AddTransition(new Transition(
-                "Stunned",
-                "Idle"
+                TentacleState.Stunned.ToString(),
+                TentacleState.Idle.ToString()
             ));
             _tentacleFsm.Init();
-        }
-        IEnumerator Stun(CoState<string, string> state)
-        {
-            while (state.timer.Elapsed < 3)
-            {
-                yield return null;
-            }
-
-            state.timer.Reset();
-            state.fsm.StateCanExit();
         }
 
         private void Update()
         {
+            Debug.Log(_tentacleFsm.ActiveStateName);
             _tentacleFsm.OnLogic();
         }
 
         private float DistanceToPlayer()
         {
             return Vector3.Distance(_player.transform.position, transform.position);
-        }
-
-        private void SwitchState(TentacleState state)
-        {
-            if (_currentState == state)
-                return;
-
-            switch (state)
-            {
-                case TentacleState.Stunned:
-                    StartCoroutine(TransitionToIdle(3f));
-                    break;
-                case TentacleState.Idle:
-                    _tentacleAnimator.PlayIdleAnimation();
-                    _playerLocomotionController.SetFollowTarget(null);
-                    break;
-                case TentacleState.GrabPlayer:
-                    _tentacleAnimator.PlayGrabPlayerAnimation(_playerFollowTarget);
-                    _playerLocomotionController.SetFollowTarget(_playerFollowTarget);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
-            }
-        }
-
-        private IEnumerator TransitionToIdle(float after)
-        {
-            yield return new WaitForSeconds(after);
         }
     }
 }
