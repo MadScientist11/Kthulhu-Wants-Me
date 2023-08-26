@@ -11,12 +11,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
     public class DataProvider : IDataProvider, IInitializableService
     {
+        public bool IsInitialized { get; set; }
         private const string PlayerConfigurationPath = "PlayerConfiguration";
         public PlayerConfiguration PlayerConfig { get; private set; }
         
 
         public async UniTask Initialize()
         {
+            IsInitialized = true;
             PlayerConfig = (PlayerConfiguration)await Resources.LoadAsync<PlayerConfiguration>(PlayerConfigurationPath);
         }
     }

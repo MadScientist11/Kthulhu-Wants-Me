@@ -12,8 +12,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
     public class ResourcesManager : IResourceManager
     {
+        public bool IsInitialized { get; set; }
+
         public async UniTask Initialize()
         {
+            IsInitialized = true;
             await UniTask.CompletedTask;
         }
 

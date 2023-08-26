@@ -20,7 +20,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
 
     public class InputService : IInputService
     {
-
+        public bool IsInitialized { get; set; }  
         private GameInput _input;
         private Dictionary<InputScenario, IInputScenario> _inputScenarios;
 

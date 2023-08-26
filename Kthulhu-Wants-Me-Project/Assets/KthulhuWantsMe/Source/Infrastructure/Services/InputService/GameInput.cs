@@ -46,6 +46,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""52406fec-0a52-43d4-97bb-1a479bfd2453"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -114,6 +123,61 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""48676de0-177f-4b38-bfdc-35c7ced7d52a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=0)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a38e2609-a9e4-4376-aeb0-5d9b209743bb"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": """",
+                    ""action"": ""SwitchItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49c7f332-8959-4da9-acbd-411584d04289"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f8f0db0-483e-4649-8e71-ea6cf48761ce"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc32dd37-72ff-49f4-b72d-8b85b76d2e46"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -130,6 +194,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
             m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
             m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
+            m_Gameplay_SwitchItem = m_Gameplay.FindAction("SwitchItem", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         }
@@ -195,12 +260,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
         private readonly InputAction m_Gameplay_Movement;
         private readonly InputAction m_Gameplay_Look;
+        private readonly InputAction m_Gameplay_SwitchItem;
         public struct GameplayActions
         {
             private @GameInput m_Wrapper;
             public GameplayActions(@GameInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
             public InputAction @Look => m_Wrapper.m_Gameplay_Look;
+            public InputAction @SwitchItem => m_Wrapper.m_Gameplay_SwitchItem;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -216,6 +283,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @SwitchItem.started += instance.OnSwitchItem;
+                @SwitchItem.performed += instance.OnSwitchItem;
+                @SwitchItem.canceled += instance.OnSwitchItem;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -226,6 +296,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @Look.started -= instance.OnLook;
                 @Look.performed -= instance.OnLook;
                 @Look.canceled -= instance.OnLook;
+                @SwitchItem.started -= instance.OnSwitchItem;
+                @SwitchItem.performed -= instance.OnSwitchItem;
+                @SwitchItem.canceled -= instance.OnSwitchItem;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -285,6 +358,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         {
             void OnMovement(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
+            void OnSwitchItem(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

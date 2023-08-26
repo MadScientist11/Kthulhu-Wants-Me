@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
@@ -8,6 +9,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         private GameInput.GameplayActions _gameplayActions;
         public Vector2 MovementInput { get; private set; }
         public Vector2 LookInput { get; private set; }
+
+        public event Action<int> SwitchItem; 
 
         public GameplayScenario(GameInput.GameplayActions gameplayActions)
         {
@@ -22,6 +25,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         public void OnLook(InputAction.CallbackContext context)
         {
             LookInput = context.ReadValue<Vector2>();
+        }
+
+        public void OnSwitchItem(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                SwitchItem?.Invoke((int)context.ReadValue<float>());
+            }
+                
         }
 
         public void Enable() =>

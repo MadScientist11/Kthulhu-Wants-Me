@@ -26,7 +26,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
 
         public async UniTask StartAsync(CancellationToken cancellation)
         {
-            List<UniTask> initializationTasks = Enumerable.Select(_services, service => service.Initialize()).ToList();
+            List<UniTask> initializationTasks = Enumerable.Select(_services, service =>
+            {
+                service.IsInitialized = true;
+                return service.Initialize();
+            }).ToList();
             await UniTask.WhenAll(initializationTasks);
             await _sceneLoader
                 .LoadSceneInjected(GameConstants.Scenes.GamePath, LoadSceneMode.Additive, _appLifetimeScope);
