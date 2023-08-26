@@ -14,6 +14,13 @@
       "dependencies": {},
       "hash": "8a8fa5a9659a6d63f196391c71e06c4286c8acd7"
     },
+    "com.inspiaaa.unityhfsm": {
+      "version": "https://github.com/Inspiaaa/UnityHFSM.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "2168c17857dfee65ab1417dee6e41b5c3b15846b"
+    },
     "com.unity.animation.rigging": {
       "version": "1.2.1",
       "depth": 0,
