@@ -29,7 +29,7 @@ namespace KthulhuWantsMe.Source.Gameplay.TentacleIK
         private static readonly int InteractPos = Shader.PropertyToID("_InteractPos");
         private static readonly int TwirlStrength = Shader.PropertyToID("_TwirlStrength");
 
-        private void Start()
+        private void Awake()
         {
             _tentacleMaterial = _renderer.material;
         }
