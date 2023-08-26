@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Camera;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
     public class GameFactory : IGameFactory
     {
         public PlayerFacade Player { get; private set; }
-        
+
         private readonly IObjectResolver _instantiator;
         private readonly IDataProvider _dataProvider;
 
@@ -29,13 +30,19 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
         public PlayerFacade CreatePlayer(Vector3 position, Quaternion rotation)
         {
-            PlayerFacade playerFacade = _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerPrefab, position, rotation);
-            CinemachineVirtualCamera playerVirtualCamera = _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerFPSCameraPrefab);
-            playerVirtualCamera.Follow = playerFacade.CameraFollowTarget;
-            playerFacade.PlayerVirtualCamera = playerVirtualCamera;
+            PlayerFacade playerFacade =
+                _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerPrefab, position, rotation);
             Player = playerFacade;
+            CinemachineVirtualCamera playerVirtualCamera =
+                _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerFPSCameraPrefab);
+            playerFacade.PlayerVirtualCamera = playerVirtualCamera;
+            
+            playerVirtualCamera.Follow = playerFacade.CameraFollowTarget;
+            
+            playerFacade.PlayerLocomotionController = new PlayerLocomotionController(this, playerFacade.PlayerMotor, _dataProvider.PlayerConfig);
             return playerFacade;
-        } 
-        
+        }
+
+      
     }
 }

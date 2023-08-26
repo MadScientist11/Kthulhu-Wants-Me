@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
+﻿using KinematicCharacterController;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -20,16 +21,18 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
         {
             builder.RegisterComponent(_playerSpawnPoint);
             builder
-                .Register<GameFactory>(Lifetime.Singleton)
+                .Register<GameFactory>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
+            
+          
             RegisterGameplayFsm(builder);
         }
 
         private static void RegisterGameplayFsm(IContainerBuilder builder)
         {
-            builder.Register<StatesFactory>(Lifetime.Singleton);
-            builder.Register<GameStateMachine>(Lifetime.Singleton);
-            builder.Register<StartGameState>(Lifetime.Singleton);
+            builder.Register<StatesFactory>(Lifetime.Scoped);
+            builder.Register<GameStateMachine>(Lifetime.Scoped);
+            builder.Register<StartGameState>(Lifetime.Scoped);
         }
     }
 }

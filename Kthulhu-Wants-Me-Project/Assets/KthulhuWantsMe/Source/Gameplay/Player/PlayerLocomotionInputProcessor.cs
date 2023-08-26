@@ -10,38 +10,37 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 {
     public class PlayerLocomotionInputProcessor : MonoBehaviour
     {
-        [SerializeField] private KinematicCharacterMotor _kinematicCharacterMotor;
-        private PlayerKinematicLocomotion _kinematicLocomotion;
-        private PlayerConfiguration _playerConfiguration;
         private IInputService _inputService;
-        private PlayerConfiguration _playerConfig;
+        private PlayerFacade _player;
+        private IGameFactory _gameFactory;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider)
+        public void Construct(IInputService inputService, IGameFactory gameFactory)
         {
-             _playerConfig = dataProvider.PlayerConfig;
-             _inputService = inputService;
-             _kinematicLocomotion = new PlayerKinematicLocomotion(_kinematicCharacterMotor, _playerConfig);
+            _gameFactory = gameFactory;
+            _inputService = inputService;
         }
 
-        private void Update() => 
+        private void Update()
+        {
             ProcessInput();
-        
+            _gameFactory.Player.PlayerLocomotionController.UpdateState();
+        }
+
         private void ProcessInput()
         {
-            Vector3 lookDirection = new Vector3(_inputService.GameplayScenario.LookInput.x, 0, _inputService.GameplayScenario.LookInput.y);
+            Vector3 lookDirection = new Vector3(_inputService.GameplayScenario.LookInput.x, 0,
+                _inputService.GameplayScenario.LookInput.y);
             Vector2 movementInput = _inputService.GameplayScenario.MovementInput;
 
-            _kinematicLocomotion.SetInputs(movementInput, UnityEngine.Camera.main.transform.rotation);
-          
-            
+            _gameFactory.Player.PlayerLocomotionController.SetInputs(movementInput, UnityEngine.Camera.main.transform.rotation);
+
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 //_locomotion.Motor.ForceUnground(0.1f);
-                _kinematicLocomotion.AddVelocity(transform.forward * 100f);
+                _gameFactory.Player.PlayerLocomotionController.AddVelocity(transform.forward * 100f);
             }
         }
-
-        
     }
 }
