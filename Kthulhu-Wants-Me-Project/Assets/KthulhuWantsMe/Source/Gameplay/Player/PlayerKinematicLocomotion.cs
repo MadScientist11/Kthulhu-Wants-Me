@@ -25,7 +25,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             // Clamp input
             Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(moveInput.x, 0f, moveInput.y), 1f);
 
-            Debug.Log(cameraRotation);
             // Calculate camera direction and rotation on the character plane
             Vector3 cameraPlanarDirection =
                 Vector3.ProjectOnPlane(cameraRotation * Vector3.forward, _motor.CharacterUp).normalized;
