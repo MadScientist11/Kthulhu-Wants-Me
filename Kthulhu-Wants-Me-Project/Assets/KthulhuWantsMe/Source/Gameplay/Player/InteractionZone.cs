@@ -1,5 +1,5 @@
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Interactions;
-using KthulhuWantsMe.Source.Gameplay.Items;
 using UnityEngine;
 using VContainer;
 

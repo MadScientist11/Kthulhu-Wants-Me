@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.Items;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
@@ -21,7 +21,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactions
             foreach (IInteractable interactable in interactables)
             {
                 if(interactable is not IPickable pickable) 
-                    return;
+                    continue;
             
                 //Play music
                 //Inventory add
@@ -29,7 +29,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactions
                 if(pickable.Equipped)
                     continue;
 
-                _inventorySystem.AddItem(pickable as ItemBase);
+               //
+               //_inventorySystem.AddItem(pickable, _gameFactory.Player.PlayerActions.PickUp, _gameFactory.Player.PlayerActions.ThrowAway);
                 pickable.Equipped = true;
                 return;
             }

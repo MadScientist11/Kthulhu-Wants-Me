@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KthulhuWantsMe.Source.Gameplay.Items;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
@@ -23,6 +23,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactions
         public InteractionsManager(IGameFactory gameFactory, IInventorySystem inventorySystem)
         {
             _interactionHandlers.Add(new PickableInteractionHandler(gameFactory, inventorySystem));
+            _interactionHandlers.Add(new ContainerInteractionHandler(inventorySystem, gameFactory));
         }
 
 
@@ -39,9 +40,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactions
 
         public void ProcessInteraction()
         {
-            foreach (IInteractionHandler interactionHandler in _interactionHandlers)
+            foreach (IInteractable interactable in _availableInteractions)
             {
-                interactionHandler.Handle(_availableInteractions);
+                bool successfulInteraction = interactable.Interact();
+                
+                if(successfulInteraction)
+                    return;
             }
         }
     }

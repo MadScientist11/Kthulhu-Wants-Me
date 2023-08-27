@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Gameplay.Items;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
@@ -9,22 +10,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 {
     public interface IInventorySystem
     {
-        event Action<ItemBase> OnItemAdded;
-        event Action<ItemBase> OnItemRemoved;
-        event Action<ItemBase, ItemBase> OnItemSwitched;
-        void AddItem(ItemBase item);
+        event Action<IPickable> OnItemAdded;
+        event Action<IPickable> OnItemRemoved;
+        event Action<IPickable, IPickable> OnItemSwitched;
+        IPickable CurrentItem { get; }
+        void ReplaceItem(IPickable item);
+        void RemoveItem(IPickable item);
     }
 
     public class InventorySystem : IInventorySystem, IInitializableService, IDisposable
     {
         public bool IsInitialized { get; set; }
-        public ItemBase[] EquippedItems => _items;
-        
-        public event Action<ItemBase> OnItemAdded;
-        public event Action<ItemBase> OnItemRemoved;
-        public event Action<ItemBase, ItemBase> OnItemSwitched;
+        public IReadOnlyList<IPickable> EquippedItems => _items;
+        public IPickable CurrentItem => _items[_currentIndex];
 
-        private readonly ItemBase[] _items = new ItemBase[5];
+        public event Action<IPickable> OnItemAdded;
+        public event Action<IPickable> OnItemRemoved;
+        public event Action<IPickable, IPickable> OnItemSwitched;
+
+        private readonly IPickable[] _items = new IPickable[5];
         private int _currentIndex;
 
         private readonly IInputService _inputService;
@@ -46,23 +50,30 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             _inputService.GameplayScenario.SwitchItem -= SwitchItem;
         }
 
-        public void AddItem(ItemBase item)
+        public void ReplaceItem(IPickable item)
         {
             Debug.Log($"Adding item {item}");
             if (_items[_currentIndex] == null)
             {
                 Debug.Log($"Was no item so added {item}");
-
                 _items[_currentIndex] = item;
+                item.PickUp();
                 OnItemAdded?.Invoke(item);
             }
             else
             {
-                ItemBase removedItem = _items[_currentIndex];
-                _items[_currentIndex] = null;
-                OnItemRemoved?.Invoke(removedItem);
-                AddItem(item);
+                IPickable removedItem = _items[_currentIndex];
+                RemoveItem(removedItem);
+                removedItem.ThrowAway();
+                ReplaceItem(item);
             }
+        }
+
+        public void RemoveItem(IPickable item)
+        {
+            int index = Array.IndexOf(_items, item);
+            _items[index] = null;
+            OnItemRemoved?.Invoke(item);
         }
 
         private void SwitchItem(int index)

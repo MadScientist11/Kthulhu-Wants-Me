@@ -23,17 +23,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         private void Start()
         {
-            _inventorySystem.OnItemAdded += PlayerActions.PickUp;
-            _inventorySystem.OnItemRemoved += PlayerActions.ThrowAway;
             _inventorySystem.OnItemSwitched += PlayerActions.SwitchItem;
         }
 
         private void OnDestroy()
         {
-            _inventorySystem.OnItemAdded -= PlayerActions.PickUp;
-            _inventorySystem.OnItemRemoved -= PlayerActions.ThrowAway;
             _inventorySystem.OnItemSwitched -= PlayerActions.SwitchItem;
-
         }
 
         private void OnValidate()
