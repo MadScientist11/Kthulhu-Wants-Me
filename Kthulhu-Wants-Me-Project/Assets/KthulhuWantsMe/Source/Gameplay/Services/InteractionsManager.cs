@@ -18,14 +18,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactions
     public class InteractionsManager : IInteractionsManager
     {
         private readonly HashSet<IInteractable> _availableInteractions = new();
-        private readonly HashSet<IInteractionHandler> _interactionHandlers = new();
-
-        public InteractionsManager(IGameFactory gameFactory, IInventorySystem inventorySystem)
-        {
-            _interactionHandlers.Add(new PickableInteractionHandler(gameFactory, inventorySystem));
-            _interactionHandlers.Add(new ContainerInteractionHandler(inventorySystem, gameFactory));
-        }
-
 
         public void AddAvailableInteraction(IInteractable interactable)
         {
