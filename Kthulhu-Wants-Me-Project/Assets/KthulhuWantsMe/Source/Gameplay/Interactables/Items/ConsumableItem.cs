@@ -1,18 +1,23 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Data;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 {
-    public class ConsumableItem : PickableItem, IConsumable
+    public sealed class ConsumableItem : PickableItem, IConsumable
     {
-        public virtual int MaxUses { get; } = 1;
+        [field: SerializeField] public ConsumableData ConsumableData { get; set; }
+        
+        public override PickableData ItemData => ConsumableData;
+      
         public int RemainingUses { get; set; }
 
         private void Start()
         {
-            RemainingUses = MaxUses;
+            RemainingUses = ConsumableData.MaxUses;
         }
-
+      
         public void Consume()
         {
             RemainingUses--;
@@ -25,7 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 
         private void DestroyConsumable()
         {
-            _inventorySystem.RemoveItem(this);
+            _inventorySystem.RemoveItemWithoutNotify(this);
             Destroy(gameObject);
         }
     }

@@ -16,6 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         IPickable CurrentItem { get; }
         void ReplaceItem(IPickable item);
         void RemoveItem(IPickable item);
+        void RemoveItemWithoutNotify(IPickable item);
     }
 
     public class InventorySystem : IInventorySystem, IInitializableService, IDisposable
@@ -57,14 +58,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             {
                 Debug.Log($"Was no item so added {item}");
                 _items[_currentIndex] = item;
-                item.PickUp();
+                item.Equipped = true;
                 OnItemAdded?.Invoke(item);
             }
             else
             {
                 IPickable removedItem = _items[_currentIndex];
                 RemoveItem(removedItem);
-                removedItem.ThrowAway();
                 ReplaceItem(item);
             }
         }
@@ -73,7 +73,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         {
             int index = Array.IndexOf(_items, item);
             _items[index] = null;
+            item.Equipped = false;
             OnItemRemoved?.Invoke(item);
+        }
+        
+        public void RemoveItemWithoutNotify(IPickable item)
+        {
+            int index = Array.IndexOf(_items, item);
+            _items[index] = null;
         }
 
         private void SwitchItem(int index)

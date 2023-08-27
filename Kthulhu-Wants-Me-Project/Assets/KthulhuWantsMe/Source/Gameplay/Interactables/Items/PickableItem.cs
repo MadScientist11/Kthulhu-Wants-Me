@@ -1,18 +1,24 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Data;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 {
-    public class PickableItem : MonoBehaviour, IPickable
+    public class PickableItem : MonoBehaviour, IPickable, IInjectable
     {
+        [field: SerializeField] public virtual PickableData ItemData { get; set; }
+        
+        public InteractableData InteractableData => ItemData;
+        
         public Transform Transform => transform;
+        
         public bool Equipped { get; set; }
 
-        private PlayerFacade _player;
         protected IInventorySystem _inventorySystem;
         protected IGameFactory _gameFactory;
 
@@ -21,12 +27,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
         {
             _gameFactory = gameFactory;
             _inventorySystem = inventorySystem;
-            gameFactory.OnPlayerInitialized += GetPlayer;
-        }
-
-        private void OnDestroy()
-        {
-            _gameFactory.OnPlayerInitialized -= GetPlayer;
         }
 
         public bool Interact()
@@ -40,19 +40,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
             return false;
         }
 
-        public virtual void PickUp()
-        {
-            _player.PlayerActions.PickUp(this);
-            Equipped = true;
-        }
 
-        public virtual void ThrowAway()
-        {
-            _player.PlayerActions.ThrowAway(this);
-            Equipped = false;
-        }
-
-        private void GetPlayer(PlayerFacade player) =>
-            _player = player;
     }
 }

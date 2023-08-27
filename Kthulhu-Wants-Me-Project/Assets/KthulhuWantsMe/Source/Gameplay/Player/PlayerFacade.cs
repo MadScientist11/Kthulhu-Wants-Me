@@ -20,16 +20,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _inventorySystem = inventorySystem;
         }
-        
-        private void Start()
-        {
-            _inventorySystem.OnItemSwitched += PlayerActions.SwitchItem;
-        }
-
-        private void OnDestroy()
-        {
-            _inventorySystem.OnItemSwitched -= PlayerActions.SwitchItem;
-        }
 
         private void OnValidate()
         {
