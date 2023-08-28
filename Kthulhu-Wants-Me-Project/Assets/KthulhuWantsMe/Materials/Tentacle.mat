@@ -41,5 +41,5 @@ Material:
     m_Floats:
     - _Radius: 0.5
     m_Colors:
-    - _InteractPos: {r: 0.33699998, g: -0.056, b: 2, a: 0}
+    - _InteractPos: {r: 0.16499999, g: 0.35, b: 2.21, a: 0}
   m_BuildTextureStacks: []
