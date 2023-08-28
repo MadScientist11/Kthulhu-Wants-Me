@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.EntryPoints;
 using KthulhuWantsMe.Source.Infrastructure.Installers;
@@ -12,11 +14,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
 {
     public class GameLifetimeScope : LifetimeScope
     {
-        [SerializeField] private PlayerSpawnPoint _playerSpawnPoint;
+        [SerializeField] private Location _location;
+
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Install(new GameInstaller(_playerSpawnPoint));
+            builder.Install(new GameInstaller(_location));
             builder.RegisterEntryPoint<GameEntryPoint>();
         }
 

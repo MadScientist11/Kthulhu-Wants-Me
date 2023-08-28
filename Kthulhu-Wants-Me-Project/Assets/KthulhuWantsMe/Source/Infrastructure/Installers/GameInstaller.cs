@@ -1,6 +1,8 @@
-﻿using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Interactions;
+using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -11,16 +13,17 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
 {
     public class GameInstaller : IInstaller
     {
-        private readonly PlayerSpawnPoint _playerSpawnPoint;
+   
+        private readonly Location _location;
 
-        public GameInstaller(PlayerSpawnPoint playerSpawnPoint)
+        public GameInstaller(Location location)
         {
-            _playerSpawnPoint = playerSpawnPoint;
+            _location = location;
         }
         
         public void Install(IContainerBuilder builder)
         {
-            builder.RegisterComponent(_playerSpawnPoint);
+            builder.RegisterInstance(_location);
             builder
                 .Register<GameFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
