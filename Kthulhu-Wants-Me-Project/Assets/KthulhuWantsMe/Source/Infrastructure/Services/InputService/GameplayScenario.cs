@@ -11,6 +11,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         public Vector2 LookInput { get; private set; }
 
         public event Action<int> SwitchItem; 
+        public event Action Attack; 
+       
 
         public GameplayScenario(GameInput.GameplayActions gameplayActions)
         {
@@ -34,6 +36,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 SwitchItem?.Invoke((int)context.ReadValue<float>());
             }
                 
+        }
+
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                Attack?.Invoke();
+            }
         }
 
         public void Enable() =>

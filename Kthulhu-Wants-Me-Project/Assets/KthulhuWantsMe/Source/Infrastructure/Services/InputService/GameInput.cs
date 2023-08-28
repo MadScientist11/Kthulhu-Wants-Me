@@ -55,6 +55,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""5d3db885-6c85-4629-a491-8ba167964998"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -178,6 +187,17 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""action"": ""SwitchItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a5ce3bd-1a95-4fd2-9370-3486d8fd33c6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -195,6 +215,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
             m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
             m_Gameplay_SwitchItem = m_Gameplay.FindAction("SwitchItem", throwIfNotFound: true);
+            m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         }
@@ -261,6 +282,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         private readonly InputAction m_Gameplay_Movement;
         private readonly InputAction m_Gameplay_Look;
         private readonly InputAction m_Gameplay_SwitchItem;
+        private readonly InputAction m_Gameplay_Attack;
         public struct GameplayActions
         {
             private @GameInput m_Wrapper;
@@ -268,6 +290,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
             public InputAction @Look => m_Wrapper.m_Gameplay_Look;
             public InputAction @SwitchItem => m_Wrapper.m_Gameplay_SwitchItem;
+            public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -286,6 +309,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @SwitchItem.started += instance.OnSwitchItem;
                 @SwitchItem.performed += instance.OnSwitchItem;
                 @SwitchItem.canceled += instance.OnSwitchItem;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -299,6 +325,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @SwitchItem.started -= instance.OnSwitchItem;
                 @SwitchItem.performed -= instance.OnSwitchItem;
                 @SwitchItem.canceled -= instance.OnSwitchItem;
+                @Attack.started -= instance.OnAttack;
+                @Attack.performed -= instance.OnAttack;
+                @Attack.canceled -= instance.OnAttack;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -359,6 +388,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             void OnMovement(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnSwitchItem(InputAction.CallbackContext context);
+            void OnAttack(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

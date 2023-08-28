@@ -31,11 +31,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _inventorySystem.OnItemAdded -= Equip;
         }
 
-       
+        private bool _initialItemTriggerState;
         private void Equip(IPickable pickable)
         {
-            Debug.Log(pickable);
             pickable.Transform.GetComponent<Rigidbody>().isKinematic = true;
+            _initialItemTriggerState = pickable.Transform.GetComponent<Collider>().isTrigger;
+            pickable.Transform.GetComponent<Collider>().isTrigger = true;
             pickable.Transform.SetParent(_itemParent);
             pickable.Transform.localPosition = Vector3.zero;
         }
@@ -44,6 +45,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             pickable.Transform.SetParent(null);
             pickable.Transform.GetComponent<Rigidbody>().isKinematic = false;
+            pickable.Transform.GetComponent<Collider>().isTrigger = _initialItemTriggerState;
+
             pickable.Transform.GetComponent<Rigidbody>().AddForce(transform.forward * 150);
         }
 

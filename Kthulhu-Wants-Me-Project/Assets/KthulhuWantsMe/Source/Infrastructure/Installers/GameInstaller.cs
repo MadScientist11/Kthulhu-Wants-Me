@@ -31,6 +31,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<InventorySystem>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
+            
+            builder
+                .Register<PlayerStats>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
             RegisterGameplayFsm(builder);
         }
 

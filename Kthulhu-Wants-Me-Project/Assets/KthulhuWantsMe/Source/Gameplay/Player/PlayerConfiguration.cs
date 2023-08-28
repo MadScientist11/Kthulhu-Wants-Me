@@ -18,5 +18,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float Drag = 0.1f;
         
         public Vector3 Gravity = new(0, -30f, 0);
+        
+        public float AttackRadius;
+        public float AttackEffectiveDistance;
+        public float BaseDamage;
     }
 }
