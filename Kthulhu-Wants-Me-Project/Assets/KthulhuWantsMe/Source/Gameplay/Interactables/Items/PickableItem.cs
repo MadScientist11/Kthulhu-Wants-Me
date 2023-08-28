@@ -4,6 +4,8 @@ using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using NaughtyAttributes;
+using UnityEditor;
 using UnityEngine;
 using VContainer;
 
@@ -40,6 +42,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
             return false;
         }
 
-
+        [Button]
+        private void CollectPositionAndRotation()
+        {
+            ItemData.ItemInHandPosition = transform.localPosition;
+            ItemData.ItemInHandRotation = transform.localRotation;
+            EditorUtility.SetDirty(ItemData);
+        }
     }
 }

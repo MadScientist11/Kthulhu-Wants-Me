@@ -1488,6 +1488,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAnimator: {fileID: -4856184112398116678}
+  _attackComboSet:
+  - {fileID: 11400000, guid: f5a6b5d6955a14049b13bd3f7382f979, type: 2}
+  - {fileID: 11400000, guid: b524d652cdd66f34f93a8e72c7dc57bb, type: 2}
+  - {fileID: 11400000, guid: 8ad5de022ba330d449025d971797e7f8, type: 2}
 --- !u!114 &94120618176507343
 MonoBehaviour:
   m_ObjectHideFlags: 0

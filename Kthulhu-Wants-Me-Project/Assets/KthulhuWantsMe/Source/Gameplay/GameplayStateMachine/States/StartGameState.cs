@@ -25,12 +25,9 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             _gameFactory.CreatePlayer(_playerSpawnPoint.Position, Quaternion.identity);
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = false;
+   
             //_gameStateMachine.SwitchState(GameFlow.StartGameState);
         }
-
-      
 
         public void Exit()
         {

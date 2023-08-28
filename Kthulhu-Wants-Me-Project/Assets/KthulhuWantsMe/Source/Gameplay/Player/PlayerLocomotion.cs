@@ -1,4 +1,3 @@
-using Cinemachine;
 using Freya;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -28,13 +27,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _playerConfig = dataProvider.PlayerConfig;
             _inputService = inputService;
             _movementController = new PlayerMovementController(_kinematicCharacterMotor, _playerConfig);
-
-           
         }
 
         private void Update()
         {
-
             if (IsMoving)
             {
                 _playerAnimator.Move();
@@ -47,23 +43,29 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             
             if(!_playerAnimator.IsAttacking)
                 ProcessInput();
-            Debug.Log(_playerAnimator.CurrentState);
         }
 
         private void ProcessInput()
         {
-            Vector3 lookDirection = new Vector3(_inputService.GameplayScenario.LookInput.x, 0,
-                _inputService.GameplayScenario.LookInput.y);
-            Vector2 movementInput = _inputService.GameplayScenario.MovementInput;
+            Ray ray = MousePointer.GetWorldRay(UnityEngine.Camera.main);
+            
+            Vector3 vectorToHit = Vector3.zero;
+            Plane plane = new Plane(Vector3.up, Vector3.zero);
+            if (plane.Raycast(ray, out float enter))
+            {
+                Vector3 hitPoint = ray.GetPoint(enter);
 
+                Vector3 hitPointXZ = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
+                vectorToHit = (hitPointXZ - transform.position);
+            }
+            
+            Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ();
+            _movementController.SetInputs(movementInput, vectorToHit.normalized);
 
-            _movementController.SetInputs(movementInput, UnityEngine.Camera.main.transform.rotation,
-                _playerConfig.PlayerFPSCameraPrefab.name == "PlayerIsoCamera");
-
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 //_locomotion.Motor.ForceUnground(0.1f);
-                _movementController.AddVelocity(transform.forward * 100f);
+                _movementController.AddVelocity(transform.forward * 50f);
             }
         }
     }

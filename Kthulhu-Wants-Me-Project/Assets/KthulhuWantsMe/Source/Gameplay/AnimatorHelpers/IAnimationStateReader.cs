@@ -2,7 +2,8 @@
 {
     public interface IAnimationStateReader
     {
-        void EnteredState(int stateInfoShortNameHash);
-        void ExitedState(int stateInfoShortNameHash);
+        void EnteredState(int stateHash);
+        void ExitedState(int stateHash);
+
     }
 }

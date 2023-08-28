@@ -20,8 +20,8 @@ namespace KthulhuWantsMe.Source.Gameplay.AnimatorHelpers
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
             FindReader(animator);
-
             _stateReader.ExitedState(stateInfo.shortNameHash);
+            
         }
 
         private void FindReader(UnityEngine.Animator animator)

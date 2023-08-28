@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: 
   Description: 
+  ItemInHandPosition: {x: -0.323, y: 0.24, z: -0.031}
+  ItemInHandRotation: {x: -0.00636166, y: 0.006937953, z: 0.49906525, w: 0.86651325}
   WeaponType: 1
   BaseDamage: 10

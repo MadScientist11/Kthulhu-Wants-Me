@@ -34,11 +34,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private bool _initialItemTriggerState;
         private void Equip(IPickable pickable)
         {
+            PickableItem item = pickable.Transform.GetComponent<PickableItem>();
             pickable.Transform.GetComponent<Rigidbody>().isKinematic = true;
             _initialItemTriggerState = pickable.Transform.GetComponent<Collider>().isTrigger;
             pickable.Transform.GetComponent<Collider>().isTrigger = true;
             pickable.Transform.SetParent(_itemParent);
-            pickable.Transform.localPosition = Vector3.zero;
+            pickable.Transform.localPosition = item.ItemData.ItemInHandPosition;
+            pickable.Transform.localRotation = item.ItemData.ItemInHandRotation;
         }
 
         private void UnEquip(IPickable pickable)

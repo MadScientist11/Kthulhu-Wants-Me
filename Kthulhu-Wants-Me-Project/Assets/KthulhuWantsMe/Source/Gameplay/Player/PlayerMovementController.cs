@@ -24,10 +24,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             motor.CharacterController = this;
         }
 
-        public void SetInputs(Vector2 moveInput, Quaternion cameraRotation, bool thirdPerson)
+        public void SetInputs(Vector2 moveInput, Vector3 lookDirection)
         {
-            _thirdPerson = thirdPerson;
-            // Clamp input
+            Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(moveInput.x, 0f, moveInput.y), 1f);
+            Vector3 cameraPlanarDirection = lookDirection;
+            _moveInputVector = moveInputVector;
+            _lookInputVector = cameraPlanarDirection;
+        }
+
+        private void SetInputsOld(Vector2 moveInput, Quaternion cameraRotation)
+        {
             Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(moveInput.x, 0f, moveInput.y), 1f);
 
             // Calculate camera direction and rotation on the character plane
@@ -42,7 +48,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, _motor.CharacterUp);
             _moveInputVector = cameraPlanarRotation * moveInputVector;
             _lookInputVector = cameraPlanarDirection;
-            //_lookInputVector = _moveInputVector.normalized;
         }
 
         public void KillVelocity() =>
@@ -54,11 +59,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
         {
-            Vector3 vec = _thirdPerson ? _moveInputVector : _lookInputVector;
-            if (vec != Vector3.zero && _playerConfiguration.OrientationSharpness > 0f)
+            if (_lookInputVector != Vector3.zero && _playerConfiguration.OrientationSharpness > 0f)
             {
                 // Smoothly interpolate from current to target look direction
-                Vector3 smoothedLookInputDirection = Vector3.Slerp(_motor.CharacterForward, vec,
+                Vector3 smoothedLookInputDirection = Vector3.Slerp(_motor.CharacterForward, _lookInputVector,
                     1 - Mathf.Exp(-_playerConfiguration.OrientationSharpness * deltaTime)).normalized;
 
                 // Set the current rotation (which will be used by the KinematicCharacterMotor)

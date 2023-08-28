@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.AnimatorHelpers;
 using UnityEngine;
 
@@ -20,8 +21,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private static readonly int _idleStateHash = Animator.StringToHash("Idle");
         private static readonly int _runStateHash = Animator.StringToHash("Run");
         private static readonly int _attackStateHash = Animator.StringToHash("Attack");
+        
+        private RuntimeAnimatorController _defaultAnimatorController;
 
 
+        private void Start()
+        {
+            _defaultAnimatorController = _animator.runtimeAnimatorController;
+        }
+
+   
         public void Move()
         {
             _animator.SetBool(IsRunning, true);
@@ -32,10 +41,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _animator.SetBool(IsRunning, false);
         }
 
-        public void PlayAttack()
+        public void PlayAttack(AnimatorOverrideController attackOverrideController)
         {
+            _animator.runtimeAnimatorController = attackOverrideController == null ? _defaultAnimatorController : attackOverrideController;
             _animator.SetTrigger(Attack);
         }
+
+        public void ResetAnimatorController() => 
+            _animator.runtimeAnimatorController = _defaultAnimatorController;
 
         public void EnteredState(int stateHash)
         {
@@ -45,6 +58,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public void ExitedState(int stateHash) => 
             OnStateExited?.Invoke(CurrentState);
+
 
         private AnimatorState StateFor(int stateHash)
         {
