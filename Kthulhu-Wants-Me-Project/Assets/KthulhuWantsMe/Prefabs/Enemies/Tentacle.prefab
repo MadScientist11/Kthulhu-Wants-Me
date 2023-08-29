@@ -257,6 +257,9 @@ GameObject:
   - component: {fileID: 1722124910228301368}
   - component: {fileID: 8468133202256745413}
   - component: {fileID: 2400385304639991808}
+  - component: {fileID: 8662503218968821094}
+  - component: {fileID: 5048728673484462543}
+  - component: {fileID: 7893959025167172210}
   m_Layer: 0
   m_Name: Tentacle
   m_TagString: Untagged
@@ -351,6 +354,49 @@ MonoBehaviour:
   - m_Rig: {fileID: 3086530469526707658}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &8662503218968821094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2543864529464768167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7edc869ae174d55ba837f2636abbdb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <TentacleAnimator>k__BackingField: {fileID: 7893959025167172210}
+  <PlayerFollowTarget>k__BackingField: {fileID: 0}
+--- !u!114 &5048728673484462543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2543864529464768167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e0102b1cf483584ab8d71e64beda84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tentacleFacade: {fileID: 8662503218968821094}
+--- !u!114 &7893959025167172210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2543864529464768167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64dd30e8b12042f6934586386dfeef7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 6729353860861768315}
+  _tentacleGrabOffset: {x: 0, y: 0, z: 0}
+  _tentacleGrabRadius: 0
+  _twirlStrength: 0
 --- !u!1 &2728249646138068946
 GameObject:
   m_ObjectHideFlags: 0

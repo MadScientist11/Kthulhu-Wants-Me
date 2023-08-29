@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
     public class Location : ScriptableObject
     {
         public Vector3 PlayerSpawnPosition;
+        public Quaternion PlayerSpawnRotation;
         public List<LocationEnemyData> Enemies;
 
 
@@ -19,9 +20,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
         public void CollectInfoFromCurrentScene()
         {
             PlayerSpawnPosition = FindObjectOfType<PlayerSpawnPoint>().Position;
+            PlayerSpawnRotation = FindObjectOfType<PlayerSpawnPoint>().Rotation;
             Enemies = FindObjectsOfType<EnemySpawnPoint>().Select(enemySp => new LocationEnemyData
             {
                 Position = enemySp.Position,
+                Rotation = enemySp.Rotation,
                 EnemyType = enemySp.EnemyType,
             }).ToList();
             

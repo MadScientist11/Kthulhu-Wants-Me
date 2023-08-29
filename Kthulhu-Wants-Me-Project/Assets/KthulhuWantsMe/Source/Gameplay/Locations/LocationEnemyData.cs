@@ -9,5 +9,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
     {
         public Vector3 Position;
         public EnemyType EnemyType;
+        public Quaternion Rotation;
     }
 }

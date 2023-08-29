@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e54fa5f97ed4118862d7f7f64d19599, type: 3}
+  m_Name: TentacleConfiguration
+  m_EditorClassIdentifier: 
+  TentaclePrefab: {fileID: 5048728673484462543, guid: f5c05b0650b7bd447899a2956fde8b15,
+    type: 3}

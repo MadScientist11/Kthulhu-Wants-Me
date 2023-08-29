@@ -2,6 +2,8 @@
 using Cinemachine;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Camera;
+using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using UnityEngine;
 using VContainer;
@@ -13,6 +15,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
     {
         PlayerFacade Player { get; }
         PlayerFacade CreatePlayer(Vector3 position, Quaternion rotation);
+        TentacleAIBrain CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
     }
 
     public class GameFactory : IGameFactory
@@ -38,6 +41,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             playerFacade.PlayerVirtualCamera = playerVirtualCamera;
         
             return playerFacade;
+        } 
+        
+        public TentacleAIBrain CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
+        {
+            TentacleAIBrain tentacleAIBrain = _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position, rotation);
+
+            return tentacleAIBrain;
         } 
         
     }

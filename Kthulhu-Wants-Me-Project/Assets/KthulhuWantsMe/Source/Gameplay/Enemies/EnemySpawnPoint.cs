@@ -5,6 +5,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
     public class EnemySpawnPoint : MonoBehaviour
     {
         public Vector3 Position => transform.position;
+        public Quaternion Rotation => transform.rotation;
+
         public EnemyType EnemyType;
         
         [SerializeField] private float _gizmoRadius;

@@ -2,6 +2,6 @@
 {
     public enum EnemyType
     {
-        TestEnemy = -1,
+        Tentacle = 0,
     }
 }

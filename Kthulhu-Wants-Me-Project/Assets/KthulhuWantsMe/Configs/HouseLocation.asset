@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: HouseLocation
   m_EditorClassIdentifier: 
   PlayerSpawnPosition: {x: 0, y: 3.97, z: 2.28}
+  PlayerSpawnRotation: {x: 0, y: 0, z: 0, w: 1}
   Enemies:
-  - Position: {x: 9.51, y: 2.27, z: 18.28}
-    EnemyType: -1
+  - Position: {x: 9.51, y: 0, z: 13.58}
+    EnemyType: 0
+    Rotation: {x: 0, y: 0, z: 0, w: 1}
