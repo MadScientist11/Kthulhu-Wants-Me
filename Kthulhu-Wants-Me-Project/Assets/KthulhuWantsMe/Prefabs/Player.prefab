@@ -1277,6 +1277,7 @@ GameObject:
   - component: {fileID: 1823546143767556717}
   - component: {fileID: 142401814652149727}
   - component: {fileID: -5172653069112829316}
+  - component: {fileID: 6482385733598322139}
   - component: {fileID: -4856184112398116678}
   - component: {fileID: 5663912579931136821}
   - component: {fileID: 1482870178762915801}
@@ -1437,6 +1438,21 @@ MonoBehaviour:
   <CameraFollowTarget>k__BackingField: {fileID: 2200005688810927865}
   <PlayerLocomotion>k__BackingField: {fileID: 5663912579931136821}
   <PlayerFollowTarget>k__BackingField: {fileID: -2573202685680207158}
+--- !u!114 &6482385733598322139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112094726857054722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f3e6664078406c9e62ea61f7ae1b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: -4856184112398116678}
+  _playerLocomotion: {fileID: 5663912579931136821}
+  Health: 100
 --- !u!114 &-4856184112398116678
 MonoBehaviour:
   m_ObjectHideFlags: 0

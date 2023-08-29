@@ -21,6 +21,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         
         public TentacleState CurrentState { get; private set; }
 
+        public bool IsAttacking => CurrentState == TentacleState.Attack;
+
         public Action<TentacleState> OnStateEntered;
         public Action<TentacleState> OnStateExited;
 

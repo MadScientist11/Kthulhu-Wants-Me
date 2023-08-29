@@ -17,10 +17,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private static readonly int IsRunning = Animator.StringToHash("IsRunning");
         private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Impact = Animator.StringToHash("Impact");
 
         private static readonly int _idleStateHash = Animator.StringToHash("Idle");
         private static readonly int _runStateHash = Animator.StringToHash("Run");
         private static readonly int _attackStateHash = Animator.StringToHash("Attack");
+        private static readonly int _dieStateHash = Animator.StringToHash("Die");
+        private static readonly int _impactStateHash = Animator.StringToHash("Impact");
         
         private RuntimeAnimatorController _defaultAnimatorController;
 
@@ -47,6 +50,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _animator.SetTrigger(Attack);
         }
 
+        public void PlayImpact()
+        {
+            _animator.SetTrigger(Impact);
+        }
+
+        public void PlayDie()
+        {
+        }
+
         public void ResetAnimatorController() => 
             _animator.runtimeAnimatorController = _defaultAnimatorController;
 
@@ -69,7 +81,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             else if (stateHash == _runStateHash)
                 state = AnimatorState.Run;
             else if (stateHash == _attackStateHash)
-                state = AnimatorState.Attack;
+                state = AnimatorState.Attack; 
+            else if (stateHash == _impactStateHash)
+                state = AnimatorState.Impact;
+            else if (stateHash == _dieStateHash)
+                state = AnimatorState.Die;
             else
                 state = AnimatorState.Unknown;
             
@@ -82,6 +98,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         Idle = 0,
         Run = 1,
         Attack = 2,
+        Impact = 3,
+        Die = 4,
         Unknown = 100,
     }
 }
