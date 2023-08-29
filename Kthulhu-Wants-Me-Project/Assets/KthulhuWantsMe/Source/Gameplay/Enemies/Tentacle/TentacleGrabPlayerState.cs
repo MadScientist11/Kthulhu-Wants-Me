@@ -7,25 +7,27 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
     public class TentacleGrabPlayerState : StateBase
     {
         private readonly TentacleAnimator _tentacleAnimator;
-        private readonly PlayerMovementController _movementController;
-        private readonly Transform _playerFollowTarget;
+        private readonly Transform _grabTarget;
+        private readonly PlayerFollowTarget _playerFollowTarget;
 
-        public TentacleGrabPlayerState(TentacleAnimator tentacleAnimator, PlayerMovementController movementController, Transform playerFollowTarget) : base(needsExitTime: false)
+        public TentacleGrabPlayerState(TentacleAnimator tentacleAnimator, PlayerFollowTarget playerFollowTarget, Transform grabTarget) : base(needsExitTime: false)
         {
             _playerFollowTarget = playerFollowTarget;
-            _movementController = movementController;
+            _grabTarget = grabTarget;
             _tentacleAnimator = tentacleAnimator;
         }
 
         public override void OnEnter()
         {
-            _tentacleAnimator.PlayGrabPlayerAnimation(_playerFollowTarget);
-            //_movementController.SetFollowTarget(_playerFollowTarget);
+            _tentacleAnimator.PlayGrabPlayerAnimation(_grabTarget);
+            Debug.Log(_playerFollowTarget);
+            Debug.Log(_grabTarget);
+            _playerFollowTarget.FollowTarget(_grabTarget);
         }
 
         public override void OnExit()
         {
-           // _movementController.SetFollowTarget(null);
+            _playerFollowTarget.StopFollowing();
         }
     }
 }

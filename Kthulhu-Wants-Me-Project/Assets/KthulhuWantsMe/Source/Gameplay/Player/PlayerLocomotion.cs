@@ -4,6 +4,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
@@ -11,10 +12,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
     public class PlayerLocomotion : MonoBehaviour
     {
         public bool IsMoving => 
-            _movementController.CurrentVelocity.XZ().sqrMagnitude > 0.1f;
+            _movementController.CurrentVelocity.XZ().sqrMagnitude > 0.1f && _motor.enabled;
         public PlayerMovementController MovementController => _movementController;
 
-        [SerializeField] private KinematicCharacterMotor _kinematicCharacterMotor;
+        [SerializeField] private KinematicCharacterMotor _motor;
         [SerializeField] private PlayerAnimator _playerAnimator;
         
         private PlayerMovementController _movementController;
@@ -27,7 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _playerConfig = dataProvider.PlayerConfig;
             _inputService = inputService;
-            _movementController = new PlayerMovementController(_kinematicCharacterMotor, _playerConfig);
+            _movementController = new PlayerMovementController(_motor, _playerConfig);
         }
 
         private void Update()
@@ -35,7 +36,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             if (IsMoving)
             {
                 _playerAnimator.Move();
-
             }
             else
             {

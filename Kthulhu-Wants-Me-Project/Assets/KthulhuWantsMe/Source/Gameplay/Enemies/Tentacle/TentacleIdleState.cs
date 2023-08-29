@@ -14,7 +14,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         public override void OnEnter()
         {
-            _tentacleAnimator.PlayIdleAnimation();
+            _tentacleAnimator.PlayIdle();
         }
     }
 }

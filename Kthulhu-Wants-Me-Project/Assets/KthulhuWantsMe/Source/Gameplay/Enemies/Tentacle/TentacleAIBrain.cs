@@ -18,12 +18,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [Inject]
         public void Construct(IGameFactory gameFactory)
         {
+            Debug.Log(gameFactory.Player);
             _player = gameFactory.Player;
         }
 
         private void Start()
         {
             _tentacleFsm = new StateMachine();
+            Debug.Log(_player);
             InitializeStates(_tentacleFsm, new TentacleStatesFactory(_tentacleFacade, _player));
             SetUpTransitions(_tentacleFsm);
             _tentacleFsm.Init();
@@ -45,6 +47,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             fsm.AddState(TentacleState.Idle.ToString(), statesFactory.Create(TentacleState.Idle));
             fsm.AddState(TentacleState.GrabPlayer.ToString(), statesFactory.Create(TentacleState.GrabPlayer));
             fsm.AddState(TentacleState.Stunned.ToString(), statesFactory.Create(TentacleState.Stunned));
+            fsm.AddState(TentacleState.Attack.ToString(), statesFactory.Create(TentacleState.Attack));
 
             fsm.SetStartState(TentacleState.Idle.ToString());
         }
@@ -53,14 +56,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             fsm.AddTransition(new Transition(
                 TentacleState.Idle.ToString(),
-                TentacleState.GrabPlayer.ToString(),
+                TentacleState.Attack.ToString(),
                 (transition) => DistanceToPlayer() < 5f
+            ));
+            
+            fsm.AddTransition(new Transition(
+                TentacleState.Attack.ToString(),
+                TentacleState.Idle.ToString()
             ));
 
             fsm.AddTransition(new Transition(
                 TentacleState.GrabPlayer.ToString(),
                 TentacleState.Stunned.ToString(),
-                (transition) => Input.GetKeyDown(KeyCode.Space)
+                (transition) => Input.GetKeyDown(KeyCode.Q)
             ));
 
             fsm.AddTransition(new Transition(

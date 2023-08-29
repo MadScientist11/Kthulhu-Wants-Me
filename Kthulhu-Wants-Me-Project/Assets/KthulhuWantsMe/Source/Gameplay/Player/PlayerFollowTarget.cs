@@ -9,7 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private PlayerMovementController _movementController;
         private Transform _target;
 
-        private void Awake()
+        private void Start()
         {
             _movementController = _player.PlayerLocomotion.MovementController;
         }

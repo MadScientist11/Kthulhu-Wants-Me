@@ -1,5 +1,8 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
+using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
@@ -15,11 +18,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             }
         }
 
-        [SerializeField] private Renderer _renderer;
+        [SerializeField] private Renderer _tentacleRenderer;
+        [SerializeField] private Animator _tentacleAnimator;
         [SerializeField] private Vector3 _tentacleGrabOffset;
         [SerializeField] private float _tentacleGrabRadius;
         [SerializeField] private float _twirlStrength;
 
+        [SerializeField] private Transform _chainTarget;
+        
         private Material _tentacleMaterial;
         private Transform _playerFollowTarget;
         private bool _grabPlayerAnimationActive;
@@ -28,10 +34,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private static readonly int Radius = Shader.PropertyToID("_Radius");
         private static readonly int InteractPos = Shader.PropertyToID("_InteractPos");
         private static readonly int TwirlStrength = Shader.PropertyToID("_TwirlStrength");
+        
+        
+        private static readonly int Attack = Animator.StringToHash("Attack");
+        
+        private PlayerFacade _player;
+
+        [Inject]
+        public void Construct(IGameFactory gameFactory)
+        {
+            _player = gameFactory.Player;
+        }
 
         private void Awake()
         {
-            _tentacleMaterial = _renderer.material;
+            _tentacleMaterial = _tentacleRenderer.material;
         }
 
         private void Update()
@@ -50,9 +67,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             GrabPlayerAnimationActive = true;
         }
 
-        public void PlayIdleAnimation()
+        public void PlayIdle()
         {
             GrabPlayerAnimationActive = false;
+        }
+
+        public void PlayAttack()
+        {
+            _chainTarget.position = _player.transform.position;
+            _tentacleAnimator.SetBool(Attack, true);
+        }
+        
+        public void CancelAttack()
+        {
+            _tentacleAnimator.SetBool(Attack, false);
         }
     }
 }

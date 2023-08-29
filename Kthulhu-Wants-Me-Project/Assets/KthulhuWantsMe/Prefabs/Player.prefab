@@ -1275,10 +1275,10 @@ GameObject:
   - component: {fileID: -751287432754516909}
   - component: {fileID: 1064982229574748652}
   - component: {fileID: 1823546143767556717}
+  - component: {fileID: 142401814652149727}
   - component: {fileID: -5172653069112829316}
   - component: {fileID: -4856184112398116678}
   - component: {fileID: 5663912579931136821}
-  - component: {fileID: 142401814652149727}
   - component: {fileID: 1482870178762915801}
   - component: {fileID: -8648004300217098860}
   - component: {fileID: 94120618176507343}
@@ -1380,47 +1380,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-5172653069112829316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5112094726857054722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533ae9025e994030ba3d33f4a28c1c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <CameraFollowTarget>k__BackingField: {fileID: 2200005688810927865}
-  <PlayerLocomotion>k__BackingField: {fileID: 5663912579931136821}
---- !u!114 &-4856184112398116678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5112094726857054722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff1bb33c41de6cb4293cadaa58070437, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 1823546143767556717}
---- !u!114 &5663912579931136821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5112094726857054722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a35a4744fb147044869883ab55f0524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _kinematicCharacterMotor: {fileID: 142401814652149727}
-  _playerAnimator: {fileID: -4856184112398116678}
 --- !u!114 &142401814652149727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1463,6 +1422,48 @@ MonoBehaviour:
   CheckMovementInitialOverlaps: 1
   KillVelocityWhenExceedMaxMovementIterations: 1
   KillRemainingMovementWhenExceedMaxMovementIterations: 1
+--- !u!114 &-5172653069112829316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112094726857054722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 533ae9025e994030ba3d33f4a28c1c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <CameraFollowTarget>k__BackingField: {fileID: 2200005688810927865}
+  <PlayerLocomotion>k__BackingField: {fileID: 5663912579931136821}
+  <PlayerFollowTarget>k__BackingField: {fileID: -2573202685680207158}
+--- !u!114 &-4856184112398116678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112094726857054722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1bb33c41de6cb4293cadaa58070437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 1823546143767556717}
+--- !u!114 &5663912579931136821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112094726857054722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a35a4744fb147044869883ab55f0524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _motor: {fileID: 142401814652149727}
+  _playerAnimator: {fileID: -4856184112398116678}
 --- !u!114 &1482870178762915801
 MonoBehaviour:
   m_ObjectHideFlags: 0

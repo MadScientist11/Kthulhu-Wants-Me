@@ -5,5 +5,6 @@
         Idle = 0,
         GrabPlayer = 1,
         Stunned = 2,
+        Attack = 3,
     }
 }

@@ -20,9 +20,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             return state switch
             {
                 TentacleState.Idle => new TentacleIdleState(_tentacleFacade.TentacleAnimator),
-                TentacleState.GrabPlayer => new TentacleGrabPlayerState(_tentacleFacade.TentacleAnimator, _player.PlayerLocomotion.MovementController,
-                    _tentacleFacade.PlayerFollowTarget),
+                TentacleState.GrabPlayer => new TentacleGrabPlayerState(_tentacleFacade.TentacleAnimator, _player.PlayerFollowTarget,
+                    _tentacleFacade.GrabTarget),
                 TentacleState.Stunned => new TentacleStunnedState(_tentacleFacade, _tentacleFacade.TentacleAnimator),
+                TentacleState.Attack => new TentacleAttackState(_tentacleFacade.TentacleAnimator),
                 _ => throw new ArgumentOutOfRangeException(nameof(state), state, null)
             };
         }

@@ -10,6 +10,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
     {
         [field: SerializeField] public Transform CameraFollowTarget { get; private set; }
         [field: SerializeField] public PlayerLocomotion PlayerLocomotion { get; private set; }
+        [field: SerializeField] public PlayerFollowTarget PlayerFollowTarget { get; private set; }
         public CinemachineVirtualCamera PlayerVirtualCamera { get; set; }
         
         
