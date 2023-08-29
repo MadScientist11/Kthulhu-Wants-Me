@@ -1,7 +1,7 @@
 ﻿using FSM;
 using KthulhuWantsMe.Source.Gameplay.Player;
 
-namespace KthulhuWantsMe.Source.Gameplay.TentacleIK
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleIdleState : StateBase
     {

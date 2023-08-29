@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.TentacleIK
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     [ExecuteInEditMode]
     public class TentacleGrabController : MonoBehaviour

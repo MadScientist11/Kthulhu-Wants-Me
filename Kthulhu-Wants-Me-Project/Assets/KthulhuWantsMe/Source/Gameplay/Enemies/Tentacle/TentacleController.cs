@@ -1,11 +1,10 @@
-using System;
 using FSM;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.TentacleIK
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public enum TentacleState
     {
@@ -24,14 +23,12 @@ namespace KthulhuWantsMe.Source.Gameplay.TentacleIK
         private PlayerMovementController _playerMovementController;
 
         private TentacleState _currentState;
-
         private StateMachine _tentacleFsm;
 
         [Inject]
         public void Construct(IGameFactory gameFactory)
         {
             _player = gameFactory.Player;
-            //_playerMovementController = gameFactory.Player.;
         }
 
         private void Start()

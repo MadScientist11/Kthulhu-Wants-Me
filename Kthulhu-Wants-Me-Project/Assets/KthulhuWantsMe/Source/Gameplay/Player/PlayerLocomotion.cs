@@ -10,9 +10,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 {
     public class PlayerLocomotion : MonoBehaviour
     {
-        public bool IsMoving => false;
-            //_movementController.CurrentVelocity.XZ().sqrMagnitude > 0.1f;
-        
+        public bool IsMoving => 
+            _movementController.CurrentVelocity.XZ().sqrMagnitude > 0.1f;
+        public PlayerMovementController MovementController => _movementController;
+
         [SerializeField] private KinematicCharacterMotor _kinematicCharacterMotor;
         [SerializeField] private PlayerAnimator _playerAnimator;
         
@@ -60,12 +61,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             }
             
             Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ();
-            //_movementController.SetInputs(movementInput, vectorToHit.normalized);
+            _movementController.SetInputs(movementInput, vectorToHit.normalized);
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 //_locomotion.Motor.ForceUnground(0.1f);
-               // _movementController.AddVelocity(transform.forward * 50f);
+                _movementController.AddVelocity(transform.forward * 50f);
             }
         }
     }

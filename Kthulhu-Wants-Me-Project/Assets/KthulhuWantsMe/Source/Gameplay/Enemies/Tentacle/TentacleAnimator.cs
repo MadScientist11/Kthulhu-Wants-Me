@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.TentacleIK
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleAnimator : MonoBehaviour
     {
