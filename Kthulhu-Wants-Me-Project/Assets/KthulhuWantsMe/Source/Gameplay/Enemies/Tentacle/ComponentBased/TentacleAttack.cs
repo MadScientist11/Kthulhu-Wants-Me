@@ -41,7 +41,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 
         public float ProvideDamage()
         {
-            return 10;
+            return 25;
         }
 
         private void OnAttack()

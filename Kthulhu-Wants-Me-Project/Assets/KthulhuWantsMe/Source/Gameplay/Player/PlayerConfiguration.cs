@@ -22,5 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float AttackRadius;
         public float AttackEffectiveDistance;
         public float BaseDamage;
+        
+        public float MaxHealth;
     }
 }

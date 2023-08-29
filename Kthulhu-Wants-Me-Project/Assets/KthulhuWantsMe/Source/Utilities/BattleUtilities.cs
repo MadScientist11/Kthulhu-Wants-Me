@@ -12,6 +12,11 @@ namespace KthulhuWantsMe.Source.Utilities
 
         public static bool HitFirst(this IDamageSource damageSource, Vector3 startPoint, float radius, out IDamageable damageableObj)
         {
+            for (var i = 0; i < _hitCollidersInternal.Length; i++)
+            {
+                _hitCollidersInternal[i] = null;
+            }
+
             Physics.OverlapSphereNonAlloc(startPoint, radius, _hitCollidersInternal);
             Collider hitCollider = _hitCollidersInternal
                 .Where(col => col != null && col.IsDamageable(out IDamageable _))

@@ -26,3 +26,4 @@ MonoBehaviour:
   AttackRadius: 1
   AttackEffectiveDistance: 0.25
   BaseDamage: 10
+  MaxHealth: 100

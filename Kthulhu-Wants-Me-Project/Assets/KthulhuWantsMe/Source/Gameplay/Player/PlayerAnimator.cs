@@ -18,6 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private static readonly int IsRunning = Animator.StringToHash("IsRunning");
         private static readonly int Attack = Animator.StringToHash("Attack");
         private static readonly int Impact = Animator.StringToHash("Impact");
+        private static readonly int Die = Animator.StringToHash("Die");
 
         private static readonly int _idleStateHash = Animator.StringToHash("Idle");
         private static readonly int _runStateHash = Animator.StringToHash("Run");
@@ -57,6 +58,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public void PlayDie()
         {
+            _animator.SetTrigger(Die);
         }
 
         public void ResetAnimatorController() => 

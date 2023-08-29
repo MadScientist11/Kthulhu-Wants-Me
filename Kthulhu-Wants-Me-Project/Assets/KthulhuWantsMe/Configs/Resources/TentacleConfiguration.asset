@@ -16,4 +16,4 @@ MonoBehaviour:
     type: 3}
   AttackRadius: 1
   AttackEffectiveDistance: 1
-  AttackCooldown: 4
+  AttackCooldown: 2

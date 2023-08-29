@@ -1,6 +1,8 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
+using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
@@ -11,19 +13,29 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         
-        public float Health = 100;
-
         private PlayerMovementController _movementController;
+        private PlayerConfiguration _playerConfiguration;
+
+        private float _currentHealth;
+
+        [Inject]
+        public void Construct(IDataProvider dataProvider)
+        {
+            _playerConfiguration = dataProvider.PlayerConfig;
+        }
         
         private void Start()
         {
             _movementController = _playerLocomotion.MovementController;
+            _currentHealth = _playerConfiguration.MaxHealth;
         }
 
         public void TakeDamage(float damage)
         {
-            Health -= damage;
-            if (Health <= 0)
+            _currentHealth -= damage;
+
+            Debug.Log(_currentHealth);
+            if (_currentHealth <= 0)
             {
                 Die();
                 return;
@@ -36,6 +48,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private void Die()
         {
             _playerAnimator.PlayDie();
+            _movementController.ToggleMotor(false);
             Died?.Invoke();
         }
     }
