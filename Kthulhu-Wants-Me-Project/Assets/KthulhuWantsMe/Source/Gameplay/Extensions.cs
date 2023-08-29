@@ -19,5 +19,15 @@ namespace KthulhuWantsMe.Source.Gameplay
             }
             return true;
         }
+        
+        public static void SwitchOn(this Behaviour behaviour)
+        {
+            behaviour.enabled = true;
+        }
+        
+        public static void SwitchOff(this Behaviour behaviour)
+        {
+            behaviour.enabled = false;
+        }
     }
 }
