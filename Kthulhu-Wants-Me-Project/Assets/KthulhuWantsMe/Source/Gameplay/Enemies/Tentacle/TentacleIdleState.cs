@@ -6,11 +6,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
     public class TentacleIdleState : StateBase
     {
         private readonly TentacleAnimator _tentacleAnimator;
-        private readonly PlayerMovementController _movementController;
 
-        public TentacleIdleState(TentacleAnimator tentacleAnimator, PlayerMovementController movementController) : base(needsExitTime: false)
+        public TentacleIdleState(TentacleAnimator tentacleAnimator) : base(needsExitTime: false)
         {
-            _movementController = movementController;
             _tentacleAnimator = tentacleAnimator;
         }
 

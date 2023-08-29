@@ -8,20 +8,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
     public class TentacleStunnedState : StateBase
     {
         private readonly TentacleAnimator _tentacleAnimator;
-        private readonly PlayerMovementController _movementController;
-        private readonly TentacleController _tentacleController;
+        private TentacleFacade _tentacleFacade;
 
-        public TentacleStunnedState(TentacleController tentacleController, TentacleAnimator tentacleAnimator, PlayerMovementController movementController) : base(needsExitTime: true)
+        public TentacleStunnedState(TentacleFacade tentacleFacade, TentacleAnimator tentacleAnimator) : base(needsExitTime: true)
         {
-            _tentacleController = tentacleController;
-            _movementController = movementController;
+            _tentacleFacade = tentacleFacade;
             _tentacleAnimator = tentacleAnimator;
         }
 
         public override void OnEnter()
         {
             _tentacleAnimator.PlayIdleAnimation();
-            _tentacleController.StartCoroutine(StunEffectWearOff(5f));
+            _tentacleFacade.StartCoroutine(StunEffectWearOff(5f));
         }
 
         private IEnumerator StunEffectWearOff(float after)

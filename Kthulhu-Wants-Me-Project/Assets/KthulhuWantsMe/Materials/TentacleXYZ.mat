@@ -55,6 +55,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Radius: 0.2
+    - _TwirlStrength: 1
     m_Colors:
     - _InteractPos: {r: -0.29, g: -0.01, b: 1.35, a: 0}
   m_BuildTextureStacks: []
