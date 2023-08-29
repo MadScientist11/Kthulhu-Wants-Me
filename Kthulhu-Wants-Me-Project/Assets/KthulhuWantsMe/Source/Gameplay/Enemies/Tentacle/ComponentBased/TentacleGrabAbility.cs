@@ -1,21 +1,20 @@
-﻿using System.Linq;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 using VContainer;
-using Vertx.Debugging;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 {
-    public class TentacleAttack : MonoBehaviour, IDamageProvider, IDamageSource
+    public class TentacleGrabAbility : MonoBehaviour, IDamageSource
     {
         public Transform DamageSourceObject => transform;
 
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
-
+        [SerializeField] private Transform _grabTarget;
+        
         private TentacleConfiguration _tentacleConfig;
 
         [Inject]
@@ -23,29 +22,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
         {
             _tentacleConfig = dataProvider.TentacleConfig;
         }
-
-        public void PerformAttack()
+        
+        public void GrabPlayer()
         {
-            _tentacleAIBrain.IsAttacking = true;
-            _tentacleAnimator.PlayAttack();
-        }
-
-        public float ProvideDamage()
-        {
-            return 25;
-        }
-
-        private void OnAttack()
-        {
-            if (!this.HitFirst(AttackStartPoint(), _tentacleConfig.AttackRadius, out IDamageable hitObject))
+            if (!this.HitFirst(AttackStartPoint(), _tentacleConfig.AttackRadius, out Collider hitObject))
                 return;
 
-            hitObject.TakeDamage(ProvideDamage());
+            if (hitObject.TryGetComponent(out PlayerTentacleInteraction playerTentacleInteraction))
+            {
+                _tentacleAIBrain.HoldsPlayer = true;
+                _tentacleAnimator.PlayGrabPlayerAttack();
+                playerTentacleInteraction.FollowGrabTarget(_grabTarget, OnPlayerBrokeFree);
+            }
         }
 
-        private void OnAttackEnd()
+        private void OnPlayerBrokeFree()
         {
-            _tentacleAIBrain.IsAttacking = false;
+            _tentacleAIBrain.HoldsPlayer = false;
+            _tentacleAIBrain.Stunned = true;
+            _tentacleAnimator.CancelGrab();
         }
 
         private Vector3 AttackStartPoint()

@@ -64,6 +64,24 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa3b3a04-02f7-4e30-9234-2056a634b09f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabResistence"",
+                    ""type"": ""Button"",
+                    ""id"": ""57c09f11-2b09-40ca-84e2-230cbbeaf250"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -198,6 +216,28 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27da6bff-d7e5-4f9e-8d59-5bdad523faaf"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0f07e78-1c0d-44ad-a08b-42a9e8970447"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrabResistence"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -216,6 +256,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
             m_Gameplay_SwitchItem = m_Gameplay.FindAction("SwitchItem", throwIfNotFound: true);
             m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
+            m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
+            m_Gameplay_GrabResistence = m_Gameplay.FindAction("GrabResistence", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         }
@@ -283,6 +325,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         private readonly InputAction m_Gameplay_Look;
         private readonly InputAction m_Gameplay_SwitchItem;
         private readonly InputAction m_Gameplay_Attack;
+        private readonly InputAction m_Gameplay_Dash;
+        private readonly InputAction m_Gameplay_GrabResistence;
         public struct GameplayActions
         {
             private @GameInput m_Wrapper;
@@ -291,6 +335,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             public InputAction @Look => m_Wrapper.m_Gameplay_Look;
             public InputAction @SwitchItem => m_Wrapper.m_Gameplay_SwitchItem;
             public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
+            public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
+            public InputAction @GrabResistence => m_Wrapper.m_Gameplay_GrabResistence;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -312,6 +358,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
+                @GrabResistence.started += instance.OnGrabResistence;
+                @GrabResistence.performed += instance.OnGrabResistence;
+                @GrabResistence.canceled += instance.OnGrabResistence;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -328,6 +380,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @Attack.started -= instance.OnAttack;
                 @Attack.performed -= instance.OnAttack;
                 @Attack.canceled -= instance.OnAttack;
+                @Dash.started -= instance.OnDash;
+                @Dash.performed -= instance.OnDash;
+                @Dash.canceled -= instance.OnDash;
+                @GrabResistence.started -= instance.OnGrabResistence;
+                @GrabResistence.performed -= instance.OnGrabResistence;
+                @GrabResistence.canceled -= instance.OnGrabResistence;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -389,6 +447,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             void OnLook(InputAction.CallbackContext context);
             void OnSwitchItem(InputAction.CallbackContext context);
             void OnAttack(InputAction.CallbackContext context);
+            void OnDash(InputAction.CallbackContext context);
+            void OnGrabResistence(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

@@ -5,15 +5,20 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
+using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using Vertx.Debugging;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    public class PlayerAttack : MonoBehaviour, IDamageProvider
+    public class PlayerAttack : MonoBehaviour, IDamageProvider, IDamageSource
     {
+        public Transform DamageSourceObject => transform;
+
         [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private PlayerTentacleInteraction _playerTentacleInteraction;
         [SerializeField] private List<Attack> _attackComboSet;
 
         private IInventorySystem _inventorySystem;
@@ -24,6 +29,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private bool _queuedAttack;
         private int _comboAttackIndex;
         private Coroutine _comboProcessor;
+
 
         [Inject]
         public void Construct(IInventorySystem inventorySystem, IInputService inputService, IDataProvider dataProvider,
@@ -62,16 +68,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             PerformHit(weapon);
         }
 
-        private void PerformThrow(WeaponBase weapon, WeaponItem item)
-        {
-            _inventorySystem.RemoveItemWithoutNotify(item);
-            weapon.GetComponent<Rigidbody>().isKinematic = false;
-            weapon.GetComponent<Rigidbody>().AddForce(transform.forward * 2000);
-        }
-
         private void PerformHit(WeaponBase weapon)
         {
-            if (_playerAnimator.IsAttacking)
+            if (_playerAnimator.IsAttacking && !_playerTentacleInteraction.PlayerGrabbed)
             {
                 _queuedAttack = true;
                 return;
@@ -85,14 +84,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             D.raw(new Shape.Sphere(AttackStartPoint(), _playerConfiguration.AttackRadius), 1f);
 
-            if (!Hit(out Collider hitObject))
+            if (!this.HitFirst(AttackStartPoint(), _playerConfiguration.AttackRadius, out IDamageable damageable))
                 return;
 
-            if (hitObject.IsDamageable(out IDamageable damageable))
-            {
-                Debug.Log(_attackComboSet[_comboAttackIndex].Damage);
-                damageable.TakeDamage(_playerStats.ProvideDamage() + _attackComboSet[_comboAttackIndex].Damage);
-            }
+
+            Debug.Log(_attackComboSet[_comboAttackIndex].Damage);
+            damageable.TakeDamage(_playerStats.ProvideDamage() + _attackComboSet[_comboAttackIndex].Damage);
         }
 
         private void OnAttackStateExited(AnimatorState state)
@@ -101,7 +98,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 return;
 
             //if (_comboProcessor == null)
-                _comboProcessor = StartCoroutine(ProcessComboDelayed());
+            _comboProcessor = StartCoroutine(ProcessComboDelayed());
         }
 
         private IEnumerator ProcessComboDelayed()
@@ -125,14 +122,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             return new WaitForSeconds(0.5f);
         }
 
-        private bool Hit(out Collider col)
-        {
-            Collider[] results = new Collider[1];
-            int hitObjectsCount =
-                Physics.OverlapSphereNonAlloc(AttackStartPoint(), _playerConfiguration.AttackRadius, results);
-            col = results.FirstOrDefault();
-            return hitObjectsCount > 0;
-        }
 
         private Vector3 AttackStartPoint()
         {

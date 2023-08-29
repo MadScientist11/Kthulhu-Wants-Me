@@ -12,6 +12,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
 
         public event Action<int> SwitchItem; 
         public event Action Attack; 
+        public event Action Dash; 
+        public event Action GrabResistence; 
        
 
         public GameplayScenario(GameInput.GameplayActions gameplayActions)
@@ -43,6 +45,22 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             if (context.performed)
             {
                 Attack?.Invoke();
+            }
+        }
+
+        public void OnDash(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                Dash?.Invoke();
+            }
+        }
+
+        public void OnGrabResistence(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                GrabResistence?.Invoke();
             }
         }
 

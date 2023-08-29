@@ -10,5 +10,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public float AttackRadius;
         public float AttackEffectiveDistance;
         public float AttackCooldown;
+        public float StunWearOffTime;
+        
+        [Range(0,1)] public float GrabAbilityChance;
     }
 }
