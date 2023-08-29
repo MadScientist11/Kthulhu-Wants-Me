@@ -15,7 +15,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
     {
         PlayerFacade Player { get; }
         PlayerFacade CreatePlayer(Vector3 position, Quaternion rotation);
-        TentacleAIBrain CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
+        GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
     }
 
     public class GameFactory : IGameFactory
@@ -43,9 +43,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             return playerFacade;
         } 
         
-        public TentacleAIBrain CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
+        public GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
         {
-            TentacleAIBrain tentacleAIBrain = _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position, rotation);
+            GameObject tentacleAIBrain = _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position, rotation);
 
             return tentacleAIBrain;
         } 

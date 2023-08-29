@@ -8,7 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Data
         Throwable = 0,
         Hitable = 1,
     }
-    [CreateAssetMenu(menuName = "Create WeaponData", fileName = "WeaponData", order = 0)]
+    [CreateAssetMenu(menuName = GameConstants.MenuName + "Create WeaponData", fileName = "WeaponData", order = 0)]
     public class WeaponData : PickableData
     {
         public WeaponType WeaponType;

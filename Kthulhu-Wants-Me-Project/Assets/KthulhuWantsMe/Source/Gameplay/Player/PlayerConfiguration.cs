@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    [CreateAssetMenu(menuName = "KhtulhuWantsMe/PlayerConfiguration", fileName = "PlayerConfiguration", order = 0)]
+    [CreateAssetMenu(menuName = GameConstants.MenuName + "PlayerConfiguration", fileName = "PlayerConfiguration", order = 0)]
     public class PlayerConfiguration : ScriptableObject
     {
         public PlayerFacade PlayerPrefab;

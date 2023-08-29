@@ -2,9 +2,13 @@
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
-    [CreateAssetMenu(menuName = "Create TentacleConfiguration", fileName = "TentacleConfiguration", order = 0)]
+    [CreateAssetMenu(menuName = GameConstants.MenuName + "TentacleConfiguration", fileName = "TentacleConfiguration", order = 0)]
     public class TentacleConfiguration : ScriptableObject
     {
-        public TentacleAIBrain TentaclePrefab;
+        public GameObject TentaclePrefab;
+        
+        public float AttackRadius;
+        public float AttackEffectiveDistance;
+        public float AttackCooldown;
     }
 }

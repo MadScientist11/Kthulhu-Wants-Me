@@ -1,4 +1,5 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.AnimatorHelpers;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
@@ -6,7 +7,7 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
-    public class TentacleAnimator : MonoBehaviour
+    public class TentacleAnimator : MonoBehaviour, IAnimationStateReader
     {
         private bool GrabPlayerAnimationActive
         {
@@ -17,6 +18,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                 _grabPlayerAnimationActive = value;
             }
         }
+        
+        public TentacleState CurrentState { get; private set; }
+
+        public Action<TentacleState> OnStateEntered;
+        public Action<TentacleState> OnStateExited;
 
         [SerializeField] private Renderer _tentacleRenderer;
         [SerializeField] private Animator _tentacleAnimator;
@@ -37,6 +43,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         
         
         private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Aggro = Animator.StringToHash("Aggro");
+        
+        private static readonly int _idleStateHash = Animator.StringToHash("Idle");
+        private static readonly int _attackStateHash = Animator.StringToHash("Attack");
         
         private PlayerFacade _player;
 
@@ -75,12 +85,40 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public void PlayAttack()
         {
             _chainTarget.position = _player.transform.position;
-            _tentacleAnimator.SetBool(Attack, true);
+            _tentacleAnimator.SetTrigger(Attack);
         }
         
         public void CancelAttack()
         {
             _tentacleAnimator.SetBool(Attack, false);
+        }
+
+        public void PlayAggroIdle()
+        {
+            _tentacleAnimator.SetBool(Aggro, true);
+        }
+
+        public void EnteredState(int stateHash)
+        {
+            CurrentState = StateFor(stateHash);
+            OnStateEntered?.Invoke(CurrentState);
+        }
+
+        public void ExitedState(int stateHash) => 
+            OnStateExited?.Invoke(CurrentState);
+
+        private TentacleState StateFor(int stateHash)
+        {
+            TentacleState state;
+            
+            if (stateHash == _idleStateHash)
+                state = TentacleState.Idle;
+            else if (stateHash == _attackStateHash)
+                state = TentacleState.Attack;
+            else
+                state = TentacleState.Unknown;
+            
+            return state;
         }
     }
 }

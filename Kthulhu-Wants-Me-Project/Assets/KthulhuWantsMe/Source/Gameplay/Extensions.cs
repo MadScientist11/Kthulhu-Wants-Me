@@ -5,7 +5,7 @@ namespace KthulhuWantsMe.Source.Gameplay
 {
     public static class Extensions
     {
-        public static bool IsDamageable(this Component obj, out IDamageable damageable)
+        public static bool IsDamageable(this Collider obj, out IDamageable damageable)
         {
             return obj.TryGetComponent(out damageable);
         }
