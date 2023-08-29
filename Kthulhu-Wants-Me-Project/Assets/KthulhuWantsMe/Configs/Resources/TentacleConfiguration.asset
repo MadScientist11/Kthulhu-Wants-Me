@@ -17,3 +17,5 @@ MonoBehaviour:
   AttackRadius: 1
   AttackEffectiveDistance: 1
   AttackCooldown: 2
+  StunWearOffTime: 3
+  GrabAbilityChance: 0.1
