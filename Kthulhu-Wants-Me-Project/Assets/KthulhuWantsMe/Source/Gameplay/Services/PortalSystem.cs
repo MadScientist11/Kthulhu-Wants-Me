@@ -23,18 +23,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     {
         private bool _isInitialized;
 
-        private List<PortalSpawnZone> _portalSpawnZone;
+        private List<PortalZone> _portalSpawnZones;
 
-        private Location _location;
         private IPortalFactory _portalFactory;
         private ICoroutineRunner _coroutineRunner;
+
+        private Collider[] _obstacles = new Collider[1];
 
         [Inject]
         public void Construct(IPortalFactory portalFactory, ICoroutineRunner coroutineRunner, Location location)
         {
             _coroutineRunner = coroutineRunner;
             _portalFactory = portalFactory;
-            _location = location;
+            _portalSpawnZones = location.PortalSpawnZones;
         }
 
         public void Init()
@@ -55,14 +56,30 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
         private void SpawnPortal()
         {
-            PortalZone spawnZone = _location.PortalSpawnZones[Random.Range(0, _location.PortalSpawnZones.Count)];
-            float randomX = Random.Range(-0.5f, 0.5f);
-            float randomZ = Random.Range(-0.5f, 0.5f);
-            Vector3 randomPoint = new Vector3(randomX, 0, randomZ);
-            Vector3 orientedRandomPoint =
-                spawnZone.LocalToWrold * new Vector4(randomPoint.x, randomPoint.y, randomPoint.z, 1);
-            _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation);
+            int spawnAttempt = 0;
+            while (spawnAttempt < 5)
+            {
+                PortalZone spawnZone = _portalSpawnZones[Random.Range(0, _portalSpawnZones.Count)];
+                Vector3 orientedRandomPoint = GetRandomPointInZone(spawnZone);
+
+                if (IsValidPortalSpawnPoint(orientedRandomPoint))
+                {
+                    _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation);
+                    break;
+                }
+
+                spawnAttempt++;
+            }
         }
+
+        private bool IsValidPortalSpawnPoint(Vector3 point)
+        {
+            int obstaclesMask = LayerMask.GetMask(GameConstants.Layers.PortalSpawnObstacle, GameConstants.Layers.Player);
+            int obstaclesCount = Physics.OverlapSphereNonAlloc(point, 1f, _obstacles,
+                obstaclesMask);
+            return obstaclesCount == 0;
+        }
+
 
         public void Release(PortalEnemySpawner portal)
         {
@@ -76,6 +93,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                 SpawnPortal();
                 yield return new WaitForSeconds(5f);
             }
+        }
+
+        private Vector3 GetRandomPointInZone(PortalZone spawnZone)
+        {
+            float randomX = Random.Range(-0.5f, 0.5f);
+            float randomZ = Random.Range(-0.5f, 0.5f);
+            Vector3 randomPoint = new Vector3(randomX, 0, randomZ);
+            Vector3 orientedRandomPoint =
+                spawnZone.LocalToWrold * new Vector4(randomPoint.x, randomPoint.y, randomPoint.z, 1);
+            return orientedRandomPoint;
         }
     }
 }

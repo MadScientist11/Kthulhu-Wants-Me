@@ -31,24 +31,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _lookInputVector = cameraPlanarDirection;
         }
 
-        private void SetInputsOld(Vector2 moveInput, Quaternion cameraRotation)
-        {
-            Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(moveInput.x, 0f, moveInput.y), 1f);
-
-            // Calculate camera direction and rotation on the character plane
-            Vector3 cameraPlanarDirection =
-                Vector3.ProjectOnPlane(cameraRotation * Vector3.forward, _motor.CharacterUp).normalized;
-            if (cameraPlanarDirection.sqrMagnitude == 0f)
-            {
-                cameraPlanarDirection =
-                    Vector3.ProjectOnPlane(cameraRotation * Vector3.up, _motor.CharacterUp).normalized;
-            }
-
-            Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, _motor.CharacterUp);
-            _moveInputVector = cameraPlanarRotation * moveInputVector;
-            _lookInputVector = cameraPlanarDirection;
-            //_lookInputVector = _moveInputVector.normalized;
-        }
+        public void ResetInputs() => 
+            _moveInputVector  =Vector3.zero;
 
         public void KillVelocity() =>
             _killVelocity = true;
@@ -178,6 +162,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public void AddVelocity(Vector3 velocity)
         {
             _internalVelocityAdd += velocity;
+        }
+
+        private void SetInputsOld(Vector2 moveInput, Quaternion cameraRotation)
+        {
+            Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(moveInput.x, 0f, moveInput.y), 1f);
+
+            // Calculate camera direction and rotation on the character plane
+            Vector3 cameraPlanarDirection =
+                Vector3.ProjectOnPlane(cameraRotation * Vector3.forward, _motor.CharacterUp).normalized;
+            if (cameraPlanarDirection.sqrMagnitude == 0f)
+            {
+                cameraPlanarDirection =
+                    Vector3.ProjectOnPlane(cameraRotation * Vector3.up, _motor.CharacterUp).normalized;
+            }
+
+            Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, _motor.CharacterUp);
+            _moveInputVector = cameraPlanarRotation * moveInputVector;
+            _lookInputVector = cameraPlanarDirection;
+            //_lookInputVector = _moveInputVector.normalized;
         }
     }
 }

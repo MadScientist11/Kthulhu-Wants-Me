@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
@@ -41,10 +42,22 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 return;
             }
 
-            _playerAnimator.PlayImpact();
-            _movementController.AddVelocity(-transform.forward * 30f);
+            ReceiveDamage();
         }
 
+        private void ReceiveDamage()
+        {
+            _playerAnimator.PlayImpact();
+            _playerLocomotion.BlockMovement(.5f);
+            AddKnockback();
+            _movementController.KillVelocity();
+        }
+
+        private void AddKnockback()
+        {
+            _movementController.AddVelocity(-transform.forward * 30f);
+        }
+        
         private void Die()
         {
             _playerAnimator.PlayDie();
