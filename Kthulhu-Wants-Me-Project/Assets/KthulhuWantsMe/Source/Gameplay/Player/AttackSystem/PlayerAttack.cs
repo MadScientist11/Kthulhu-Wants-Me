@@ -28,7 +28,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private bool _queuedAttack;
         private int _comboAttackIndex;
-        private Coroutine _comboProcessor;
 
 
         [Inject]
@@ -39,23 +38,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _inputService = inputService;
             _inventorySystem = inventorySystem;
             _playerConfiguration = dataProvider.PlayerConfig;
-        }
-
-        private void Start()
-        {
+            
             _inputService.GameplayScenario.Attack += PerformAttack;
-            _playerAnimator.OnStateExited += OnAttackStateExited;
+
         }
 
         private void OnDestroy()
         {
             _inputService.GameplayScenario.Attack -= PerformAttack;
-            _playerAnimator.OnStateExited -= OnAttackStateExited;
         }
 
         public float ProvideDamage()
         {
-            return 10;
+            return _playerConfiguration.BaseDamage;
         }
 
         private void PerformAttack()
@@ -72,11 +67,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             if (_playerAnimator.IsAttacking && !_playerTentacleInteraction.PlayerGrabbed)
             {
+                Debug.Log("Queued Attack");
                 _queuedAttack = true;
                 return;
             }
 
-            Debug.Log(_comboAttackIndex);
             _playerAnimator.PlayAttack(_attackComboSet[_comboAttackIndex].AttackOverrideController);
         }
 
@@ -87,41 +82,22 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             if (!this.HitFirst(AttackStartPoint(), _playerConfiguration.AttackRadius, out IDamageable damageable))
                 return;
 
-
-            Debug.Log(_attackComboSet[_comboAttackIndex].Damage);
             damageable.TakeDamage(_playerStats.ProvideDamage() + _attackComboSet[_comboAttackIndex].Damage);
         }
 
-        private void OnAttackStateExited(AnimatorState state)
+        private void OnAttackEnd()
         {
-            if (state != AnimatorState.Attack)
-                return;
-
-            //if (_comboProcessor == null)
-            _comboProcessor = StartCoroutine(ProcessComboDelayed());
-        }
-
-        private IEnumerator ProcessComboDelayed()
-        {
-            yield return WaitForAnimatorStateChange();
-
             if (_queuedAttack)
             {
                 _queuedAttack = false;
                 _comboAttackIndex++;
                 _comboAttackIndex %= _attackComboSet.Count;
                 PerformAttack();
-                yield break;
+                return;
             }
 
             _comboAttackIndex = 0;
         }
-
-        private WaitForSeconds WaitForAnimatorStateChange()
-        {
-            return new WaitForSeconds(0.5f);
-        }
-
 
         private Vector3 AttackStartPoint()
         {

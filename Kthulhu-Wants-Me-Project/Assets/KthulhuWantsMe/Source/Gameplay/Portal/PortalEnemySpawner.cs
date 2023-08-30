@@ -23,7 +23,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Portal
         {
             _portalSystem = portalSystem;
             _gameFactory = gameFactory;
-            Debug.Log("Construct");
 
         }
 
@@ -31,7 +30,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Portal
         {
             if (_createdEnemy == null)
             {
-                Debug.Log("Enable");
                 _createdEnemy = _gameFactory.CreateEnemy(_tentacleSpawnPoint.position, _tentacleSpawnPoint.rotation,
                     EnemyType.Tentacle);
                 _createdEnemy.transform.SetParent(transform);
