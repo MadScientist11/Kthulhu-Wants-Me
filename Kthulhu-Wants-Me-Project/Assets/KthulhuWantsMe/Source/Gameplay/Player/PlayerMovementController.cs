@@ -82,7 +82,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 Vector3 inputRight = Vector3.Cross(_moveInputVector, _motor.CharacterUp);
                 Vector3 reorientedInput = Vector3.Cross(_motor.GroundingStatus.GroundNormal, inputRight).normalized *
                                           _moveInputVector.magnitude;
-                targetMovementVelocity = reorientedInput * _playerConfiguration.MaxStableMoveSpeed;
+                targetMovementVelocity = reorientedInput * _playerConfiguration.MoveSpeed;
 
                 // Smooth movement Velocity
                 currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity,

@@ -84,6 +84,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
                 .XZ();
+
             _movementController.SetInputs(movementInput, lookDirection.normalized);
         }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NaughtyAttributes;
+using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
@@ -14,6 +15,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public float AttackCooldown;
         public float StunWearOffTime;
         
-        [Range(0,1)] public float GrabAbilityChance;
+         public float GrabAbilityChance;
     }
 }

@@ -67,7 +67,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             if (_playerAnimator.IsAttacking && !_playerTentacleInteraction.PlayerGrabbed)
             {
-                Debug.Log("Queued Attack");
                 _queuedAttack = true;
                 return;
             }

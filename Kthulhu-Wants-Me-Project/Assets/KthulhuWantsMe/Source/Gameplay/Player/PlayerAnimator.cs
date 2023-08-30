@@ -53,6 +53,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public void PlayImpact()
         {
+            _animator.ResetTrigger(Attack);
+            StopMoving();
             _animator.SetTrigger(Impact);
         }
 

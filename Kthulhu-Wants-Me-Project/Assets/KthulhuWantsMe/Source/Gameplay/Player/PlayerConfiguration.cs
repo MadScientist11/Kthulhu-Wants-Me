@@ -1,28 +1,48 @@
 ﻿using Cinemachine;
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
     [CreateAssetMenu(menuName = GameConstants.MenuName + "PlayerConfiguration", fileName = "PlayerConfiguration", order = 0)]
     public class PlayerConfiguration : ScriptableObject
     {
+        [HorizontalLine(color: EColor.Violet)]
+        [BoxGroup("Links")]
         public PlayerFacade PlayerPrefab;
-        public CinemachineVirtualCamera PlayerFPSCameraPrefab;
+        [BoxGroup("Links")]
+        public CinemachineVirtualCamera PlayerCameraPrefab;
+
+        [HorizontalLine(color: EColor.Violet)]
+        [BoxGroup("Health")]
+        public float MaxHealth;
         
-        public float MaxStableMoveSpeed = 10f;
-        public float StableMovementSharpness = 15;
-        public float OrientationSharpness = 10;
-        
-        public float MaxAirMoveSpeed = 10f;
-        public float AirAccelerationSpeed = 5f;
-        public float Drag = 0.1f;
-        
+        [HorizontalLine(color: EColor.Violet)]
+        [BoxGroup("Locomotion")]
+        public float MoveSpeed;
+        [BoxGroup("Locomotion")]
         public Vector3 Gravity = new(0, -30f, 0);
         
+        [HorizontalLine(color: EColor.Violet)]
+        [BoxGroup("Attack")]
         public float AttackRadius;
+        [BoxGroup("Attack")]
         public float AttackEffectiveDistance;
+        [BoxGroup("Attack")]
         public float BaseDamage;
         
-        public float MaxHealth;
+        
+        [Foldout("MovementInDepth")]
+        public float StableMovementSharpness = 15;
+        [Foldout("MovementInDepth")]
+        public float OrientationSharpness = 10;
+        [Foldout("MovementInDepth")]
+        public float MaxAirMoveSpeed = 10f;
+        [Foldout("MovementInDepth")]
+        public float AirAccelerationSpeed = 5f;
+        [Foldout("MovementInDepth")]
+        public float Drag = 0.1f;
+        
     }
 }

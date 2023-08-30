@@ -38,7 +38,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         {
             PlayerFacade playerFacade = _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerPrefab, position, rotation);
             Player = playerFacade;
-            CinemachineVirtualCamera playerVirtualCamera = _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerFPSCameraPrefab);
+            CinemachineVirtualCamera playerVirtualCamera = _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerCameraPrefab);
             playerVirtualCamera.Follow = playerFacade.CameraFollowTarget;
             playerFacade.PlayerVirtualCamera = playerVirtualCamera;
         
