@@ -14,7 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerSpawnPosition: {x: 0, y: 3.97, z: 2.28}
   PlayerSpawnRotation: {x: 0, y: 0, z: 0, w: 1}
-  Enemies:
-  - Position: {x: 9.51, y: 0, z: 13.58}
-    EnemyType: 0
+  PortalSpawnZones:
+  - Position: {x: 10.99, y: 0.01, z: 6.93}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
+    Extents: {x: 10, y: 10}
+    LocalToWrold:
+      e00: 20
+      e01: 0
+      e02: 0
+      e03: 10.99
+      e10: 0
+      e11: 0
+      e12: 0
+      e13: 0.01
+      e20: 0
+      e21: 0
+      e22: 20
+      e23: 6.93
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    Normal: {x: 0, y: 1, z: 0}

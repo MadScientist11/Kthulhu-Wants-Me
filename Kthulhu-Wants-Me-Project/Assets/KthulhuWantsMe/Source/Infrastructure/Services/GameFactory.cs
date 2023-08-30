@@ -4,7 +4,9 @@ using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Camera;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Portal;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -49,6 +51,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
             return tentacleAIBrain;
         } 
-        
+       
     }
 }

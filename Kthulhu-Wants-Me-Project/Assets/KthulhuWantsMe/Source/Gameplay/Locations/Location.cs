@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Locations
 {
@@ -13,7 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
     {
         public Vector3 PlayerSpawnPosition;
         public Quaternion PlayerSpawnRotation;
-        public List<LocationEnemyData> Enemies;
+        public List<PortalZone> PortalSpawnZones;
 
 
         [Button]
@@ -21,11 +23,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
         {
             PlayerSpawnPosition = FindObjectOfType<PlayerSpawnPoint>().Position;
             PlayerSpawnRotation = FindObjectOfType<PlayerSpawnPoint>().Rotation;
-            Enemies = FindObjectsOfType<EnemySpawnPoint>().Select(enemySp => new LocationEnemyData
+            PortalSpawnZones = FindObjectsOfType<PortalSpawnZone>().Select(enemySp => new PortalZone()
             {
                 Position = enemySp.Position,
                 Rotation = enemySp.Rotation,
-                EnemyType = enemySp.EnemyType,
+                Extents = enemySp.Scale.XZ() / 2,
+                Normal = enemySp.transform.up,
+                LocalToWrold = enemySp.transform.localToWorldMatrix,
             }).ToList();
             
             EditorUtility.SetDirty(this);

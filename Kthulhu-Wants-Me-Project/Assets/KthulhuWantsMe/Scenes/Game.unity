@@ -805,7 +805,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fce97dacddf46af95c48d945b73a082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
 --- !u!136 &782462533
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2515,7 +2514,7 @@ GameObject:
   - component: {fileID: 1991288448}
   - component: {fileID: 1991288447}
   m_Layer: 0
-  m_Name: EnemySpawnPoint
+  m_Name: PortalSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2533,8 +2532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8196c8ceacdc49ea9dbd40bad3c6b1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 0
-  _gizmoRadius: 0.25
 --- !u!4 &1991288448
 Transform:
   m_ObjectHideFlags: 0
@@ -2544,8 +2541,8 @@ Transform:
   m_GameObject: {fileID: 1991288446}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.51, y: 0, z: 13.58}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 10.99, y: 0.01, z: 6.93}
+  m_LocalScale: {x: 20, y: 0, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2712,74 +2709,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1001 &1606211687931389982
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4979357061969144133, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_Name
-      value: TentaclePortal
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9063420655839478127, guid: 510342187213ed0498380c6fa0163dc4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 510342187213ed0498380c6fa0163dc4, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2799,4 +2728,3 @@ SceneRoots:
   - {fileID: 1088494897}
   - {fileID: 2025044154}
   - {fileID: 1991288448}
-  - {fileID: 1606211687931389982}

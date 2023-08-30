@@ -38,6 +38,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<PlayerStats>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
+
+            builder
+                .Register<PortalSystem>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
+                
+            builder
+                .Register<PortalFactory>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
             RegisterGameplayFsm(builder);
         }
 

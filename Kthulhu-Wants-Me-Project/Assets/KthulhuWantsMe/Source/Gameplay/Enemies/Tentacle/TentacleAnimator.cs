@@ -41,6 +41,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private static readonly int Aggro = Animator.StringToHash("Aggro");
         private static readonly int Impact = Animator.StringToHash("Impact");
         private static readonly int GrabPlayer = Animator.StringToHash("GrabPlayer");
+        private static readonly int Emerge = Animator.StringToHash("Emerged");
+        private static readonly int Retreat = Animator.StringToHash("Retreat");
 
         
         private static readonly int _idleStateHash = Animator.StringToHash("Idle");
@@ -63,14 +65,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             //_playerFollowTarget = playerFollowTarget;
         }
-        
+
+        private void Update()
+        {
+            _tentacleMaterial.SetFloat(Radius, _tentacleGrabRadius);
+            _tentacleMaterial.SetFloat(TwirlStrength, _twirlStrength);
+            _tentacleMaterial.SetVector(InteractPos, _grabTarget.localPosition + _tentacleGrabOffset);
+        }
+
         public void PlayGrabPlayerAttack()
         {
             _tentacleMaterial.SetInt(GrabPlayerParam, 1);
             _tentacleAnimator.SetBool(GrabPlayer, true);
-            _tentacleMaterial.SetFloat(Radius, _tentacleGrabRadius);
-            _tentacleMaterial.SetFloat(TwirlStrength, _twirlStrength);
-            _tentacleMaterial.SetVector(InteractPos, _grabTarget.localPosition + _tentacleGrabOffset);
+            
             _tentacleRig.weight = 0;
         }
 
@@ -103,6 +110,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public void PlayImpact()
         {
             _tentacleAnimator.SetTrigger(Impact);
+        }
+
+        public void PlayEmerge()
+        {
+            _tentacleRig.weight = 0;
+            _tentacleAnimator.SetBool(Emerge, false);
+        }
+
+        public void SetEmerged()
+        {
+            _tentacleRig.weight = 1;
+            _tentacleAnimator.SetBool(Emerge, true);
+        }
+
+        public void PlayRetreat()
+        {
+            _tentacleAnimator.SetBool(Retreat, true);
+            _tentacleRig.weight = 0;
         }
 
         public void EnteredState(int stateHash)

@@ -148,7 +148,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 506bf7e30ad9374479fd282655cc81ec, type: 2}
+  - {fileID: 2100000, guid: dda473c5b9222d4448a26eb42daadeff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: -8437970798004524629}
   - component: {fileID: -8854100897847997932}
   m_Layer: 0
-  m_Name: Tentacle 1
+  m_Name: TentacleWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fce97dacddf46af95c48d945b73a082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
 --- !u!114 &-2563807488164230852
 MonoBehaviour:
   m_ObjectHideFlags: 0

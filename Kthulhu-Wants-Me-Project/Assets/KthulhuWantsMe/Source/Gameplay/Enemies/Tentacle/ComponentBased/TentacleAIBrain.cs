@@ -34,12 +34,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 
         public bool HoldsPlayer { get; set; }
 
+        public bool BlockProcessing { get; set; }
+        
+
         [SerializeField] private TentacleAttack _tentacleAttack;
         [SerializeField] private TentacleGrabAbility _tentacleGrabAbility;
         [SerializeField] private TentacleAggro _tentacleAggro;
+        [SerializeField] private TentacleEmergence _tentacleEmergence;
+        [SerializeField] private TentacleRetreat _tentacleRetreat;
 
         private float _attackCooldown;
-        private float _untilStunWearOff;
         private bool _isAttacking;
         private bool _stunned;
 
@@ -53,8 +57,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 
         private void Update()
         {
+            if (BlockProcessing)
+                return;
+
             UpdateAttackCooldown();
             DecideAttackStrategy();
+        }
+
+        public void ResetBrain()
+        {
+            IsAttacking = false;
+            Stunned = false;
+            HoldsPlayer = false;
+            BlockProcessing = false;
+            ResetCooldown();
         }
 
         private void DecideAttackStrategy()
@@ -62,12 +78,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
             if (CanNotAttack())
                 return;
 
+
             if (GrabAbilityConditionsFulfilled())
             {
                 _tentacleGrabAbility.GrabPlayer();
                 return;
             }
 
+       
             if (CanDoBasicAttack())
                 _tentacleAttack.PerformAttack();
         }
@@ -78,6 +96,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
             Stunned = false;
             ResetCooldown();
         }
+
+     
 
         private bool CanNotAttack() => 
             HoldsPlayer || Stunned;

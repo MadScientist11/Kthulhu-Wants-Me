@@ -123,14 +123,14 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!21 &740943634
+--- !u!21 &1021412569
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TentacleXYZ (Instance)
+  m_Name: TentacleXYZ (Instance) (Instance)
   m_Shader: {fileID: -6465566751694194690, guid: 6d8960a1892df7b448a78513f7680de1,
     type: 3}
   m_Parent: {fileID: 0}
@@ -161,11 +161,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _GrabPlayer: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Radius: 0
+    - _TwirlStrength: 3.76
     m_Colors:
-    - _InteractPos: {r: -0.61, g: 1.1800001, b: 1.57, a: 0}
+    - _InteractPos: {r: -1.16, g: -1.22, b: 0.88, a: 0}
   m_BuildTextureStacks: []
 --- !u!1 &1220743220
 GameObject:
@@ -511,7 +513,7 @@ Transform:
   m_GameObject: {fileID: 1930770688}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.61, y: 3.43, z: 1.57}
+  m_LocalPosition: {x: -1.16, y: 0.78, z: 0.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -610,7 +612,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 740943634}
+  - {fileID: 1021412569}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -694,12 +696,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 919132148794666807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a247b25d82e7c94695fa1554915142d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7237a983f3bb8d44eba24208a5ea483c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _renderer: {fileID: 42152479831368186}
-  _player: {fileID: 1930770689}
-  _offset: {x: 0, y: -2.25, z: 0}
+  _tentacleRenderer: {fileID: 42152479831368186}
+  _tentacleGrabOffset: {x: 0, y: -2, z: 0}
+  _tentacleGrabRadius: 0
+  _twirlStrength: 3.76
+  _grabTarget: {fileID: 1930770689}
 --- !u!1 &1032754111299591879
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
@@ -13,10 +14,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly IGameFactory _gameFactory;
         private readonly IInputService _inputService;
         private readonly Location _location;
+        private readonly IPortalSystem _portalSystem;
 
-        public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IInputService inputService,
+        public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IPortalSystem portalSystem, IInputService inputService,
             Location location)
         {
+            _portalSystem = portalSystem;
             _location = location;
             _inputService = inputService;
             _gameFactory = gameFactory;
@@ -27,7 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             _gameFactory.CreatePlayer(_location.PlayerSpawnPosition, _location.PlayerSpawnRotation);
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
-            CreateMonsters();
+            _portalSystem.Init();
             //_gameStateMachine.SwitchState(GameFlow.StartGameState);
         }
 
@@ -35,12 +38,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
         }
 
-        private void CreateMonsters()
-        {
-            foreach (LocationEnemyData locationEnemyData in _location.Enemies)
-            {
-                _gameFactory.CreateEnemy(locationEnemyData.Position, locationEnemyData.Rotation, EnemyType.Tentacle);
-            }
-        }
+      
     }
 }

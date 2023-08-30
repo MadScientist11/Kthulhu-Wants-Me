@@ -1,20 +1,20 @@
-﻿using UnityEngine;
+﻿using Freya;
+using UnityEngine;
+using Vertx.Debugging;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies
 {
-    public class EnemySpawnPoint : MonoBehaviour
+    public class PortalSpawnZone : MonoBehaviour
     {
         public Vector3 Position => transform.position;
         public Quaternion Rotation => transform.rotation;
-
-        public EnemyType EnemyType;
-        
-        [SerializeField] private float _gizmoRadius;
+        public Vector3 Scale => transform.localScale;
         
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(transform.position, _gizmoRadius);
+            Gizmos.matrix = transform.localToWorldMatrix;
+            Gizmos.DrawCube(Vector3.zero, Vector3.one);
         }
     }
 }

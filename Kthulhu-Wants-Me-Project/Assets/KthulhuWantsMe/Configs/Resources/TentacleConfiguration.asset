@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TentaclePrefab: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
     type: 3}
+  MaxHealth: 100
   AttackRadius: 1
   AttackEffectiveDistance: 1
   AttackCooldown: 2

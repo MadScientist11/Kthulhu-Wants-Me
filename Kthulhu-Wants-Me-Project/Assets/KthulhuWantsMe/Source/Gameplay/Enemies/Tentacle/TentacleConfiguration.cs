@@ -7,6 +7,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
     {
         public GameObject TentaclePrefab;
         
+        public float MaxHealth;
+        
         public float AttackRadius;
         public float AttackEffectiveDistance;
         public float AttackCooldown;
