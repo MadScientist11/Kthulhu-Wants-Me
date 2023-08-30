@@ -25,10 +25,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
             PlayerSpawnRotation = FindObjectOfType<PlayerSpawnPoint>().Rotation;
             PortalSpawnZones = FindObjectsOfType<PortalSpawnZone>().Select(enemySp => new PortalZone()
             {
-                Position = enemySp.Position,
                 Rotation = enemySp.Rotation,
-                Extents = enemySp.Scale.XZ() / 2,
-                Normal = enemySp.transform.up,
                 LocalToWrold = enemySp.transform.localToWorldMatrix,
             }).ToList();
             

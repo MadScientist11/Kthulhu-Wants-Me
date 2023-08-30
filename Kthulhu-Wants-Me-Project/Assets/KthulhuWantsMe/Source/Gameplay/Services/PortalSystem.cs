@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Locations;
@@ -21,6 +22,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     public class PortalSystem : IPortalSystem, ITickable
     {
         private bool _isInitialized;
+
+        private List<PortalSpawnZone> _portalSpawnZone;
+
         private Location _location;
         private IPortalFactory _portalFactory;
         private ICoroutineRunner _coroutineRunner;
@@ -36,44 +40,42 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         public void Init()
         {
             _isInitialized = true;
-            CreatePortals();
+            _coroutineRunner.StartRoutine(Reappear());
         }
 
         public void Tick()
         {
             if (!_isInitialized)
                 return;
-            //spawn portals every 5 seconds
         }
 
         public void SpawnPortals()
         {
         }
 
-        private void CreatePortals()
+        private void SpawnPortal()
         {
-            foreach (PortalZone spawnZone in _location.PortalSpawnZones)
-            {
-                float randomX = Random.Range(-0.5f, 0.5f);
-                float randomZ = Random.Range(-0.5f, 0.5f);
-                Vector3 randomPoint = new Vector3(randomX, 0, randomZ);
-                Vector3 orientedRandomPoint = spawnZone.LocalToWrold * new Vector4(randomPoint.x, randomPoint.y, randomPoint.z, 1);
-                _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation);
-            }
+            PortalZone spawnZone = _location.PortalSpawnZones[Random.Range(0, _location.PortalSpawnZones.Count)];
+            float randomX = Random.Range(-0.5f, 0.5f);
+            float randomZ = Random.Range(-0.5f, 0.5f);
+            Vector3 randomPoint = new Vector3(randomX, 0, randomZ);
+            Vector3 orientedRandomPoint =
+                spawnZone.LocalToWrold * new Vector4(randomPoint.x, randomPoint.y, randomPoint.z, 1);
+            _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation);
         }
-
-  
 
         public void Release(PortalEnemySpawner portal)
         {
             portal.Release?.Invoke(portal);
-            _coroutineRunner.StartRoutine(Reappear());
         }
 
         private IEnumerator Reappear()
         {
-            yield return new WaitForSeconds(5f);
-            CreatePortals();
+            while (true)
+            {
+                SpawnPortal();
+                yield return new WaitForSeconds(5f);
+            }
         }
     }
 }
