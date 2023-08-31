@@ -47,9 +47,16 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         
         public GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
         {
-            GameObject tentacleAIBrain = _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position, rotation);
+            GameObject instance = enemyType switch
+            {
+                EnemyType.Tentacle => _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position,
+                    rotation),
+                EnemyType.Minion => _instantiator.Instantiate(_dataProvider.MinionConfig.MinionPrefab, position,
+                    rotation),
+                _ => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, null)
+            };
 
-            return tentacleAIBrain;
+            return instance;
         } 
        
     }

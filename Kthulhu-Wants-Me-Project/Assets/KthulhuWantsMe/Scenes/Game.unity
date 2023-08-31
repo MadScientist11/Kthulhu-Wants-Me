@@ -394,12 +394,7 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 1088494898}
   - {fileID: 132496220}
-  - {fileID: 1678655720}
-  - {fileID: 1680636184}
-  - {fileID: 1924335327}
-  - {fileID: 2025044148}
   _location: {fileID: 11400000, guid: f11b7182c649a3e49b033a75febfa6a3, type: 2}
 --- !u!1 &386463091
 GameObject:
@@ -1025,12 +1020,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cff17db52d333d14e8c4ec8a458e1444, type: 3}
---- !u!1 &1088494898 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7788496209366989126, guid: cff17db52d333d14e8c4ec8a458e1444,
-    type: 3}
-  m_PrefabInstance: {fileID: 1088494897}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1189980370
 GameObject:
   m_ObjectHideFlags: 0

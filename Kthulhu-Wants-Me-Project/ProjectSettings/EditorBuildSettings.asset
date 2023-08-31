@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/KthulhuWantsMe/Scenes/Game.unity
     guid: fb53bbc961baf1f40a4fadbe9c9e8c7c
+  - enabled: 1
+    path: Assets/KthulhuWantsMe/Scenes/PrototypeScenes/Minions.unity
+    guid: 157576cc7b0578b4995b6d34d0891d06
   m_configObjects: {}

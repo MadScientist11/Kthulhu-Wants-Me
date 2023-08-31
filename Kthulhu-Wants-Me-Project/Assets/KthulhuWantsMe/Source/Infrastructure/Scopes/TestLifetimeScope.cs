@@ -1,3 +1,4 @@
+using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.EntryPoints;
 using KthulhuWantsMe.Source.Infrastructure.Installers;
@@ -8,12 +9,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
 {
     public class TestLifetimeScope : LifetimeScope
     {
-        public PlayerSpawnPoint PlayerSpawnPoint;
+        public Location Location;
         
         protected override void Configure(IContainerBuilder builder)
         {
-           //builder.Install(new GameInstaller(PlayerSpawnPoint));
-           //builder.RegisterEntryPoint<GameEntryPoint>();
+          builder.Install(new GameInstaller(Location));
+          builder.RegisterEntryPoint<TestEntryPoint>();
         }
     }
 }

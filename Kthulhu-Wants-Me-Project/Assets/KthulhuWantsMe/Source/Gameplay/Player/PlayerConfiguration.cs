@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    [CreateAssetMenu(menuName = GameConstants.MenuName + "PlayerConfiguration", fileName = "PlayerConfiguration", order = 0)]
+    [CreateAssetMenu(menuName = GameConstants.MenuPath + "PlayerConfiguration", fileName = "PlayerConfiguration", order = 0)]
     public class PlayerConfiguration : ScriptableObject
     {
         [HorizontalLine(color: EColor.Violet)]

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
-    [CreateAssetMenu(menuName = GameConstants.MenuName + "TentacleConfiguration", fileName = "TentacleConfiguration",
+    [CreateAssetMenu(menuName = GameConstants.MenuPath + "TentacleConfiguration", fileName = "TentacleConfiguration",
         order = 0)]
     public class TentacleConfiguration : ScriptableObject
     {

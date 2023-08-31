@@ -2,7 +2,7 @@
 {
     public static class GameConstants
     {
-        public const string MenuName = "KthulhuWantsMe/";
+        public const string MenuPath = "KthulhuWantsMe/";
         public static class Layers
         {
             public const string PortalSpawnObstacle = "PortalSpawnObstacle";
@@ -12,6 +12,9 @@
         {
             public static string StartUpPath = "Assets/KthulhuWantsMe/Scenes/StartUp.unity";
             public static string GamePath = "Assets/KthulhuWantsMe/Scenes/Game.unity";
+            
+            public static string MinionsTestPath = "Assets/KthulhuWantsMe/Scenes/PrototypeScenes/Minions.unity";
+
         }
     }
 }

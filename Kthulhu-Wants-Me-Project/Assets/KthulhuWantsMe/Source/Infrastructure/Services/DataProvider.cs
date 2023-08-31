@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Portal;
@@ -10,6 +11,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
     {
         PlayerConfiguration PlayerConfig { get; }
         TentacleConfiguration TentacleConfig { get; }
+        MinionConfiguration MinionConfig { get; }
         PortalConfiguration PortalConfig { get; }
     }
 
@@ -19,8 +21,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         private const string PlayerConfigurationPath = "PlayerConfiguration";
         private const string TentacleConfigurationPath = "TentacleConfiguration";
         private const string PortalConfigurationPath = "PortalConfiguration";
+        private const string MinionConfigurationPath = "MinionConfiguration";
         public PlayerConfiguration PlayerConfig { get; private set; }
         public TentacleConfiguration TentacleConfig { get; private set; }
+        
+        public MinionConfiguration MinionConfig { get; private set; }
         public PortalConfiguration PortalConfig { get; private set; }
         
 
@@ -30,6 +35,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             PlayerConfig = (PlayerConfiguration)await Resources.LoadAsync<PlayerConfiguration>(PlayerConfigurationPath);
             TentacleConfig = (TentacleConfiguration)await Resources.LoadAsync<TentacleConfiguration>(TentacleConfigurationPath);
             PortalConfig = (PortalConfiguration)await Resources.LoadAsync<PortalConfiguration>(PortalConfigurationPath);
+            MinionConfig = (MinionConfiguration)await Resources.LoadAsync<MinionConfiguration>(MinionConfigurationPath);
         }
     }
 }
