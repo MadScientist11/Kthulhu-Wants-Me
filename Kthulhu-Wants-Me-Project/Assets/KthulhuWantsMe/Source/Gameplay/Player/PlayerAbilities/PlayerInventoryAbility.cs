@@ -32,6 +32,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private IInventorySystem _inventorySystem;
         private IInputService _inputService;
 
+        public PlayerInventoryAbility(Transform itemParent)
+        {
+            ItemParent = itemParent;
+        }
+
 
         [Inject]
         public void Construct(IInventorySystem inventorySystem, IInputService inputService)
@@ -46,17 +51,22 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _inputService.GameplayScenario.SwitchItem -= SwitchItem;
         }
 
-
-        private void Update()
+        public bool PickUpItem()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (PhysicsUtility.HitFirst(transform, transform.position, 3, IgnoreEquippedItem, out IPickable item))
             {
-                if (PhysicsUtility.HitFirst(transform, transform.position, 4, IgnoreEquippedItem, out IPickable item))
-                {
-                    _inventorySystem.ReplaceItem(item, onItemAdded: Equip, onItemRemoved: UnEquip);
-                }
+                _inventorySystem.ReplaceItem(item, onItemAdded: Equip, onItemRemoved: UnEquip);
+                return true;
             }
+
+            return false;
         }
+
+        public void PickUpItem(IPickable item)
+        {
+            _inventorySystem.ReplaceItem(item, onItemAdded: Equip, onItemRemoved: UnEquip);
+        }
+
 
         private void Equip(IPickable item)
         {
@@ -74,10 +84,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _inventorySystem.SwitchItem(index, (newItem, prevItem) =>
             {
-                if(newItem != null)
+                if (newItem != null)
                     Show(newItem);
-                
-                if(prevItem != null)
+
+                if (prevItem != null)
                     Hide(prevItem);
             });
         }

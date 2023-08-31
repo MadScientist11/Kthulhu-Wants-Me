@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
 using VContainer;
@@ -20,6 +18,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private IInputService _inputService;
         private TentacleGrabAbility _ability;
+
+        private Coroutine _tentacleDamageCoroutine;
 
         [Inject]
         public void Construct(IInputService inputService)
@@ -46,10 +46,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _ability = ability;
             FollowGrabTarget(ability.GrabTarget);
-            StartCoroutine(KillPlayerOnGrab(ability));
+            _tentacleDamageCoroutine = StartCoroutine(DealDamageOnGrab(ability));
         }
 
-        private IEnumerator KillPlayerOnGrab(TentacleGrabAbility ability)
+        private IEnumerator DealDamageOnGrab(TentacleGrabAbility ability)
         {
             yield return new WaitForSeconds(ability.KillPlayerAfter);
             if (transform.TryGetComponent(out PlayerHealth playerHealth))
@@ -57,7 +57,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 playerHealth.TakeDamage(ability.TentacleGrabDamage);
             }
             _ability.CancelGrab();
-            StopFollowing();
+            StopFollowingGrabTarget();
+        }
+
+        private void ResistGrab()
+        {
+            if(!Grabbed)
+                return;
+
+            CancelDealDamageCoroutine();
+            StopFollowingGrabTarget();
+            _ability.CancelGrab();
         }
 
         private void FollowGrabTarget(Transform target)
@@ -68,20 +78,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _target = target;
         }
 
-        private void StopFollowing()
+        private void StopFollowingGrabTarget()
         {
             _target = null;
             _movementController.ToggleMotor(true);
             Grabbed = false;
         }
 
-        private void ResistGrab()
-        {
-            if(!Grabbed)
-                return;
-
-            StopFollowing();
-            _ability.CancelGrab();
-        }
+        private void CancelDealDamageCoroutine() => 
+            StopCoroutine(_tentacleDamageCoroutine);
     }
 }

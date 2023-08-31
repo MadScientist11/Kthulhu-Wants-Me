@@ -32,15 +32,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 
         public void GrabPlayer()
         {
-            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfig.AttackRadius, out IAbilityResponse<TentacleGrabAbility> hitObject))
+            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfig.AttackRadius,
+                    out IAbilityResponse<TentacleGrabAbility> hitObject))
                 return;
 
-            if (hitObject != null)
-            {
-                _tentacleAIBrain.HoldsPlayer = true;
-                _tentacleAnimator.PlayGrabPlayerAttack();
-                //StartCoroutine(KillPlayerOnGrab(player, 5));
-            }
+            Debug.Log("Grab Player");
+
+            _tentacleAIBrain.HoldsPlayer = true;
+            _tentacleAnimator.PlayGrabPlayerAttack();
+            hitObject.RespondTo(this);
         }
 
         public void CancelGrab()

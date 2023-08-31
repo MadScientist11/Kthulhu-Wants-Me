@@ -3,6 +3,7 @@ using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.SOData;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
@@ -17,10 +18,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 
         public Transform Transform => transform;
 
-        public void RespondTo(PlayerInteractionAbility ability)
-        {
-            //highlight object or whatever
-        }
 
         public void RespondTo(PlayerHighlightAbility ability)
         {
@@ -37,6 +34,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void RespondTo(PlayerInteractionAbility ability)
+        {
+            if (ability.CurrentInteractionAbility is not PlayerInventoryAbility playerInventoryAbility)
+                return;
+            
+            RespondTo(playerInventoryAbility);
         }
 
         public void RespondTo(PlayerInventoryAbility ability)

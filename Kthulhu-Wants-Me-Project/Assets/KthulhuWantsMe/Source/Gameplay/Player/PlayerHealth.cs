@@ -36,7 +36,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _currentHealth -= damage;
 
-            Debug.Log(_currentHealth);
             if (_currentHealth <= 0)
             {
                 Die();

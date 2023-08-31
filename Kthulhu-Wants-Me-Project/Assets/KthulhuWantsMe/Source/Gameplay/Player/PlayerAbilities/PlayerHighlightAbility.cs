@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Utilities;
@@ -11,25 +12,29 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         Highlight = 0,
         CancelHighlight = 1,
     }
-
-    public class PlayerHighlightAbility : IAbility
+    
+    public class PlayerHighlightAbility : MonoBehaviour, IAbility
     {
         public HighlightState HighlightState { get; private set; }
-        private IInteractable _highlightedInteractable;
+        public IInteractable HighlightedInteractable { get; private set; }
 
         private readonly RaycastHit[] _results = new RaycastHit[1];
 
-        public void HighlightObjectOnMouseHover()
+
+        private void Update() => 
+            HighlightObjectOnMouseHover();
+
+        private void HighlightObjectOnMouseHover()
         {
             Ray worldRay = MousePointer.GetWorldRay(UnityEngine.Camera.main);
             if (HitInteractable(worldRay, out RaycastHit hit))
             {
-                if (_highlightedInteractable != null && hit.transform == _highlightedInteractable.Transform)
+                if (HighlightedInteractable != null && hit.transform == HighlightedInteractable.Transform)
                     return;
 
                 if (hit.transform.TryGetComponent(out IInteractable interactable))
                 {
-                    _highlightedInteractable = interactable;
+                    HighlightedInteractable = interactable;
                     HighlightState = HighlightState.Highlight;
                     interactable.RespondTo(this);
                 }
@@ -37,8 +42,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             else
             {
                 HighlightState = HighlightState.CancelHighlight;
-                _highlightedInteractable?.RespondTo(this);
-                _highlightedInteractable = null;
+                HighlightedInteractable?.RespondTo(this);
+                HighlightedInteractable = null;
             }
         }
 
@@ -49,23 +54,5 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             interactable = _results.FirstOrDefault();
             return count > 0;
         }
-    }
-
-    public class PlayerInteractionAbility : MonoBehaviour, IAbility
-    {
-        private PlayerHighlightAbility _playerHighlightAbility;
-
-        private void Start()
-        {
-            _playerHighlightAbility = new PlayerHighlightAbility();
-        }
-
-     
-        private void Update()
-        {
-            _playerHighlightAbility.HighlightObjectOnMouseHover();
-        }
-
-    
     }
 }

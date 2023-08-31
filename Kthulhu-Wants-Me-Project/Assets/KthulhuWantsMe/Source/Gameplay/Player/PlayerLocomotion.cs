@@ -91,7 +91,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private void PerformDash()
         {
             //_locomotion.Motor.ForceUnground(0.1f);
-            if(tentacleGrabAbilityResponse.Grabbed)
+            if(tentacleGrabAbilityResponse.Grabbed || !IsMoving)
                 return;
             
             _movementController.AddVelocity(transform.forward * 50f);
