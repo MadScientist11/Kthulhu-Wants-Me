@@ -473,9 +473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fdbb98a83d4fd0b1c6209167c65a02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GrabTarget: {fileID: 0}
   _tentacleAnimator: {fileID: 7893959025167172210}
   _tentacleAIBrain: {fileID: -2563807488164230852}
-  _grabTarget: {fileID: 1241455327053050249}
 --- !u!114 &423395108823978285
 MonoBehaviour:
   m_ObjectHideFlags: 0

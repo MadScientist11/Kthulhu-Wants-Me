@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces
 {
-    public interface IInteractable : IAbilityResponse<PlayerInteractionAbility>
+    public interface IInteractable : IAbilityResponse<PlayerInteractionAbility>, IAbilityResponse<PlayerHighlightAbility>
     {
         InteractableData InteractableData { get; }
         Transform Transform { get; }

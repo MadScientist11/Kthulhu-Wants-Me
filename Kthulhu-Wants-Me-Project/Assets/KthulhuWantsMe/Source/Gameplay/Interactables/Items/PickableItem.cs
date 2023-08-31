@@ -22,6 +22,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
             //highlight object or whatever
         }
 
+        public void RespondTo(PlayerHighlightAbility ability)
+        {
+            switch (ability.HighlightState)
+            {
+                case HighlightState.Highlight:
+                    GetComponent<Renderer>().material.SetFloat("_Outline_Width", 120);
+                    GetComponent<Renderer>().material.SetFloat("_Offset_Z", -1);
+                    break;
+                case HighlightState.CancelHighlight:
+                    GetComponent<Renderer>().material.SetFloat("_Outline_Width", 0);
+                    GetComponent<Renderer>().material.SetFloat("_Offset_Z", 0);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public void RespondTo(PlayerInventoryAbility ability)
         {
             switch (ability.CurrentAction)

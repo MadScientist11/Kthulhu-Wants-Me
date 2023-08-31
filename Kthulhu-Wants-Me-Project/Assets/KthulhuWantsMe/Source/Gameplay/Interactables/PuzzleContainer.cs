@@ -31,6 +31,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables
             });
         }
 
+        public void RespondTo(PlayerHighlightAbility ability)
+        {
+        }
+
         public void RespondTo(PlayerInteractionAbility ability)
         {
             if (_inventorySystem.CurrentItem.Transform.TryGetComponent(_itemsInOrder.Peek(), out Component _))

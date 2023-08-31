@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: 
   Description: 
+  ItemInHandPosition: {x: 0, y: 0, z: 0}
+  ItemInHandRotation: {x: 0, y: 0, z: 0, w: 1}
   MaxUses: 1
