@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
+namespace KthulhuWantsMe.Source.Gameplay.DamageSystem
 {
     
     public class WeaponBase : MonoBehaviour, IDamageProvider

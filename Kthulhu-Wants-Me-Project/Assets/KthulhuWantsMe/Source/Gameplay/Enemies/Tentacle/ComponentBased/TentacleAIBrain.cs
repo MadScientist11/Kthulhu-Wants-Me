@@ -97,8 +97,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
             ResetCooldown();
         }
 
-     
-
         private bool CanNotAttack() => 
             HoldsPlayer || Stunned;
 

@@ -21,7 +21,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         [SerializeField] private KinematicCharacterMotor _motor;
         [SerializeField] private PlayerAnimator _playerAnimator;
-        [SerializeField] private PlayerTentacleInteraction _playerTentacleInteraction;
+        [FormerlySerializedAs("_playerTentacleInteraction")] [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
 
         private bool _blockMovement;
 
@@ -91,7 +91,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private void PerformDash()
         {
             //_locomotion.Motor.ForceUnground(0.1f);
-            if(_playerTentacleInteraction.PlayerGrabbed)
+            if(tentacleGrabAbilityResponse.Grabbed)
                 return;
             
             _movementController.AddVelocity(transform.forward * 50f);

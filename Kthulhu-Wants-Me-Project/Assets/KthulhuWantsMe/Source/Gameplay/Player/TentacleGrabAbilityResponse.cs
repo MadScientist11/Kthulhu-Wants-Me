@@ -1,21 +1,25 @@
 ﻿using System;
+using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    public class PlayerTentacleInteraction : MonoBehaviour
+    public class TentacleGrabAbilityResponse : MonoBehaviour, IAbilityResponse<TentacleGrabAbility>
     {
-        public bool PlayerGrabbed { get; private set; }
+        public bool Grabbed { get; private set; }
 
         [SerializeField] private PlayerFacade _player;
 
         private Transform _target;
         private PlayerMovementController _movementController;
-        private Action _onPlayerBrokeFree;
 
         private IInputService _inputService;
+        private TentacleGrabAbility _ability;
 
         [Inject]
         public void Construct(IInputService inputService)
@@ -38,10 +42,27 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 transform.SetPositionAndRotation(_target.position, _target.rotation);
         }
 
-        public void FollowGrabTarget(Transform target, Action onPlayerBrokeFree)
+        public void RespondTo(TentacleGrabAbility ability)
         {
-            _onPlayerBrokeFree = onPlayerBrokeFree;
-            PlayerGrabbed = true;
+            _ability = ability;
+            FollowGrabTarget(ability.GrabTarget);
+            StartCoroutine(KillPlayerOnGrab(ability));
+        }
+
+        private IEnumerator KillPlayerOnGrab(TentacleGrabAbility ability)
+        {
+            yield return new WaitForSeconds(ability.KillPlayerAfter);
+            if (transform.TryGetComponent(out PlayerHealth playerHealth))
+            {
+                playerHealth.TakeDamage(ability.TentacleGrabDamage);
+            }
+            _ability.CancelGrab();
+            StopFollowing();
+        }
+
+        private void FollowGrabTarget(Transform target)
+        {
+            Grabbed = true;
             _movementController.KillVelocity();
             _movementController.ToggleMotor(false);
             _target = target;
@@ -51,16 +72,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _target = null;
             _movementController.ToggleMotor(true);
-            PlayerGrabbed = false;
+            Grabbed = false;
         }
 
         private void ResistGrab()
         {
-            if(!PlayerGrabbed)
+            if(!Grabbed)
                 return;
 
             StopFollowing();
-            _onPlayerBrokeFree?.Invoke();
+            _ability.CancelGrab();
         }
     }
 }

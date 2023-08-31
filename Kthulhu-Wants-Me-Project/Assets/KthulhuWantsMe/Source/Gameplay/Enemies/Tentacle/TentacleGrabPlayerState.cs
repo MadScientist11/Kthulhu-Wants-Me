@@ -8,11 +8,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
     {
         private readonly TentacleAnimator _tentacleAnimator;
         private readonly Transform _grabTarget;
-        private readonly PlayerTentacleInteraction _playerTentacleInteraction;
+        private readonly TentacleGrabAbilityResponse _tentacleGrabAbilityResponse;
 
-        public TentacleGrabPlayerState(TentacleAnimator tentacleAnimator, PlayerTentacleInteraction playerTentacleInteraction, Transform grabTarget) : base(needsExitTime: false)
+        public TentacleGrabPlayerState(TentacleAnimator tentacleAnimator, TentacleGrabAbilityResponse tentacleGrabAbilityResponse, Transform grabTarget) : base(needsExitTime: false)
         {
-            _playerTentacleInteraction = playerTentacleInteraction;
+            _tentacleGrabAbilityResponse = tentacleGrabAbilityResponse;
             _grabTarget = grabTarget;
             _tentacleAnimator = tentacleAnimator;
         }
@@ -20,7 +20,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public override void OnEnter()
         {
             _tentacleAnimator.PlayGrabPlayerAnimation(_grabTarget);
-            Debug.Log(_playerTentacleInteraction);
+            Debug.Log(_tentacleGrabAbilityResponse);
             Debug.Log(_grabTarget);
             //_playerTentacleInteraction.FollowGrabTarget(_grabTarget);
         }

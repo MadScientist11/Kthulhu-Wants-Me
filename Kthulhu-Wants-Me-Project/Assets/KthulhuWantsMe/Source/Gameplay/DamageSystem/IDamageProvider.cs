@@ -1,4 +1,4 @@
-﻿namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
+﻿namespace KthulhuWantsMe.Source.Gameplay.DamageSystem
 {
     public interface IDamageProvider
     {

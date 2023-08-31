@@ -18,7 +18,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [Inject]
         public void Construct(IGameFactory gameFactory)
         {
-            Debug.Log(gameFactory.Player);
             _player = gameFactory.Player;
         }
 

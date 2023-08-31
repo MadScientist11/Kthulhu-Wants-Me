@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Data;
+﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Data;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items

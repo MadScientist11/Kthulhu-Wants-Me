@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -18,7 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public Transform DamageSourceObject => transform;
 
         [SerializeField] private PlayerAnimator _playerAnimator;
-        [SerializeField] private PlayerTentacleInteraction _playerTentacleInteraction;
+        [FormerlySerializedAs("_playerTentacleInteraction")] [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
         [SerializeField] private List<Attack> _attackComboSet;
 
         private IInventorySystem _inventorySystem;
@@ -65,7 +66,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void PerformHit(WeaponBase weapon)
         {
-            if (_playerAnimator.IsAttacking && !_playerTentacleInteraction.PlayerGrabbed)
+            if (_playerAnimator.IsAttacking && !tentacleGrabAbilityResponse.Grabbed)
             {
                 _queuedAttack = true;
                 return;

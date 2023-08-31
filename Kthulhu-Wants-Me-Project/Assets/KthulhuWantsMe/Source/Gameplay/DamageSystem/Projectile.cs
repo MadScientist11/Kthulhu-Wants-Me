@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
+namespace KthulhuWantsMe.Source.Gameplay.DamageSystem
 {
     public class Projectile : WeaponBase
     {

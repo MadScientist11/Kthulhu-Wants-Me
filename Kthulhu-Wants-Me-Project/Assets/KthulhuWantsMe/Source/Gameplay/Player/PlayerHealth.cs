@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
