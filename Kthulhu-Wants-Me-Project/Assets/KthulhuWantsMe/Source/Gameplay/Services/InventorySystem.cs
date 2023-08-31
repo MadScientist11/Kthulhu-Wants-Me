@@ -17,9 +17,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         void ReplaceItem(IPickable item);
         void RemoveItem(IPickable item);
         void RemoveItemWithoutNotify(IPickable item);
+        void ReplaceItem(IPickable item,Action<IPickable> onItemAdded, Action<IPickable> onItemRemoved);
+        void SwitchItem(int index, Action<IPickable, IPickable> onItemSwitched);
     }
 
-    public class InventorySystem : IInventorySystem, IInitializableService, IDisposable
+    public class InventorySystem : IInventorySystem
     {
         public bool IsInitialized { get; set; }
         public IReadOnlyList<IPickable> EquippedItems => _items;
@@ -32,25 +34,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         private readonly IPickable[] _items = new IPickable[5];
         private int _currentIndex;
 
-        private readonly IInputService _inputService;
-
-
-        public InventorySystem(IInputService inputService)
-        {
-            _inputService = inputService;
-        }
-
-        public UniTask Initialize()
-        {
-            _inputService.GameplayScenario.SwitchItem += SwitchItem;
-            return UniTask.CompletedTask;
-        }
-
-        public void Dispose()
-        {
-            _inputService.GameplayScenario.SwitchItem -= SwitchItem;
-        }
-
+     
         public void ReplaceItem(IPickable item)
         {
             Debug.Log($"Adding item {item}");
@@ -68,6 +52,27 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                 ReplaceItem(item);
             }
         }
+        
+        public void ReplaceItem(IPickable item,Action<IPickable> onItemAdded, Action<IPickable> onItemRemoved)
+        {
+            Debug.Log($"Adding item {item}");
+            if (_items[_currentIndex] == null)
+            {
+                Debug.Log($"Was no item so added {item}");
+                _items[_currentIndex] = item;
+                item.Equipped = true;
+                OnItemAdded?.Invoke(item);
+                onItemAdded?.Invoke(item);
+            }
+            else
+            {
+                IPickable removedItem = _items[_currentIndex];
+                RemoveItem(removedItem);
+                onItemRemoved?.Invoke(removedItem);
+                ReplaceItem(item, onItemAdded, onItemRemoved);
+            }
+        }
+
 
         public void RemoveItem(IPickable item)
         {
@@ -83,10 +88,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             _items[index] = null;
         }
 
-        private void SwitchItem(int index)
+        public void SwitchItem(int index, Action<IPickable, IPickable> onItemSwitched)
         {
             int previous = _currentIndex;
             _currentIndex = index;
+            onItemSwitched?.Invoke(_items[_currentIndex], _items[previous]);
             OnItemSwitched?.Invoke(_items[_currentIndex], _items[previous]);
         }
     }

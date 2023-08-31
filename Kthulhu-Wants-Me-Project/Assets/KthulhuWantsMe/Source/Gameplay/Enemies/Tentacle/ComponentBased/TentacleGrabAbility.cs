@@ -32,7 +32,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 
         public void GrabPlayer()
         {
-            if (!this.HitFirst(AttackStartPoint(), _tentacleConfig.AttackRadius, out IAbilityResponse<TentacleGrabAbility> hitObject))
+            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfig.AttackRadius, out IAbilityResponse<TentacleGrabAbility> hitObject))
                 return;
 
             if (hitObject != null)

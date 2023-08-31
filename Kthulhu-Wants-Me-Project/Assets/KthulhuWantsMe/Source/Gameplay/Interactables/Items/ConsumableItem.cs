@@ -30,7 +30,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 
         private void DestroyConsumable()
         {
-            _inventorySystem.RemoveItemWithoutNotify(this);
             Destroy(gameObject);
         }
     }

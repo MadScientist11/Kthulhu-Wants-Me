@@ -38,7 +38,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 
         private void OnAttack()
         {
-            if (!this.HitFirst(AttackStartPoint(), _tentacleConfig.AttackRadius, out IDamageable hitObject))
+            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfig.AttackRadius, out IDamageable hitObject))
                 return;
 
             hitObject.TakeDamage(ProvideDamage());

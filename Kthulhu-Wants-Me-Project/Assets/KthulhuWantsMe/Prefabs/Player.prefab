@@ -1280,10 +1280,9 @@ GameObject:
   - component: {fileID: 6482385733598322139}
   - component: {fileID: -4856184112398116678}
   - component: {fileID: 5663912579931136821}
-  - component: {fileID: 1482870178762915801}
   - component: {fileID: -8648004300217098860}
-  - component: {fileID: 94120618176507343}
   - component: {fileID: -2573202685680207158}
+  - component: {fileID: -8559625170406584742}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -1437,7 +1436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CameraFollowTarget>k__BackingField: {fileID: 2200005688810927865}
   <PlayerLocomotion>k__BackingField: {fileID: 5663912579931136821}
-  <PlayerTentacleInteraction>k__BackingField: {fileID: -2573202685680207158}
+  <TentacleGrabAbilityResponse>k__BackingField: {fileID: 0}
 --- !u!114 &6482385733598322139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1479,19 +1478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motor: {fileID: 142401814652149727}
   _playerAnimator: {fileID: -4856184112398116678}
-  _playerTentacleInteraction: {fileID: -2573202685680207158}
---- !u!114 &1482870178762915801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5112094726857054722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c66adeea0b4d899444c8416a1622f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  tentacleGrabAbilityResponse: {fileID: -2573202685680207158}
 --- !u!114 &-8648004300217098860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1505,25 +1492,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAnimator: {fileID: -4856184112398116678}
-  _playerTentacleInteraction: {fileID: -2573202685680207158}
+  tentacleGrabAbilityResponse: {fileID: -2573202685680207158}
   _attackComboSet:
   - {fileID: 11400000, guid: f5a6b5d6955a14049b13bd3f7382f979, type: 2}
   - {fileID: 11400000, guid: b524d652cdd66f34f93a8e72c7dc57bb, type: 2}
   - {fileID: 11400000, guid: 8ad5de022ba330d449025d971797e7f8, type: 2}
---- !u!114 &94120618176507343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5112094726857054722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df4eac3bd7154c33bf245b4a32b8cbff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemParent: {fileID: 1434937371896396477}
-  _playerAttack: {fileID: -8648004300217098860}
 --- !u!114 &-2573202685680207158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1537,6 +1510,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: -5172653069112829316}
+--- !u!114 &-8559625170406584742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112094726857054722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9757d87f26f4440d8a2a01e0c9b8e929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ItemParent>k__BackingField: {fileID: 1434937371896396477}
 --- !u!1 &5272480011812278617
 GameObject:
   m_ObjectHideFlags: 0

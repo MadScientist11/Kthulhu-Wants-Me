@@ -626,6 +626,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
         type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -1205,6 +1210,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Text.409 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
         type: 3}
@@ -1854,6 +1864,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
         type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -2029,6 +2044,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Text.409
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 9055071361083827846, guid: 8e08f0f1d20bbbe489482dec67ace236,
         type: 3}
@@ -2427,6 +2447,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
         type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7267503489387074868, guid: 8e08f0f1d20bbbe489482dec67ace236,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -2667,7 +2692,7 @@ GameObject:
   - component: {fileID: 2025044150}
   - component: {fileID: 2025044149}
   - component: {fileID: 2025044155}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}

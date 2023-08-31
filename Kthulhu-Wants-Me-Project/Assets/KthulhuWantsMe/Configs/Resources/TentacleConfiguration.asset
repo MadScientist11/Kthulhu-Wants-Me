@@ -20,4 +20,4 @@ MonoBehaviour:
   AttackCooldown: 2
   StunWearOffTime: 3
   TentacleGrabDamage: 0
-  GrabAbilityChance: 0.1
+  GrabAbilityChance: 1

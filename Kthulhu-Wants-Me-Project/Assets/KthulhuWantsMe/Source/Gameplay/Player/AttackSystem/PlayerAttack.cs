@@ -79,7 +79,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             D.raw(new Shape.Sphere(AttackStartPoint(), _playerConfiguration.AttackRadius), 1f);
 
-            if (!this.HitFirst(AttackStartPoint(), _playerConfiguration.AttackRadius, out IDamageable damageable))
+            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _playerConfiguration.AttackRadius, out IDamageable damageable))
                 return;
 
             damageable.TakeDamage(_playerStats.ProvideDamage() + _attackComboSet[_comboAttackIndex].Damage);
