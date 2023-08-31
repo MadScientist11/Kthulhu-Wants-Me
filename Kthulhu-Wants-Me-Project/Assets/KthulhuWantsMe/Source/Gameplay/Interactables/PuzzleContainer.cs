@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Data;
+using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items.Story;
+using KthulhuWantsMe.Source.Gameplay.Interactables.SOData;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
+namespace KthulhuWantsMe.Source.Gameplay.Interactables
 {
     public class PuzzleContainer : MonoBehaviour, IInteractable, IInjectable
     {
@@ -27,10 +31,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
             });
         }
 
-        public bool Interact()
+        public void RespondTo(PlayerInteractionAbility ability)
         {
-            bool isSuccess = false;
-            
             if (_inventorySystem.CurrentItem.Transform.TryGetComponent(_itemsInOrder.Peek(), out Component _))
             {
                 if (_inventorySystem.CurrentItem is IConsumable consumable)
@@ -39,7 +41,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 
                     consumable.Consume();
                     _itemsInOrder.Pop();
-                    isSuccess = true;
                 }
             }
 
@@ -47,8 +48,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
             {
                 Debug.Log("Unlocked");
             }
-
-            return isSuccess;
         }
     }
 }

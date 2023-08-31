@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
-using UnityEngine;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
 {
@@ -14,9 +10,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         event Action<IPickable> OnItemRemoved;
         event Action<IPickable, IPickable> OnItemSwitched;
         IPickable CurrentItem { get; }
-        void ReplaceItem(IPickable item);
-        void RemoveItem(IPickable item);
-        void RemoveItemWithoutNotify(IPickable item);
         void ReplaceItem(IPickable item,Action<IPickable> onItemAdded, Action<IPickable> onItemRemoved);
         void SwitchItem(int index, Action<IPickable, IPickable> onItemSwitched);
     }
@@ -35,32 +28,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         private int _currentIndex;
 
      
-        public void ReplaceItem(IPickable item)
-        {
-            Debug.Log($"Adding item {item}");
-            if (_items[_currentIndex] == null)
-            {
-                Debug.Log($"Was no item so added {item}");
-                _items[_currentIndex] = item;
-                item.Equipped = true;
-                OnItemAdded?.Invoke(item);
-            }
-            else
-            {
-                IPickable removedItem = _items[_currentIndex];
-                RemoveItem(removedItem);
-                ReplaceItem(item);
-            }
-        }
-        
         public void ReplaceItem(IPickable item,Action<IPickable> onItemAdded, Action<IPickable> onItemRemoved)
         {
-            Debug.Log($"Adding item {item}");
             if (_items[_currentIndex] == null)
             {
-                Debug.Log($"Was no item so added {item}");
                 _items[_currentIndex] = item;
-                item.Equipped = true;
                 OnItemAdded?.Invoke(item);
                 onItemAdded?.Invoke(item);
             }
@@ -78,7 +50,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         {
             int index = Array.IndexOf(_items, item);
             _items[index] = null;
-            item.Equipped = false;
             OnItemRemoved?.Invoke(item);
         }
         

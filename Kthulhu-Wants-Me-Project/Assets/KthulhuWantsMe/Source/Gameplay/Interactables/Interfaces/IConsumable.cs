@@ -1,6 +1,6 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Data;
+﻿using KthulhuWantsMe.Source.Gameplay.Interactables.SOData;
 
-namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
+namespace KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces
 {
     public interface IConsumable : IPickable
     {

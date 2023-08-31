@@ -1,7 +1,6 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Interactables.Data
+namespace KthulhuWantsMe.Source.Gameplay.Interactables.SOData
 {
     public enum WeaponType
     {

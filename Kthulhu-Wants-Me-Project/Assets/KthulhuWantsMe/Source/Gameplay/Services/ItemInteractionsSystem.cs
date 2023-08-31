@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
 {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Interactables.Data
+namespace KthulhuWantsMe.Source.Gameplay.Interactables.SOData
 {
     
     [CreateAssetMenu(menuName = GameConstants.MenuName + "Create PickableData", fileName = "PickableData", order = 0)]

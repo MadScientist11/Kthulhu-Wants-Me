@@ -1,9 +1,6 @@
-using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
-using KthulhuWantsMe.Source.Gameplay.Interactions;
 using KthulhuWantsMe.Source.Gameplay.Locations;
-using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using VContainer;
@@ -28,9 +25,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<GameFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
-            builder
-                .Register<InteractionsManager>(Lifetime.Singleton)
-                .AsImplementedInterfaces();
+      
             builder
                 .Register<InventorySystem>(Lifetime.Scoped)
                 .AsImplementedInterfaces();

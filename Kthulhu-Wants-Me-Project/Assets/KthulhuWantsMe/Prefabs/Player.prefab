@@ -1436,7 +1436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CameraFollowTarget>k__BackingField: {fileID: 2200005688810927865}
   <PlayerLocomotion>k__BackingField: {fileID: 5663912579931136821}
-  <TentacleGrabAbilityResponse>k__BackingField: {fileID: 0}
+  <TentacleGrabAbilityResponse>k__BackingField: {fileID: -2573202685680207158}
 --- !u!114 &6482385733598322139
 MonoBehaviour:
   m_ObjectHideFlags: 0

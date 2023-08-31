@@ -1,6 +1,7 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -17,7 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         Show = 3,
     }
 
-    public class PlayerInventoryAbility : MonoBehaviour, IDamageSource, IAbility
+    public class PlayerInventoryAbility : MonoBehaviour, IAbility
     {
         [field: SerializeField] public Transform ItemParent { get; private set; }
 

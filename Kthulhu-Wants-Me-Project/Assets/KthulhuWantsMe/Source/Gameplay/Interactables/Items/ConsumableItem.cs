@@ -1,6 +1,5 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Data;
-using NaughtyAttributes;
+﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
+using KthulhuWantsMe.Source.Gameplay.Interactables.SOData;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
