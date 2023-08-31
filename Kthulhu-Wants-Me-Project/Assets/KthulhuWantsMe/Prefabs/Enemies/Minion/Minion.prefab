@@ -96,10 +96,13 @@ GameObject:
   - component: {fileID: -2179128748547752395}
   - component: {fileID: 7277809355919913474}
   - component: {fileID: 5780975104130917406}
+  - component: {fileID: 2481892175170321686}
   - component: {fileID: 7689057061223986462}
   - component: {fileID: 2809151243320649145}
   - component: {fileID: 6389396322317099540}
   - component: {fileID: 6052406462669988158}
+  - component: {fileID: 746340338439813629}
+  - component: {fileID: -6374073598655141297}
   m_Layer: 0
   m_Name: Minion
   m_TagString: Untagged
@@ -209,6 +212,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minionFollow: {fileID: 6389396322317099540}
   _minionAttack: {fileID: 6052406462669988158}
+--- !u!114 &2481892175170321686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777951966961791017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fce97dacddf46af95c48d945b73a082, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7689057061223986462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,4 +274,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd9757d570c4d60b30faa5de49072a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minionAIBrain: {fileID: 5780975104130917406}
+  _enemyHealth: {fileID: 2481892175170321686}
+--- !u!114 &746340338439813629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777951966961791017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f9726619293481d8222fd6c99b6c2f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tentacleAnimator: {fileID: 0}
+  _tentacleAIBrain: {fileID: 0}
+--- !u!114 &-6374073598655141297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777951966961791017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d721a3247e47f498121c375134d578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyHealth: {fileID: 2481892175170321686}
   _minionAIBrain: {fileID: 5780975104130917406}

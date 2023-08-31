@@ -1,8 +1,10 @@
 using System;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 using VContainer;
 
@@ -17,10 +19,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Portal
 
         private IGameFactory _gameFactory;
         private IPortalSystem _portalSystem;
+        private EnemyType _enemyType;
+        private ICoroutineRunner _coroutineRunner;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IPortalSystem portalSystem)
+        public void Construct(IGameFactory gameFactory, IPortalSystem portalSystem, ICoroutineRunner coroutineRunner)
         {
+            _coroutineRunner = coroutineRunner;
             _portalSystem = portalSystem;
             _gameFactory = gameFactory;
 
@@ -30,20 +35,59 @@ namespace KthulhuWantsMe.Source.Gameplay.Portal
         {
             if (_createdEnemy == null)
             {
+                _enemyType = EnumExtensions<EnemyType>.Random;
                 _createdEnemy = _gameFactory.CreateEnemy(_tentacleSpawnPoint.position, _tentacleSpawnPoint.rotation,
-                    EnemyType.Tentacle);
+                    _enemyType);
                 _createdEnemy.transform.SetParent(transform);
             }
-           
+
+            if (_enemyType == EnemyType.Tentacle)
+            {
+                TentacleOnEnable();
+
+            }
+            else
+            {
+                MinionOnEnable();
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_enemyType == EnemyType.Tentacle)
+            {
+                TentacleOnDisable();
+
+            }
+            else
+            {
+                MinionOnDisable();
+            }
+        }
+
+        private void TentacleOnEnable()
+        {
             _createdEnemy.GetComponent<TentacleEmergence>().Emerge(_tentacleSpawnPoint.position, transform.position);
             _createdEnemy.GetComponent<EnemyHealth>().RestoreHealth();
             _createdEnemy.GetComponent<TentacleRetreat>().OnRetreated += ClosePortal;
         }
 
-        private void OnDisable()
+        private void TentacleOnDisable()
         {
             _createdEnemy.GetComponent<TentacleRetreat>().OnRetreated -= ClosePortal;
         }
+
+
+        private void MinionOnEnable()
+        {
+            _createdEnemy.GetComponent<MinionEmergence>().Emerge(_tentacleSpawnPoint.position, transform.position);
+        }
+
+        private void MinionOnDisable()
+        {
+            
+        }
+
 
         private void ClosePortal()
         {

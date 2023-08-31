@@ -7,9 +7,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     public class MinionAttack : MonoBehaviour, IDamageProvider
     {
         [SerializeField] private MinionAIBrain _minionAIBrain;
+        [SerializeField] private EnemyHealth _enemyHealth;
 
         private float _attackCooldown;
         private const float AttackCooldownTime = 2f;
+
+        private void Start()
+        {
+            _enemyHealth.OnHealthChanged += OnHealthChanged;
+        }
+
+        private void OnDestroy()
+        {
+            _enemyHealth.OnHealthChanged -= OnHealthChanged;
+
+        }
 
         private void Update()
         {
@@ -32,6 +44,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 
             ResetCooldown();
             hitObject.TakeDamage(ProvideDamage());
+        }
+
+        private void OnHealthChanged(float health)
+        {
+            ResetCooldown();
         }
 
         private void ResetCooldown()

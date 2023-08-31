@@ -33,7 +33,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             }).ToList();
             await UniTask.WhenAll(initializationTasks);
             await _sceneLoader
-                .LoadSceneInjected(GameConstants.Scenes.MinionsTestPath, LoadSceneMode.Additive, _appLifetimeScope);
+                .LoadSceneInjected(GameConstants.Scenes.GamePath, LoadSceneMode.Additive, _appLifetimeScope);
         }
     }
 }

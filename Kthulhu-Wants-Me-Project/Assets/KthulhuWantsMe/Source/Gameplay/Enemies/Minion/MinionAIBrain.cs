@@ -9,12 +9,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
         public bool IsAttacking { get; set; }
         public bool AttackCooldownReached { get; set; }
         public bool IsInAttackRange { get; set; }
+        public bool BlockProcessing { get; set; }
 
         [SerializeField] private MinionFollow _minionFollow;
         [SerializeField] private MinionAttack _minionAttack;
         
         private void Update()
         {
+            if(BlockProcessing)
+                return;
+            
             if (HasAggro) 
                 _minionFollow.FollowPlayer();
             
