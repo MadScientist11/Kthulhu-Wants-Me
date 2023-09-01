@@ -24,7 +24,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 
         private IEnumerator ActivateSpellAfter(float delay)
         {
-            yield return new WaitForSeconds(delay);
+            yield return Utilities.WaitForSeconds.Wait(delay);
             _minionsSpawnSpell.Activate();
         }
 

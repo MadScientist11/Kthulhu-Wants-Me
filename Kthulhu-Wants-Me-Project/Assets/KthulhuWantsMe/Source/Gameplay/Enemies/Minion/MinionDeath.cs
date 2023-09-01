@@ -5,17 +5,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 {
     public class MinionDeath : MonoBehaviour
     {
-        [SerializeField] private EnemyHealth _enemyHealth;
+        [SerializeField] private MinionHealth _enemyHealth;
         [SerializeField] private MinionAIBrain _minionAIBrain;
 
         private void Start()
         {
-            _enemyHealth.OnDied += OnDied;
+            _enemyHealth.Died += OnDied;
         }
 
         private void OnDestroy()
         {
-            _enemyHealth.OnDied -= OnDied;
+            _enemyHealth.Died -= OnDied;
         }
 
         private void OnDied()

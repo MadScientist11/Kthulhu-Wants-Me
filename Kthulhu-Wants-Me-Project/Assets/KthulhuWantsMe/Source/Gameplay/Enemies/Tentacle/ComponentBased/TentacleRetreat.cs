@@ -2,6 +2,7 @@
 using System.Collections;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 {
@@ -12,16 +13,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleEmergence _tentacleEmergence;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
-        [SerializeField] private EnemyHealth _enemyHealth;
+        [SerializeField] private TentacleHealth _tentacleHealth;
 
         private void Start()
         {
-            _enemyHealth.OnDied += Retreat;
+            _tentacleHealth.Died += Retreat;
         }
 
         private void OnDestroy()
         {
-            _enemyHealth.OnDied -= Retreat;
+            _tentacleHealth.Died -= Retreat;
         }
 
         private void Retreat()

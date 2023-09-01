@@ -91,7 +91,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             while (true)
             {
                 SpawnPortal();
-                yield return new WaitForSeconds(5f);
+                yield return Utilities.WaitForSeconds.Wait(20f);
             }
         }
 

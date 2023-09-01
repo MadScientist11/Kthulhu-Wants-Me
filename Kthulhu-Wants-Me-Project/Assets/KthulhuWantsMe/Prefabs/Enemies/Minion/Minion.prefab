@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -2179128748547752395}
   - component: {fileID: 7277809355919913474}
   - component: {fileID: 5780975104130917406}
-  - component: {fileID: 2481892175170321686}
+  - component: {fileID: 3310733626822108890}
   - component: {fileID: 7689057061223986462}
   - component: {fileID: 2809151243320649145}
   - component: {fileID: 6389396322317099540}
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minionFollow: {fileID: 6389396322317099540}
   _minionAttack: {fileID: 6052406462669988158}
---- !u!114 &2481892175170321686
+--- !u!114 &3310733626822108890
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3777951966961791017}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fce97dacddf46af95c48d945b73a082, type: 3}
+  m_Script: {fileID: 11500000, guid: 16f3b15a37f74769af27cb89f42018d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7689057061223986462
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minionAIBrain: {fileID: 5780975104130917406}
-  _enemyHealth: {fileID: 2481892175170321686}
+  _minionHealth: {fileID: 3310733626822108890}
 --- !u!114 &746340338439813629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,5 +302,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d721a3247e47f498121c375134d578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyHealth: {fileID: 2481892175170321686}
+  _enemyHealth: {fileID: 3310733626822108890}
   _minionAIBrain: {fileID: 5780975104130917406}

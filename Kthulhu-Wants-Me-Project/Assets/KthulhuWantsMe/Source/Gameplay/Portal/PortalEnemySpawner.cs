@@ -35,7 +35,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Portal
         {
             if (_createdEnemy == null)
             {
-                _enemyType = EnumExtensions<EnemyType>.Random;
+                _enemyType = EnemyType.Tentacle;
                 _createdEnemy = _gameFactory.CreateEnemy(_tentacleSpawnPoint.position, _tentacleSpawnPoint.rotation,
                     _enemyType);
                 _createdEnemy.transform.SetParent(transform);
@@ -68,7 +68,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Portal
         private void TentacleOnEnable()
         {
             _createdEnemy.GetComponent<TentacleEmergence>().Emerge(_tentacleSpawnPoint.position, transform.position);
-            _createdEnemy.GetComponent<EnemyHealth>().RestoreHealth();
+            _createdEnemy.GetComponent<Health>().RestoreHp();
             _createdEnemy.GetComponent<TentacleRetreat>().OnRetreated += ClosePortal;
         }
 

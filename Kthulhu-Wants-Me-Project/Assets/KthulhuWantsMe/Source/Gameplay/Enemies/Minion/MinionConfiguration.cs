@@ -6,5 +6,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     public class MinionConfiguration : ScriptableObject
     {
         public GameObject MinionPrefab;
+        public float MaxHealth;
     }
 }

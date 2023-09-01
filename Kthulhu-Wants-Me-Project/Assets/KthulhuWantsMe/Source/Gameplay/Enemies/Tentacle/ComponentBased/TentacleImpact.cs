@@ -4,17 +4,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 {
     public class TentacleImpact : MonoBehaviour
     {
-        [SerializeField] private EnemyHealth _enemyHealth;
+        [SerializeField] private TentacleHealth _tentacleHealth;
         [SerializeField] private TentacleAnimator _tentacleAnimator;
 
         private void Start()
         {
-            _enemyHealth.OnHealthChanged += ReceiveDamageImpact;
+            _tentacleHealth.Changed += ReceiveDamageImpact;
         }
 
         private void OnDestroy()
         {
-            _enemyHealth.OnHealthChanged -= ReceiveDamageImpact;
+            _tentacleHealth.Changed -= ReceiveDamageImpact;
         }
 
         private void ReceiveDamageImpact(float damage)

@@ -1,5 +1,4 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
@@ -7,20 +6,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     public class MinionAttack : MonoBehaviour, IDamageProvider
     {
         [SerializeField] private MinionAIBrain _minionAIBrain;
-        [SerializeField] private EnemyHealth _enemyHealth;
+        [SerializeField] private MinionHealth _minionHealth;
 
         private float _attackCooldown;
         private const float AttackCooldownTime = 2f;
 
         private void Start()
         {
-            _enemyHealth.OnHealthChanged += OnHealthChanged;
+            _minionHealth.TookDamage += OnTookDamage;
         }
 
         private void OnDestroy()
         {
-            _enemyHealth.OnHealthChanged -= OnHealthChanged;
-
+            _minionHealth.TookDamage -= OnTookDamage;
         }
 
         private void Update()
@@ -46,10 +44,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
             hitObject.TakeDamage(ProvideDamage());
         }
 
-        private void OnHealthChanged(float health)
-        {
+        private void OnTookDamage() => 
             ResetCooldown();
-        }
 
         private void ResetCooldown()
         {

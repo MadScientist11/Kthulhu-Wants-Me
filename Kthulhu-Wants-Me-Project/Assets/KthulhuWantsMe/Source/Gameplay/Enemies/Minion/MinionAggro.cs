@@ -9,7 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     public class MinionAggro : MonoBehaviour
     {
         [SerializeField] private MinionAIBrain _minionAIBrain;
-        
+
         private PlayerFacade _player;
 
         [Inject]
@@ -17,26 +17,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
         {
             _player = gameFactory.Player;
         }
-        
+
         private void Update()
         {
-            if (PlayerInRange())
-            {
-                _minionAIBrain.HasAggro = true;
-                _minionAIBrain.IsInAttackRange = PlayerIsInAttackRange();
-            }
-            else
-            {
-                _minionAIBrain.HasAggro = false;
-            }
+            _minionAIBrain.HasAggro = true;
+            _minionAIBrain.IsInAttackRange = PlayerIsInAttackRange();
         }
-        
+
         private bool PlayerInRange()
         {
             return DistanceToPlayer() < 5f;
         }
-        
-        private bool PlayerIsInAttackRange() => 
+
+        private bool PlayerIsInAttackRange() =>
             DistanceToPlayer() < 2f;
 
         private float DistanceToPlayer()

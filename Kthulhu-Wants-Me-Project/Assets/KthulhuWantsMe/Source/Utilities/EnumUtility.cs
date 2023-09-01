@@ -2,7 +2,7 @@
 
 namespace KthulhuWantsMe.Source.Utilities
 {
-    public class EnumExtensions<T> where T : struct, IConvertible
+    public class EnumUtility<T> where T : struct, IConvertible
     {
         public static T Random
         {
