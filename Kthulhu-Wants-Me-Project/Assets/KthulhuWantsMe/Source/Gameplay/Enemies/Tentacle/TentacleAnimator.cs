@@ -9,15 +9,8 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
-    public class TentacleAnimator : MonoBehaviour, IAnimationStateReader
+    public class TentacleAnimator : MonoBehaviour
     {
-        public TentacleState CurrentState { get; private set; }
-
-        public bool IsAttacking => CurrentState == TentacleState.Attack;
-
-        public Action<TentacleState> OnStateEntered;
-        public Action<TentacleState> OnStateExited;
-
         [SerializeField] private Renderer _tentacleRenderer;
         [SerializeField] private Animator _tentacleAnimator;
         [SerializeField] private Rig _tentacleRig;
@@ -130,27 +123,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _tentacleRig.weight = 0;
         }
 
-        public void EnteredState(int stateHash)
-        {
-            CurrentState = StateFor(stateHash);
-            OnStateEntered?.Invoke(CurrentState);
-        }
-
-        public void ExitedState(int stateHash) => 
-            OnStateExited?.Invoke(CurrentState);
-
-        private TentacleState StateFor(int stateHash)
-        {
-            TentacleState state;
-            
-            if (stateHash == _idleStateHash)
-                state = TentacleState.Idle;
-            else if (stateHash == _attackStateHash)
-                state = TentacleState.Attack;
-            else
-                state = TentacleState.Unknown;
-            
-            return state;
-        }
+       
     }
 }

@@ -1,79 +1,118 @@
-using FSM;
-using KthulhuWantsMe.Source.Gameplay.Player;
+﻿using System.Collections;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
 {
     public class TentacleAIBrain : MonoBehaviour
     {
-        [SerializeField] private TentacleFacade _tentacleFacade;
-
-        private PlayerFacade _player;
-
-        private TentacleState _currentState;
-        private StateMachine _tentacleFsm;
-
-        [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public bool IsAttacking
         {
-            _player = gameFactory.Player;
+            get => _isAttacking;
+            set
+            {
+                _isAttacking = value;
+                
+                if (!_isAttacking)
+                    ResetCooldown();
+            }
         }
 
-        private void Start()
+        public bool Stunned
         {
-            _tentacleFsm = new StateMachine();
-            Debug.Log(_player);
-            InitializeStates(_tentacleFsm, new TentacleStatesFactory(_tentacleFacade, _player));
-            SetUpTransitions(_tentacleFsm);
-            _tentacleFsm.Init();
+            get => _stunned;
+            set
+            {
+                _stunned = value;
+                if (_stunned)
+                {
+                    StartCoroutine(StunWearOff());
+                }
+            }
+        }
+
+        public bool HoldsPlayer { get; set; }
+
+        public bool BlockProcessing { get; set; }
+        
+
+        [SerializeField] private TentacleAttack _tentacleAttack;
+        [SerializeField] private TentacleGrabAbility _tentacleGrabAbility;
+        [SerializeField] private TentacleAggro _tentacleAggro;
+        [SerializeField] private TentacleEmergence _tentacleEmergence;
+        [SerializeField] private TentacleRetreat _tentacleRetreat;
+
+        private float _attackCooldown;
+        private bool _isAttacking;
+        private bool _stunned;
+
+        private TentacleConfiguration _tentacleConfig;
+
+        [Inject]
+        public void Construct(IDataProvider dataProvider)
+        {
+            _tentacleConfig = dataProvider.TentacleConfig;
         }
 
         private void Update()
         {
-            Debug.Log(_tentacleFsm.ActiveStateName);
-            _tentacleFsm.OnLogic();
+            if (BlockProcessing)
+                return;
+
+            UpdateAttackCooldown();
+            DecideAttackStrategy();
         }
 
-        private float DistanceToPlayer()
+        public void ResetBrain()
         {
-            return Vector3.Distance(_player.transform.position, transform.position);
+            IsAttacking = false;
+            Stunned = false;
+            HoldsPlayer = false;
+            BlockProcessing = false;
+            ResetCooldown();
         }
 
-        private void InitializeStates(StateMachine fsm, TentacleStatesFactory statesFactory)
+        private void DecideAttackStrategy()
         {
-            fsm.AddState(TentacleState.Idle.ToString(), statesFactory.Create(TentacleState.Idle));
-            fsm.AddState(TentacleState.GrabPlayer.ToString(), statesFactory.Create(TentacleState.GrabPlayer));
-            fsm.AddState(TentacleState.Stunned.ToString(), statesFactory.Create(TentacleState.Stunned));
-            fsm.AddState(TentacleState.Attack.ToString(), statesFactory.Create(TentacleState.Attack));
+            if (CanNotAttack())
+                return;
 
-            fsm.SetStartState(TentacleState.Idle.ToString());
+
+            if (GrabAbilityConditionsFulfilled())
+            {
+                _tentacleGrabAbility.GrabPlayer();
+                return;
+            }
+
+       
+            if (CanDoBasicAttack())
+                _tentacleAttack.PerformAttack();
         }
 
-        private void SetUpTransitions(StateMachine fsm)
+        private IEnumerator StunWearOff()
         {
-            fsm.AddTransition(new Transition(
-                TentacleState.Idle.ToString(),
-                TentacleState.Attack.ToString(),
-                (transition) => DistanceToPlayer() < 5f
-            ));
-            
-            fsm.AddTransition(new Transition(
-                TentacleState.Attack.ToString(),
-                TentacleState.Idle.ToString()
-            ));
-
-            fsm.AddTransition(new Transition(
-                TentacleState.GrabPlayer.ToString(),
-                TentacleState.Stunned.ToString(),
-                (transition) => Input.GetKeyDown(KeyCode.Q)
-            ));
-
-            fsm.AddTransition(new Transition(
-                TentacleState.Stunned.ToString(),
-                TentacleState.Idle.ToString()
-            ));
+            yield return new WaitForSeconds(_tentacleConfig.StunWearOffTime);
+            Stunned = false;
+            ResetCooldown();
         }
+
+        private bool CanNotAttack() => 
+            HoldsPlayer || Stunned;
+
+        private bool CanDoBasicAttack() =>
+            CooldownIsUp() && !IsAttacking && _tentacleAggro.HasAggro;
+
+        private void UpdateAttackCooldown() =>
+            _attackCooldown -= Time.deltaTime;
+
+        private bool CooldownIsUp() =>
+            _attackCooldown <= 0;
+
+        private void ResetCooldown() =>
+            _attackCooldown = _tentacleConfig.AttackCooldown;
+
+        private bool GrabAbilityConditionsFulfilled() => 
+            Random.value < _tentacleConfig.GrabAbilityChance && CanDoBasicAttack();
     }
 }
