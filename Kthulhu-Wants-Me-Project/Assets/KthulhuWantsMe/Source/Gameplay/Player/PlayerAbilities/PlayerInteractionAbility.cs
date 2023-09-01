@@ -33,7 +33,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             {
                 CurrentInteractionAbility = _playerInventoryAbility;
                 _playerInventoryAbility.PickUpItem(item);
+                return;
             }
+            
+            interactable.RespondTo(this);
         }
     }
 }

@@ -23,6 +23,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float MoveSpeed;
         [BoxGroup("Locomotion")]
         public Vector3 Gravity = new(0, -30f, 0);
+        [BoxGroup("Locomotion")]
+        public float DashStrength;
         
         [HorizontalLine(color: EColor.Violet)]
         [BoxGroup("Attack")]
@@ -43,6 +45,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float AirAccelerationSpeed = 5f;
         [Foldout("MovementInDepth")]
         public float Drag = 0.1f;
-        
+
     }
 }

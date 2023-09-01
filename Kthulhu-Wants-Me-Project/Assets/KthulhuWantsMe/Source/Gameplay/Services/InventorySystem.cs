@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         IPickable CurrentItem { get; }
         void ReplaceItem(IPickable item,Action<IPickable> onItemAdded, Action<IPickable> onItemRemoved);
         void SwitchItem(int index, Action<IPickable, IPickable> onItemSwitched);
+        void RemoveItem(IPickable item);
     }
 
     public class InventorySystem : IInventorySystem

@@ -1,12 +1,9 @@
-using System;
 using Freya;
 using KinematicCharacterController;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
@@ -21,7 +18,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         [SerializeField] private KinematicCharacterMotor _motor;
         [SerializeField] private PlayerAnimator _playerAnimator;
-        [FormerlySerializedAs("_playerTentacleInteraction")] [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
 
         private bool _blockMovement;
 
@@ -38,12 +34,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _playerConfig = dataProvider.PlayerConfig;
             _inputService = inputService;
             _movementController = new PlayerMovementController(_motor, _playerConfig);
-            inputService.GameplayScenario.Dash += PerformDash;
-        }
-
-        private void OnDestroy()
-        {
-            _inputService.GameplayScenario.Dash -= PerformDash;
         }
 
         private void Update()
@@ -86,15 +76,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 .XZ();
 
             _movementController.SetInputs(movementInput, lookDirection.normalized);
-        }
-
-        private void PerformDash()
-        {
-            //_locomotion.Motor.ForceUnground(0.1f);
-            if(tentacleGrabAbilityResponse.Grabbed || !IsMoving)
-                return;
-            
-            _movementController.AddVelocity(transform.forward * 50f);
         }
 
         private bool CanMove()

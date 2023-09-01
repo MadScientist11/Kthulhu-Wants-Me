@@ -1,5 +1,7 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
+﻿using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.SOData;
+using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
@@ -16,7 +18,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
         {
             RemainingUses = ConsumableData.MaxUses;
         }
-      
+
+        public void RespondTo(PlayerConsumeAbility ability)
+        {
+            //destroy
+        }
+
         public void Consume()
         {
             RemainingUses--;

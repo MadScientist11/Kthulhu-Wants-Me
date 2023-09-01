@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items.Story;
-using KthulhuWantsMe.Source.Gameplay.Interactables.SOData;
-using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
@@ -13,10 +11,8 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables
 {
-    public class PuzzleContainer : MonoBehaviour, IInteractable, IInjectable
+    public class PuzzleContainer : InteractableItem, IInjectable
     {
-        public InteractableData InteractableData { get; }
-        public Transform Transform => transform;
         private Stack<Type> _itemsInOrder;
         private IInventorySystem _inventorySystem;
 
@@ -32,18 +28,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables
             });
         }
 
-        public void RespondTo(PlayerHighlightAbility ability)
-        {
-        }
 
-        public void RespondTo(PlayerInteractionAbility ability)
+        public override void RespondTo(PlayerInteractionAbility ability)
         {
             if (_inventorySystem.CurrentItem.Transform.TryGetComponent(_itemsInOrder.Peek(), out Component _))
             {
                 if (_inventorySystem.CurrentItem is IConsumable consumable)
                 {
                     Debug.Log("Pass 2");
-
+                    _inventorySystem.RemoveItem(consumable);
                     consumable.Consume();
                     _itemsInOrder.Pop();
                 }

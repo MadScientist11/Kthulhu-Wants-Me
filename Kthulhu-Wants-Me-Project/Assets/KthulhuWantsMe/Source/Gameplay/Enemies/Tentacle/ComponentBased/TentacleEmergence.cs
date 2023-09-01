@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Spell;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
@@ -8,6 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
         public Vector3 InitialPoint { get; private set; }
 
         [SerializeField] private TentacleAnimator _tentacleAnimator;
+        [SerializeField] private MinionsSpawnSpell _minionsSpawnSpell;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
 
 
@@ -17,6 +19,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
             _tentacleAIBrain.ResetBrain();
             _tentacleAIBrain.BlockProcessing = true;
             StartCoroutine(EmergeFromPortal(from, to));
+            StartCoroutine(ActivateSpellAfter(4f));
+        }
+
+        private IEnumerator ActivateSpellAfter(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            _minionsSpawnSpell.Activate();
         }
 
         private IEnumerator EmergeFromPortal(Vector3 from, Vector3 to)
