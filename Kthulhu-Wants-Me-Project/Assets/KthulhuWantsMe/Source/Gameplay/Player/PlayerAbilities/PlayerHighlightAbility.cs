@@ -2,10 +2,8 @@
 using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
-using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 {
@@ -14,11 +12,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         Highlight = 0,
         CancelHighlight = 1,
     }
-    
+
     public class PlayerHighlightAbility : MonoBehaviour, IAbility
     {
         public HighlightState HighlightState { get; private set; }
-        public IInteractable MouseHoverHighlightedInteractable { get; private set; }
+        public IInteractable MouseHoverInteractable { get; private set; }
         public List<IInteractable> InteractablesInZone => _interactablesInZone;
 
 
@@ -27,14 +25,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private readonly RaycastHit[] _results = new RaycastHit[1];
 
         private List<IInteractable> _interactablesInZone = new();
-        
-        private IInventorySystem _inventorySystem;
-
-        [Inject]
-        public void Construct(IInventorySystem inventorySystem)
-        {
-            _inventorySystem = inventorySystem;
-        }
 
         private void Start()
         {
@@ -50,42 +40,95 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void OnInteractableInside(Collider collider)
         {
-            if (collider.TryGetComponent(out IInteractable interactable)) 
+            if (collider.TryGetComponent(out IInteractable interactable))
                 _interactablesInZone.Add(interactable);
         }
+
         private void OnInteractableExit(Collider collider)
         {
-            if (collider.TryGetComponent(out IInteractable interactable)) 
+            if (collider.TryGetComponent(out IInteractable interactable))
                 _interactablesInZone.Remove(interactable);
         }
-        
+
         private void Update()
         {
-            HighlightObjectOnMouseHover();
+            HighlightOnMouseHover();
             ProcessInteractablesInInteractionZone();
+            Debug.Log(MouseHoverInteractable);
         }
 
         private void ProcessInteractablesInInteractionZone()
         {
-            _interactablesInZone.RemoveAll(i => i == null);
-            
+            HandleEquippedItems();
+
             foreach (IInteractable interactable in _interactablesInZone)
             {
+                HighlightState newState = InteractableIsVisible(interactable)
+                    ? HighlightState.Highlight
+                    : HighlightState.CancelHighlight;
                 
-                if (ShouldHighlightInteractable(interactable))
-                {
-                    HighlightState = HighlightState.Highlight;
-                    interactable.RespondTo(this);
-                }
-                else
-                {
-                    HighlightState = HighlightState.CancelHighlight;
-                    interactable.RespondTo(this);
-                }
+                ChangeStateFor(interactable, newState);
             }
         }
 
-        private bool ShouldHighlightInteractable(IInteractable interactable)
+        private void HandleEquippedItems()
+        {
+            _interactablesInZone.RemoveAll(i =>
+            {
+                if (i is IPickable { Equipped: true } item)
+                {
+                    ChangeStateFor(item, HighlightState.CancelHighlight);
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        private void HighlightOnMouseHover()
+        {
+            Ray worldRay = MousePointer.GetWorldRay(UnityEngine.Camera.main);
+            if (HitInteractable(worldRay, out IInteractable interactable))
+            {
+                Debug.Log($"Hit Interactable {interactable.Transform.name}");
+                if (InteractableAlreadyHighlighted(interactable)
+                    || InteractableIsEquippedItem(interactable)
+                    || InteractableIsOutOfReach(interactable))
+                    return;
+
+                MouseHoverInteractable = interactable;
+                ChangeStateFor(MouseHoverInteractable, HighlightState.Highlight);
+            }
+            else
+            {
+                if (MouseHoverInteractable != null)
+                    ChangeStateFor(MouseHoverInteractable, HighlightState.CancelHighlight);
+                Debug.Log("Mouse Lost");
+
+                MouseHoverInteractable = null;
+            }
+
+            bool InteractableAlreadyHighlighted(IInteractable i) =>
+                MouseHoverInteractable != null && i.Transform == MouseHoverInteractable.Transform;
+
+            bool InteractableIsOutOfReach(IInteractable i) =>
+                !_interactablesInZone.Contains(i);
+
+            bool InteractableIsEquippedItem(IInteractable i)
+            {
+                if (i is IPickable item)
+                    return item.Equipped;
+                return false;
+            }
+        }
+
+        private void ChangeStateFor(IInteractable interactable, HighlightState highlightState)
+        {
+            HighlightState = highlightState;
+            interactable.RespondTo(this);
+        }
+
+        private bool InteractableIsVisible(IInteractable interactable)
         {
             Vector3 playerPos = transform.position;
             Vector3 interactablePos = interactable.Transform.position;
@@ -99,51 +142,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             return lookAtItemIndicator > 0.75f;
         }
 
-        private void HighlightObjectOnMouseHover()
-        {
-            Ray worldRay = MousePointer.GetWorldRay(UnityEngine.Camera.main);
-            if (HitInteractable(worldRay, out RaycastHit hit))
-            {
-                if (hit.transform.TryGetComponent(out IInteractable interactable))
-                {
-                    if (InteractableAlreadyHighlighted(interactable) 
-                        || InteractableIsEquippedItem(interactable)
-                        || InteractableIsOutOfReach(interactable))
-                        return;
-                    
-                    
-                    MouseHoverHighlightedInteractable = interactable;
-                    HighlightState = HighlightState.Highlight;
-                    interactable.RespondTo(this);
-                }
-            }
-            else
-            {
-                HighlightState = HighlightState.CancelHighlight;
-                MouseHoverHighlightedInteractable?.RespondTo(this);
-                MouseHoverHighlightedInteractable = null;
-            }
-
-            bool InteractableAlreadyHighlighted(IInteractable interactable) => 
-                MouseHoverHighlightedInteractable != null && interactable.Transform == MouseHoverHighlightedInteractable.Transform;
-
-            bool InteractableIsOutOfReach(IInteractable interactable) => 
-                !_interactablesInZone.Contains(interactable);
-
-            bool InteractableIsEquippedItem(IInteractable interactable)
-            {
-                if(interactable is IPickable item)
-                    return item.Equipped;
-                return false;
-            }
-        }
-
-        private bool HitInteractable(Ray worldRay, out RaycastHit interactable)
+        private bool HitInteractable(Ray worldRay, out IInteractable interactable)
         {
             int interactablesMask = LayerMask.GetMask("Interactable", "Item");
-            int count = Physics.RaycastNonAlloc(worldRay, _results, 100f, interactablesMask);
-            interactable = _results.FirstOrDefault();
-            return count > 0;
+            int hitCount = Physics.RaycastNonAlloc(worldRay, _results, 100f, interactablesMask);
+            RaycastHit hit = _results.FirstOrDefault();
+
+            if (hitCount > 0 && hit.transform.TryGetComponent(out interactable))
+                return true;
+
+            interactable = null;
+            return false;
         }
     }
 }

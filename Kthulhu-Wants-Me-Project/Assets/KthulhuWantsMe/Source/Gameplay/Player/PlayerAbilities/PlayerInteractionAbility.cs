@@ -16,9 +16,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (_playerHighlightAbility.MouseHoverHighlightedInteractable != null)
+                if (_playerHighlightAbility.MouseHoverInteractable != null)
                 {
-                    ProcessHighlightedInteractable(_playerHighlightAbility.MouseHoverHighlightedInteractable);
+                    Debug.Log(_playerHighlightAbility.MouseHoverInteractable);
+                    ProcessHighlightedInteractable(_playerHighlightAbility.MouseHoverInteractable);
                     return;
                 }
 
