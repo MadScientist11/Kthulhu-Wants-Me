@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System.Collections.Generic;
+using Cinemachine;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -33,7 +34,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float AttackEffectiveDistance;
         [BoxGroup("Attack")]
         public float BaseDamage;
-        
+        [BoxGroup("Attack")]
+        public List<Attack> AttackComboSet;
         
         [Foldout("MovementInDepth")]
         public float StableMovementSharpness = 15;

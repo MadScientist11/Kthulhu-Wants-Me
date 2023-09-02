@@ -13,16 +13,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             get => _currentHealth;
             private set
             {
-                if(value < _currentHealth)
+                float newHealth = Mathf.Max(0, value);
+                
+                if(newHealth < _currentHealth)
                     TookDamage?.Invoke();
+                
+                _currentHealth = newHealth;
                     
-                _currentHealth = value;
                 Changed?.Invoke(_currentHealth);
 
-                if (_currentHealth == 0)
-                {
+                if (_currentHealth == 0) 
                     Died?.Invoke();
-                }
             }
         }
 

@@ -90,7 +90,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             Ray worldRay = MousePointer.GetWorldRay(UnityEngine.Camera.main);
             if (HitInteractable(worldRay, out IInteractable interactable))
             {
-                Debug.Log($"Hit Interactable {interactable.Transform.name}");
                 if (InteractableAlreadyHighlighted(interactable)
                     || InteractableIsEquippedItem(interactable)
                     || InteractableIsOutOfReach(interactable))
@@ -103,7 +102,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             {
                 if (MouseHoverInteractable != null)
                     ChangeStateFor(MouseHoverInteractable, HighlightState.CancelHighlight);
-                Debug.Log("Mouse Lost");
 
                 MouseHoverInteractable = null;
             }

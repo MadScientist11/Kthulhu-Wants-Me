@@ -1,97 +1,62 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
-using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 using Vertx.Debugging;
 
-namespace KthulhuWantsMe.Source.Gameplay.Player
+namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 {
-    public class PlayerAttack : MonoBehaviour, IDamageProvider, IDamageSource
+    public class PlayerAttack : Entity.Attack
     {
-        public Transform DamageSourceObject => transform;
-
+        protected override float BaseDamage => _playerConfiguration.BaseDamage;
+        
         [SerializeField] private PlayerAnimator _playerAnimator;
-        [FormerlySerializedAs("_playerTentacleInteraction")] [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
-        [SerializeField] private List<Attack> _attackComboSet;
-
-        private IInventorySystem _inventorySystem;
-        private IInputService _inputService;
-        private PlayerConfiguration _playerConfiguration;
-        private IPlayerStats _playerStats;
-
+        [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
+        
         private bool _queuedAttack;
         private int _comboAttackIndex;
+        private WeaponItem _activeWeapon;
 
+        private PlayerConfiguration _playerConfiguration;
+        private IInputService _inputService;
+        private IInventorySystem _inventorySystem;
 
         [Inject]
-        public void Construct(IInventorySystem inventorySystem, IInputService inputService, IDataProvider dataProvider,
-            IPlayerStats playerStats)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, IInventorySystem inventorySystem)
         {
-            _playerStats = playerStats;
-            _inputService = inputService;
             _inventorySystem = inventorySystem;
+            _inputService = inputService;
             _playerConfiguration = dataProvider.PlayerConfig;
             
             _inputService.GameplayScenario.Attack += PerformAttack;
-
         }
 
-        private void OnDestroy()
-        {
+        private void OnDestroy() => 
             _inputService.GameplayScenario.Attack -= PerformAttack;
-        }
 
-        public float ProvideDamage()
-        {
-            return _playerConfiguration.BaseDamage;
-        }
+        public override float ProvideDamage() => 
+            base.ProvideDamage() + _activeWeapon.WeaponData.BaseDamage + _playerConfiguration.AttackComboSet[_comboAttackIndex].Damage;
 
-        private void PerformAttack()
-        {
-            if (_inventorySystem.CurrentItem is not WeaponItem weaponItem)
-                return;
-
-
-            WeaponBase weapon = weaponItem.GetComponent<WeaponBase>();
-            PerformHit(weapon);
-        }
-
-        private void PerformHit(WeaponBase weapon)
-        {
-            if (_playerAnimator.IsAttacking && !tentacleGrabAbilityResponse.Grabbed)
-            {
-                _queuedAttack = true;
-                return;
-            }
-
-            _playerAnimator.PlayAttack(_attackComboSet[_comboAttackIndex].AttackOverrideController);
-        }
-
-        private void OnAttack()
+        protected override void OnAttack()
         {
             D.raw(new Shape.Sphere(AttackStartPoint(), _playerConfiguration.AttackRadius), 1f);
 
             if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _playerConfiguration.AttackRadius, out IDamageable damageable))
                 return;
 
-            damageable.TakeDamage(_playerStats.ProvideDamage() + _attackComboSet[_comboAttackIndex].Damage);
+            ApplyDamage(damageable);
         }
 
-        private void OnAttackEnd()
+        protected override void OnAttackEnd()
         {
             if (_queuedAttack)
             {
                 _queuedAttack = false;
                 _comboAttackIndex++;
-                _comboAttackIndex %= _attackComboSet.Count;
+                _comboAttackIndex %= _playerConfiguration.AttackComboSet.Count;
                 PerformAttack();
                 return;
             }
@@ -99,10 +64,34 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _comboAttackIndex = 0;
         }
 
-        private Vector3 AttackStartPoint()
+        private void PerformAttack()
         {
-            return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-                   transform.forward * _playerConfiguration.AttackEffectiveDistance;
+            _activeWeapon = GetActiveWeapon();
+            
+            if (CantAttack())
+            {
+                _queuedAttack = true;
+                return;
+            }
+
+            AnimatorOverrideController attack = _playerConfiguration.AttackComboSet[_comboAttackIndex].AttackOverrideController;
+            _playerAnimator.PlayAttack(attack);
         }
+        
+        
+        private Vector3 AttackStartPoint() =>
+            new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) + 
+            transform.forward * _playerConfiguration.AttackEffectiveDistance;
+
+        private WeaponItem GetActiveWeapon()
+        {
+            if (_inventorySystem.CurrentItem is WeaponItem weaponItem)
+                return weaponItem;
+            
+            return null;
+        }
+
+        private bool CantAttack() => 
+            _playerAnimator.IsAttacking || tentacleGrabAbilityResponse.Grabbed || _activeWeapon == null;
     }
 }

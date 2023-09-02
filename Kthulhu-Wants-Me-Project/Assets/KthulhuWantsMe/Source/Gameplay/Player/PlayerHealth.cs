@@ -1,51 +1,42 @@
-﻿using System;
-using System.Collections;
-using KthulhuWantsMe.Source.Gameplay.DamageSystem;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    public class PlayerHealth : MonoBehaviour, IDamageable
+    public class PlayerHealth : Health
     {
-        public event Action Died;
+        public override float MaxHealth => _playerConfiguration.MaxHealth;
         
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         
         private PlayerMovementController _movementController;
+
         private PlayerConfiguration _playerConfiguration;
-
-        private float _currentHealth;
-
-        [Inject]
-        public void Construct(IDataProvider dataProvider)
-        {
-            _playerConfiguration = dataProvider.PlayerConfig;
-        }
         
-        private void Start()
-        {
+        [Inject]
+        public void Construct(IDataProvider dataProvider) => 
+            _playerConfiguration = dataProvider.PlayerConfig;
+        
+        private void Start() => 
             _movementController = _playerLocomotion.MovementController;
-            _currentHealth = _playerConfiguration.MaxHealth;
-        }
 
-        public void TakeDamage(float damage)
+        public override void TakeDamage(float damage)
         {
-            _currentHealth -= damage;
+            base.TakeDamage(damage);
 
-            if (_currentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
                 Die();
                 return;
             }
 
-            ReceiveDamage();
+            ReceiveDamageVisual();
         }
-
-        private void ReceiveDamage()
+        
+        private void ReceiveDamageVisual()
         {
             _playerAnimator.PlayImpact();
             _playerLocomotion.BlockMovement(.5f);
@@ -53,16 +44,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _movementController.KillVelocity();
         }
 
-        private void AddKnockback()
-        {
+        private void AddKnockback() => 
             _movementController.AddVelocity(-transform.forward * 30f);
-        }
-        
+
         private void Die()
         {
             _playerAnimator.PlayDie();
             _movementController.ToggleMotor(false);
-            Died?.Invoke();
         }
     }
 }
