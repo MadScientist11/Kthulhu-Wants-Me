@@ -106,7 +106,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             {
                 if (hit.transform.TryGetComponent(out IInteractable interactable))
                 {
-                    if (InteractableAlreadyHighlighted(interactable) || InteractableIsEquippedItem(interactable))
+                    if (InteractableAlreadyHighlighted(interactable) 
+                        || InteractableIsEquippedItem(interactable)
+                        || InteractableIsOutOfReach(interactable))
                         return;
                     
                     
@@ -124,6 +126,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
             bool InteractableAlreadyHighlighted(IInteractable interactable) => 
                 MouseHoverHighlightedInteractable != null && interactable.Transform == MouseHoverHighlightedInteractable.Transform;
+
+            bool InteractableIsOutOfReach(IInteractable interactable) => 
+                !_interactablesInZone.Contains(interactable);
 
             bool InteractableIsEquippedItem(IInteractable interactable)
             {

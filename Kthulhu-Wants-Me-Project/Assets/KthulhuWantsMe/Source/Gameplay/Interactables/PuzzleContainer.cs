@@ -29,6 +29,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables
         }
 
 
+
         public override void RespondTo(PlayerInteractionAbility ability)
         {
             if (_inventorySystem.CurrentItem.Transform.TryGetComponent(_itemsInOrder.Peek(), out Component _))

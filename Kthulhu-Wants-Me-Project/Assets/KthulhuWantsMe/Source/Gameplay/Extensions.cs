@@ -13,12 +13,12 @@ namespace KthulhuWantsMe.Source.Gameplay
             color.a = value;
             material.SetColor(cachedColorProperty, color);
         }
-        
+
         public static bool IsDamageable(this Collider obj, out IDamageable damageable)
         {
             return obj.TryGetComponent(out damageable);
         }
-        
+
         public static bool IsWeapon(this IPickable item, out IDamageProvider damageProvider)
         {
             if (item is not IWeapon || !item.Transform.TryGetComponent(out damageProvider))
@@ -26,17 +26,28 @@ namespace KthulhuWantsMe.Source.Gameplay
                 damageProvider = null;
                 return false;
             }
+
             return true;
         }
-        
+
         public static void SwitchOn(this Behaviour behaviour)
         {
             behaviour.enabled = true;
         }
-        
+
         public static void SwitchOff(this Behaviour behaviour)
         {
             behaviour.enabled = false;
+        }
+
+        public static void SwitchOn(this GameObject go)
+        {
+            go.SetActive(true);
+        }
+
+        public static void SwitchOff(this GameObject go)
+        {
+            go.SetActive(false);
         }
     }
 }

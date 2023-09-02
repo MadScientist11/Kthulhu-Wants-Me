@@ -435,6 +435,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 934c3b06bcff4056b140b966c39a7d74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _outlineWidth: 120
+  _offsetZ: 0
 --- !u!1 &368452431
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,7 +880,6 @@ GameObject:
   - component: {fileID: 782462535}
   - component: {fileID: 782462534}
   - component: {fileID: 782462533}
-  - component: {fileID: 782462532}
   - component: {fileID: 782462537}
   m_Layer: 0
   m_Name: Enemy
@@ -887,18 +888,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &782462532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782462531}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fce97dacddf46af95c48d945b73a082, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &782462533
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2125,6 +2114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff733ef9a04e4868b99bcc693f579a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _outlineWidth: 0
+  _offsetZ: 0
   <ItemData>k__BackingField: {fileID: 0}
 --- !u!1001 &1680636183
 PrefabInstance:
@@ -2318,6 +2309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb40b60b9274858b50913110faacf3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _outlineWidth: 120
+  _offsetZ: -1
   <ItemData>k__BackingField: {fileID: 0}
   <ConsumableData>k__BackingField: {fileID: 11400000, guid: d9218caf1c88cc9439b530936e28ee88,
     type: 2}
@@ -2734,6 +2727,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb40b60b9274858b50913110faacf3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _outlineWidth: 120
+  _offsetZ: -1
   <ItemData>k__BackingField: {fileID: 0}
   <ConsumableData>k__BackingField: {fileID: 11400000, guid: d9218caf1c88cc9439b530936e28ee88,
     type: 2}
@@ -2815,6 +2810,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d160b63cdf944f0a91d75f0c202edae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _outlineWidth: 0
+  _offsetZ: 0
   <ItemData>k__BackingField: {fileID: 0}
   <WeaponData>k__BackingField: {fileID: 11400000, guid: 6675ebf8c9271fa4ebee389f41636266,
     type: 2}

@@ -1,10 +1,9 @@
-﻿using System;
-using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.UI;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleUI : MonoBehaviour
     {
@@ -22,11 +21,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
         private void Awake()
         {
             _tentacleHealth.Changed += UpdateHpBar;
+            _tentacleHealth.TookDamage += _hpBar.gameObject.SwitchOn;
+            _hpBar.gameObject.SwitchOff();
         }
 
         private void OnDestroy()
         {
             _tentacleHealth.Changed -= UpdateHpBar;
+            _tentacleHealth.TookDamage -= _hpBar.gameObject.SwitchOn;
         }
 
         private void UpdateHpBar(float newValue)

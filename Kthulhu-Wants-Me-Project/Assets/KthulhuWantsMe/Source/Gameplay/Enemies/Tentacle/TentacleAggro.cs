@@ -1,10 +1,9 @@
-using System;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleAggro : MonoBehaviour
     {

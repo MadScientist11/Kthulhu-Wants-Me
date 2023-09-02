@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
-using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleRetreat : MonoBehaviour
     {

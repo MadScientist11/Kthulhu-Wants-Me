@@ -1,14 +1,9 @@
-﻿using System.Linq;
-using KthulhuWantsMe.Source.Gameplay.DamageSystem;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
-using KthulhuWantsMe.Source.Gameplay.Player;
+﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 using VContainer;
-using Vertx.Debugging;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleAttack : MonoBehaviour, IDamageProvider, IDamageSource
     {

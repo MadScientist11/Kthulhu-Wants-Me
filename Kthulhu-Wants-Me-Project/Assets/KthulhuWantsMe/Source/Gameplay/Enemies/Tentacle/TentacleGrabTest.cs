@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     [ExecuteInEditMode]
     public class TentacleGrabTest : MonoBehaviour

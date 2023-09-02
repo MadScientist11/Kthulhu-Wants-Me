@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
 using VContainer;

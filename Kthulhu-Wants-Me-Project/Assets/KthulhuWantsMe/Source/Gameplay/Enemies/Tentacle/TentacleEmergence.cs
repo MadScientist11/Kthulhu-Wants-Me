@@ -2,7 +2,7 @@
 using KthulhuWantsMe.Source.Gameplay.Enemies.Spell;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.ComponentBased
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleEmergence : MonoBehaviour
     {

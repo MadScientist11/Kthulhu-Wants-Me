@@ -10,34 +10,14 @@ using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 {
-    public class PickableItem : MonoBehaviour, IPickable
+    public class PickableItem : InteractableItem, IPickable
     {
-        [field: SerializeField] public virtual PickableData ItemData { get; set; }
         public bool Equipped { get; set; }
-
-        public InteractableData InteractableData => ItemData;
-
-        public Transform Transform => transform;
+        [field: SerializeField] public virtual PickableData ItemData { get; set; }
+        
 
 
-        public void RespondTo(PlayerHighlightAbility ability)
-        {
-            switch (ability.HighlightState)
-            {
-                case HighlightState.Highlight:
-                    GetComponent<Renderer>().material.SetFloat("_Outline_Width", 120);
-                    GetComponent<Renderer>().material.SetFloat("_Offset_Z", -1);
-                    break;
-                case HighlightState.CancelHighlight:
-                    GetComponent<Renderer>().material.SetFloat("_Outline_Width", 0);
-                    GetComponent<Renderer>().material.SetFloat("_Offset_Z", 0);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        public void RespondTo(PlayerInteractionAbility ability)
+        public override void RespondTo(PlayerInteractionAbility ability)
         {
             if (ability.CurrentInteractionAbility is not PlayerInventoryAbility playerInventoryAbility)
                 return;
