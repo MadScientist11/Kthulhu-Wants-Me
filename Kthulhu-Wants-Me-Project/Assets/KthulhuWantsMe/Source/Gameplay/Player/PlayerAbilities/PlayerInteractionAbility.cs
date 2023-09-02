@@ -16,10 +16,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (_playerHighlightAbility.HighlightedInteractable != null)
+                if (_playerHighlightAbility.MouseHoverHighlightedInteractable != null)
                 {
-                    ProcessHighlightedInteractable(_playerHighlightAbility.HighlightedInteractable);
+                    ProcessHighlightedInteractable(_playerHighlightAbility.MouseHoverHighlightedInteractable);
                     return;
+                }
+
+                if (_playerHighlightAbility.InteractablesInZone.Count > 0)
+                {
+                    ProcessHighlightedInteractable(_playerHighlightAbility.InteractablesInZone[0]);
                 }
                 // PlayerItemInteraction
                 // PlayerObjectInteraction - doors, explorable objects

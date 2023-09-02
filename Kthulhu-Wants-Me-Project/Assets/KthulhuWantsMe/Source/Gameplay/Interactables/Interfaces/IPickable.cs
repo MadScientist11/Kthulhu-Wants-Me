@@ -7,6 +7,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces
     public interface IPickable : IInteractable, IAbilityResponse<PlayerInventoryAbility>
     {
         PickableData ItemData { get; }
-
+        bool Equipped { get; set; }
     }
 }

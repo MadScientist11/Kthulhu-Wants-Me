@@ -13,14 +13,14 @@ namespace KthulhuWantsMe.Source.Gameplay.AnimatorHelpers
             base.OnStateEnter(animator, stateInfo, layerIndex, controller);
             FindReader(animator);
 
-            _stateReader.EnteredState(stateInfo.shortNameHash);
+            _stateReader?.EnteredState(stateInfo.shortNameHash);
         }
 
         public override void OnStateExit(UnityEngine.Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             base.OnStateExit(animator, stateInfo, layerIndex);
             FindReader(animator);
-            _stateReader.ExitedState(stateInfo.shortNameHash);
+            _stateReader?.ExitedState(stateInfo.shortNameHash);
             
         }
 

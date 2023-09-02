@@ -19,6 +19,7 @@ MonoBehaviour:
   MaxHealth: 100
   MoveSpeed: 5
   Gravity: {x: 0, y: -30, z: 0}
+  DashStrength: 40
   AttackRadius: 1
   AttackEffectiveDistance: 0.25
   BaseDamage: 10

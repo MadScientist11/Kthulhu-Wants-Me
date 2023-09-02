@@ -13,6 +13,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
     public class PickableItem : MonoBehaviour, IPickable
     {
         [field: SerializeField] public virtual PickableData ItemData { get; set; }
+        public bool Equipped { get; set; }
 
         public InteractableData InteractableData => ItemData;
 
@@ -67,6 +68,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 
         private void SwitchToEquippedState(PlayerInventoryAbility ability)
         {
+            Equipped = true;
             GetComponent<Rigidbody>().isKinematic = true;
             transform.SetParent(ability.ItemParent);
             transform.localPosition = ItemData.ItemInHandPosition;
@@ -75,6 +77,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 
         private void SwitchToUnEquippedState(PlayerInventoryAbility ability)
         {
+            Equipped = false;
             transform.SetParent(null);
             transform.GetComponent<Rigidbody>().isKinematic = false;
             transform.GetComponent<Rigidbody>().AddForce(transform.forward * 150);

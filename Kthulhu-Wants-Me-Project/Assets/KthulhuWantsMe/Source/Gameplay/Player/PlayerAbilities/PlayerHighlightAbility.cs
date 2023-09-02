@@ -1,11 +1,13 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
+using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Player
+namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 {
     public enum HighlightState
     {
@@ -16,25 +18,99 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
     public class PlayerHighlightAbility : MonoBehaviour, IAbility
     {
         public HighlightState HighlightState { get; private set; }
-        public IInteractable HighlightedInteractable { get; private set; }
+        public IInteractable MouseHoverHighlightedInteractable { get; private set; }
+        public List<IInteractable> InteractablesInZone => _interactablesInZone;
+
+
+        [SerializeField] private TriggerObserver _interactionZone;
 
         private readonly RaycastHit[] _results = new RaycastHit[1];
 
+        private List<IInteractable> _interactablesInZone = new();
+        
+        private IInventorySystem _inventorySystem;
 
-        private void Update() => 
+        [Inject]
+        public void Construct(IInventorySystem inventorySystem)
+        {
+            _inventorySystem = inventorySystem;
+        }
+
+        private void Start()
+        {
+            _interactionZone.TriggerEnter += OnInteractableInside;
+            _interactionZone.TriggerExit += OnInteractableExit;
+        }
+
+        private void OnDestroy()
+        {
+            _interactionZone.TriggerEnter -= OnInteractableInside;
+            _interactionZone.TriggerExit -= OnInteractableExit;
+        }
+
+        private void OnInteractableInside(Collider collider)
+        {
+            if (collider.TryGetComponent(out IInteractable interactable)) 
+                _interactablesInZone.Add(interactable);
+        }
+        private void OnInteractableExit(Collider collider)
+        {
+            if (collider.TryGetComponent(out IInteractable interactable)) 
+                _interactablesInZone.Remove(interactable);
+        }
+        
+        private void Update()
+        {
             HighlightObjectOnMouseHover();
+            ProcessInteractablesInInteractionZone();
+        }
+
+        private void ProcessInteractablesInInteractionZone()
+        {
+            _interactablesInZone.RemoveAll(i => i == null);
+            
+            foreach (IInteractable interactable in _interactablesInZone)
+            {
+                
+                if (ShouldHighlightInteractable(interactable))
+                {
+                    HighlightState = HighlightState.Highlight;
+                    interactable.RespondTo(this);
+                }
+                else
+                {
+                    HighlightState = HighlightState.CancelHighlight;
+                    interactable.RespondTo(this);
+                }
+            }
+        }
+
+        private bool ShouldHighlightInteractable(IInteractable interactable)
+        {
+            Vector3 playerPos = transform.position;
+            Vector3 interactablePos = interactable.Transform.position;
+            Vector3 playerLookDirection = transform.forward;
+
+            Vector3 directionTo = interactablePos - playerPos;
+            directionTo = directionTo.normalized;
+
+            float lookAtItemIndicator = Vector3.Dot(playerLookDirection, directionTo);
+
+            return lookAtItemIndicator > 0.75f;
+        }
 
         private void HighlightObjectOnMouseHover()
         {
             Ray worldRay = MousePointer.GetWorldRay(UnityEngine.Camera.main);
             if (HitInteractable(worldRay, out RaycastHit hit))
             {
-                if (HighlightedInteractable != null && hit.transform == HighlightedInteractable.Transform)
-                    return;
-
                 if (hit.transform.TryGetComponent(out IInteractable interactable))
                 {
-                    HighlightedInteractable = interactable;
+                    if (InteractableAlreadyHighlighted(interactable) || InteractableIsEquippedItem(interactable))
+                        return;
+                    
+                    
+                    MouseHoverHighlightedInteractable = interactable;
                     HighlightState = HighlightState.Highlight;
                     interactable.RespondTo(this);
                 }
@@ -42,8 +118,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             else
             {
                 HighlightState = HighlightState.CancelHighlight;
-                HighlightedInteractable?.RespondTo(this);
-                HighlightedInteractable = null;
+                MouseHoverHighlightedInteractable?.RespondTo(this);
+                MouseHoverHighlightedInteractable = null;
+            }
+
+            bool InteractableAlreadyHighlighted(IInteractable interactable) => 
+                MouseHoverHighlightedInteractable != null && interactable.Transform == MouseHoverHighlightedInteractable.Transform;
+
+            bool InteractableIsEquippedItem(IInteractable interactable)
+            {
+                if(interactable is IPickable item)
+                    return item.Equipped;
+                return false;
             }
         }
 
