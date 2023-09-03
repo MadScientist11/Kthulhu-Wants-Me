@@ -7,14 +7,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Entity
     {
         protected abstract float BaseDamage { get; }
 
-        public virtual float ProvideDamage() => 
+        public virtual float ProvideDamage() =>
             BaseDamage;
 
-        protected virtual void OnAttack() { }
+        protected virtual void OnAttack()
+        {
+        }
 
-        protected virtual void OnAttackEnd() { }
+        protected virtual void OnAttackEnd()
+        {
+        }
 
-        protected void ApplyDamage(IDamageable damageable) => 
-            damageable.TakeDamage(ProvideDamage());
+        protected void ApplyDamage(IDamageable to)
+        {
+            to.TakeDamage(ProvideDamage());
+        }
     }
 }

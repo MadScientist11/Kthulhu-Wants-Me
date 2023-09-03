@@ -14,7 +14,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             private set
             {
                 float newHealth = Mathf.Max(0, value);
-                
                 if(newHealth < _currentHealth)
                     TookDamage?.Invoke();
                 

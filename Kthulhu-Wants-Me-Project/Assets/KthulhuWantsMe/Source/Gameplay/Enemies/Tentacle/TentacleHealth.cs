@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using System;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
@@ -15,6 +16,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [Inject]
         public void Construct(IDataProvider dataProvider) => 
             _tentacleConfig = dataProvider.TentacleConfig;
+
+        private void Start() => 
+            RestoreHp();
 
         public override void TakeDamage(float damage)
         {

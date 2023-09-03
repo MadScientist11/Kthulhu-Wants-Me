@@ -5,7 +5,6 @@ using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
 using VContainer;
-using Vertx.Debugging;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 {
@@ -42,9 +41,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         protected override void OnAttack()
         {
-            D.raw(new Shape.Sphere(AttackStartPoint(), _playerConfiguration.AttackRadius), 1f);
-
-            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _playerConfiguration.AttackRadius, out IDamageable damageable))
+            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _playerConfiguration.AttackRadius,
+                    LayerMasks.EnemyMask, out IDamageable damageable ))
                 return;
 
             ApplyDamage(damageable);
@@ -80,7 +78,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         
         
         private Vector3 AttackStartPoint() =>
-            new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) + 
+            new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z) + 
             transform.forward * _playerConfiguration.AttackEffectiveDistance;
 
         private WeaponItem GetActiveWeapon()

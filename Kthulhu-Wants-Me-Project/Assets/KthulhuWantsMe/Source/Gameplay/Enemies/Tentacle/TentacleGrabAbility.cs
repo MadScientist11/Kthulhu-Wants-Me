@@ -6,9 +6,8 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
-    public class TentacleGrabAbility : MonoBehaviour, IDamageSource, IAbility
+    public class TentacleGrabAbility : MonoBehaviour, IAbility
     {
-        public Transform DamageSourceObject => transform;
         public Transform GrabTarget;
 
         public float TentacleGrabDamage => _tentacleConfig.TentacleGrabDamage;
@@ -29,7 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public void GrabPlayer()
         {
             if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfig.AttackRadius,
-                    out IAbilityResponse<TentacleGrabAbility> hitObject))
+                    LayerMasks.PlayerMask, out IAbilityResponse<TentacleGrabAbility> hitObject))
                 return;
 
             Debug.Log("Grab Player");

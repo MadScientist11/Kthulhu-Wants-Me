@@ -3,13 +3,13 @@ using System.Linq;
 using UnityEngine;
 using Vertx.Debugging;
 
-namespace KthulhuWantsMe.Source.Gameplay.DamageSystem
+namespace KthulhuWantsMe.Source.Gameplay
 {
     public static class PhysicsUtility
     {
         private static readonly Collider[] _hitCollidersInternal = new Collider[20];
 
-        public static bool HitFirst<T>(Transform source, Vector3 startPoint, float radius,
+        public static bool HitFirst<T>(Transform source, Vector3 startPoint, float radius, LayerMask layer,
             out T desiredObject)
         {
             D.raw(new Shape.Sphere(startPoint, radius), 1f);
@@ -19,10 +19,9 @@ namespace KthulhuWantsMe.Source.Gameplay.DamageSystem
                 _hitCollidersInternal[i] = null;
             }
 
-            Physics.OverlapSphereNonAlloc(startPoint, radius, _hitCollidersInternal);
+            Physics.OverlapSphereNonAlloc(startPoint, radius, _hitCollidersInternal, layer);
             desiredObject = _hitCollidersInternal
-                .Where(col =>
-                    col != null && col.TryGetComponent(out T _) && col.transform != source)
+                .Where(col => col != null && col.TryGetComponent(out T _))
                 .Select(col => col.GetComponent<T>())
                 .FirstOrDefault();
 

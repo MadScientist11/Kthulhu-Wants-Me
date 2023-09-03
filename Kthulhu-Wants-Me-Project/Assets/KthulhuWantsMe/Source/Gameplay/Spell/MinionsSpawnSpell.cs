@@ -53,7 +53,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Spell
             while (true)
             {
                 BatchSpawn(5);
-                yield return WaitForSeconds.Wait(5);
+                yield return WaitForSeconds.Wait(60);
             }
         }
 

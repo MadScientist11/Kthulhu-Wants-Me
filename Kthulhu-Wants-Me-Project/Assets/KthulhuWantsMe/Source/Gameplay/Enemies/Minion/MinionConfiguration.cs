@@ -7,5 +7,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     {
         public GameObject MinionPrefab;
         public float MaxHealth;
+        public float BaseDamage;
+        public float AttackCooldownTime;
     }
 }

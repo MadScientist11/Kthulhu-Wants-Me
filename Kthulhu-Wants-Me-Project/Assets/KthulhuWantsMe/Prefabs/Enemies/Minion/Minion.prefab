@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6486643635215899666}
   - component: {fileID: 5152449692342820979}
   - component: {fileID: 3484868030937878551}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 6052406462669988158}
   - component: {fileID: 746340338439813629}
   - component: {fileID: -6374073598655141297}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Minion
   m_TagString: Untagged
   m_Icon: {fileID: 0}

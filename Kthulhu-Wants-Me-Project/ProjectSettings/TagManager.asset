@@ -15,10 +15,10 @@ TagManager:
   - 
   - 
   - Player
+  - Enemy
   - 
   - 
   - 
-  - PortalSpawnObstacle
   - 
   - 
   - Item

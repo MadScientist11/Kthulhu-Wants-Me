@@ -12,5 +12,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
         [Inject]
         public void Construct(IDataProvider dataProvider) => 
             _minionConfig = dataProvider.MinionConfig;
+
+        private void Start() => 
+            RestoreHp();
     }
 }

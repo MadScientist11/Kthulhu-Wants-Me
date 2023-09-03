@@ -1,55 +1,48 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
+using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 {
-    public class MinionAttack : MonoBehaviour, IDamageProvider
+    public class MinionAttack : Attack
     {
+        protected override float BaseDamage => _minionConfiguration.BaseDamage;
+        
         [SerializeField] private MinionAIBrain _minionAIBrain;
-        [SerializeField] private MinionHealth _minionHealth;
 
         private float _attackCooldown;
-        private const float AttackCooldownTime = 2f;
+        
+        private MinionConfiguration _minionConfiguration;
 
-        private void Start()
-        {
-            _minionHealth.TookDamage += OnTookDamage;
-        }
-
-        private void OnDestroy()
-        {
-            _minionHealth.TookDamage -= OnTookDamage;
-        }
-
+        [Inject]
+        public void Construct(IDataProvider dataProvider) => 
+            _minionConfiguration = dataProvider.MinionConfig;
+        
         private void Update()
         {
             _attackCooldown -= Time.deltaTime;
-            if (_attackCooldown <= 0)
-            {
+            if (_attackCooldown <= 0) 
                 _minionAIBrain.AttackCooldownReached = true;
-            }
-        }
-
-        public float ProvideDamage()
-        {
-            return 25;
         }
 
         public void PerformAttack()
         {
-            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), 2, out IDamageable hitObject))
+            if (!PhysicsUtility.HitFirst(transform, 
+                    AttackStartPoint(), 
+                    1f, 
+                    LayerMasks.PlayerMask, 
+                    out IDamageable damageable))
                 return;
 
             ResetCooldown();
-            hitObject.TakeDamage(ProvideDamage());
+            ApplyDamage(to: damageable);
         }
-
-        private void OnTookDamage() => 
-            ResetCooldown();
-
+        
         private void ResetCooldown()
         {
-            _attackCooldown = AttackCooldownTime;
+            _attackCooldown = _minionConfiguration.AttackCooldownTime;
             _minionAIBrain.AttackCooldownReached = false;
         }
 

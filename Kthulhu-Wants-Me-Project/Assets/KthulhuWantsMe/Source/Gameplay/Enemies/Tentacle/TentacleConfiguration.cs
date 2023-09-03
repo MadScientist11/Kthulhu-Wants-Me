@@ -11,6 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         public float MaxHealth;
 
+        public float BaseDamage;
         public float AttackRadius;
         public float AttackEffectiveDistance;
         public float AttackCooldown;

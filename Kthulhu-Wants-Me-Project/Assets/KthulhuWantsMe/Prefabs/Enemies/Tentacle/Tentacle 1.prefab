@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2314224538593704678}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: tentacle_prototype
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7753188170550182014}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Limb_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 554460948734985425}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5824028288470631590}
   - component: {fileID: 6729353860861768315}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: tentacle_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8949783025517672255}
   - component: {fileID: 8936881266231696993}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: ChainConstraint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 423395108823978285}
   - component: {fileID: -8437970798004524629}
   - component: {fileID: -8854100897847997932}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Tentacle 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -546,7 +546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7322601797408401165}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: ChainConstraintTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6319796879571465537}
   - component: {fileID: 3086530469526707658}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Rig 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7844423199222592518}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Limb_06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 4640143058864623152}
   - component: {fileID: 6050992009393648799}
   - component: {fileID: 2477882965983531103}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -740,7 +740,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1241455327053050249}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: GrabTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -774,7 +774,7 @@ GameObject:
   - component: {fileID: 8743291039701707566}
   - component: {fileID: 6787768223501906087}
   - component: {fileID: 4168230298860864657}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -860,7 +860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3473213195386337800}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Limb_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,7 +892,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 278764460895632917}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Limb_Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -923,7 +923,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 733475098396707584}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Limb_05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -959,7 +959,7 @@ GameObject:
   - component: {fileID: 2742785545962769758}
   - component: {fileID: 3876336825110454460}
   - component: {fileID: 1627893407925517961}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1074,7 +1074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7832535222552156369}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Limb_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,7 +1106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1376276434041169149}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Limb_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1138,7 +1138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4366341450584047931}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Limb_07
   m_TagString: Untagged
   m_Icon: {fileID: 0}

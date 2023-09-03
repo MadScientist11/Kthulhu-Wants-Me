@@ -54,7 +54,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             HighlightOnMouseHover();
             ProcessInteractablesInInteractionZone();
-            Debug.Log(MouseHoverInteractable);
         }
 
         private void ProcessInteractablesInInteractionZone()

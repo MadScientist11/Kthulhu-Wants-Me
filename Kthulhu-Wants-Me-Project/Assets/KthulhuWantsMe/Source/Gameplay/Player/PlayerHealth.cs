@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
+﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
@@ -19,14 +20,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [Inject]
         public void Construct(IDataProvider dataProvider) => 
             _playerConfiguration = dataProvider.PlayerConfig;
-        
-        private void Start() => 
+
+        private void Start()
+        {
             _movementController = _playerLocomotion.MovementController;
+            RestoreHp();
+        }
 
         public override void TakeDamage(float damage)
         {
             base.TakeDamage(damage);
-
+            Debug.Log($"Player took {damage}");
             if (CurrentHealth <= 0)
             {
                 Die();
