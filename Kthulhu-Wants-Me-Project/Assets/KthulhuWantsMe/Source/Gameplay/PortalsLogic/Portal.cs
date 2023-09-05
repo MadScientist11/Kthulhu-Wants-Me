@@ -14,14 +14,9 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
 
         public PortalFactory.PortalType PortalType;
         
-        [ShowIf("TentaclePortal")]
-        public bool SpawnMinions = true;
-        
         [SerializeField] private Transform _initialLocation;
         [SerializeField] private Transform _desiredLocation;
 
-        private bool TentaclePortal => PortalType == PortalFactory.PortalType.TentaclePortal;
-        
         private GameObject _spawnedTentacle;
 
         private IGameFactory _gameFactory;

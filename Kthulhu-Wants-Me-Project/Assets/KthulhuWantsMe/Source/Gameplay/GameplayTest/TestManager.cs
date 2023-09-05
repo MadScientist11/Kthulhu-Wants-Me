@@ -3,6 +3,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.Spell;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using NaughtyAttributes;
 using UnityEngine;
@@ -55,6 +56,13 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
         {
             GameObject tentacle = _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.Tentacle);
             tentacle.GetComponent<TentacleEmergence>().Emerge(EnemySpawnPoint.position, EnemySpawnPoint.position);
+        }
+        
+        [Button()]
+        private void SpawnMinionsSpell()
+        {
+            MinionsSpawnSpell spell = _gameFactory.CreateMinionsSpawnSpell(EnemySpawnPoint.position, EnemySpawnPoint.rotation);
+            spell.Activate();
         }
     }
 }

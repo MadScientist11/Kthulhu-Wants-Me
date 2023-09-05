@@ -1,5 +1,4 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services;
-using NaughtyAttributes;
+﻿using KthulhuWantsMe.Source.Gameplay.Spell;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
@@ -9,6 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
     public class TentacleConfiguration : ScriptableObject
     {
         public GameObject TentaclePrefab;
+        public MinionsSpawnSpell MinionsSpawnSpell;
 
         public float MaxHealth;
 

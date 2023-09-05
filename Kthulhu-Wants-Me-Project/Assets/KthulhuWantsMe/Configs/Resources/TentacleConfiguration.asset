@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TentaclePrefab: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
     type: 3}
+  MinionsSpawnSpell: {fileID: 364244572452489457, guid: facd1a2a104982d4eb484803f81f3146,
+    type: 3}
   MaxHealth: 100
   BaseDamage: 10
   AttackRadius: 1
@@ -22,3 +24,4 @@ MonoBehaviour:
   StunWearOffTime: 3
   TentacleGrabDamage: 100
   GrabAbilityChance: 0.1
+  SpellActivationTime: 0

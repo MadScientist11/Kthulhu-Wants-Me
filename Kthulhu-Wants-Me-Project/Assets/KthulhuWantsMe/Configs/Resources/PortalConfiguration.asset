@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PortalPrefab: {fileID: 1556028068222277247, guid: 510342187213ed0498380c6fa0163dc4,
     type: 3}
+  TentaclePortalPrefab: {fileID: 3073858835776937556, guid: 510342187213ed0498380c6fa0163dc4,
+    type: 3}

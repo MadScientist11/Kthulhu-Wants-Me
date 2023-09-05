@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Spell;
+using KthulhuWantsMe.Source.Gameplay.Spell;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;

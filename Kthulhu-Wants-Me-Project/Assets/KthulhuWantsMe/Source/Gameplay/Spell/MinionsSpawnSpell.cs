@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using DG.Tweening;
 using Freya;
+using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 using WaitForSeconds = KthulhuWantsMe.Source.Utilities.WaitForSeconds;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies.Spell
+namespace KthulhuWantsMe.Source.Gameplay.Spell
 {
     public class MinionsSpawnSpell : MonoBehaviour
     {
