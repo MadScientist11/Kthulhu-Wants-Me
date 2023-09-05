@@ -4,11 +4,10 @@ using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Portal
+namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
 {
     public class PortalEnemySpawner : MonoBehaviour, IPoolable<PortalEnemySpawner>
     {

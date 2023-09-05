@@ -3,6 +3,7 @@ using System.Linq;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;

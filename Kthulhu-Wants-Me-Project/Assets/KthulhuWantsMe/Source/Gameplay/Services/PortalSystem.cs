@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Locations;
-using KthulhuWantsMe.Source.Gameplay.Portal;
+using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
@@ -64,7 +64,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
                 if (IsValidPortalSpawnPoint(orientedRandomPoint))
                 {
-                    _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation);
+                    //_portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation);
                     break;
                 }
 

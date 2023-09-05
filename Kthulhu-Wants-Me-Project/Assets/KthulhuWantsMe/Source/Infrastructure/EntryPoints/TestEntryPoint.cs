@@ -30,9 +30,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             Debug.Log("Start");
             List<UniTask> initializationTasks = _services.Where(service => service.IsInitialized == false).Select(service => service.Initialize()).ToList();
             await UniTask.WhenAll(initializationTasks);
-            _gameFactory.CreatePlayer(_location.PlayerSpawnPosition, _location.PlayerSpawnRotation);
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
-            _gameFactory.CreateEnemy(Vector3.up *2, Quaternion.identity, EnemyType.Minion);
+            //_gameFactory.CreateEnemy(Vector3.up *2, Quaternion.identity, EnemyType.Minion);
         }
     }
 }

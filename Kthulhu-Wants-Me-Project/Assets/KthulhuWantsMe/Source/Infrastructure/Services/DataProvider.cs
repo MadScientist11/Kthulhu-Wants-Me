@@ -2,20 +2,20 @@
 using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Gameplay.Portal;
+using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
-    public interface IDataProvider
+    public interface IDataProvider : IInitializableService
     {
         PlayerConfiguration PlayerConfig { get; }
         TentacleConfiguration TentacleConfig { get; }
         MinionConfiguration MinionConfig { get; }
         PortalConfiguration PortalConfig { get; }
     }
-
-    public class DataProvider : IDataProvider, IInitializableService
+    
+    public class DataProvider : IDataProvider
     {
         public bool IsInitialized { get; set; }
         private const string PlayerConfigurationPath = "PlayerConfiguration";

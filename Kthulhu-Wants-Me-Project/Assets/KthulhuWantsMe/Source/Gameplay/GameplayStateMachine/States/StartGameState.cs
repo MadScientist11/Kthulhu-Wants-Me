@@ -30,7 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             _gameFactory.CreatePlayer(_location.PlayerSpawnPosition, _location.PlayerSpawnRotation);
             _inputService.SwitchInputScenario(InputScenario.Gameplay); 
-            //_portalSystem.Init();
+            _portalSystem.Init();
             //_gameStateMachine.SwitchState(GameFlow.StartGameState);
         }
 

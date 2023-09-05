@@ -1,8 +1,6 @@
-﻿using Freya;
-using UnityEngine;
-using Vertx.Debugging;
+﻿using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies
+namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
 {
     public class PortalSpawnZone : MonoBehaviour
     {
