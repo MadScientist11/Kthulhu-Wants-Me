@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using KthulhuWantsMe.Source.Gameplay.Player;
+using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.SOData
 {
@@ -11,6 +12,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.SOData
     public class WeaponData : PickableData
     {
         public WeaponType WeaponType;
-        public int BaseDamage;
+        public float BaseDamage;
+
+        public bool HasSpecialAttack => SpecialAttack != null;
+
+        public Attack SpecialAttack;
+
+
     }
 }

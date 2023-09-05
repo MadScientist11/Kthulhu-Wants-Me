@@ -1247,6 +1247,7 @@ GameObject:
   - component: {fileID: -4856184112398116678}
   - component: {fileID: 5663912579931136821}
   - component: {fileID: -8648004300217098860}
+  - component: {fileID: 302771739074157513}
   - component: {fileID: 4421352636050686118}
   - component: {fileID: 6774093509248161396}
   - component: {fileID: 5173070491289112120}
@@ -1465,6 +1466,19 @@ MonoBehaviour:
   _playerAnimator: {fileID: -4856184112398116678}
   _playerLocomotion: {fileID: 5663912579931136821}
   tentacleGrabAbilityResponse: {fileID: -2573202685680207158}
+--- !u!114 &302771739074157513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112094726857054722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7f45686cd346728015a54c5fc2b62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: -4856184112398116678}
 --- !u!114 &4421352636050686118
 MonoBehaviour:
   m_ObjectHideFlags: 0

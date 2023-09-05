@@ -18,3 +18,4 @@ MonoBehaviour:
   ItemInHandRotation: {x: -0.00636166, y: 0.006937953, z: 0.49906525, w: 0.86651325}
   WeaponType: 1
   BaseDamage: 10
+  SpecialAttack: {fileID: 11400000, guid: 7ed0d5811732b144e9c3da5afe9421f1, type: 2}

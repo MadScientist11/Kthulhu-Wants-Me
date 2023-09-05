@@ -1,5 +1,6 @@
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -41,6 +42,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<PortalFactory>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
+            
+            builder
+                .Register<ProjectileArcFactory>(Lifetime.Scoped)
+                .AsSelf();
             RegisterGameplayFsm(builder);
         }
 

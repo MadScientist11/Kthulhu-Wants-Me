@@ -535,6 +535,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 132496220}
+  - {fileID: 2025044148}
   - {fileID: 782462531}
   _location: {fileID: 11400000, guid: f11b7182c649a3e49b033a75febfa6a3, type: 2}
 --- !u!1 &386463091
@@ -1159,74 +1160,6 @@ Transform:
   - {fileID: 808545628}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1088494897
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526452895151159516, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7788496209366989126, guid: cff17db52d333d14e8c4ec8a458e1444,
-        type: 3}
-      propertyPath: m_Name
-      value: Projectile
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cff17db52d333d14e8c4ec8a458e1444, type: 3}
 --- !u!1 &1189980370
 GameObject:
   m_ObjectHideFlags: 0
@@ -2936,6 +2869,7 @@ GameObject:
   - component: {fileID: 2025044150}
   - component: {fileID: 2025044149}
   - component: {fileID: 2025044155}
+  - component: {fileID: 2025044156}
   m_Layer: 16
   m_Name: Sword
   m_TagString: Untagged
@@ -2955,7 +2889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d160b63cdf944f0a91d75f0c202edae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _outlineWidth: 0
+  _outlineWidth: 60
   _offsetZ: 0
   <ItemData>k__BackingField: {fileID: 0}
   <WeaponData>k__BackingField: {fileID: 11400000, guid: 6675ebf8c9271fa4ebee389f41636266,
@@ -3085,6 +3019,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2025044156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025044148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1451242119f047019631355186cfe14b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectileArcPrefab: {fileID: 8497179350632159108, guid: a6269b502c6e2924ab50aea7bf229588,
+    type: 3}
+  _specialAttackData: {fileID: 11400000, guid: 7ed0d5811732b144e9c3da5afe9421f1, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3101,7 +3050,6 @@ SceneRoots:
   - {fileID: 1678655719}
   - {fileID: 132496225}
   - {fileID: 782462536}
-  - {fileID: 1088494897}
   - {fileID: 2025044154}
   - {fileID: 1991288448}
   - {fileID: 1810179329}

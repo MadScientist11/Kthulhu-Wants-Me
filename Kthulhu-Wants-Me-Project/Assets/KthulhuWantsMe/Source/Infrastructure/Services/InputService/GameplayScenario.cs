@@ -16,6 +16,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         public event Action GrabResistance;
         public event Action LungePerformed;
         public event Action LungeHold;
+        public event Action SpecialAttack;
 
 
         public GameplayScenario(GameInput.GameplayActions gameplayActions)
@@ -75,6 +76,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             if (context.canceled)
             {
                 LungePerformed?.Invoke();
+            }
+        }
+
+        public void OnSpecialAttack(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                SpecialAttack?.Invoke();
             }
         }
 

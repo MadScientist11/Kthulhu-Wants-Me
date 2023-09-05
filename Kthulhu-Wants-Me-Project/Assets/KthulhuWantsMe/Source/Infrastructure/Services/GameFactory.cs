@@ -9,6 +9,7 @@ using KthulhuWantsMe.Source.Gameplay.Portal;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Object = UnityEngine.Object;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
@@ -17,6 +18,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         PlayerFacade Player { get; }
         PlayerFacade CreatePlayer(Vector3 position, Quaternion rotation);
         GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
+        T CreatePrefabInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object;
     }
 
     public class GameFactory : IGameFactory
@@ -56,6 +58,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             };
 
             return instance;
+        } 
+        
+        public T CreatePrefabInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object
+        {
+            return _instantiator.Instantiate(prefab, position, rotation);
         } 
        
     }
