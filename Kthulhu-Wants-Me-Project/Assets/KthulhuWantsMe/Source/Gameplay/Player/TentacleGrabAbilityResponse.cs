@@ -25,7 +25,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public void Construct(IInputService inputService)
         {
             _inputService = inputService;
-            _inputService.GameplayScenario.GrabResistence += ResistGrab;
+            _inputService.GameplayScenario.GrabResistance += ResistGrab;
         }
 
         private void Start() => 
@@ -33,7 +33,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void OnDestroy()
         {
-            _inputService.GameplayScenario.GrabResistence -= ResistGrab;
+            _inputService.GameplayScenario.GrabResistance -= ResistGrab;
         }
 
         private void Update()

@@ -14,6 +14,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private bool _killVelocity;
 
         public Vector3 CurrentVelocity => _motor.Velocity;
+        public Vector3 InternalVelocityAdd => _internalVelocityAdd;
         public bool IsGrounded => _motor.GroundingStatus.IsStableOnGround;
 
         public PlayerMovementController(KinematicCharacterMotor motor, PlayerConfiguration playerConfiguration)

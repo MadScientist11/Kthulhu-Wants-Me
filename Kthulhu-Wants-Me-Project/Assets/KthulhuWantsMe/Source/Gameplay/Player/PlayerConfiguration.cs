@@ -37,6 +37,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [BoxGroup("Attack")]
         public List<Attack> AttackComboSet;
         
+        [HorizontalLine(color: EColor.Violet)]
+        [BoxGroup("Lunge")]
+        public float LungeBaseDamage;
+        
         [Foldout("MovementInDepth")]
         public float StableMovementSharpness = 15;
         [Foldout("MovementInDepth")]

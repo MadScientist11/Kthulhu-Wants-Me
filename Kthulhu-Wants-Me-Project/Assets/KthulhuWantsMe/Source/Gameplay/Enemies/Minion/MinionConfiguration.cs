@@ -9,5 +9,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
         public float MaxHealth;
         public float BaseDamage;
         public float AttackCooldownTime;
+        public float AttackDelay;
     }
 }

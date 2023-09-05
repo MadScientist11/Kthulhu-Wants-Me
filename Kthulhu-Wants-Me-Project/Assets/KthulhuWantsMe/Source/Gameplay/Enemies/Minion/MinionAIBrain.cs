@@ -1,5 +1,7 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
+using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 {
@@ -13,6 +15,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 
         [SerializeField] private MinionFollow _minionFollow;
         [SerializeField] private MinionAttack _minionAttack;
+
+        private float _attackDelay;
+        
+        private MinionConfiguration _minionConfiguration;
+
+        [Inject]
+        public void Construct(IDataProvider dataProvider)
+        {
+            _minionConfiguration = dataProvider.MinionConfig;
+        }
         
         private void Update()
         {
@@ -21,9 +33,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
             
             if (HasAggro) 
                 _minionFollow.FollowPlayer();
-            
-            if(CanAttack())
-                _minionAttack.PerformAttack();
+
+            if (CanAttack())
+            {
+                _attackDelay -= Time.deltaTime;
+                if (_attackDelay <= 0)
+                {
+                    _attackDelay = _minionConfiguration.AttackDelay;
+                    _minionAttack.PerformAttack();
+                }
+
+            }
             
         }
 

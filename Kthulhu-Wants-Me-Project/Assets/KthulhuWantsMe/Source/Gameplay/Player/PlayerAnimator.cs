@@ -19,6 +19,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private static readonly int Attack = Animator.StringToHash("Attack");
         private static readonly int Impact = Animator.StringToHash("Impact");
         private static readonly int Die = Animator.StringToHash("Die");
+        private static readonly int LungeCharge = Animator.StringToHash("LungeCharge");
+        private static readonly int Lunge = Animator.StringToHash("Lunge");
 
         private static readonly int _idleStateHash = Animator.StringToHash("Idle");
         private static readonly int _runStateHash = Animator.StringToHash("Run");
@@ -43,6 +45,22 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public void StopMoving()
         {
             _animator.SetBool(IsRunning, false);
+        }
+
+        public void PlayLungeCharge()
+        {
+            _animator.SetBool(LungeCharge, true);
+        }
+
+        public void StopLungeCharge()
+        {
+            _animator.SetBool(LungeCharge, false);
+        }
+
+        public void PlayLunge()
+        {
+            StopLungeCharge();
+            _animator.SetTrigger(Lunge);
         }
 
         public void PlayAttack(AnimatorOverrideController attackOverrideController)

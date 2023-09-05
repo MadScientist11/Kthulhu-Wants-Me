@@ -3,6 +3,7 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
 
@@ -12,7 +13,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
     {
         protected override float BaseDamage => _playerConfiguration.BaseDamage;
         
+        public MMFeedbacks TargetFeedbacks;
         [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
         
         private bool _queuedAttack;
@@ -45,6 +48,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
                     LayerMasks.EnemyMask, out IDamageable damageable ))
                 return;
 
+            TargetFeedbacks.PlayFeedbacks(AttackStartPoint());
             ApplyDamage(damageable);
         }
 
@@ -90,6 +94,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         }
 
         private bool CantAttack() => 
-            _playerAnimator.IsAttacking || tentacleGrabAbilityResponse.Grabbed || _activeWeapon == null;
+            _playerAnimator.IsAttacking 
+            || tentacleGrabAbilityResponse.Grabbed 
+            || _activeWeapon == null 
+            || _playerLocomotion.MovementController.InternalVelocityAdd.sqrMagnitude > 0;
     }
 }

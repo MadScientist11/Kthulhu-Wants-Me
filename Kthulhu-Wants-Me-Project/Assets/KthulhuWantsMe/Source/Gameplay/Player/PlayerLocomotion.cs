@@ -38,17 +38,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void Update()
         {
-            if (IsMoving)
-            {
-                _playerAnimator.Move();
-            }
-            else
-            {
-                _playerAnimator.StopMoving();
-            }
-
             if (CanMove())
+            {
+                if (MovementInputDetected())
+                    _playerAnimator.Move();
+                else
+                    _playerAnimator.StopMoving();
+                
                 ProcessInput();
+            }
         }
 
         public void BlockMovement(float timeFor)
@@ -82,6 +80,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             return !_playerAnimator.IsAttacking && !_blockMovement;
         }
-        
+
+        private bool MovementInputDetected()
+        {
+            return _inputService.GameplayScenario.MovementInput.sqrMagnitude > 0.1f;
+        }
     }
 }

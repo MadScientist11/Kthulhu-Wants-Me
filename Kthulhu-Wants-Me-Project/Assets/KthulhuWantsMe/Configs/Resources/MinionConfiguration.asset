@@ -17,3 +17,4 @@ MonoBehaviour:
   MaxHealth: 10
   BaseDamage: 1
   AttackCooldownTime: 7
+  AttackDelay: 1

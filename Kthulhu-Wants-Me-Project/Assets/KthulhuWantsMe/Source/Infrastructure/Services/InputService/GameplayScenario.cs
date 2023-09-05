@@ -10,11 +10,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         public Vector2 MovementInput { get; private set; }
         public Vector2 LookInput { get; private set; }
 
-        public event Action<int> SwitchItem; 
-        public event Action Attack; 
-        public event Action Dash; 
-        public event Action GrabResistence; 
-       
+        public event Action<int> SwitchItem;
+        public event Action Attack;
+        public event Action Dash;
+        public event Action GrabResistance;
+        public event Action LungePerformed;
+        public event Action LungeHold;
+
 
         public GameplayScenario(GameInput.GameplayActions gameplayActions)
         {
@@ -37,7 +39,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             {
                 SwitchItem?.Invoke((int)context.ReadValue<float>());
             }
-                
         }
 
         public void OnAttack(InputAction.CallbackContext context)
@@ -60,7 +61,20 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         {
             if (context.performed)
             {
-                GrabResistence?.Invoke();
+                GrabResistance?.Invoke();
+            }
+        }
+
+        public void OnLunge(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                LungeHold?.Invoke();
+            }
+            
+            if (context.canceled)
+            {
+                LungePerformed?.Invoke();
             }
         }
 
