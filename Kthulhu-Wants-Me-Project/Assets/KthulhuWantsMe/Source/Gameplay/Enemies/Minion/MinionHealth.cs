@@ -13,7 +13,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
         public void Construct(IDataProvider dataProvider) => 
             _minionConfig = dataProvider.MinionConfig;
 
-        private void Start() => 
+        private void Start()
+        {
             RestoreHp();
+            Died += Die;
+        }
+
+        private void OnDestroy()
+        {
+            Died -= Die;
+        }
+
+        private void Die()
+        {
+            Destroy(gameObject, 2f);
+        }
     }
 }
