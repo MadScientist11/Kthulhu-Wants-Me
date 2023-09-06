@@ -38,8 +38,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private IEnumerator RetreatToPortal(Vector3 to)
         {
-            _tentacleAnimator.PlayEmerge();
-
             Vector3 initialPosition = transform.position;
             Vector3 targetPosition = to;
 

@@ -22,13 +22,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             _tentacleHealth.Changed += UpdateHpBar;
             _tentacleHealth.TookDamage += _hpBar.gameObject.SwitchOn;
+            _tentacleHealth.Died += _hpBar.gameObject.SwitchOff;
             _hpBar.gameObject.SwitchOff();
         }
 
+  
         private void OnDestroy()
         {
             _tentacleHealth.Changed -= UpdateHpBar;
             _tentacleHealth.TookDamage -= _hpBar.gameObject.SwitchOn;
+            _tentacleHealth.Died -= _hpBar.gameObject.SwitchOff;
         }
 
         private void UpdateHpBar(float newValue)

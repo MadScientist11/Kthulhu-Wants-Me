@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     [RequireComponent(typeof(NavMeshAgent))]
     public class MinionFollow : MonoBehaviour
     {
+        [SerializeField] private MinionHealth _minionHealth;
         [SerializeField] private NavMeshAgent _navMeshAgent;
 
         private PlayerFacade _player;
@@ -21,15 +22,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
         public void Construct(IGameFactory gameFactory)
         {
             _player = gameFactory.Player;
-            _randomOffset = Random.insideUnitCircle.XZtoXYZ() * 2;
+            //_randomOffset = Random.insideUnitCircle.XZtoXYZ() * 2;
+            _minionHealth.Died += StopFollowing;
+        }
+
+        private void OnDestroy()
+        {
+            _minionHealth.Died -= StopFollowing;
         }
 
         public void FollowPlayer()
         {
-            MoveTo(_player.transform.position + _randomOffset);
+            MoveTo(_player.transform.position);
         }
         
         private void MoveTo(Vector3 destination) => 
             _navMeshAgent.destination = destination;
+
+        private void StopFollowing() => 
+            _navMeshAgent.isStopped = true;
     }
 }

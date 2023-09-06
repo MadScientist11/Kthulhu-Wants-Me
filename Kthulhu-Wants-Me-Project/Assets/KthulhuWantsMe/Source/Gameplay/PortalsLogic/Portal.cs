@@ -27,10 +27,10 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         }
 
         public void Show() =>
-            gameObject.SetActive(true);
+            gameObject.SwitchOn();
 
         public void Hide() =>
-            gameObject.SetActive(false);
+            gameObject.SwitchOff();
 
         public void StartEnemySpawn()
         {

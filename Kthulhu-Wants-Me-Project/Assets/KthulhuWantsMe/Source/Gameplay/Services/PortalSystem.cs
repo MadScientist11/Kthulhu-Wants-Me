@@ -49,6 +49,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             if (!_isInitialized)
                 return;
 
+          
         }
 
         public void SpawnPortals()

@@ -100,6 +100,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a64171b-54d9-4250-b918-a86eb1fb56fc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -278,6 +287,17 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""action"": ""SpecialAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ce6eb31f-205c-4ec0-9c69-ebc890b6a167"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -300,6 +320,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             m_Gameplay_GrabResistence = m_Gameplay.FindAction("GrabResistence", throwIfNotFound: true);
             m_Gameplay_Lunge = m_Gameplay.FindAction("Lunge", throwIfNotFound: true);
             m_Gameplay_SpecialAttack = m_Gameplay.FindAction("SpecialAttack", throwIfNotFound: true);
+            m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         }
@@ -371,6 +392,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         private readonly InputAction m_Gameplay_GrabResistence;
         private readonly InputAction m_Gameplay_Lunge;
         private readonly InputAction m_Gameplay_SpecialAttack;
+        private readonly InputAction m_Gameplay_Interact;
         public struct GameplayActions
         {
             private @GameInput m_Wrapper;
@@ -383,6 +405,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             public InputAction @GrabResistence => m_Wrapper.m_Gameplay_GrabResistence;
             public InputAction @Lunge => m_Wrapper.m_Gameplay_Lunge;
             public InputAction @SpecialAttack => m_Wrapper.m_Gameplay_SpecialAttack;
+            public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -416,6 +439,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @SpecialAttack.started += instance.OnSpecialAttack;
                 @SpecialAttack.performed += instance.OnSpecialAttack;
                 @SpecialAttack.canceled += instance.OnSpecialAttack;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -444,6 +470,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @SpecialAttack.started -= instance.OnSpecialAttack;
                 @SpecialAttack.performed -= instance.OnSpecialAttack;
                 @SpecialAttack.canceled -= instance.OnSpecialAttack;
+                @Interact.started -= instance.OnInteract;
+                @Interact.performed -= instance.OnInteract;
+                @Interact.canceled -= instance.OnInteract;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -509,6 +538,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             void OnGrabResistence(InputAction.CallbackContext context);
             void OnLunge(InputAction.CallbackContext context);
             void OnSpecialAttack(InputAction.CallbackContext context);
+            void OnInteract(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

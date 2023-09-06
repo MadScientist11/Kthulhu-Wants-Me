@@ -17,6 +17,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         public event Action LungePerformed;
         public event Action LungeHold;
         public event Action SpecialAttack;
+        public event Action Interact;
 
 
         public GameplayScenario(GameInput.GameplayActions gameplayActions)
@@ -84,6 +85,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             if (context.performed)
             {
                 SpecialAttack?.Invoke();
+            }
+        }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                Interact?.Invoke();
             }
         }
 

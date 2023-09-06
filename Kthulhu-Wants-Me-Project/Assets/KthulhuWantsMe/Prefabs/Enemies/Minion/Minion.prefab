@@ -261,6 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2066bbc8334ec1b5fdb752f2ed398d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _minionHealth: {fileID: 3310733626822108890}
   _navMeshAgent: {fileID: 7277809355919913474}
 --- !u!114 &6052406462669988158
 MonoBehaviour:
