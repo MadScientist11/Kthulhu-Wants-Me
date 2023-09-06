@@ -11,7 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 {
     public class PlayerAttack : Entity.Attack
     {
-        protected override float BaseDamage => _playerConfiguration.BaseDamage;
+        protected override float BaseDamage => _playerStats.BaseDamage;
         
         public MMFeedbacks TargetFeedbacks;
         [SerializeField] private PlayerAnimator _playerAnimator;
@@ -23,16 +23,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         private WeaponItem _activeWeapon;
 
         private PlayerConfiguration _playerConfiguration;
+        private Stats _playerStats;
         private IInputService _inputService;
         private IInventorySystem _inventorySystem;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, IInventorySystem inventorySystem)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, IPlayerStats playerStats, IInventorySystem inventorySystem)
         {
             _inventorySystem = inventorySystem;
             _inputService = inputService;
             _playerConfiguration = dataProvider.PlayerConfig;
-            
+            _playerStats = playerStats.Stats;
             _inputService.GameplayScenario.Attack += PerformAttack;
         }
 
