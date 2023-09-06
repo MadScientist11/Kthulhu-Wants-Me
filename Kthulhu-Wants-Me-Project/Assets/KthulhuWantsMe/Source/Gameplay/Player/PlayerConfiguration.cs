@@ -40,6 +40,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [HorizontalLine(color: EColor.Violet)]
         [BoxGroup("Lunge")]
         public float LungeBaseDamage;
+        [BoxGroup("Lunge")]
+        public float LungeRadius;
         
         [Foldout("MovementInDepth")]
         public float StableMovementSharpness = 15;

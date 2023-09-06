@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+﻿using System.Collections.Generic;
+using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -85,10 +86,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             if (LungeInProcess())
             {
-                if (PhysicsUtility.HitFirst(transform, AttackStartPoint(), 1f, LayerMasks.EnemyMask,
-                        out IDamageable enemy))
+                if (PhysicsUtility.HitMany( AttackStartPoint(), _playerConfiguration.LungeRadius, LayerMasks.EnemyMask,
+                        out List<IDamageable> enemies))
                 {
-                    enemy.TakeDamage(_playerConfiguration.LungeBaseDamage);
+                    foreach (IDamageable enemy in enemies) 
+                        enemy.TakeDamage(_playerConfiguration.LungeBaseDamage);
+                    
                     _playerLocomotion.MovementController.KillVelocity();
                 }
             }
