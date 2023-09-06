@@ -11,6 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private TentacleEmergence _tentacleEmergence;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
         [SerializeField] private TentacleHealth _tentacleHealth;
+        [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
         
         private Portal _boundPortal;
 
@@ -33,6 +34,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             _tentacleAnimator.PlayRetreat();
             _tentacleAIBrain.BlockProcessing = true;
+            _tentacleSpellCastingAbility.CancelSpell();
             StartCoroutine(RetreatToPortal(_tentacleEmergence.InitialPoint));
         }
 

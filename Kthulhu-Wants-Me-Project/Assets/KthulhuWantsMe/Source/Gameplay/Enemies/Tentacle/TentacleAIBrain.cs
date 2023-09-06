@@ -39,14 +39,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         [SerializeField] private TentacleAttack _tentacleAttack;
         [SerializeField] private TentacleGrabAbility _tentacleGrabAbility;
+        [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
         [SerializeField] private TentacleAggro _tentacleAggro;
-        [SerializeField] private TentacleAnimator _tentacleAnimator;
-        [SerializeField] private TentacleEmergence _tentacleEmergence;
-        [SerializeField] private TentacleRetreat _tentacleRetreat;
+       
 
         private float _attackCooldown;
         private bool _isAttacking;
         private bool _stunned;
+
+        private float _livingTime;
 
         private TentacleConfiguration _tentacleConfig;
 
@@ -58,6 +59,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void Update()
         {
+            _livingTime += Time.deltaTime;
+            
             if (BlockProcessing)
                 return;
 
@@ -71,14 +74,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             Stunned = false;
             HoldsPlayer = false;
             BlockProcessing = false;
+            
+            _livingTime = 0f;
+            
             ResetCooldown();
         }
+
+      
 
         private void DecideAttackStrategy()
         {
             if (CanNotAttack())
                 return;
 
+            if (CanCastMinionsSpawnSpell())
+            {
+                Debug.Log("Cast");
+                _tentacleSpellCastingAbility.CastMinionsSpawnSpell();
+                return;
+            }
 
             if (GrabAbilityConditionsFulfilled())
             {
@@ -97,6 +111,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             Stunned = false;
             ResetCooldown();
         }
+
+        private bool CanCastMinionsSpawnSpell() => 
+            _livingTime > _tentacleConfig.SpellActivationTime && !_tentacleSpellCastingAbility.MinionsSpawnSpellActive;
+            
 
         private bool CanNotAttack() => 
             HoldsPlayer || Stunned;

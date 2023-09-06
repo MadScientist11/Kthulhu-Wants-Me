@@ -12,30 +12,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleHealth _tentacleHealth;
-        [SerializeField] private MinionsSpawnSpell _minionsSpawnSpell;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
 
-        private TentacleConfiguration _tentacleConfiguration;
-        private TentacleSettings _tentacleSettings;
-
-        [Inject]
-        public void Construct(IDataProvider dataProvider, IRuntimeData runtimeData)
-        {
-            _tentacleSettings = runtimeData.TentacleSettings;
-            _tentacleConfiguration = dataProvider.TentacleConfig;
-        }
 
         public void Emerge(Vector3 from, Vector3 to)
         {
             InitialPoint = from;
-            
+
             ResetState();
             _tentacleAIBrain.BlockProcessing = true;
-            
+
             StartCoroutine(EmergeFromPortal(from, to));
-            
-            if (_tentacleSettings.ActivateSpell)
-                StartCoroutine(ActivateSpellAfter(_tentacleConfiguration.SpellActivationTime));
         }
 
         private void ResetState()
@@ -43,12 +30,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _tentacleAIBrain.ResetAI();
             _tentacleAnimator.ResetAnimator();
             _tentacleHealth.RestoreHp();
-        }
-
-        private IEnumerator ActivateSpellAfter(float delay)
-        {
-            yield return Utilities.WaitForSeconds.Wait(delay);
-            _minionsSpawnSpell.Activate();
         }
 
         private IEnumerator EmergeFromPortal(Vector3 from, Vector3 to)

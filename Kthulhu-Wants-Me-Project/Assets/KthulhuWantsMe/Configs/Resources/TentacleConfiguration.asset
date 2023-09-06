@@ -24,4 +24,4 @@ MonoBehaviour:
   StunWearOffTime: 3
   TentacleGrabDamage: 100
   GrabAbilityChance: 0.1
-  SpellActivationTime: 0
+  SpellActivationTime: 20

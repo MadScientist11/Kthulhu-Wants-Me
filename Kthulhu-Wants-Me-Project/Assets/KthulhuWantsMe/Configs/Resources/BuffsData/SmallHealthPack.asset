@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6770ac27e3b9460a838080d9d16117ee, type: 3}
   m_Name: SmallHealthPack
   m_EditorClassIdentifier: 
-  BuffTarget: 0
+  BuffPrefab: {fileID: 0}
+  BuffTarget: 1
   BuffType: 0
   Value: 20

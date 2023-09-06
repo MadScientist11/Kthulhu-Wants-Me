@@ -48,7 +48,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
         {
             Portal portal = _portalFactory.GetOrCreatePortal(EnemySpawnPoint.position, EnemySpawnPoint.rotation,
                 PortalFactory.PortalType.TentaclePortal);
-            _runtimeData.TentacleSettings.ActivateSpell = false;
+            _runtimeData.TentacleSettings.AllowSpellCasting = false;
         }
 
         [Button()]
