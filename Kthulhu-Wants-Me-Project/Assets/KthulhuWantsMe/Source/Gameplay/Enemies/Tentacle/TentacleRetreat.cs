@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleRetreat : MonoBehaviour
     {
-        public event Action OnRetreated;
-
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleEmergence _tentacleEmergence;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
         [SerializeField] private TentacleHealth _tentacleHealth;
+        
+        private Portal _boundPortal;
 
+        public void Init(Portal boundPortal)
+        {
+            _boundPortal = boundPortal;
+        }
+        
         private void Start()
         {
             _tentacleHealth.Died += Retreat;
@@ -50,7 +56,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
                 yield return null;
             }
-            OnRetreated?.Invoke();
+
+            _boundPortal.ClosePortal();
         }
 
     }

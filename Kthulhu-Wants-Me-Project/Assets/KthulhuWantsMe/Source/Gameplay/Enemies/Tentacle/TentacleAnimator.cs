@@ -81,6 +81,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _tentacleRig.weight = 1;
         }
 
+        public void ResetAnimator()
+        {
+            _tentacleAnimator.Rebind();
+            _tentacleAnimator.Update(0f);
+        }
+
         public void PlayIdle()
         { }
 
@@ -122,6 +128,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _tentacleAnimator.SetBool(Retreat, true);
             _tentacleRig.weight = 0;
         }
+        
+        
 
        
     }

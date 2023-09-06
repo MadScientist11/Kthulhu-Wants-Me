@@ -4,7 +4,12 @@ using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies
 {
-    public abstract class Health : MonoBehaviour, IDamageable
+    public interface IHealable
+    {
+        void Heal(float amount);
+    }
+
+    public abstract class Health : MonoBehaviour, IDamageable, IHealable
     {
         public abstract float MaxHealth { get; }
 
@@ -13,15 +18,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             get => _currentHealth;
             private set
             {
-                float newHealth = Mathf.Max(0, value);
-                if(newHealth < _currentHealth)
-                    TookDamage?.Invoke();
+                float newHealth = Mathf.Clamp(value, 0, MaxHealth);
                 
+                
+                if (newHealth < _currentHealth)
+                    TookDamage?.Invoke();
+
                 _currentHealth = newHealth;
-                    
+
                 Changed?.Invoke(_currentHealth);
 
-                if (_currentHealth == 0) 
+                if (_currentHealth == 0)
                     Died?.Invoke();
             }
         }
@@ -36,8 +43,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public virtual void TakeDamage(float damage) =>
             CurrentHealth -= damage;
 
-        public void RestoreHp() => 
+        public virtual void Heal(float amount) =>
+            CurrentHealth += amount;
+
+
+        public void RestoreHp() =>
             CurrentHealth = MaxHealth;
     }
-
 }

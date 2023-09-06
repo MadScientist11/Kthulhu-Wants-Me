@@ -8,7 +8,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         public float BaseDamage;
         public float TentacleGrabDamage;
 
-        public bool ActivateSpell;
+        public bool ActivateSpell = true;
     }
     public interface IRuntimeData : IInitializableService
     {

@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
+using UnityEngine.AI;
 using VContainer;
 using VContainer.Unity;
 using Random = Freya.Random;
@@ -16,7 +17,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     {
         void Init();
         void SpawnPortals();
-        void Release(PortalEnemySpawner portal);
     }
 
     public class PortalSystem : IPortalSystem, ITickable
@@ -48,6 +48,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         {
             if (!_isInitialized)
                 return;
+
         }
 
         public void SpawnPortals()
@@ -64,7 +65,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
                 if (IsValidPortalSpawnPoint(orientedRandomPoint))
                 {
-                    //_portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation);
+                    Portal portal = _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation,
+                        PortalFactory.PortalType.TentaclePortal);
+                    portal.StartEnemySpawn();
                     break;
                 }
 
@@ -74,17 +77,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
         private bool IsValidPortalSpawnPoint(Vector3 point)
         {
-            int obstaclesMask = LayerMask.GetMask(GameConstants.Layers.PortalSpawnObstacle, GameConstants.Layers.Player);
+            int obstaclesMask =
+                LayerMask.GetMask(GameConstants.Layers.PortalSpawnObstacle, GameConstants.Layers.Player);
             int obstaclesCount = Physics.OverlapSphereNonAlloc(point, 1f, _obstacles,
                 obstaclesMask);
             return obstaclesCount == 0;
         }
 
-
-        public void Release(PortalEnemySpawner portal)
-        {
-            portal.Release?.Invoke(portal);
-        }
 
         private IEnumerator Reappear()
         {

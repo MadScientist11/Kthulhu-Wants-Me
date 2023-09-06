@@ -2,7 +2,6 @@
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using NaughtyAttributes;
 using UnityEngine;
 using VContainer;
 
@@ -17,7 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         [SerializeField] private Transform _initialLocation;
         [SerializeField] private Transform _desiredLocation;
 
-        private GameObject _spawnedTentacle;
+        private TentacleEmergence _spawnedTentacle;
 
         private IGameFactory _gameFactory;
 
@@ -27,26 +26,13 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
             _gameFactory = gameFactory;
         }
 
-        private void OnEnable()
-        {
-            SpawnEnemy();
-        }
-
-        private void OnDisable()
-        {
-            if (PortalType == PortalFactory.PortalType.TentaclePortal && _spawnedTentacle != null) 
-            {
-                _spawnedTentacle.GetComponent<TentacleRetreat>().OnRetreated -= ClosePortal;
-            }
-        }
-
         public void Show() =>
             gameObject.SetActive(true);
 
         public void Hide() =>
             gameObject.SetActive(false);
 
-        private void SpawnEnemy()
+        public void StartEnemySpawn()
         {
             switch (PortalType)
             {
@@ -55,13 +41,22 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
                     if (_spawnedTentacle == null)
                         CreateBoundedTentacle();
                     
-                    TentacleEmergence tentacleEmergence = _spawnedTentacle.GetComponent<TentacleEmergence>();
-                    tentacleEmergence.Emerge(_initialLocation.transform.position, _desiredLocation.transform.position);
-                    _spawnedTentacle.GetComponent<TentacleRetreat>().OnRetreated += ClosePortal;
+                    EmergeTentacle();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void ClosePortal()
+        {
+            Release?.Invoke(this);
+        }
+
+        private void EmergeTentacle()
+        {
+            _spawnedTentacle.Emerge(_initialLocation.transform.position, _desiredLocation.transform.position);
+            _spawnedTentacle.GetComponent<TentacleRetreat>().Init(this);
         }
 
         private void CreateBoundedTentacle()
@@ -72,13 +67,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
                 _ => throw new ArgumentOutOfRangeException()
             };
             _spawnedTentacle =
-                _gameFactory.CreateEnemy(_initialLocation.position, _initialLocation.rotation, enemyType);
-        }
-
-
-        private void ClosePortal()
-        {
-            Release?.Invoke(this);
+                _gameFactory.CreateEnemy(_initialLocation.position, _initialLocation.rotation, enemyType).GetComponent<TentacleEmergence>();
         }
     }
 }

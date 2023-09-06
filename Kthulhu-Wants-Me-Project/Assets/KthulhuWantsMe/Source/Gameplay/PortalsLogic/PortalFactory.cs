@@ -37,12 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
             portal.Show();
             return portal;
         }
-
-        public PortalEnemySpawner GetOrCreatePortal(Vector3 spawnPoint, Quaternion rotation)
-        {
-            return null;
-        }
-
+        
         protected override Portal Create()
         {
             Portal portalPrefab = _portalType switch

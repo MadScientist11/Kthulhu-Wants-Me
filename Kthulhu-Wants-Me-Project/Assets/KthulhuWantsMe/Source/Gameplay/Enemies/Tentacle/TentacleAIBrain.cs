@@ -40,6 +40,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private TentacleAttack _tentacleAttack;
         [SerializeField] private TentacleGrabAbility _tentacleGrabAbility;
         [SerializeField] private TentacleAggro _tentacleAggro;
+        [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleEmergence _tentacleEmergence;
         [SerializeField] private TentacleRetreat _tentacleRetreat;
 
@@ -64,7 +65,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             DecideAttackStrategy();
         }
 
-        public void ResetBrain()
+        public void ResetAI()
         {
             IsAttacking = false;
             Stunned = false;

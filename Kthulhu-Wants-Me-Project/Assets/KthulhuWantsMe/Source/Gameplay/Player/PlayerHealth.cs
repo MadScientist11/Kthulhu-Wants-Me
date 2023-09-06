@@ -1,6 +1,7 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
 
@@ -12,6 +13,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
+        [SerializeField] private MMFeedbacks _healFeedback;
         
         private PlayerMovementController _movementController;
 
@@ -39,7 +41,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             ReceiveDamageVisual();
         }
-        
+
+        public override void Heal(float amount)
+        {
+            float prevHealth = CurrentHealth;
+            base.Heal(amount);
+            if (CurrentHealth > prevHealth)
+            {
+                _healFeedback.PlayFeedbacks(transform.position);
+            }
+        }
+
         private void ReceiveDamageVisual()
         {
             _playerAnimator.PlayImpact();

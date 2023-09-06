@@ -442,6 +442,7 @@ MonoBehaviour:
   _tentacleAttack: {fileID: -4741555755902591119}
   _tentacleGrabAbility: {fileID: 3629999761114246035}
   _tentacleAggro: {fileID: 423395108823978285}
+  _tentacleAnimator: {fileID: 7893959025167172210}
   _tentacleEmergence: {fileID: -8437970798004524629}
   _tentacleRetreat: {fileID: -8854100897847997932}
 --- !u!114 &7893959025167172210
@@ -519,6 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tentacleAnimator: {fileID: 7893959025167172210}
+  _tentacleHealth: {fileID: 1336930687297924091}
   _minionsSpawnSpell: {fileID: 1627893407925517961}
   _tentacleAIBrain: {fileID: -2563807488164230852}
 --- !u!114 &-8854100897847997932
