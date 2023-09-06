@@ -1,93 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using KthulhuWantsMe.Source.Gameplay.DamageSystem;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces.AutoInteractables;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
 {
-    public interface IPlayerStats : IDamageProvider
+    public interface IPlayerStats
     {
-        void AddDamageProvider(IDamageProvider damageProvider);
-        void RemoveDamageProvider(IDamageProvider damageProvider);
+        Stats Stats { get; }
+        void ApplyBuff(IBuff buffItem);
     }
 
-    public class PlayerBaseDamageProvider : IDamageProvider
+
+    public class PlayerStats : IPlayerStats
     {
+        public Stats Stats { get; }
+        
+        
+        
         private readonly PlayerConfiguration _playerConfiguration;
+        private readonly PlayerFacade _player;
+        private readonly IGameFactory _gameFactory;
 
-        public PlayerBaseDamageProvider(PlayerConfiguration playerConfiguration)
+        public PlayerStats(IDataProvider dataProvider, IGameFactory gameFactory)
         {
-            _playerConfiguration = playerConfiguration;
-        }
-
-        public float ProvideDamage()
-        {
-            return _playerConfiguration.BaseDamage;
-        }
-    }
-
-    public class PlayerStats : IPlayerStats, IDisposable
-    {
-        private readonly HashSet<IDamageProvider> _damageProviders = new();
-        private readonly PlayerConfiguration _playerConfiguration;
-        private readonly IInventorySystem _inventorySystem;
-
-        public PlayerStats(IDataProvider dataProvider, IInventorySystem inventorySystem)
-        {
-            _inventorySystem = inventorySystem;
+            _gameFactory = gameFactory;
             _playerConfiguration = dataProvider.PlayerConfig;
-            AddDamageProvider(new PlayerBaseDamageProvider(_playerConfiguration));
-            _inventorySystem.OnItemAdded += AddItemStatsIfAny;
-            _inventorySystem.OnItemRemoved += RemoveItemStatsIfAny;
-            _inventorySystem.OnItemSwitched += ItemSwitched;
-        }
-
-        public void Dispose()
-        {
-            _inventorySystem.OnItemAdded -= AddItemStatsIfAny;
-            _inventorySystem.OnItemRemoved -= RemoveItemStatsIfAny;
-            _inventorySystem.OnItemSwitched -= ItemSwitched;
-        }
-
-        public void AddDamageProvider(IDamageProvider damageProvider)
-        {
-            _damageProviders.Add(damageProvider);
-            Debug.Log(ProvideDamage());
-        }
-
-        public void RemoveDamageProvider(IDamageProvider damageProvider)
-        {
-            _damageProviders.Remove(damageProvider);
-        }
-
-        public float ProvideDamage() =>
-            _damageProviders.Sum(provider => provider.ProvideDamage());
-
-        private void AddItemStatsIfAny(IPickable item)
-        {
-            if (item.IsWeapon(out IDamageProvider damageProvider))
+            Stats = new Stats()
             {
-                AddDamageProvider(damageProvider);
-            }
+                MaxHealth = _playerConfiguration.MaxHealth,
+                BaseDamage = _playerConfiguration.BaseDamage,
+                Damage = _playerConfiguration.BaseDamage,
+            };
         }
 
-        private void RemoveItemStatsIfAny(IPickable item)
+        public void ApplyBuff(IBuff buff)
         {
-            if (item.IsWeapon(out IDamageProvider damageProvider))
+            switch (buff.BuffTarget)
             {
-                RemoveDamageProvider(damageProvider);
+                case BuffTarget.InstaHealthReplenish:
+                    _gameFactory.Player.PlayerHealth.Heal(buff.Value);
+                    break;
+                case BuffTarget.DamageBuff:
+                    Stats.Damage += buff.Value;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-        }
-
-        private void ItemSwitched(IPickable item, IPickable previousItem)
-        {
-            RemoveItemStatsIfAny(previousItem);
-            AddItemStatsIfAny(previousItem);
         }
     }
 }

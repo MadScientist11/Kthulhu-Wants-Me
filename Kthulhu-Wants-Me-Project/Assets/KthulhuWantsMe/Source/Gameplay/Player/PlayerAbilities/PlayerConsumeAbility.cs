@@ -1,7 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
-using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
@@ -20,11 +18,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _inventorySystem = inventorySystem;
         }
 
-        public void InstaConsume(HealthItem healthItem)
-        {
-            _playerHealth.Heal(healthItem.HealthReplenishAmount);
-        }
-        
         public void Consume(IConsumable consumable)
         {
             consumable.RemainingUses--;

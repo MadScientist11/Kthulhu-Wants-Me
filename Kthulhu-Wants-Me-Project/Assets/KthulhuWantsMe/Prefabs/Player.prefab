@@ -25831,6 +25831,74 @@ Transform:
   - {fileID: 8634896447511357001}
   m_Father: {fileID: 6546987725394091216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4283437215234548758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6696372534220490874}
+  - component: {fileID: 8987672472887817515}
+  - component: {fileID: 9084508726732642798}
+  m_Layer: 18
+  m_Name: AutoInteractionZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6696372534220490874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283437215234548758}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7507567670304966633}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8987672472887817515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283437215234548758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1329f9de11f14525b9f064a6a4000a61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!136 &9084508726732642798
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283437215234548758}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4385668443560703208
 GameObject:
   m_ObjectHideFlags: 0
@@ -30920,6 +30988,7 @@ Transform:
   - {fileID: 4331935649930727702}
   - {fileID: 7938607841616575160}
   - {fileID: 375742521806048122}
+  - {fileID: 6696372534220490874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &-751287432754516909
@@ -31065,6 +31134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CameraFollowTarget>k__BackingField: {fileID: 2200005688810927865}
   <PlayerLocomotion>k__BackingField: {fileID: 5663912579931136821}
+  <PlayerHealth>k__BackingField: {fileID: 6482385733598322139}
   <TentacleGrabAbilityResponse>k__BackingField: {fileID: -2573202685680207158}
 --- !u!114 &6482385733598322139
 MonoBehaviour:
@@ -31151,6 +31221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerHighlightAbility: {fileID: 6774093509248161396}
   _playerInventoryAbility: {fileID: 5173070491289112120}
+  _autoInteractionZone: {fileID: 8987672472887817515}
 --- !u!114 &6774093509248161396
 MonoBehaviour:
   m_ObjectHideFlags: 0

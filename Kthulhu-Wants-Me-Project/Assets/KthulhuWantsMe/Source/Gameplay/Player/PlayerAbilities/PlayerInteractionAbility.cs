@@ -1,8 +1,11 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces.AutoInteractables;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
@@ -14,19 +17,37 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerHighlightAbility _playerHighlightAbility;
         [SerializeField] private PlayerInventoryAbility _playerInventoryAbility;
         
+        [SerializeField] private TriggerObserver _autoInteractionZone;
+        
         private IInputService _inputService;
+        private IPlayerStats _playerStats;
 
         [Inject]
-        public void Construct(IInputService inputService)
+        public void Construct(IInputService inputService, IPlayerStats playerStats)
         {
+            _playerStats = playerStats;
             _inputService = inputService;
 
             _inputService.GameplayScenario.Interact += OnInteractButtonPressed;
+            _autoInteractionZone.TriggerEnter += HandleProximityBasedInteractions;
         }
 
         private void OnDestroy()
         {
             _inputService.GameplayScenario.Interact -= OnInteractButtonPressed;
+            _autoInteractionZone.TriggerEnter -= HandleProximityBasedInteractions;
+        }
+
+        private void HandleProximityBasedInteractions(Collider interaction)
+        {
+            if(!interaction.TryGetComponent(out IAutoInteractable autoInteractable))
+                return;
+
+            if (autoInteractable is IBuff buffItem)
+            {
+               _playerStats.ApplyBuff(buffItem);
+               autoInteractable.RespondTo(this);
+            }
         }
 
 
@@ -34,7 +55,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             if (_playerHighlightAbility.MouseHoverInteractable != null)
             {
-                Debug.Log(_playerHighlightAbility.MouseHoverInteractable);
                 ProcessHighlightedInteractable(_playerHighlightAbility.MouseHoverInteractable);
                 return;
             }

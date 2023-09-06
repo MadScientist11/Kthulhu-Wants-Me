@@ -1,5 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -17,11 +18,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         private PlayerMovementController _movementController;
 
-        private PlayerConfiguration _playerConfiguration;
+        private Stats _playerConfiguration;
         
         [Inject]
-        public void Construct(IDataProvider dataProvider) => 
-            _playerConfiguration = dataProvider.PlayerConfig;
+        public void Construct(IPlayerStats playerStats) => 
+            _playerConfiguration = playerStats.Stats;
 
         private void Start()
         {
