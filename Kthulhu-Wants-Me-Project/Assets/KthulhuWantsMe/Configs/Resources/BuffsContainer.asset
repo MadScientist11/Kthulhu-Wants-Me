@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6770ac27e3b9460a838080d9d16117ee, type: 3}
-  m_Name: SmallHealthPack
+  m_Script: {fileID: 11500000, guid: 93c7bec111e0400a99ce34862faef4d8, type: 3}
+  m_Name: BuffsContainer
   m_EditorClassIdentifier: 
-  BuffPrefab: {fileID: 0}
-  BuffTarget: 1
-  BuffType: 0
-  Value: 20
+  _randomBuffs:
+  - {fileID: 11400000, guid: cdb8a2639ca3e2f428b50445f0717a0f, type: 2}

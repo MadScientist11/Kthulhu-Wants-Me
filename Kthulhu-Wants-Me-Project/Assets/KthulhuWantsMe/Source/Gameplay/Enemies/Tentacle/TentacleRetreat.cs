@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using UnityEngine;
+using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
@@ -14,6 +16,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
         
         private Portal _boundPortal;
+        
+        private ILootService _lootService;
+
+        [Inject]
+        public void Construct(ILootService lootService)
+        {
+            _lootService = lootService;
+        }
 
         public void Init(Portal boundPortal)
         {
@@ -35,6 +45,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _tentacleAnimator.PlayRetreat();
             _tentacleAIBrain.BlockProcessing = true;
             _tentacleSpellCastingAbility.CancelSpell();
+
+            _lootService.SpawnRandomBuff(_tentacleEmergence.InitialPoint + Vector3.up * 5f, Quaternion.identity);
             StartCoroutine(RetreatToPortal(_tentacleEmergence.InitialPoint));
         }
 

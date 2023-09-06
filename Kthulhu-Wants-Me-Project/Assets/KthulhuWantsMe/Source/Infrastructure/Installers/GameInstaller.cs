@@ -33,6 +33,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
             
             builder
+                .Register<LootService>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
+            
+            builder
                 .Register<PlayerStats>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
 

@@ -1,9 +1,11 @@
 ﻿using System;
 using Cinemachine;
 using KinematicCharacterController;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Camera;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Spell;
 using UnityEngine;
@@ -20,6 +22,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
         T CreatePrefabInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object;
         MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation);
+        BuffItem CreateRandomBuff(Vector3 position, Quaternion rotation);
     }
 
     public class GameFactory : IGameFactory
@@ -66,8 +69,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             MinionsSpawnSpell instance = _instantiator.Instantiate(_dataProvider.TentacleConfig.MinionsSpawnSpell, position, rotation);
 
             return instance;
-        } 
-        
+        }
+
+        public BuffItem CreateRandomBuff(Vector3 position, Quaternion rotation)
+        {
+            BuffData buffData = _dataProvider.BuffsContainer.Random;
+            BuffItem instance = _instantiator.Instantiate(buffData.BuffPrefab, position, rotation);
+            return instance;
+        }
+
         public T CreatePrefabInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object
         {
             return _instantiator.Instantiate(prefab, position, rotation);
