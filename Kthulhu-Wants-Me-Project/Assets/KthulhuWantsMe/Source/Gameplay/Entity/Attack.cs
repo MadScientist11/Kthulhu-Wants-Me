@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+﻿using System;
+using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Entity
@@ -9,12 +10,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Entity
 
         public virtual float ProvideDamage() =>
             BaseDamage;
-
-        protected virtual void OnAttack()
+        
+        protected virtual void OnWindUpPhase()
+        {
+        }
+        
+        protected virtual void OnContactPhase()
+        {
+        }
+        
+        protected virtual void OnRecoveryPhase()
         {
         }
 
         protected virtual void OnAttackEnd()
+        {
+        }
+
+        [Obsolete]
+        protected virtual void OnAttack()
         {
         }
 

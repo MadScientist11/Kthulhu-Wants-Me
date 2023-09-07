@@ -24,17 +24,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private static readonly int LungeCharge = Animator.StringToHash("LungeCharge");
         private static readonly int Lunge = Animator.StringToHash("Lunge");
 
-        private static readonly int _idleStateHash = Animator.StringToHash("Idle");
-        private static readonly int _locomotionState = Animator.StringToHash("Locomotion");
-        private static readonly int _runStateHash = Animator.StringToHash("Run");
-        private static readonly int _attackStateHash = Animator.StringToHash("Attack Move 1");
-        private static readonly int _dieStateHash = Animator.StringToHash("Die");
-        private static readonly int _impactStateHash = Animator.StringToHash("Impact");
         
+        private static readonly int _impactStateHash = Animator.StringToHash("Impact");
+
         private RuntimeAnimatorController _defaultAnimatorController;
 
 
-        private void Start() => 
+        private void Start() =>
             _defaultAnimatorController = _animator.runtimeAnimatorController;
 
 
@@ -66,7 +62,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public void ApplyWeaponMoveSet(WeaponMoveSet moveSet)
         {
-            _animator.runtimeAnimatorController = moveSet == null ? _defaultAnimatorController : moveSet.MoveSetAnimations;
+            _animator.runtimeAnimatorController =
+                moveSet == null ? _defaultAnimatorController : moveSet.MoveSetAnimations;
         }
 
         public void PlayAttack(int attackIndex)
@@ -92,7 +89,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _animator.SetTrigger(Die);
         }
 
-        public void ResetAnimatorController() => 
+        public void ResetAnimatorController() =>
             _animator.runtimeAnimatorController = _defaultAnimatorController;
 
         public void EnteredState(int stateHash)
@@ -101,25 +98,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             OnStateEntered?.Invoke(CurrentState);
         }
 
-        public void ExitedState(int stateHash) => 
+        public void ExitedState(int stateHash) =>
             OnStateExited?.Invoke(CurrentState);
 
 
         private AnimatorState StateFor(int stateHash)
         {
             AnimatorState state;
-            
-            if (stateHash == _idleStateHash)
-                state = AnimatorState.Idle;
-            else if (stateHash == _attackStateHash)
-                state = AnimatorState.Attack;
+
+            if (stateHash == _impactStateHash)
+                state = AnimatorState.Impact;
             else
                 state = AnimatorState.Unknown;
-            
+
             return state;
         }
-
-      
     }
 
     public enum AnimatorState
