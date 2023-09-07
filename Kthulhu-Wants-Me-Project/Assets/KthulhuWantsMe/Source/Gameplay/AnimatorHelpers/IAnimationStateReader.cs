@@ -4,6 +4,5 @@
     {
         void EnteredState(int stateHash);
         void ExitedState(int stateHash);
-
     }
 }

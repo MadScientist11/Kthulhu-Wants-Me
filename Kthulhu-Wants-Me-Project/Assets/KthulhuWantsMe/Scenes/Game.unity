@@ -2373,7 +2373,7 @@ MonoBehaviour:
   _outlineWidth: 120
   _offsetZ: -1
   <ItemData>k__BackingField: {fileID: 0}
-  <ConsumableData>k__BackingField: {fileID: 11400000, guid: d9218caf1c88cc9439b530936e28ee88,
+  <ConsumableData>k__BackingField: {fileID: 11400000, guid: 529b46feb8c0fb44db232b96e9098744,
     type: 2}
 --- !u!1 &1692796603
 GameObject:
@@ -2808,7 +2808,7 @@ MonoBehaviour:
   _outlineWidth: 120
   _offsetZ: -1
   <ItemData>k__BackingField: {fileID: 0}
-  <ConsumableData>k__BackingField: {fileID: 11400000, guid: d9218caf1c88cc9439b530936e28ee88,
+  <ConsumableData>k__BackingField: {fileID: 11400000, guid: 529b46feb8c0fb44db232b96e9098744,
     type: 2}
 --- !u!1 &1991288446
 GameObject:

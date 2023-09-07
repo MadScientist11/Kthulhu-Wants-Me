@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6707de23b7b947efa59c0b07b73f6909, type: 3}
-  m_Name: Attack 2
+  m_Script: {fileID: 11500000, guid: cc982e758be34962b0ecdfe37ef36be4, type: 3}
+  m_Name: ConsumableData
   m_EditorClassIdentifier: 
-  AttackOverrideController: {fileID: 22100000, guid: accffb1160bcc3e499c1a5dbfd87c316,
-    type: 2}
-  Damage: 10
+  DisplayName: 
+  Description: 
+  ItemInHandPosition: {x: 0, y: 0, z: 0}
+  ItemInHandRotation: {x: 0, y: 0, z: 0, w: 0}
+  MaxUses: 1

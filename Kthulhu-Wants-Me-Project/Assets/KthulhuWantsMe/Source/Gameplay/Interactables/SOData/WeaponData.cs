@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Weapons;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.SOData
@@ -13,11 +14,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.SOData
     {
         public WeaponType WeaponType;
         public float BaseDamage;
-
-        public bool HasSpecialAttack => SpecialAttack != null;
-
-        public Attack SpecialAttack;
-
-
+        public WeaponMoveSet WeaponMoveSet;
     }
 }

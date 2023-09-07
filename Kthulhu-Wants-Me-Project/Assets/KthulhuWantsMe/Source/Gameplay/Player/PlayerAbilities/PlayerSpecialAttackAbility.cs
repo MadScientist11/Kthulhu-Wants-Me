@@ -42,10 +42,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void PerformSpecialAttack()
         {
-            if (_inventorySystem.CurrentItem is WeaponItem weapon && weapon.WeaponData.HasSpecialAttack)
+            if (_inventorySystem.CurrentItem is WeaponItem weapon && weapon.WeaponData.WeaponMoveSet.HasSpecialAttack)
             {
+                Debug.Log("Special Attack");
                 _currentWeapon = weapon;
-                _playerAnimator.PlaySpecialAttack(weapon.WeaponData.SpecialAttack.AttackOverrideController);
+                _playerAnimator.PlaySpecialAttack();
             }
         }
     }

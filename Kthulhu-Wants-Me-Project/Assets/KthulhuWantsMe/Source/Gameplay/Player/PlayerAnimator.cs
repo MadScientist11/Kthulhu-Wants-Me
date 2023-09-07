@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.AnimatorHelpers;
+using KthulhuWantsMe.Source.Gameplay.Weapons;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
     public class PlayerAnimator : MonoBehaviour, IAnimationStateReader
     {
-        public bool IsAttacking => CurrentState == AnimatorState.Attack;
         public AnimatorState CurrentState { get; private set; }
 
         public Action<AnimatorState> OnStateEntered;
@@ -17,6 +17,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private static readonly int IsRunning = Animator.StringToHash("IsRunning");
         private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int AttackIndex = Animator.StringToHash("AttackIndex");
         private static readonly int SpecialAttack = Animator.StringToHash("SpecialAttack");
         private static readonly int Impact = Animator.StringToHash("Impact");
         private static readonly int Die = Animator.StringToHash("Die");
@@ -24,20 +25,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private static readonly int Lunge = Animator.StringToHash("Lunge");
 
         private static readonly int _idleStateHash = Animator.StringToHash("Idle");
+        private static readonly int _locomotionState = Animator.StringToHash("Locomotion");
         private static readonly int _runStateHash = Animator.StringToHash("Run");
-        private static readonly int _attackStateHash = Animator.StringToHash("Attack");
+        private static readonly int _attackStateHash = Animator.StringToHash("Attack Move 1");
         private static readonly int _dieStateHash = Animator.StringToHash("Die");
         private static readonly int _impactStateHash = Animator.StringToHash("Impact");
         
         private RuntimeAnimatorController _defaultAnimatorController;
 
 
-        private void Start()
-        {
+        private void Start() => 
             _defaultAnimatorController = _animator.runtimeAnimatorController;
-        }
 
-   
+
         public void Move()
         {
             _animator.SetBool(IsRunning, true);
@@ -64,15 +64,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _animator.SetTrigger(Lunge);
         }
 
-        public void PlayAttack(AnimatorOverrideController attackOverrideController = null)
+        public void ApplyWeaponMoveSet(WeaponMoveSet moveSet)
         {
-            _animator.runtimeAnimatorController = attackOverrideController == null ? _defaultAnimatorController : attackOverrideController;
-            _animator.SetTrigger(Attack);
+            _animator.runtimeAnimatorController = moveSet == null ? _defaultAnimatorController : moveSet.MoveSetAnimations;
         }
 
-        public void PlaySpecialAttack(AnimatorOverrideController attackOverrideController = null)
+        public void PlayAttack(int attackIndex)
         {
-            _animator.runtimeAnimatorController = attackOverrideController == null ? _defaultAnimatorController : attackOverrideController;
+            _animator.SetTrigger(Attack);
+            _animator.SetInteger(AttackIndex, attackIndex);
+        }
+
+        public void PlaySpecialAttack()
+        {
             _animator.SetTrigger(SpecialAttack);
         }
 
@@ -107,19 +111,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             
             if (stateHash == _idleStateHash)
                 state = AnimatorState.Idle;
-            else if (stateHash == _runStateHash)
-                state = AnimatorState.Run;
             else if (stateHash == _attackStateHash)
-                state = AnimatorState.Attack; 
-            else if (stateHash == _impactStateHash)
-                state = AnimatorState.Impact;
-            else if (stateHash == _dieStateHash)
-                state = AnimatorState.Die;
+                state = AnimatorState.Attack;
             else
                 state = AnimatorState.Unknown;
             
             return state;
         }
+
+      
     }
 
     public enum AnimatorState

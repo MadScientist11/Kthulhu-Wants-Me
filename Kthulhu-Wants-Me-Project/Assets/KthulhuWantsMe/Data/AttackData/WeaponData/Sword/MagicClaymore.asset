@@ -10,9 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8128ab5d8f5490896a9ed4e321f7031, type: 3}
-  m_Name: Projectile
+  m_Name: MagicClaymore
   m_EditorClassIdentifier: 
   DisplayName: 
   Description: 
-  WeaponType: 0
+  ItemInHandPosition: {x: -0.323, y: 0.24, z: -0.031}
+  ItemInHandRotation: {x: -0.00636166, y: 0.006937953, z: 0.49906525, w: 0.86651325}
+  WeaponType: 1
   BaseDamage: 10
+  WeaponMoveSet: {fileID: 11400000, guid: eec6806aa787fab47b70ed570fc16182, type: 2}

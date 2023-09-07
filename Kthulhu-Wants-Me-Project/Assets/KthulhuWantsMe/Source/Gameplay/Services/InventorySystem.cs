@@ -9,6 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         event Action<IPickable> OnItemAdded;
         event Action<IPickable> OnItemRemoved;
         event Action<IPickable, IPickable> OnItemSwitched;
+        event Action<IPickable> OnCurrentItemChanged;
         IPickable CurrentItem { get; }
         void ReplaceItem(IPickable item,Action<IPickable> onItemAdded, Action<IPickable> onItemRemoved);
         void SwitchItem(int index, Action<IPickable, IPickable> onItemSwitched);
@@ -24,6 +25,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         public event Action<IPickable> OnItemAdded;
         public event Action<IPickable> OnItemRemoved;
         public event Action<IPickable, IPickable> OnItemSwitched;
+        public event Action<IPickable> OnCurrentItemChanged;
 
         private readonly IPickable[] _items = new IPickable[5];
         private int _currentIndex;
@@ -34,6 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             if (_items[_currentIndex] == null)
             {
                 _items[_currentIndex] = item;
+                OnCurrentItemChanged?.Invoke(item);
                 OnItemAdded?.Invoke(item);
                 onItemAdded?.Invoke(item);
             }
@@ -51,6 +54,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         {
             int index = Array.IndexOf(_items, item);
             _items[index] = null;
+            OnCurrentItemChanged?.Invoke(null);
             OnItemRemoved?.Invoke(item);
         }
         
@@ -66,6 +70,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             _currentIndex = index;
             onItemSwitched?.Invoke(_items[_currentIndex], _items[previous]);
             OnItemSwitched?.Invoke(_items[_currentIndex], _items[previous]);
+            OnCurrentItemChanged?.Invoke(_items[_currentIndex]);
+
         }
     }
 }

@@ -31178,6 +31178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _motor: {fileID: 142401814652149727}
   _playerAnimator: {fileID: -4856184112398116678}
+  _playerAttack: {fileID: -8648004300217098860}
 --- !u!114 &-8648004300217098860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31192,6 +31193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetFeedbacks: {fileID: 8662729706895713989}
   _playerAnimator: {fileID: -4856184112398116678}
+  _playerHealth: {fileID: 6482385733598322139}
   _playerLocomotion: {fileID: 5663912579931136821}
   tentacleGrabAbilityResponse: {fileID: -2573202685680207158}
 --- !u!114 &302771739074157513

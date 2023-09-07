@@ -1,5 +1,6 @@
 using Freya;
 using KinematicCharacterController;
+using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Utilities;
@@ -18,6 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         [SerializeField] private KinematicCharacterMotor _motor;
         [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private PlayerAttack _playerAttack;
 
         private bool _blockMovement;
 
@@ -46,7 +48,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                     _playerAnimator.StopMoving();
                 
                 ProcessInput();
+                return;
             }
+
+            _movementController.SetInputs(Vector2.zero, _lastLookDirection);
+            _playerAnimator.StopMoving();
         }
 
         public void BlockMovement(float timeFor)
@@ -56,29 +62,31 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _coroutineRunner.ExecuteAfter(timeFor, () => _blockMovement = false);
         }
 
+        private Vector3 _lastLookDirection;
+
         private void ProcessInput()
         {
             Ray ray = MousePointer.GetWorldRay(UnityEngine.Camera.main);
 
-            Vector3 lookDirection = Vector3.zero;
+            _lastLookDirection = Vector3.zero;
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(ray, out float enter))
             {
                 Vector3 hitPoint = ray.GetPoint(enter);
 
                 Vector3 hitPointXZ = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
-                lookDirection = (hitPointXZ - transform.position);
+                _lastLookDirection = (hitPointXZ - transform.position).normalized;
             }
 
             Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
                 .XZ();
 
-            _movementController.SetInputs(movementInput, lookDirection.normalized);
+            _movementController.SetInputs(movementInput, _lastLookDirection);
         }
 
         private bool CanMove()
         {
-            return !_playerAnimator.IsAttacking && !_blockMovement;
+            return !_playerAttack.IsAttacking && !_blockMovement;
         }
 
         private bool MovementInputDetected()
