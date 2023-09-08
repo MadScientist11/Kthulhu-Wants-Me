@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Effects;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
@@ -24,25 +25,27 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
-        
+
         private int _comboAttackIndex;
         private WeaponItem _activeWeapon;
         private bool _isAttacking;
         private bool _canProceedWithCombo;
-        
+
         private PlayerConfiguration _playerConfiguration;
         private Stats _playerStats;
         private IInputService _inputService;
         private IInventorySystem _inventorySystem;
+        private WeaponParticleTrailEffect _weaponTrails;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, IPlayerStats playerStats, IInventorySystem inventorySystem)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, IPlayerStats playerStats,
+            IInventorySystem inventorySystem)
         {
             _inventorySystem = inventorySystem;
             _inputService = inputService;
             _playerConfiguration = dataProvider.PlayerConfig;
             _playerStats = playerStats.Stats;
-            
+
             _inputService.GameplayScenario.Attack += PerformAttack;
             _playerHealth.TookDamage += ResetAttackState;
             _inventorySystem.OnCurrentItemChanged += UpdateActiveWeaponStatus;
@@ -55,12 +58,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _inventorySystem.OnCurrentItemChanged -= UpdateActiveWeaponStatus;
         }
 
-        public override float ProvideDamage() => 
-            base.ProvideDamage() + _activeWeapon.WeaponData.BaseDamage + _activeWeapon.WeaponData.WeaponMoveSet.AttackMoveDamage[_comboAttackIndex];
+        public override float ProvideDamage() =>
+            base.ProvideDamage() + _activeWeapon.WeaponData.BaseDamage +
+            _activeWeapon.WeaponData.WeaponMoveSet.AttackMoveDamage[_comboAttackIndex];
 
         protected override void OnWindUpPhase()
         {
             _isAttacking = true;
+            _canProceedWithCombo = false;
+            Debug.Log("WindUp");
+
         }
 
         protected override void OnContactPhase()
@@ -69,6 +76,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
                     LayerMasks.EnemyMask, out IDamageable damageable))
                 return;
 
+            Debug.Log("Contact");
+
+            _weaponTrails.Play(_comboAttackIndex);
             TargetFeedbacks.PlayFeedbacks(AttackStartPoint());
             ApplyDamage(damageable);
         }
@@ -76,8 +86,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         protected override void OnRecoveryPhase()
         {
             _canProceedWithCombo = true;
+            _comboAttackIndex++;
+            _comboAttackIndex %= _activeWeapon.WeaponData.WeaponMoveSet.MoveSetAttackCount;
+            Debug.Log("Recovery");
+
         }
-        
+
         protected override void OnAttackEnd()
         {
             ResetAttackState();
@@ -87,10 +101,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         {
             if (CantAttack())
                 return;
-            
+
+
             _playerAnimator.PlayAttack(_comboAttackIndex);
-            _comboAttackIndex++;
-            _comboAttackIndex %= _activeWeapon.WeaponData.WeaponMoveSet.MoveSetAttackCount;
+           
         }
 
         private void ResetAttackState()
@@ -102,7 +116,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
 
         private Vector3 AttackStartPoint() =>
-            new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z) + 
+            new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z) +
             transform.forward * _playerConfiguration.AttackEffectiveDistance;
 
         private void UpdateActiveWeaponStatus(IPickable item)
@@ -113,14 +127,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
                 _activeWeapon = null;
 
             WeaponMoveSet weaponMoveSet = _activeWeapon == null ? null : _activeWeapon.WeaponData.WeaponMoveSet;
+            if (_activeWeapon != null && _weaponTrails == null)
+            {
+                _weaponTrails = Instantiate(_activeWeapon.WeaponData.WeaponTrailsPrefab, transform);
+            }
+            else if (_activeWeapon != null)
+            {
+                Destroy(_weaponTrails);
+                _weaponTrails = Instantiate(_activeWeapon.WeaponData.WeaponTrailsPrefab, transform);
+            }
+
             _playerAnimator.ApplyWeaponMoveSet(weaponMoveSet);
         }
 
-        private bool CantAttack() => 
+        private bool CantAttack() =>
             (_isAttacking && !_canProceedWithCombo)
             || _playerAnimator.CurrentState == AnimatorState.Impact
-            || tentacleGrabAbilityResponse.Grabbed 
-            || _activeWeapon == null 
+            || tentacleGrabAbilityResponse.Grabbed
+            || _activeWeapon == null
             || _playerLocomotion.MovementController.InternalVelocityAdd.sqrMagnitude > 0;
     }
 }

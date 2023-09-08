@@ -1,6 +1,7 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces.AutoInteractables;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 
@@ -10,6 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     {
         Stats Stats { get; }
         void ApplyBuff(IBuff buffItem);
+        float GetOverallDamage();
     }
 
 
@@ -22,9 +24,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         private readonly PlayerConfiguration _playerConfiguration;
         private readonly PlayerFacade _player;
         private readonly IGameFactory _gameFactory;
+        private readonly IInventorySystem _inventorySystem;
 
-        public PlayerStats(IDataProvider dataProvider, IGameFactory gameFactory)
+        public PlayerStats(IDataProvider dataProvider, IGameFactory gameFactory, IInventorySystem inventorySystem)
         {
+            _inventorySystem = inventorySystem;
             _gameFactory = gameFactory;
             _playerConfiguration = dataProvider.PlayerConfig;
             Stats = new Stats()
@@ -48,6 +52,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public float GetOverallDamage()
+        {
+            float weaponDamage = (_inventorySystem.CurrentItem is WeaponItem weaponItem)
+                ? weaponItem.WeaponData.BaseDamage
+                : 0;
+            return Stats.BaseDamage + weaponDamage;
         }
     }
 }

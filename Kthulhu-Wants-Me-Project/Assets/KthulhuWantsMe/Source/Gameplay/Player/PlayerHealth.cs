@@ -10,19 +10,39 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 {
     public class PlayerHealth : Health
     {
-        public override float MaxHealth => _playerConfiguration.MaxHealth;
-        
+        public override float MaxHealth => _playerStats.Stats.MaxHealth;
+
+        public override float CurrentHealth
+        {
+            get { return _playerStats.Stats.Health;  }
+            protected set
+            {
+                float newHealth = Mathf.Clamp(value, 0, MaxHealth);
+                
+                
+                if (newHealth < _playerStats.Stats.Health)
+                    RaiseTookDamageEvent();
+
+                _playerStats.Stats.Health = newHealth;
+
+                RaiseHealthChangedEvent(_playerStats.Stats.Health);
+
+                if (_playerStats.Stats.Health == 0)
+                    RaiseDiedEvent();
+            }
+        }
+
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private MMFeedbacks _healFeedback;
         
         private PlayerMovementController _movementController;
 
-        private Stats _playerConfiguration;
+        private IPlayerStats _playerStats;
         
         [Inject]
         public void Construct(IPlayerStats playerStats) => 
-            _playerConfiguration = playerStats.Stats;
+            _playerStats = playerStats;
 
         private void Start()
         {

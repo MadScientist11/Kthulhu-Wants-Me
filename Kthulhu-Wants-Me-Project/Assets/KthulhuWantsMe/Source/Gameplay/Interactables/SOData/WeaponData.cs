@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Player;
+﻿using KthulhuWantsMe.Source.Gameplay.Effects;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Weapons;
 using UnityEngine;
 
@@ -15,5 +16,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.SOData
         public WeaponType WeaponType;
         public float BaseDamage;
         public WeaponMoveSet WeaponMoveSet;
+        public WeaponParticleTrailEffect WeaponTrailsPrefab;
     }
 }

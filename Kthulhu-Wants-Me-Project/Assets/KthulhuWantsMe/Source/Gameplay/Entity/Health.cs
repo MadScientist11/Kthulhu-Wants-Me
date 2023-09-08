@@ -13,10 +13,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
     {
         public abstract float MaxHealth { get; }
 
-        public float CurrentHealth
+        public virtual float CurrentHealth
         {
             get => _currentHealth;
-            private set
+            protected set
             {
                 float newHealth = Mathf.Clamp(value, 0, MaxHealth);
                 
@@ -38,6 +38,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public event Action Died;
 
         private float _currentHealth;
+
+        protected void RaiseTookDamageEvent() => TookDamage?.Invoke();
+        protected void RaiseHealthChangedEvent(float newValue) => Changed?.Invoke(newValue);
+        protected void RaiseDiedEvent() => Died?.Invoke();
 
 
         public virtual void TakeDamage(float damage) =>
