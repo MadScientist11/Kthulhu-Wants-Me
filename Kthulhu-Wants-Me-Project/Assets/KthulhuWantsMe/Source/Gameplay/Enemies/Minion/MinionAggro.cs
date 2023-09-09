@@ -1,6 +1,4 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
-using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
@@ -8,33 +6,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 {
     public class MinionAggro : MonoBehaviour
     {
-        [SerializeField] private MinionAIBrain _minionAIBrain;
-
-        private PlayerFacade _player;
+        public bool HasAggro { get; }
+        public bool IsPlayerInAttackRange { get; }
+        
+        private IGameFactory _gameFactory;
 
         [Inject]
         public void Construct(IGameFactory gameFactory)
         {
-            _player = gameFactory.Player;
+            _gameFactory = gameFactory;
         }
 
-        private void Update()
+        public void Init()
         {
-            _minionAIBrain.HasAggro = true;
-            _minionAIBrain.IsInAttackRange = PlayerIsInAttackRange();
-        }
-
-        private bool PlayerInRange()
-        {
-            return DistanceToPlayer() < 5f;
-        }
-
-        private bool PlayerIsInAttackRange() =>
-            DistanceToPlayer() < 2f;
-
-        private float DistanceToPlayer()
-        {
-            return Vector3.Distance(_player.transform.position, transform.position);
+            
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 {
     public class MinionDeath : MonoBehaviour
     {
         [SerializeField] private MinionHealth _enemyHealth;
-        [SerializeField] private MinionAIBrain _minionAIBrain;
+        [FormerlySerializedAs("_minionAIBrain")] [SerializeField] private YithAIBrain yithAIBrain;
 
         private void Start()
         {
@@ -20,7 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 
         private void OnDied()
         {
-            _minionAIBrain.BlockProcessing = true;
+           // yithAIBrain.BlockProcessing = true;
         }
     }
 }

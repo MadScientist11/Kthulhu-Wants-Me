@@ -56,7 +56,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             {
                 EnemyType.Tentacle => _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position,
                     rotation),
-                EnemyType.Minion => _instantiator.Instantiate(_dataProvider.MinionConfig.MinionPrefab, position,
+                EnemyType.Cyeagha => _instantiator.Instantiate(_dataProvider.CyaeghaConfig.Prefab, position,
+                    rotation), 
+                EnemyType.Yith => _instantiator.Instantiate(_dataProvider.YithConfig.Prefab, position,
                     rotation),
                 _ => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, null)
             };

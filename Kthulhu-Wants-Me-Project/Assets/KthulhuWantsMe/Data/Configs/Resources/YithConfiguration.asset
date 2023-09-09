@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c667cc77b447bca1abf10fbe2d68cd, type: 3}
+  m_Name: YithConfiguration
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 1590797425616401305, guid: 4e09be44c288e9e4eb6301b27122f540, type: 3}
+  MaxHealth: 20
+  BaseDamage: 1
+  AttackCooldownTime: 2
+  AttackDelay: 2

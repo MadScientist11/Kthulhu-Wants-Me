@@ -25,6 +25,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<RuntimeData>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
+            
+            builder
+                .Register<RandomService>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
           
             builder
                 .RegisterComponentOnNewGameObject<CoroutineRunner>(Lifetime.Singleton, "CoroutineRunner")

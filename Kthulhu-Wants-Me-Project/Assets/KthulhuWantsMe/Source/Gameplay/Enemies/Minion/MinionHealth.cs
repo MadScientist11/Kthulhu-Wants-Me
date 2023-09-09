@@ -1,17 +1,18 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 {
     public class MinionHealth : Health
     {
-        public override float MaxHealth => _minionConfig.MaxHealth;
+        public override float MaxHealth => _cyaeghaConfig.MaxHealth;
         
-        private MinionConfiguration _minionConfig;
+        private CyaeghaConfiguration _cyaeghaConfig;
 
         [Inject]
         public void Construct(IDataProvider dataProvider) => 
-            _minionConfig = dataProvider.MinionConfig;
+            _cyaeghaConfig = dataProvider.CyaeghaConfig;
 
         private void Start()
         {

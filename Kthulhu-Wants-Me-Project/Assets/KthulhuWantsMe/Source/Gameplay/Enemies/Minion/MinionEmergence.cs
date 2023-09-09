@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
@@ -8,7 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
         public Vector3 InitialPoint { get; private set; }
 
         [SerializeField] private MinionAnimator _tentacleAnimator;
-        [SerializeField] private MinionAIBrain _tentacleAIBrain;
+        [SerializeField] private YithAIBrain _tentacleAIBrain;
 
 
         public void Emerge(Vector3 from, Vector3 to)

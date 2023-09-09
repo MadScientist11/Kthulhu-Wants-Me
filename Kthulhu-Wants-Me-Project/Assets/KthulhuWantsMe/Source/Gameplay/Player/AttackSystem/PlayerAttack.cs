@@ -104,7 +104,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
 
             _playerAnimator.PlayAttack(_comboAttackIndex);
-           
         }
 
         private void ResetAttackState()
