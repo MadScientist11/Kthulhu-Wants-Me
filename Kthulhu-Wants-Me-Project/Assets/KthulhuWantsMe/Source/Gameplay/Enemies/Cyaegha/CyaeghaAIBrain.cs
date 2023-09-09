@@ -14,9 +14,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private bool _isDead;
         private float _attackDelayTime;
-        private float _rageComboRandom;
-
-        private const float ComboAttackReavaluationTime = 5f;
 
         private PlayerFacade _player;
         private YithConfiguration _yithConfiguration;
@@ -28,8 +25,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             _player = gameFactory.Player;
             
             _cyaeghaHealth.Died += TriggerDeath;
-            
-            randomService.ProvideRandomValue(value => _rageComboRandom = value, ComboAttackReavaluationTime);
         }
 
         private void OnDestroy()
@@ -39,7 +34,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private void Start()
         {
-            _followLogic.Init(_player.transform, Mathf.Infinity, 1.5f);
+            _followLogic.Init(_player.transform, Mathf.Infinity, 3f);
         }
 
         private void Update() => 
@@ -79,7 +74,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
             if (CanDoBasicAttack())
             {
-                _cyaeghaAttack.PerformAttack();
+                _cyaeghaAttack.PerformAttack(_player.transform.position);
                 ResetAttackDelayCountdown();
             }
         }

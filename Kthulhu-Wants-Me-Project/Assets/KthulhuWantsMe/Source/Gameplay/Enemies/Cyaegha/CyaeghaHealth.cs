@@ -21,6 +21,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         public void HandleDeath()
         {
+            _hitFeedbacks?.PlayFeedbacks();
+            Destroy(gameObject, 2f);
         }
     }
 }

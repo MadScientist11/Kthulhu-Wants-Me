@@ -1,7 +1,12 @@
-﻿namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
+﻿using UnityEngine;
+
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
-    public class CyaeghaJumpAbility
+    public class CyaeghaJumpAbility : MonoBehaviour
     {
+        public float MaxJumpDistance;
+        
+        
         
     }
 }

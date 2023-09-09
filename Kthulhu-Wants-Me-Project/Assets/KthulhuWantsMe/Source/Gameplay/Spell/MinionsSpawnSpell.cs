@@ -65,7 +65,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Spell
             for (float i = 0; i < Mathfs.TAU; i += angleStep)
             { 
                 Vector2 pointOnCircle = new Vector2(Mathfs.Cos(i),Mathfs.Sin(i)) * _radius;
-                _gameFactory.CreateEnemy(transform.position + pointOnCircle.XZtoXYZ(), Quaternion.identity, EnemyType.Yith);
+                _gameFactory.CreateEnemy(transform.position + pointOnCircle.XZtoXYZ(), Quaternion.identity, EnemyType.Cyeagha);
             }
         }
     }

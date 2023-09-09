@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+﻿using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -12,8 +13,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
     {
         protected override float BaseDamage => _cyaeghaConfiguration.BaseDamage;
 
-        [SerializeField] private MMFeedbacks _attackFeedback;
-        [SerializeField] private FollowLogic _followLogic;
+
+        public AnimationCurve HeightCurve;
+
 
         private float _attackCooldown;
         private bool _isAttacking;
@@ -32,19 +34,37 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             _attackCooldown -= Time.deltaTime;
         }
 
-        public void PerformAttack()
+        public void PerformAttack(Vector3 lastPlayerPosition)
         {
-            if (!PhysicsUtility.HitFirst(transform, 
-                    AttackStartPoint(), 
-                    .75f, 
-                    LayerMasks.PlayerMask, 
-                    out IDamageable damageable))
-                return;
-            
+            StartCoroutine(DoAttack(lastPlayerPosition));
+
+            // ApplyDamage(to: damageable);
+        }
+
+        private IEnumerator DoAttack(Vector3 lastPlayerPosition)
+        {
+            Vector3 jumpStartPos = transform.position;
+            Vector3 dest = lastPlayerPosition;
             _isAttacking = true;
 
-            ApplyDamage(to: damageable);
-            
+            for (float t = 0; t < 1; t += Time.deltaTime * 2f)
+            {
+                transform.position = Vector3.Lerp(jumpStartPos, dest, t)
+                                     + Vector3.up * HeightCurve.Evaluate(t);
+                yield return null;
+            }
+
+            if (PhysicsUtility.HitFirst(transform,
+                    AttackStartPoint(),
+                    .75f,
+                    LayerMasks.PlayerMask,
+                    out IDamageable damageable))
+            {
+                ApplyDamage(to: damageable);
+            }
+
+            //NavMesh SamplePosition?
+
             _isAttacking = false;
             _attackCooldown = _cyaeghaConfiguration.AttackCooldownTime;
         }
@@ -53,8 +73,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         {
             return !_isAttacking && _attackCooldown <= 0f;
         }
-        
-   
+
+
         private Vector3 AttackStartPoint()
         {
             return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +

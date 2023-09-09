@@ -8,7 +8,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     {
         public Vector3 InitialPoint { get; private set; }
 
-        [SerializeField] private MinionAnimator _tentacleAnimator;
         [SerializeField] private YithAIBrain _tentacleAIBrain;
 
 
