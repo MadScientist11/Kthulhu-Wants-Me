@@ -1,5 +1,8 @@
 ﻿using System.Collections;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -31,17 +34,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Spell
             _spellMaterial.SetTransparency(Color, 0);
         }
 
-        public void Activate()
+        public async UniTask Activate()
         {
-            _spellMaterial
+            await _spellMaterial
                 .DOFade(1, 3)
-                .OnComplete(StartSpawnLoop);
+                .ToUniTask();
+
+             StartSpawnLoop();
         }
         
-        public void Deactivate()
+        public async UniTask Deactivate()
         {
-            _spellMaterial
-                .DOFade(0, 2);
+           await _spellMaterial
+                .DOFade(0, 2).ToUniTask();
         }
 
         private void StartSpawnLoop()

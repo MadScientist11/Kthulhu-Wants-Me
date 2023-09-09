@@ -30963,6 +30963,7 @@ GameObject:
   - component: {fileID: 1575893109066662898}
   - component: {fileID: 7666459093575961814}
   - component: {fileID: -2573202685680207158}
+  - component: {fileID: 8209058745014812478}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -31136,6 +31137,8 @@ MonoBehaviour:
   <PlayerLocomotion>k__BackingField: {fileID: 5663912579931136821}
   <PlayerHealth>k__BackingField: {fileID: 6482385733598322139}
   <TentacleGrabAbilityResponse>k__BackingField: {fileID: -2573202685680207158}
+  <PlayerInteractionAbility>k__BackingField: {fileID: 4421352636050686118}
+  <TentacleSpellResponse>k__BackingField: {fileID: 8209058745014812478}
 --- !u!114 &6482385733598322139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31305,6 +31308,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: -5172653069112829316}
+--- !u!114 &8209058745014812478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112094726857054722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963a149a42a3467586f16a2bc3cdd7a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5272480011812278617
 GameObject:
   m_ObjectHideFlags: 0

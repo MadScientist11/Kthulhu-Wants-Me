@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
@@ -80,18 +81,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             ResetCooldown();
         }
 
-      
 
         private void DecideAttackStrategy()
         {
             if (CanNotAttack())
                 return;
 
-            if (CanCastMinionsSpawnSpell())
+            if (CanCastSpells())
             {
-                Debug.Log("Cast");
-                _tentacleSpellCastingAbility.CastMinionsSpawnSpell();
-                return;
+                if (_tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.PlayerCantUseHealthItems))
+                {
+                    _tentacleSpellCastingAbility.CastSpell(TentacleSpell.PlayerCantUseHealthItems).Forget();
+
+                    return;
+                }
             }
 
             if (GrabAbilityConditionsFulfilled())
@@ -112,12 +115,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             ResetCooldown();
         }
 
-        private bool CanCastMinionsSpawnSpell() => 
-            _livingTime > _tentacleConfig.SpellActivationTime && !_tentacleSpellCastingAbility.MinionsSpawnSpellActive;
+        private bool CanCastSpells() => 
+            _livingTime > _tentacleConfig.SpellActivationTime;
             
 
         private bool CanNotAttack() => 
-            HoldsPlayer || Stunned;
+            HoldsPlayer || Stunned || _tentacleSpellCastingAbility.CastingSpell;
 
         private bool CanDoBasicAttack() =>
             CooldownIsUp() && !IsAttacking && _tentacleAggro.HasAggro;

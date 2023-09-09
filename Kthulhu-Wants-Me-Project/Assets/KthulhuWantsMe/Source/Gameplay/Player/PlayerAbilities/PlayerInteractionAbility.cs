@@ -18,6 +18,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerInventoryAbility _playerInventoryAbility;
         
         [SerializeField] private TriggerObserver _autoInteractionZone;
+
+        private bool _prohibitBuffsUsage;
         
         private IInputService _inputService;
         private IPlayerStats _playerStats;
@@ -38,12 +40,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _autoInteractionZone.TriggerEnter -= HandleProximityBasedInteractions;
         }
 
+        public void ApplyBuffsUsageRestriction()
+        {
+            _prohibitBuffsUsage = true;
+        }
+        
+        
+        public void CancelBuffsUsageRestriction()
+        {
+            _prohibitBuffsUsage = false;
+        }
+
         private void HandleProximityBasedInteractions(Collider interaction)
         {
             if(!interaction.TryGetComponent(out IAutoInteractable autoInteractable))
                 return;
 
-            if (autoInteractable is IBuff buffItem)
+            if (autoInteractable is IBuff buffItem && !_prohibitBuffsUsage)
             {
                _playerStats.ApplyBuff(buffItem);
                autoInteractable.RespondTo(this);

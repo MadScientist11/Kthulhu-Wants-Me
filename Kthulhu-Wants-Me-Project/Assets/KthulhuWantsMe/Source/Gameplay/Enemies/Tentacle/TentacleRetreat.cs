@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
 
@@ -14,9 +17,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
         [SerializeField] private TentacleHealth _tentacleHealth;
         [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
-        
+
         private Portal _boundPortal;
-        
+
         private ILootService _lootService;
 
         [Inject]
@@ -29,7 +32,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             _boundPortal = boundPortal;
         }
-        
+
         private void Start()
         {
             _tentacleHealth.Died += Retreat;
@@ -44,7 +47,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             _tentacleAnimator.PlayRetreat();
             _tentacleAIBrain.BlockProcessing = true;
-            _tentacleSpellCastingAbility.CancelSpell();
+            _tentacleSpellCastingAbility.CancelActiveSpells();
+                
 
             _lootService.SpawnRandomBuff(_tentacleEmergence.InitialPoint + Vector3.up * 5f, Quaternion.identity);
             StartCoroutine(RetreatToPortal(_tentacleEmergence.InitialPoint));
@@ -71,6 +75,5 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
             _boundPortal.ClosePortal();
         }
-
     }
 }

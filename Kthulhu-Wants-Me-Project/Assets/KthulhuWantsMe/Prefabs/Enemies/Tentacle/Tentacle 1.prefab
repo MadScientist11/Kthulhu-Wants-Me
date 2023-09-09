@@ -505,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bfae020a5d40d59a69c996798f3c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spellSpawnPoint: {fileID: 2076584000519452278}
+  SpellSpawnPoint: {fileID: 2076584000519452278}
 --- !u!114 &423395108823978285
 MonoBehaviour:
   m_ObjectHideFlags: 0
