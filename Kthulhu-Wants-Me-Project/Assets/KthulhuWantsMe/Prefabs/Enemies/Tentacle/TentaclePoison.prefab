@@ -8,10 +8,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4741555755902591119, guid: b2a1390fa35be8c4c9e850651ae965b2,
+        type: 3}
+      propertyPath: _damageModifier
+      value: 
+      objectReference: {fileID: 3970498150363333850}
     - target: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
         type: 3}
       propertyPath: m_Name
-      value: TentacleBase
+      value: TentaclePoison
       objectReference: {fileID: 0}
     - target: {fileID: 5174028308077087162, guid: b2a1390fa35be8c4c9e850651ae965b2,
         type: 3}
@@ -63,8 +68,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6729353860861768315, guid: b2a1390fa35be8c4c9e850651ae965b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e743e8ef68c80bd44a8cc97b92605e12, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3970498150363333850}
   m_SourcePrefab: {fileID: 100100000, guid: b2a1390fa35be8c4c9e850651ae965b2, type: 3}
+--- !u!1 &7040502946091595901 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 4826024193828572890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3970498150363333850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7040502946091595901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a20a2c63ed492681573dfcee15620a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageModifierId: 1
+  _poisonVFXPrefab: {fileID: 7163259385320301113, guid: 6cc1df5af8285d84481515a5ec44bdf4,
+    type: 3}

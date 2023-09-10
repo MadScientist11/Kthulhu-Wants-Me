@@ -29,7 +29,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             _tentacleAIBrain.ResetAI();
             _tentacleAnimator.ResetAnimator();
-            _tentacleHealth.RestoreHp();
+            _tentacleHealth.Revive();
         }
 
         private IEnumerator EmergeFromPortal(Vector3 from, Vector3 to)

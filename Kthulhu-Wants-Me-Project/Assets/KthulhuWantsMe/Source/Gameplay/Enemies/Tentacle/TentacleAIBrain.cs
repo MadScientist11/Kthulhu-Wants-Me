@@ -75,9 +75,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             if (CanNotAttack())
                 return;
 
+
             _reconsiderationTime = ReconsiderationTime;
-      
-            switch (MakeAttackDecision())
+
+            AttackDecision attackDecision = MakeAttackDecision();
+
+            switch (attackDecision)
             {
                 case AttackDecision.BasicAttack:
                     _tentacleAttack.PerformAttack();

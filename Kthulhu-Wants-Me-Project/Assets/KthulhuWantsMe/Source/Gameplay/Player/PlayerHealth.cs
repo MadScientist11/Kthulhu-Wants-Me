@@ -1,4 +1,6 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
+using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -34,20 +36,46 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
+        [SerializeField] private EntityBuffDebuffContainer _entityBuffDebuffContainer;
         [SerializeField] private MMFeedbacks _healFeedback;
         
         private PlayerMovementController _movementController;
 
         private IPlayerStats _playerStats;
-        
+        private IBuffDebuffService _buffDebuffService;
+
         [Inject]
-        public void Construct(IPlayerStats playerStats) => 
+        public void Construct(IPlayerStats playerStats, IBuffDebuffService buffDebuffService)
+        {
+            _buffDebuffService = buffDebuffService;
             _playerStats = playerStats;
+        }
 
         private void Start()
         {
             _movementController = _playerLocomotion.MovementController;
-            RestoreHp();
+            Revive();
+        }
+
+        private void OnDestroy()
+        {
+            
+        }
+
+        public override void TakeDamage(float damage, IDamageProvider damageProvider)
+        {
+            base.TakeDamage(damage);
+            Debug.Log($"Player took {damage}");
+            if (CurrentHealth <= 0)
+            {
+                Die();
+                return;
+            }
+
+            if (damageProvider is IBuffDebuff)
+            {
+                //Do something
+            }
         }
 
         public override void TakeDamage(float damage)
@@ -73,6 +101,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             }
         }
 
+        private void CancelAllActiveEffects()
+        {
+            _buffDebuffService.CancelAllEffectsOnEntity(_entityBuffDebuffContainer);
+        }
+
         private void ReceiveDamageVisual()
         {
             _playerAnimator.PlayImpact();
@@ -88,6 +121,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _playerAnimator.PlayDie();
             _movementController.ToggleMotor(false);
+            CancelAllActiveEffects();
         }
     }
 }

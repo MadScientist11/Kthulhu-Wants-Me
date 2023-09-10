@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+﻿using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem

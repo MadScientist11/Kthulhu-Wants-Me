@@ -1,12 +1,20 @@
-﻿using System;
+﻿using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
+using UnityEngine.UIElements;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
-{
+{    
+    public enum DamageModifierId
+    {
+        None = 0,
+        Poison = 1,
+        Bleed = 2,
+    }
+
     public class TentacleAttack : Attack
     {
 
@@ -16,6 +24,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
+        [SerializeField] private DamageModifier _damageModifier;
 
         private bool _isAttacking;
         private float _attackCooldown;
@@ -35,10 +44,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         protected override void OnAttack()
         {
             if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfig.AttackRadius,
-                    LayerMasks.PlayerMask, out IDamageable damageable))
+                    LayerMasks.PlayerMask, out Transform player))
                 return;
 
-            ApplyDamage(to: damageable);
+            ApplyDamage(to: player.GetComponent<IDamageable>());
+            _damageModifier?.ApplyTo(player.GetComponent<IEffectReceiver>());
         }
 
         protected override void OnAttackEnd()

@@ -51,12 +51,12 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         public void ClosePortal()
         {
             Release?.Invoke(this);
-            _spawnedTentacle.gameObject.SwitchOff();
+            //_spawnedTentacle.gameObject.SwitchOff();
         }
 
         private void EmergeTentacle()
         {
-            _spawnedTentacle.gameObject.SwitchOn();
+            //_spawnedTentacle.gameObject.SwitchOn();
             _spawnedTentacle.Emerge(_initialLocation.transform.position, _desiredLocation.transform.position);
             _spawnedTentacle.GetComponent<TentacleRetreat>().Init(this);
         }

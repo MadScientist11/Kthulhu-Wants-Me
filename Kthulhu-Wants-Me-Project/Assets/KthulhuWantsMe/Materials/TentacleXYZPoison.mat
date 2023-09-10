@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TentacleXYZ
+  m_Name: TentacleXYZPoison
   m_Shader: {fileID: -6465566751694194690, guid: 6d8960a1892df7b448a78513f7680de1,
     type: 3}
   m_Parent: {fileID: 0}
@@ -57,6 +57,6 @@ Material:
     - _Radius: 0.2
     - _TwirlStrength: 1
     m_Colors:
-    - _Color: {r: 0.8867924, g: 0, b: 0.57725537, a: 0}
+    - _Color: {r: 0, g: 0.3018868, b: 0.10695152, a: 0}
     - _InteractPos: {r: -0.29, g: -0.01, b: 1.35, a: 0}
   m_BuildTextureStacks: []

@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Player;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
@@ -15,8 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             _tentacleSpellCastingAbility = tentacleSpellCastingAbility;
             _player = player;
         }
-
-
+       
         public UniTask Cast()
         {
             _player.PlayerInteractionAbility.ApplyBuffsUsageRestriction();

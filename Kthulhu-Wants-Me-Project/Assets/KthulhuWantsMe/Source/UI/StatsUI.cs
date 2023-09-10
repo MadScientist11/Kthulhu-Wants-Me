@@ -21,7 +21,7 @@ namespace KthulhuWantsMe.Source.UI
 
         private void Update()
         {
-            HpStatText.text = $"HP: {_playerStats.Stats.Health}";
+            HpStatText.text = $"HP: {(int)_playerStats.Stats.Health}";
             AttackStatText.text = $"ATK: {_playerStats.GetOverallDamage()}";
         }
     }

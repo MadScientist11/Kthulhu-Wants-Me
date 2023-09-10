@@ -1,6 +1,6 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
 
-namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
+namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 {
     public class InstaHealBuff : IBuffDebuff
     {
