@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3377359313235388310}
   - component: {fileID: 1715008005696882204}
   - component: {fileID: 1033271894632010011}
-  - component: {fileID: 4262172926937109935}
+  - component: {fileID: 1717804991820437883}
   m_Layer: 16
   m_Name: HealthBuff
   m_TagString: Untagged
@@ -106,7 +106,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4262172926937109935
+--- !u!114 &1717804991820437883
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2621662879852892323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99b54dd60a944d2fa84a042b130521fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a237d5ad85d4171901bd502e80b987e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buffData: {fileID: 11400000, guid: cdb8a2639ca3e2f428b50445f0717a0f, type: 2}
+  _healAmount: 20

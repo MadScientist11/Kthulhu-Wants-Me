@@ -22,7 +22,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
         T CreatePrefabInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object;
         MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation);
-        BuffItem CreateRandomBuff(Vector3 position, Quaternion rotation);
+        BuffItem CreateHealItem(Vector3 position, Quaternion rotation);
     }
 
     public class GameFactory : IGameFactory
@@ -73,10 +73,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             return instance;
         }
 
-        public BuffItem CreateRandomBuff(Vector3 position, Quaternion rotation)
+        public BuffItem CreateHealItem(Vector3 position, Quaternion rotation)
         {
-            BuffData buffData = _dataProvider.BuffsContainer.Random;
-            BuffItem instance = _instantiator.Instantiate(buffData.BuffPrefab, position, rotation);
+            BuffItem instance = _instantiator.Instantiate(_dataProvider.BuffItems.Get<InstaHealthItem>(), position, rotation);
             return instance;
         }
 

@@ -1,5 +1,7 @@
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
@@ -46,6 +48,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 
             builder
                 .Register<PortalFactory>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
+            
+            builder
+                .Register<BuffDebuffService>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
+            
+            builder
+                .Register<BuffDebuffFactory>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
             builder

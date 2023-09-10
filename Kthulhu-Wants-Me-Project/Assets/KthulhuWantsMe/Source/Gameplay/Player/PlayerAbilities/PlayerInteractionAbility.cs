@@ -1,7 +1,9 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces.AutoInteractables;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
@@ -22,12 +24,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private bool _prohibitBuffsUsage;
         
         private IInputService _inputService;
-        private IPlayerStats _playerStats;
+        private IBuffDebuffService _buffDebuffService; 
 
         [Inject]
-        public void Construct(IInputService inputService, IPlayerStats playerStats)
+        public void Construct(IInputService inputService, IBuffDebuffService buffDebuffService)
         {
-            _playerStats = playerStats;
+            _buffDebuffService = buffDebuffService;
             _inputService = inputService;
 
             _inputService.GameplayScenario.Interact += OnInteractButtonPressed;
@@ -40,6 +42,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _autoInteractionZone.TriggerEnter -= HandleProximityBasedInteractions;
         }
 
+        public void ApplyEffectToPlayer(IBuffDebuff effect)
+        {
+            _buffDebuffService.ApplyEffect(effect, GetComponent<EntityBuffDebuffContainer>());
+        }
         public void ApplyBuffsUsageRestriction()
         {
             _prohibitBuffsUsage = true;
@@ -56,9 +62,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             if(!interaction.TryGetComponent(out IAutoInteractable autoInteractable))
                 return;
 
-            if (autoInteractable is IBuff buffItem && !_prohibitBuffsUsage)
+            if (autoInteractable is BuffItem && !_prohibitBuffsUsage)
             {
-               _playerStats.ApplyBuff(buffItem);
                autoInteractable.RespondTo(this);
             }
         }

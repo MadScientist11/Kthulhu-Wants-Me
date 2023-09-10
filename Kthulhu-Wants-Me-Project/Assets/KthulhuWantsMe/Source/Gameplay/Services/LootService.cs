@@ -20,7 +20,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         
         public BuffItem SpawnRandomBuff(Vector3 at, Quaternion rotation)
         {
-            return _gameFactory.CreateRandomBuff(at, rotation);
+            return _gameFactory.CreateHealItem(at, rotation);
         }
     }
 }

@@ -1,26 +1,26 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces.AutoInteractables;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using UnityEngine;
+using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 {
-    public class BuffItem : MonoBehaviour, IBuff, IAutoInteractable
+
+    public abstract class BuffItem : MonoBehaviour, IAutoInteractable
     {
-        [SerializeField] private BuffData _buffData;
-        
-        public BuffTarget BuffTarget => _buffData.BuffTarget;
-        public BuffType BuffType => _buffData.BuffType;
-        public float Value => _buffData.Value;
-        
+        protected IBuffDebuffFactory EffectFactory;
 
-        public void Init(BuffData buffData)
-        {
-            _buffData = buffData;
-        }
+        [Inject]
+        public void Construct(IBuffDebuffFactory effectFactory) 
+            => EffectFactory = effectFactory;
 
+        protected abstract IBuffDebuff ProvideBuff();
+       
         public void RespondTo(PlayerInteractionAbility ability)
         {
+            ability.ApplyEffectToPlayer(ProvideBuff());
             Destroy(gameObject);
         }
     }

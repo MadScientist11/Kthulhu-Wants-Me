@@ -1,4 +1,5 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces.AutoInteractables;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
@@ -10,30 +11,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     public interface IPlayerStats
     {
         Stats Stats { get; }
-        void ApplyBuff(IBuff buffItem);
         float GetOverallDamage();
     }
 
-    public interface IBuffDebuff
-    {
-        
-    }
 
-    public class BuffDebuffSystem
-    {
-        public BuffDebuffSystem()
-        {
-            
-        }
-
-
-        public void ApplyEffect()
-        {
-            
-        }
-    }
-
-  
     public class PlayerStats : IPlayerStats
     {
         public Stats Stats { get; }
@@ -56,21 +37,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                 BaseDamage = _playerConfiguration.BaseDamage,
                 Damage = _playerConfiguration.BaseDamage,
             };
-        }
-
-        public void ApplyBuff(IBuff buff)
-        {
-            switch (buff.BuffTarget)
-            {
-                case BuffTarget.InstaHealthReplenish:
-                    _gameFactory.Player.PlayerHealth.Heal(buff.Value);
-                    break;
-                case BuffTarget.DamageBuff:
-                    Stats.Damage += buff.Value;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         public float GetOverallDamage()
