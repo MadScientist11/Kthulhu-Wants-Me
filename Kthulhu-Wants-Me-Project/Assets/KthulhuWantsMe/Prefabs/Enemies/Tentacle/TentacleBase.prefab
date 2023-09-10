@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: -8437970798004524629}
   - component: {fileID: -8854100897847997932}
   m_Layer: 10
-  m_Name: Tentacle 1
+  m_Name: TentacleBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

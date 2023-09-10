@@ -8,6 +8,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleGrabAbility : MonoBehaviour, IAbility
     {
+        public bool HoldsPlayer { get; private set; }
+        
         public Transform GrabTarget;
 
         public float TentacleGrabDamage => _tentacleConfig.TentacleGrabDamage;
@@ -33,14 +35,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
             Debug.Log("Grab Player");
 
-            _tentacleAIBrain.HoldsPlayer = true;
+            HoldsPlayer = true;
             _tentacleAnimator.PlayGrabPlayerAttack();
             hitObject.RespondTo(this);
         }
 
         public void CancelGrab()
         {
-            _tentacleAIBrain.HoldsPlayer = false;
+            HoldsPlayer = false;
             _tentacleAIBrain.Stunned = true;
             _tentacleAnimator.CancelGrab();
         }

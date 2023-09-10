@@ -11,6 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
     public abstract class Health : MonoBehaviour, IDamageable, IHealable
     {
+        public bool IsDead { get; private set; }
         public abstract float MaxHealth { get; }
 
         public virtual float CurrentHealth
@@ -18,8 +19,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             get => _currentHealth;
             protected set
             {
-                float newHealth = Mathf.Clamp(value, 0, MaxHealth);
+                if(IsDead)
+                    return;
                 
+                float newHealth = Mathf.Clamp(value, 0, MaxHealth);
                 
                 if (newHealth < _currentHealth)
                     TookDamage?.Invoke();
@@ -29,7 +32,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
                 Changed?.Invoke(_currentHealth);
 
                 if (_currentHealth == 0)
+                {
                     Died?.Invoke();
+                    IsDead = true;
+                }
             }
         }
 
@@ -38,6 +44,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public event Action Died;
 
         private float _currentHealth;
+        
 
         protected void RaiseTookDamageEvent() => TookDamage?.Invoke();
         protected void RaiseHealthChangedEvent(float newValue) => Changed?.Invoke(newValue);

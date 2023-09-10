@@ -14,7 +14,26 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         float GetOverallDamage();
     }
 
+    public interface IBuffDebuff
+    {
+        
+    }
 
+    public class BuffDebuffSystem
+    {
+        public BuffDebuffSystem()
+        {
+            
+        }
+
+
+        public void ApplyEffect()
+        {
+            
+        }
+    }
+
+  
     public class PlayerStats : IPlayerStats
     {
         public Stats Stats { get; }

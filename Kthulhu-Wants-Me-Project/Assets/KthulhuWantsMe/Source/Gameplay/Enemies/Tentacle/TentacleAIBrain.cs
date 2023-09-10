@@ -1,140 +1,123 @@
-﻿using System.Collections;
-using Cysharp.Threading.Tasks;
+﻿using System;
+using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
+using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleAIBrain : MonoBehaviour
     {
-        public bool IsAttacking
+        enum AttackDecision
         {
-            get => _isAttacking;
-            set
-            {
-                _isAttacking = value;
-                
-                if (!_isAttacking)
-                    ResetCooldown();
-            }
+            BasicAttack = 0,
+            GrabAbility = 1,
+            SpellCast = 2,
+            Nothing = 3,
         }
-
+        
+        public bool BlockProcessing { get; set; }
+        
         public bool Stunned
         {
             get => _stunned;
             set
             {
                 _stunned = value;
-                if (_stunned)
-                {
+                if (_stunned) 
                     StartCoroutine(StunWearOff());
-                }
             }
         }
-
-        public bool HoldsPlayer { get; set; }
-
-        public bool BlockProcessing { get; set; }
         
-
         [SerializeField] private TentacleAttack _tentacleAttack;
         [SerializeField] private TentacleGrabAbility _tentacleGrabAbility;
         [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
         [SerializeField] private TentacleAggro _tentacleAggro;
-       
-
-        private float _attackCooldown;
-        private bool _isAttacking;
-        private bool _stunned;
 
         private float _livingTime;
+        private float _reconsiderationTime;
+        private bool _stunned;
 
-        private TentacleConfiguration _tentacleConfig;
+        public const float ReconsiderationTime = 1f;
+
+        private TentacleConfiguration _tentacleConfiguration;
 
         [Inject]
-        public void Construct(IDataProvider dataProvider)
-        {
-            _tentacleConfig = dataProvider.TentacleConfig;
-        }
+        public void Construct(IDataProvider dataProvider) =>
+            _tentacleConfiguration = dataProvider.TentacleConfig;
 
         private void Update()
         {
             _livingTime += Time.deltaTime;
             
-            if (BlockProcessing)
+            if(BlockProcessing)
                 return;
-
-            UpdateAttackCooldown();
-            DecideAttackStrategy();
+            
+            DecideStrategy();
         }
 
         public void ResetAI()
         {
-            IsAttacking = false;
+            _livingTime = 0;
             Stunned = false;
-            HoldsPlayer = false;
             BlockProcessing = false;
-            
-            _livingTime = 0f;
-            
-            ResetCooldown();
         }
 
+        private void DecideStrategy() => 
+            DecideAttackStrategy();
 
         private void DecideAttackStrategy()
         {
+            _reconsiderationTime -= Time.deltaTime;
+            
             if (CanNotAttack())
                 return;
 
-            if (CanCastSpells())
+            _reconsiderationTime = ReconsiderationTime;
+      
+            switch (MakeAttackDecision())
             {
-                if (_tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.PlayerCantUseHealthItems))
-                {
-                    _tentacleSpellCastingAbility.CastSpell(TentacleSpell.PlayerCantUseHealthItems).Forget();
-
-                    return;
-                }
+                case AttackDecision.BasicAttack:
+                    _tentacleAttack.PerformAttack();
+                    break;
+                case AttackDecision.GrabAbility:
+                    _tentacleGrabAbility.GrabPlayer();
+                    break;
+                case AttackDecision.SpellCast:
+                case AttackDecision.Nothing:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+        }
 
-            if (GrabAbilityConditionsFulfilled())
-            {
-                _tentacleGrabAbility.GrabPlayer();
-                return;
-            }
+        private AttackDecision MakeAttackDecision()
+        {
+            float decisionValue = Random.value;
 
-       
-            if (CanDoBasicAttack())
-                _tentacleAttack.PerformAttack();
+            if (CanGrabPlayer() && decisionValue < _tentacleConfiguration.GrabAbilityChance)
+                return AttackDecision.GrabAbility;
+            else if(CanDoBasicAttack())
+                return AttackDecision.BasicAttack;
+            else
+                return AttackDecision.Nothing;
         }
 
         private IEnumerator StunWearOff()
         {
-            yield return new WaitForSeconds(_tentacleConfig.StunWearOffTime);
+            yield return Utilities.WaitForSeconds.Wait(_tentacleConfiguration.StunWearOffTime);
             Stunned = false;
-            ResetCooldown();
         }
 
-        private bool CanCastSpells() => 
-            _livingTime > _tentacleConfig.SpellActivationTime;
-            
-
-        private bool CanNotAttack() => 
-            HoldsPlayer || Stunned || _tentacleSpellCastingAbility.CastingSpell;
+        private bool CanGrabPlayer() =>
+            Random.value < _tentacleConfiguration.GrabAbilityChance && _tentacleAggro.HasAggro;
 
         private bool CanDoBasicAttack() =>
-            CooldownIsUp() && !IsAttacking && _tentacleAggro.HasAggro;
+            _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro;
 
-        private void UpdateAttackCooldown() =>
-            _attackCooldown -= Time.deltaTime;
-
-        private bool CooldownIsUp() =>
-            _attackCooldown <= 0;
-
-        private void ResetCooldown() =>
-            _attackCooldown = _tentacleConfig.AttackCooldown;
-
-        private bool GrabAbilityConditionsFulfilled() => 
-            Random.value < _tentacleConfig.GrabAbilityChance && CanDoBasicAttack();
+        private bool CanNotAttack() =>
+            _tentacleGrabAbility.HoldsPlayer || _tentacleAttack.IsAttacking || _reconsiderationTime > 0 || Stunned;
     }
 }

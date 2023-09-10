@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using System;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
@@ -17,9 +18,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         public void Construct(IDataProvider dataProvider)
         {
             _cyaeghaConfiguration = dataProvider.CyaeghaConfig;
+
+            Died += HandleDeath;
         }
 
-        public void HandleDeath()
+        private void OnDestroy()
+        {
+            Died -= HandleDeath;
+        }
+
+        private void HandleDeath()
         {
             _hitFeedbacks?.PlayFeedbacks();
             Destroy(gameObject, 2f);

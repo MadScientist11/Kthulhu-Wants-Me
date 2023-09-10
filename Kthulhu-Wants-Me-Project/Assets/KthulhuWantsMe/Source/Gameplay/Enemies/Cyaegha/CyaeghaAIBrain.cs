@@ -23,13 +23,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         {
             _yithConfiguration = dataProvider.YithConfig;
             _player = gameFactory.Player;
-            
-            _cyaeghaHealth.Died += TriggerDeath;
-        }
-
-        private void OnDestroy()
-        {
-            _cyaeghaHealth.Died -= TriggerDeath;
         }
 
         private void Start()
@@ -46,7 +39,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private void DecideStrategy()
         {
-            if(_isDead)
+            if(_cyaeghaHealth.IsDead)
                 return;
             
             DecideMoveStrategy();
@@ -63,8 +56,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         
         private void DecideAttackStrategy()
         {
-      
-            
             if(_followLogic.TargetReached)
                 UpdateAttackDelayCountdown();
             else
@@ -77,12 +68,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
                 _cyaeghaAttack.PerformAttack(_player.transform.position);
                 ResetAttackDelayCountdown();
             }
-        }
-
-        private void TriggerDeath()
-        {
-            _cyaeghaHealth.HandleDeath();
-            _isDead = true;
         }
 
         private void UpdateAttackDelayCountdown() => 

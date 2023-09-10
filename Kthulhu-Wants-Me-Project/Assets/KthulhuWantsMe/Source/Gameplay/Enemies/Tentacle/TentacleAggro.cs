@@ -25,6 +25,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                 _tentacleAnimator.PlayAggroIdle();
                 HasAggro = true;
             }
+            else
+            {
+                HasAggro = false;
+            }
         }
         
         private bool PlayerInRange()
