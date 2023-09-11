@@ -25,18 +25,21 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
 
         public void ApplyEffect(IBuffDebuff effect, IEffectReceiver to)
         {
-            effect.ApplyEffect(to);
-
+           
             if (effect is IUpdatableEffect updatableEffect)
             {
                 if (ActiveEffectReceivers.TryGetValue(to, out List<IBuffDebuff> effects))
                 {
-                    if(effects.FirstOrDefault(e => e.GetType() == effect.GetType()) == null)
+                    if (effects.FirstOrDefault(e => e.GetType() == effect.GetType()) == null)
+                    {
                         effects.Add(effect);
+                        effect.ApplyEffect(to);
+                    }
                 }
                 else
                 {
                     ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() {effect});
+                    effect.ApplyEffect(to);
                 }
             }
         }
