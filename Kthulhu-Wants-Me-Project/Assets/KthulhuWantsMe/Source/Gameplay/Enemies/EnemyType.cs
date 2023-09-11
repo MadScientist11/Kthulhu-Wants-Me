@@ -3,7 +3,8 @@
     public enum EnemyType
     {
         Tentacle = 0,
-        Yith = 1,
-        Cyeagha = 2,
+        PoisonousTentacle = 1,
+        Yith = 2,
+        Cyeagha = 3,
     }
 }

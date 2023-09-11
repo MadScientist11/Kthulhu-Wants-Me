@@ -56,6 +56,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             {
                 EnemyType.Tentacle => _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position,
                     rotation),
+                EnemyType.PoisonousTentacle => _instantiator.Instantiate(_dataProvider.PoisonTentacleConfig.TentaclePrefab, position,
+                    rotation),
                 EnemyType.Cyeagha => _instantiator.Instantiate(_dataProvider.CyaeghaConfig.Prefab, position,
                     rotation), 
                 EnemyType.Yith => _instantiator.Instantiate(_dataProvider.YithConfig.Prefab, position,

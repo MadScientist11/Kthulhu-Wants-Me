@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e54fa5f97ed4118862d7f7f64d19599, type: 3}
-  m_Name: TentacleConfiguration
+  m_Name: PoisonTentacleConfiguration
   m_EditorClassIdentifier: 
-  TentaclePrefab: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
+  TentaclePrefab: {fileID: 7040502946091595901, guid: fa6485ad9671b57469481f88c6d60ee2,
     type: 3}
   MinionsSpawnSpell: {fileID: 364244572452489457, guid: facd1a2a104982d4eb484803f81f3146,
     type: 3}

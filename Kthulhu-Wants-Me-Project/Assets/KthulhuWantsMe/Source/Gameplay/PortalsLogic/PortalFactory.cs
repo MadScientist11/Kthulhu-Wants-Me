@@ -15,6 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         public enum PortalType
         {
             TentaclePortal = 0,
+            PoisonTentaclePortal = 1,
         }
         private PortalType _portalType;
         
@@ -43,11 +44,13 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
             Portal portalPrefab = _portalType switch
             {
                 PortalType.TentaclePortal => _dataProvider.PortalConfig.TentaclePortalPrefab,
+                PortalType.PoisonTentaclePortal => _dataProvider.PortalConfig.TentaclePortalPrefab,
                 _ => throw new ArgumentOutOfRangeException()
             };
             
             portalPrefab.gameObject.SetActive(false);
             Portal portal = _instantiator.Instantiate(portalPrefab);
+            portal.PortalType = _portalType;
             return portal;
         }
 

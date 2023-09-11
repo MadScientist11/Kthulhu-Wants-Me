@@ -37,6 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
             switch (PortalType)
             {
                 case PortalFactory.PortalType.TentaclePortal:
+                case PortalFactory.PortalType.PoisonTentaclePortal:
                     
                     if (_spawnedTentacle == null)
                         CreateBoundedTentacle();
@@ -66,6 +67,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
             EnemyType enemyType = PortalType switch
             {
                 PortalFactory.PortalType.TentaclePortal => EnemyType.Tentacle,
+                PortalFactory.PortalType.PoisonTentaclePortal => EnemyType.PoisonousTentacle,
                 _ => throw new ArgumentOutOfRangeException()
             };
             _spawnedTentacle =
