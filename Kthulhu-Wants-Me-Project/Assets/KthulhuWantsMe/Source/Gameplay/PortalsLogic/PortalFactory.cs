@@ -1,4 +1,5 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
@@ -8,16 +9,18 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
 {
     public interface IPortalFactory
     {
-        Portal GetOrCreatePortal(Vector3 spawnPoint, Quaternion rotation, PortalFactory.PortalType portalType);
+        Portal GetOrCreatePortal(Vector3 spawnPoint, Quaternion rotation, EnemyType portalType);
     }
+  
     public class PortalFactory : PooledFactory<Portal>, IPortalFactory
     {
         public enum PortalType
         {
-            TentaclePortal = 0,
-            PoisonTentaclePortal = 1,
+            TentaclePortal,
+            PoisonTentaclePortal
         }
-        private PortalType _portalType;
+       
+        private EnemyType _portalType;
         
         private IObjectResolver _instantiator;
         private IDataProvider _dataProvider;
@@ -29,7 +32,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
             _instantiator = instantiator;
         }
 
-        public Portal GetOrCreatePortal(Vector3 spawnPoint, Quaternion rotation, PortalType portalType)
+        public Portal GetOrCreatePortal(Vector3 spawnPoint, Quaternion rotation, EnemyType portalType)
         {
             _portalType = portalType;
             Portal portal = Get(portal => portal.PortalType == portalType);
@@ -43,8 +46,8 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         {
             Portal portalPrefab = _portalType switch
             {
-                PortalType.TentaclePortal => _dataProvider.PortalConfig.TentaclePortalPrefab,
-                PortalType.PoisonTentaclePortal => _dataProvider.PortalConfig.TentaclePortalPrefab,
+                EnemyType.Tentacle => _dataProvider.PortalConfig.TentaclePortalPrefab,
+                EnemyType.PoisonousTentacle => _dataProvider.PortalConfig.TentaclePortalPrefab,
                 _ => throw new ArgumentOutOfRangeException()
             };
             
@@ -65,5 +68,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
             Portal portal = base.Get(predicate);
             return portal;
         }
+
+        
     }
 }

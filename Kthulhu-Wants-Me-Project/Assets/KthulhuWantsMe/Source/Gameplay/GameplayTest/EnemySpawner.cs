@@ -38,12 +38,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
             {
                 case EnemyType.Tentacle:
                     Portal portal1 = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity,
-                        PortalFactory.PortalType.TentaclePortal);
+                        EnemyType.Tentacle);
                     portal1.StartEnemySpawn();
                     break;
                 case EnemyType.PoisonousTentacle:
                     Portal portal2 = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity,
-                        PortalFactory.PortalType.PoisonTentaclePortal);
+                        EnemyType.PoisonousTentacle);
                     portal2.StartEnemySpawn();
                     break;
                 case EnemyType.Yith:

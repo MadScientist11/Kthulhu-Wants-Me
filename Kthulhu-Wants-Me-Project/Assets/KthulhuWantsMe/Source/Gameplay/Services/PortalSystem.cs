@@ -67,7 +67,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                 if (IsValidPortalSpawnPoint(orientedRandomPoint))
                 {
                     Portal portal = _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation,
-                        PortalFactory.PortalType.TentaclePortal);
+                        EnemyType.Tentacle);
                     portal.StartEnemySpawn();
                     break;
                 }

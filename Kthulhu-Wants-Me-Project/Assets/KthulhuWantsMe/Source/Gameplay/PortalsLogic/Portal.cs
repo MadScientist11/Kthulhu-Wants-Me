@@ -11,7 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
     {
         public Action<Portal> Release { get; set; }
 
-        public PortalFactory.PortalType PortalType;
+        public EnemyType PortalType;
         
         [SerializeField] private Transform _initialLocation;
         [SerializeField] private Transform _desiredLocation;
@@ -36,8 +36,8 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         {
             switch (PortalType)
             {
-                case PortalFactory.PortalType.TentaclePortal:
-                case PortalFactory.PortalType.PoisonTentaclePortal:
+                case EnemyType.PoisonousTentacle:
+                case EnemyType.Tentacle:
                     
                     if (_spawnedTentacle == null)
                         CreateBoundedTentacle();
@@ -64,14 +64,9 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
 
         private void CreateBoundedTentacle()
         {
-            EnemyType enemyType = PortalType switch
-            {
-                PortalFactory.PortalType.TentaclePortal => EnemyType.Tentacle,
-                PortalFactory.PortalType.PoisonTentaclePortal => EnemyType.PoisonousTentacle,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+         
             _spawnedTentacle =
-                _gameFactory.CreateEnemy(_initialLocation.position, _initialLocation.rotation, enemyType).GetComponent<TentacleEmergence>();
+                _gameFactory.CreateEnemy(_initialLocation.position, _initialLocation.rotation, PortalType).GetComponent<TentacleEmergence>();
         }
     }
 }
