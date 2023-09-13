@@ -55,7 +55,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
         private void SpawnTentacle_NoPortal_NoMinions()
         {
             GameObject tentacle = _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.Tentacle);
-            tentacle.GetComponent<TentacleEmergence>().Emerge(EnemySpawnPoint.position, EnemySpawnPoint.position);
+            //tentacle.GetComponent<TentacleEmergence>().Emerge(EnemySpawnPoint.position, EnemySpawnPoint.position);
         }
         
         [Button()]

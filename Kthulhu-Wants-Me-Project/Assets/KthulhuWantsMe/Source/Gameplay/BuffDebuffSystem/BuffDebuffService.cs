@@ -42,6 +42,11 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
                     effect.ApplyEffect(to);
                 }
             }
+            else
+            {
+                ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() {effect});
+                effect.ApplyEffect(to);
+            }
         }
 
         public void Tick()
