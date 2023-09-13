@@ -17,6 +17,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         PlayerConfiguration PlayerConfig { get; }
         TentacleConfiguration TentacleConfig { get; }
         TentacleConfiguration PoisonTentacleConfig { get; }
+        TentacleConfiguration BleedTentacleConfig { get; }
         CyaeghaConfiguration CyaeghaConfig { get; }
         YithConfiguration YithConfig { get; }
         PortalConfiguration PortalConfig { get; }
@@ -33,10 +34,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         private const string YithConfigurationPath = "YithConfiguration";
         private const string BuffItemsPath = "BuffItemsContainer";
         private const string PoisonTentacleConfigurationPath = "PoisonTentacleConfiguration";
+        private const string BleedTentacleConfigurationPath = "BleedTentacleConfiguration";
         public PlayerConfiguration PlayerConfig { get; private set; }
         public TentacleConfiguration TentacleConfig { get; private set; }
         
         public TentacleConfiguration PoisonTentacleConfig { get; private set;}
+        public TentacleConfiguration BleedTentacleConfig { get; private set;}
 
         public CyaeghaConfiguration CyaeghaConfig { get; private set; }
         public YithConfiguration YithConfig { get; private set; }
@@ -56,6 +59,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             YithConfig = (YithConfiguration)await Resources.LoadAsync<YithConfiguration>(YithConfigurationPath);
             BuffItems = (BuffItemsContainer)await Resources.LoadAsync<BuffItemsContainer>(BuffItemsPath);
             PoisonTentacleConfig = (TentacleConfiguration)await Resources.LoadAsync<TentacleConfiguration>(PoisonTentacleConfigurationPath);
+            BleedTentacleConfig= (TentacleConfiguration)await Resources.LoadAsync<TentacleConfiguration>(BleedTentacleConfigurationPath);
         }
     }
 }

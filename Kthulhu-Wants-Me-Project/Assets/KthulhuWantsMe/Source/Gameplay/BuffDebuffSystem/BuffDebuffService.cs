@@ -15,39 +15,30 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
         void CancelAllEffectsOnEntity(IEffectReceiver entity);
     }
 
- 
+
     public class BuffDebuffService : IBuffDebuffService, ITickable
     {
-
         public Dictionary<IEffectReceiver, List<IBuffDebuff>> ActiveEffectReceivers { get; } = new();
 
         private readonly List<Action> _queuedCancellations = new();
 
         public void ApplyEffect(IBuffDebuff effect, IEffectReceiver to)
         {
-           
-            if (effect is IUpdatableEffect updatableEffect)
+            if (ActiveEffectReceivers.TryGetValue(to, out List<IBuffDebuff> effects))
             {
-                if (ActiveEffectReceivers.TryGetValue(to, out List<IBuffDebuff> effects))
+                if (effects.FirstOrDefault(e => e.GetType() == effect.GetType()) == null)
                 {
-                    if (effects.FirstOrDefault(e => e.GetType() == effect.GetType()) == null)
-                    {
-                        effects.Add(effect);
-                        effect.ApplyEffect(to);
-                    }
-                }
-                else
-                {
-                    ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() {effect});
+                    effects.Add(effect);
                     effect.ApplyEffect(to);
                 }
             }
             else
             {
-                ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() {effect});
+                ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() { effect });
                 effect.ApplyEffect(to);
             }
         }
+
 
         public void Tick()
         {
@@ -55,7 +46,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             {
                 foreach (IBuffDebuff buffDebuff in valuePair.Value)
                 {
-                    if (buffDebuff is IUpdatableEffect updatableEffect) 
+                    if (buffDebuff is IUpdatableEffect updatableEffect)
                         updatableEffect.UpdateEffect();
                 }
             }
@@ -64,7 +55,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             {
                 queuedCancellation?.Invoke();
             }
-            
+
             _queuedCancellations.Clear();
         }
 

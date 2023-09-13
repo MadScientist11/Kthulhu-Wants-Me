@@ -34,7 +34,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             {
                 DamageModifierId.None => null,
                 DamageModifierId.Poison => _buffDebuffFactory.CreateEffect<PoisonDebuff>().Init(5, 5f, _poisonVFXPrefab),
-                DamageModifierId.Bleed => null,
+                DamageModifierId.Bleed => _buffDebuffFactory.CreateEffect<BleedDebuff>().Init(2, 10f, _poisonVFXPrefab),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

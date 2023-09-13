@@ -65,7 +65,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public override void TakeDamage(float damage, IDamageProvider damageProvider)
         {
             base.TakeDamage(damage);
-            Debug.Log($"Player took {damage}");
+            //Debug.Log($"Player took {damage}");
             if (CurrentHealth <= 0)
             {
                 Die();

@@ -7,6 +7,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
     public class YithAIBrain : MonoBehaviour
     {
+        public bool BlockProcessing { get; private set; }
+        
         [SerializeField] private YithHealth _yithHealth;
         [SerializeField] private YithAttack _yithAttack;
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
@@ -51,7 +53,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void DecideStrategy()
         {
-            if(_isDead)
+            if(_isDead || BlockProcessing)
                 return;
             
             DecideMoveStrategy();
