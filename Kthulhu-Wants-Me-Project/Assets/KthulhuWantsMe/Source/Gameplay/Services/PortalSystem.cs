@@ -16,7 +16,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     public interface IPortalSystem
     {
         void Init();
-        void SpawnPortals();
     }
 
     public class PortalSystem : IPortalSystem, ITickable
@@ -52,9 +51,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
           
         }
 
-        public void SpawnPortals()
-        {
-        }
+   
 
         private void SpawnPortal()
         {
@@ -68,7 +65,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                 {
                     Portal portal = _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation,
                         EnemyType.Tentacle);
-                    portal.StartEnemySpawn();
+                    portal.StartEnemySpawn(EnemyType.Cyeagha);
                     break;
                 }
 

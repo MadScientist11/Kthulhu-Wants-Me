@@ -35,8 +35,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float AttackEffectiveDistance;
         [BoxGroup("Attack")]
         public float BaseDamage;
-        [BoxGroup("Attack")]
-        public List<Attack> AttackComboSet;
+    
         
         [HorizontalLine(color: EColor.Violet)]
         [BoxGroup("Lunge")]

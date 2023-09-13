@@ -7,6 +7,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.Spell;
 using UnityEngine;
 using VContainer;
@@ -23,6 +24,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         T CreatePrefabInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object;
         MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation);
         BuffItem CreateHealItem(Vector3 position, Quaternion rotation);
+        GameObject CreateEnemyFromPortal(Vector3 position, Quaternion rotation, EnemyType enemyType);
     }
 
     public class GameFactory : IGameFactory
@@ -31,9 +33,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         
         private readonly IObjectResolver _instantiator;
         private readonly IDataProvider _dataProvider;
+        private IPortalFactory _portalFactory;
 
-        public GameFactory(IObjectResolver instantiator, IDataProvider dataProvider)
+        public GameFactory(IObjectResolver instantiator, IDataProvider dataProvider, IPortalFactory portalFactory)
         {
+            _portalFactory = portalFactory;
             _dataProvider = dataProvider;
             _instantiator = instantiator;
         }
@@ -48,10 +52,18 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             playerFacade.PlayerVirtualCamera = playerVirtualCamera;
         
             return playerFacade;
-        } 
+        }
+
+        public GameObject CreateEnemyFromPortal(Vector3 position, Quaternion rotation, EnemyType enemyType)
+        {
+            Portal portal = _portalFactory.GetOrCreatePortal(position, rotation, enemyType);
+            portal.StartEnemySpawn(enemyType);
+            return portal.gameObject;
+        }
         
         public GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
         {
+            //Call state reset
             GameObject instance = enemyType switch
             {
                 EnemyType.Tentacle => _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position,

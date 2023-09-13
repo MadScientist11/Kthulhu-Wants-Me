@@ -37,8 +37,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         public void PerformAttack(Vector3 lastPlayerPosition)
         {
             StartCoroutine(DoAttack(lastPlayerPosition));
-
-            // ApplyDamage(to: damageable);
         }
 
         private IEnumerator DoAttack(Vector3 lastPlayerPosition)

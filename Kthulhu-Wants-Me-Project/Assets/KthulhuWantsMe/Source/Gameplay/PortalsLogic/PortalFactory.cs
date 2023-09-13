@@ -14,12 +14,6 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
   
     public class PortalFactory : PooledFactory<Portal>, IPortalFactory
     {
-        public enum PortalType
-        {
-            TentaclePortal,
-            PoisonTentaclePortal
-        }
-       
         private EnemyType _portalType;
         
         private IObjectResolver _instantiator;
@@ -35,7 +29,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         public Portal GetOrCreatePortal(Vector3 spawnPoint, Quaternion rotation, EnemyType portalType)
         {
             _portalType = portalType;
-            Portal portal = Get(portal => portal.PortalType == portalType);
+            Portal portal = Get(null);
             portal.transform.position = spawnPoint;
             portal.transform.rotation = rotation;
             portal.Show();
@@ -46,14 +40,11 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         {
             Portal portalPrefab = _portalType switch
             {
-                EnemyType.Tentacle => _dataProvider.PortalConfig.TentaclePortalPrefab,
-                EnemyType.PoisonousTentacle => _dataProvider.PortalConfig.TentaclePortalPrefab,
-                _ => throw new ArgumentOutOfRangeException()
+                _ => _dataProvider.PortalConfig.TentaclePortalPrefab
             };
             
             portalPrefab.gameObject.SetActive(false);
             Portal portal = _instantiator.Instantiate(portalPrefab);
-            portal.PortalType = _portalType;
             return portal;
         }
 

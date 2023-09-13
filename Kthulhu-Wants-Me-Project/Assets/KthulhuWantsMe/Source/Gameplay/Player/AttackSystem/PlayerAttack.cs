@@ -66,8 +66,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         {
             _isAttacking = true;
             _canProceedWithCombo = false;
-            Debug.Log("WindUp");
-
         }
 
         protected override void OnContactPhase()
@@ -76,7 +74,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
                     LayerMasks.EnemyMask, out IDamageable damageable))
                 return;
 
-            Debug.Log("Contact");
 
             _weaponTrails.Play(_comboAttackIndex);
             TargetFeedbacks.PlayFeedbacks(AttackStartPoint());
@@ -88,8 +85,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _canProceedWithCombo = true;
             _comboAttackIndex++;
             _comboAttackIndex %= _activeWeapon.WeaponData.WeaponMoveSet.MoveSetAttackCount;
-            Debug.Log("Recovery");
-
         }
 
         protected override void OnAttackEnd()
