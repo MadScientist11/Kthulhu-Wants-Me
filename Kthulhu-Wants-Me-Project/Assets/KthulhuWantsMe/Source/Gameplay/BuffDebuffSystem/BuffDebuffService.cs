@@ -33,7 +33,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             }
             else
             {
-                ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() { effect });
+              
                 ApplyEffectInternal(effect, to);
             }
         }
@@ -71,15 +71,22 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
 
         public void CancelAllEffectsOnEntity(IEffectReceiver entity)
         {
-            foreach (IBuffDebuff effect in ActiveEffectReceivers[entity])
-                CancelEffect(effect, entity);
+            if (ActiveEffectReceivers.TryGetValue(entity, out List<IBuffDebuff> effects))
+            {
+                foreach (IBuffDebuff effect in effects)
+                    CancelEffect(effect, entity);
+            }
+         
         }
 
         private void ApplyEffectInternal(IBuffDebuff effect, IEffectReceiver to)
         {
             effect.ApplyEffect(to);
+            AddEffect(effect, to);
+
             if (IsInstaEffect(effect))
                 CancelEffectInternal(effect, to);
+
         }
 
         private void CancelEffectInternal(IBuffDebuff effect, IEffectReceiver onEffectReceiver)
@@ -90,7 +97,17 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             ActiveEffectReceivers[onEffectReceiver].Remove(effect);
 
             if (ActiveEffectReceivers[onEffectReceiver] == null || ActiveEffectReceivers[onEffectReceiver].Count == 0)
+            {
                 ActiveEffectReceivers.Remove(onEffectReceiver);
+            }
+        }
+
+        private void AddEffect(IBuffDebuff effect, IEffectReceiver to)
+        {
+            if (!ActiveEffectReceivers.ContainsKey(to))
+                ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() { effect });
+            else
+                ActiveEffectReceivers[to].Add(effect);
         }
 
         private bool EntityDoesntHaveTheEffectApplied(IBuffDebuff effect, List<IBuffDebuff> effects)
