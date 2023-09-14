@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
     public abstract class Health : MonoBehaviour, IDamageable, IHealable, IStateReset
     {
+        public Transform Transform => transform;
         public bool IsDead { get; private set; }
         public abstract float MaxHealth { get; }
 

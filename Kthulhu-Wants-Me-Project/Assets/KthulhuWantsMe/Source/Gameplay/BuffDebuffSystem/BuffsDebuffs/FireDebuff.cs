@@ -4,7 +4,7 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 {
-    public class BleedDebuff : IBuffDebuff, IUpdatableEffect, IDamageProvider
+    public class FireDebuff : IBuffDebuff, IUpdatableEffect, IDamageProvider
     {
         private float _damagePerSecond;
         private float _duration;
@@ -16,7 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
         private ParticleSystem _poisonVFXInstance;
 
         private IBuffDebuffService _buffDebuffService;
-        private ParticleSystem _poisonVFXPrefab;
+        private ParticleSystem _VFXPrefab;
 
         [Inject]
         public void Construct(IBuffDebuffService buffDebuffService)
@@ -24,9 +24,9 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
             _buffDebuffService = buffDebuffService;
         }
 
-        public BleedDebuff Init(float damagePerSecond, float duration, ParticleSystem poisonVFXPrefab)
+        public FireDebuff Init(float damagePerSecond, float duration, ParticleSystem poisonVFXPrefab)
         {
-            _poisonVFXPrefab = poisonVFXPrefab;
+            _VFXPrefab = poisonVFXPrefab;
             _duration = duration;
             _damagePerSecond = damagePerSecond;
             return this;
@@ -40,7 +40,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
                 _damageable = damageable;
             }
 
-            _poisonVFXInstance = GameObject.Instantiate(_poisonVFXPrefab, _effectReceiver.Transform);
+            _poisonVFXInstance = GameObject.Instantiate(_VFXPrefab, _effectReceiver.Transform);
             _poisonVFXInstance.transform.position += Vector3.up;
             _effectStartTime = Time.realtimeSinceStartup;
         }
@@ -50,7 +50,6 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
             if (Time.realtimeSinceStartup > _effectStartTime + _duration)
             {
                 _buffDebuffService.CancelEffect(this, _effectReceiver);
-                Debug.Log("Cancel Bleed");
                 return;
             }
 
@@ -62,6 +61,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 
         public void CancelEffect(IEffectReceiver effectReceiver)
         {
+            if(_poisonVFXInstance.gameObject != null)
                 GameObject.Destroy(_poisonVFXInstance.gameObject);
         }
     }

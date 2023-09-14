@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
+using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 {
@@ -14,6 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
   
         public void ApplyEffect(IEffectReceiver effectReceiver)
         {
+            Debug.Log("Heal?");
             if (effectReceiver.Transform.TryGetComponent(out IHealable healable))
             {
                 healable.Heal(_healAmount);

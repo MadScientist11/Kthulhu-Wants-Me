@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Effects;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
@@ -25,6 +26,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
+        [SerializeField] private DamageModifier _playerDamageModifier;
 
         private int _comboAttackIndex;
         private WeaponItem _activeWeapon;
@@ -78,6 +80,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _weaponTrails.Play(_comboAttackIndex);
             TargetFeedbacks.PlayFeedbacks(AttackStartPoint());
             ApplyDamage(damageable);
+            if (damageable.Transform.TryGetComponent(out IEffectReceiver effectReceiver))
+            {
+                _playerDamageModifier?.ApplyTo(effectReceiver);
+
+            }
         }
 
         protected override void OnRecoveryPhase()

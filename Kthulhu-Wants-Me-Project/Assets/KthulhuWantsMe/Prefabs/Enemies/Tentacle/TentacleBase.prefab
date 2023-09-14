@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 423395108823978285}
   - component: {fileID: 1366331452263209347}
   - component: {fileID: 2119516100063412033}
+  - component: {fileID: -8978431778437181689}
   m_Layer: 10
   m_Name: TentacleBase
   m_TagString: Untagged
@@ -555,6 +556,18 @@ MonoBehaviour:
   RetreatDuration: 3
   _enemyHealth: {fileID: 1336930687297924091}
   _tentacleFacade: {fileID: 8662503218968821094}
+--- !u!114 &-8978431778437181689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2543864529464768167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c18c7c07ec4ae9ae65740534d28b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2728249646138068946
 GameObject:
   m_ObjectHideFlags: 0

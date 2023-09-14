@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
@@ -14,5 +15,10 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
         [Inject]
         public void Construct(IBuffDebuffService buffDebuffService) => 
             _buffDebuffService = buffDebuffService;
+
+        private void OnDestroy()
+        {
+            _buffDebuffService.CancelAllEffectsOnEntity(this);
+        }
     }
 }
