@@ -97,9 +97,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             ActiveEffectReceivers[onEffectReceiver].Remove(effect);
 
             if (ActiveEffectReceivers[onEffectReceiver] == null || ActiveEffectReceivers[onEffectReceiver].Count == 0)
-            {
                 ActiveEffectReceivers.Remove(onEffectReceiver);
-            }
         }
 
         private void AddEffect(IBuffDebuff effect, IEffectReceiver to)
