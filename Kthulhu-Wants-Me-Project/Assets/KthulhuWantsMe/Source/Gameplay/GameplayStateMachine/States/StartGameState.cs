@@ -3,6 +3,7 @@ using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
 
@@ -17,10 +18,10 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly IPortalSystem _portalSystem;
 
         public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IPortalSystem portalSystem, IInputService inputService,
-            Location location)
+            IDataProvider dataProvider)
         {
+            _location = dataProvider.Locations[LocationId.GameLocation];
             _portalSystem = portalSystem;
-            _location = location;
             _inputService = inputService;
             _gameFactory = gameFactory;
             _gameStateMachine = gameStateMachine;

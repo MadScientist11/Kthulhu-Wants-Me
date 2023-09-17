@@ -15,17 +15,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
 {
     public class GameInstaller : IInstaller
     {
-   
-        private readonly Location _location;
-
-        public GameInstaller(Location location)
-        {
-            _location = location;
-        }
         
         public void Install(IContainerBuilder builder)
         {
-            builder.RegisterInstance(_location);
             builder
                 .Register<GameFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
@@ -73,7 +65,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             
             builder
                 .Register<WaveSystem>(Lifetime.Scoped)
-                .AsSelf();
+                .AsImplementedInterfaces();
             
             builder
                 .Register<ProjectileArcFactory>(Lifetime.Scoped)
