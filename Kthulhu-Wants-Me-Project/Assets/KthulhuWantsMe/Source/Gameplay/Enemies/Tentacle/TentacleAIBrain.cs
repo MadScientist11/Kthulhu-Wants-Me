@@ -42,12 +42,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private bool _stunned;
 
         public const float ReconsiderationTime = 1f;
-
-        private TentacleConfiguration _tentacleConfiguration;
-
-        [Inject]
-        public void Construct(IDataProvider dataProvider) =>
-            _tentacleConfiguration = dataProvider.TentacleConfig;
+        public const float GrabAbilityChance = .2f;
+        public const float StunWearOffTime = 1f;
+        
 
         private void Update()
         {
@@ -101,7 +98,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             float decisionValue = Random.value;
 
-            if (CanGrabPlayer() && decisionValue < _tentacleConfiguration.GrabAbilityChance)
+            if (CanGrabPlayer() && decisionValue < GrabAbilityChance)
                 return AttackDecision.GrabAbility;
             else if(CanDoBasicAttack())
                 return AttackDecision.BasicAttack;
@@ -111,12 +108,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private IEnumerator StunWearOff()
         {
-            yield return Utilities.WaitForSeconds.Wait(_tentacleConfiguration.StunWearOffTime);
+            yield return Utilities.WaitForSeconds.Wait(StunWearOffTime);
             Stunned = false;
         }
 
         private bool CanGrabPlayer() =>
-            Random.value < _tentacleConfiguration.GrabAbilityChance && _tentacleAggro.HasAggro;
+            Random.value < GrabAbilityChance && _tentacleAggro.HasAggro;
 
         private bool CanDoBasicAttack() =>
             _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro;

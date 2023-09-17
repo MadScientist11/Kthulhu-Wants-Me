@@ -40,7 +40,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         public void Init()
         {
             _isInitialized = true;
-            _coroutineRunner.StartRoutine(Reappear());
+            //_coroutineRunner.StartRoutine(Reappear());
         }
 
         public void Tick()

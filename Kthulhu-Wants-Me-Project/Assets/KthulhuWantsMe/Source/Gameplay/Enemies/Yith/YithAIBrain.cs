@@ -10,6 +10,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
     {
         public bool BlockProcessing { get; private set; }
         
+        [SerializeField] private Enemy _enemy;
         [SerializeField] private YithHealth _yithHealth;
         [SerializeField] private YithAttack _yithAttack;
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
@@ -22,12 +23,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private const float ComboAttackReavaluationTime = 5f;
 
         private PlayerFacade _player;
-        private YithConfiguration _yithConfiguration;
 
         [Inject]
-        public void Construct(IDataProvider dataProvider, IGameFactory gameFactory, IRandomService randomService)
+        public void Construct(IGameFactory gameFactory, IRandomService randomService)
         {
-            _yithConfiguration = dataProvider.YithConfig;
             _player = gameFactory.Player;
             
             _yithHealth.Died += TriggerDeath;
@@ -103,7 +102,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _attackDelayTime -= Time.deltaTime;
 
         private void ResetAttackDelayCountdown() => 
-            _attackDelayTime = _yithConfiguration.AttackDelay;
+            _attackDelayTime = 1f;
 
         private bool AttackDelayCountdownIsUp() 
             => _attackDelayTime <= 0;

@@ -33,7 +33,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
         public UniTask Initialize()
         {
-            _tentacleSettings = _dataProvider.TentacleConfig.AsRuntimeSettings();
+//            _tentacleSettings = _dataProvider.TentacleConfig.AsRuntimeSettings();
             return UniTask.CompletedTask;
         }
     }

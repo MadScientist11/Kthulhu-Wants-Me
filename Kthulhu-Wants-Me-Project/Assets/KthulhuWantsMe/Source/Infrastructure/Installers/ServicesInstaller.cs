@@ -24,6 +24,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<DataProvider>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
    
+            builder
+                .Register<ProgressService>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
             
             builder
                 .Register<RandomService>(Lifetime.Singleton)

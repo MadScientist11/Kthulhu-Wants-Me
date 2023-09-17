@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using MoreMountains.Feedbacks;
@@ -12,23 +13,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
     public class YithAttack : Attack
     {
+        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.Damage];
         
-        protected override float BaseDamage => _yithConfiguration.BaseDamage;
-
+        [SerializeField] private Enemy _enemy;
         [SerializeField] private MMFeedbacks _attackFeedback;
         [SerializeField] private FollowLogic _followLogic;
 
         private float _attackCooldown;
         private bool _isAttacking;
 
-
-        private YithConfiguration _yithConfiguration;
-
-        [Inject]
-        public void Construct(IDataProvider dataProvider)
-        {
-            _yithConfiguration = dataProvider.YithConfig;
-        }
 
         private void Update()
         {
@@ -49,7 +42,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             ApplyDamage(to: damageable);
             
             _isAttacking = false;
-            _attackCooldown = _yithConfiguration.AttackCooldownTime;
+            _attackCooldown = 1f;
         }
 
         public bool CanAttack()

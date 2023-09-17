@@ -1,8 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -13,10 +10,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
     public interface IDataProvider : IInitializableService
     {
         PlayerConfiguration PlayerConfig { get; }
-        TentacleConfiguration TentacleConfig { get; }
-        TentacleConfiguration PoisonTentacleConfig { get; }
-        TentacleConfiguration BleedTentacleConfig { get; }
-        YithConfiguration YithConfig { get; }
         PortalConfiguration PortalConfig { get; }
         BuffItemsContainer BuffItems { get; }
         Waves Waves { get; }
@@ -31,13 +24,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         private const string BuffItemsPath = "BuffItemsContainer";
         private const string WavesPath = "Waves";
         public PlayerConfiguration PlayerConfig { get; private set; }
-        public TentacleConfiguration TentacleConfig { get; private set; }
-        
-        public TentacleConfiguration PoisonTentacleConfig { get; private set;}
-        public TentacleConfiguration BleedTentacleConfig { get; private set;}
-
-       
-        public YithConfiguration YithConfig { get; private set; }
         public PortalConfiguration PortalConfig { get; private set; }
         public BuffItemsContainer BuffItems { get; private set; }
         public Waves Waves { get; private set; }

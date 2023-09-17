@@ -19,14 +19,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         private List<TentacleSpell> _activeSpells = new();
 
 
-        private TentacleConfiguration _tentacleConfiguration;
         private IGameFactory _gameFactory;
 
         [Inject]
         public void Construct(IDataProvider dataProvider, IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
-            _tentacleConfiguration = dataProvider.TentacleConfig;
+            
         }
 
         private void Start() =>

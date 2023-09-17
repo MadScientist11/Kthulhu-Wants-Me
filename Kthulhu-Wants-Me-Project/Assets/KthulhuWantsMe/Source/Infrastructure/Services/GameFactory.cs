@@ -37,9 +37,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         private readonly IDataProvider _dataProvider;
         private IPortalFactory _portalFactory;
         private EnemyStatsProvider _enemyStatsProvider;
+        private IProgressService _progressService;
 
-        public GameFactory(IObjectResolver instantiator, IDataProvider dataProvider, IPortalFactory portalFactory, EnemyStatsProvider enemyStatsProvider)
+        public GameFactory(IObjectResolver instantiator, IDataProvider dataProvider, IPortalFactory portalFactory,
+            EnemyStatsProvider enemyStatsProvider, IProgressService progressService)
         {
+            _progressService = progressService;
             _enemyStatsProvider = enemyStatsProvider;
             _portalFactory = portalFactory;
             _dataProvider = dataProvider;
@@ -70,27 +73,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         public GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
         {
             //Call state reset
-            GameObject instance = enemyType switch
-            {
-                EnemyType.Tentacle => _instantiator.Instantiate(_dataProvider.TentacleConfig.TentaclePrefab, position,
-                    rotation),
-                EnemyType.PoisonousTentacle => _instantiator.Instantiate(
-                    _dataProvider.PoisonTentacleConfig.TentaclePrefab, position,
-                    rotation),
-                EnemyType.BleedTentacle => _instantiator.Instantiate(_dataProvider.BleedTentacleConfig.TentaclePrefab,
-                    position,
-                    rotation),
-                EnemyType.Cyeagha => _instantiator.Instantiate(
-                    _dataProvider.EnemyConfigsProvider.EnemyConfigs[EnemyType.Cyeagha].Prefab, position,
-                    rotation),
-                EnemyType.Yith => _instantiator.Instantiate(_dataProvider.YithConfig.Prefab, position,
-                    rotation),
-                _ => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, null)
-            };
+            GameObject enemyPrefab = _dataProvider.EnemyConfigsProvider.EnemyConfigs[enemyType].Prefab;
+            GameObject instance = _instantiator.Instantiate(enemyPrefab, position, rotation);
 
-            if (enemyType == EnemyType.Cyeagha)
+            if (instance.TryGetComponent(out Enemy enemy))
             {
-                instance.GetComponent<Enemy>().Initialize(_enemyStatsProvider.StatsFor(enemyType, 1));
+                EnemyStats enemyStats = _enemyStatsProvider.StatsFor(enemyType, _progressService.ProgressData.WaveIndex);
+                enemy.Initialize(enemyStats);
             }
 
 

@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 5731019940550290006}
   - component: {fileID: 9033666309106188953}
   - component: {fileID: 5174677676976298968}
+  - component: {fileID: 8151728752701681097}
   - component: {fileID: 3944748895859747068}
   - component: {fileID: 877950398925464152}
   - component: {fileID: -8257174440324719655}
@@ -321,6 +322,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8151728752701681097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590797425616401305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e4e0982d5049a99dc8b8f09636e291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3944748895859747068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6fba48bb534d3cb15a6b3ae64b2a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 8151728752701681097}
   _yithHealth: {fileID: 877950398925464152}
   _yithAttack: {fileID: 6624409593950422001}
   _yithRageComboAbility: {fileID: 2838533250784125204}
@@ -349,6 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e28fdf85d74d6aab0a921a6319f41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 8151728752701681097}
   _hitFeedbacks: {fileID: 7172276037332111135}
 --- !u!114 &-8257174440324719655
 MonoBehaviour:
@@ -388,6 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80abf785af314970a47977844f87aba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 8151728752701681097}
   _attackFeedback: {fileID: 5463552140370051989}
   _followLogic: {fileID: 289277531940907717}
 --- !u!114 &2838533250784125204

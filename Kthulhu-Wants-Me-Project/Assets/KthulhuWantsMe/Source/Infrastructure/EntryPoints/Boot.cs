@@ -31,7 +31,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
         public async UniTask StartAsync(CancellationToken cancellation)
         {
             await _dataProvider.Initialize();
-            Debug.Log(_dataProvider.TentacleConfig);
             List<UniTask> initializationTasks = Enumerable.Select(_services, service =>
             {
                 service.IsInitialized = true;

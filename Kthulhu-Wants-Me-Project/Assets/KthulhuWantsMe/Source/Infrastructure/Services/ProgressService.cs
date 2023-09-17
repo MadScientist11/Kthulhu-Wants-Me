@@ -13,7 +13,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
     public class ProgressService : IProgressService, IInitializableService
     {
-        public ProgressData ProgressData { get; }
+        public ProgressData ProgressData { get; } = new();
 
         public bool IsInitialized { get; set; }
         public UniTask Initialize()
