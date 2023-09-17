@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;

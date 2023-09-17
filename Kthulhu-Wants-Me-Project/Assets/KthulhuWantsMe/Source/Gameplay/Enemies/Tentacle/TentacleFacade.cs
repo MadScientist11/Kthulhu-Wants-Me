@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells;
+﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle

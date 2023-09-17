@@ -1,24 +1,18 @@
-﻿using System;
-using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
     public class CyaeghaHealth : Health
     {
-        public override float MaxHealth => _cyaeghaConfiguration.MaxHealth;
-        
+        public override float MaxHealth => _enemy.EnemyStats.Stats[StatType.Health];
+
+        [SerializeField] private Enemy _enemy;
         [SerializeField] private MMFeedbacks _hitFeedbacks;
         
-        private CyaeghaConfiguration _cyaeghaConfiguration;
-
-        [Inject]
-        public void Construct(IDataProvider dataProvider)
+        private void Start()
         {
-            _cyaeghaConfiguration = dataProvider.CyaeghaConfig;
-
             Died += HandleDeath;
         }
 

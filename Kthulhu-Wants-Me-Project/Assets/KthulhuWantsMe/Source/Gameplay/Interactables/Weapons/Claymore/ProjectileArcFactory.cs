@@ -1,5 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

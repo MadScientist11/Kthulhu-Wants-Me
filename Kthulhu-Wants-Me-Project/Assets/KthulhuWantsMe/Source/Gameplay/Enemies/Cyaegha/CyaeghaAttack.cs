@@ -2,33 +2,28 @@
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
     public class CyaeghaAttack : Attack
     {
-        protected override float BaseDamage => _cyaeghaConfiguration.BaseDamage;
+        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.Damage];
 
 
         public AnimationCurve HeightCurve;
 
-
+        [SerializeField] private Enemy _enemy;
+        
         private float _attackCooldown;
         private bool _isAttacking;
-
-
-        private CyaeghaConfiguration _cyaeghaConfiguration;
-
-        [Inject]
-        public void Construct(IDataProvider dataProvider)
-        {
-            _cyaeghaConfiguration = dataProvider.CyaeghaConfig;
-        }
-
+    
         private void Update()
         {
             _attackCooldown -= Time.deltaTime;
@@ -64,7 +59,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             //NavMesh SamplePosition?
 
             _isAttacking = false;
-            _attackCooldown = _cyaeghaConfiguration.AttackCooldownTime;
+            _attackCooldown = 1f;
         }
 
         public bool CanAttack()

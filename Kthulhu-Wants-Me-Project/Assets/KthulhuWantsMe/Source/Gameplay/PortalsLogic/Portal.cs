@@ -10,6 +10,8 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
     public class Portal : MonoBehaviour, IPoolable<Portal>, IAbility
     {
         public Action<Portal> Release { get; set; }
+        
+        public GameObject LastSpawnedEnemy { get; private set; }
 
         private IGameFactory _gameFactory;
 
@@ -28,7 +30,8 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         public void StartEnemySpawn(EnemyType enemyType)
         {
             GameObject enemy = _gameFactory.CreateEnemy(transform.position, transform.rotation, enemyType);
-
+            LastSpawnedEnemy = enemy;
+            
             if (!enemy.TryGetComponent(out EmergeState emergeState))
             {
                 ClosePortal();

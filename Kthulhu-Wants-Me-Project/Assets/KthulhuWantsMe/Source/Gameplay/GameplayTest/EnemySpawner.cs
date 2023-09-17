@@ -24,6 +24,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
 
         [Button()]
         private void SpawnEnemy() => 
-            _gameFactory.CreateEnemyFromPortal(transform.position, transform.rotation, _enemyType);
+            _gameFactory.CreatePortalWithEnemy(transform.position, transform.rotation, _enemyType);
     }
 }

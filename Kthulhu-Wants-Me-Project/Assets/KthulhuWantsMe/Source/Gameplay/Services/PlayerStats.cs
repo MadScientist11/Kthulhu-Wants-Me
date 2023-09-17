@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces.AutoInteractables;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
 {

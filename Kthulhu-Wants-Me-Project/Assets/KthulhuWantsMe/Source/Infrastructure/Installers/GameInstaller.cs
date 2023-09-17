@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using VContainer;
 using VContainer.Unity;
@@ -57,6 +58,22 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<BuffDebuffFactory>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
+            
+            builder
+                .Register<EnemyStatsScalingService>(Lifetime.Scoped)
+                .AsSelf();
+            
+            builder
+                .Register<EnemyStatsProvider>(Lifetime.Scoped)
+                .AsSelf();
+            
+            builder
+                .Register<EnemyStatsScalingService>(Lifetime.Scoped)
+                .AsSelf();
+            
+            builder
+                .Register<WaveSystem>(Lifetime.Scoped)
+                .AsSelf();
             
             builder
                 .Register<ProjectileArcFactory>(Lifetime.Scoped)

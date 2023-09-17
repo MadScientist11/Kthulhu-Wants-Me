@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
