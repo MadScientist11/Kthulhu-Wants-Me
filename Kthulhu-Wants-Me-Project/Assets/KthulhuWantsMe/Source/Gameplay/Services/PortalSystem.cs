@@ -83,15 +83,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         }
 
 
-        private IEnumerator Reappear()
-        {
-            while (true)
-            {
-                SpawnPortal();
-                yield return Utilities.WaitForSeconds.Wait(20f);
-            }
-        }
-
         private Vector3 GetRandomPointInZone(PortalZone spawnZone)
         {
             float randomX = Random.Range(-0.5f, 0.5f);
@@ -100,6 +91,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             Vector3 orientedRandomPoint =
                 spawnZone.LocalToWrold * new Vector4(randomPoint.x, randomPoint.y, randomPoint.z, 1);
             return orientedRandomPoint;
+        }
+
+        private IEnumerator Reappear()
+        {
+            while (true)
+            {
+                SpawnPortal();
+                yield return Utilities.WaitForSeconds.Wait(20f);
+            }
         }
     }
 }
