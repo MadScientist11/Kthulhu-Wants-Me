@@ -51,9 +51,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 2|KthulhuWantsMe.Source.Gameplay.WavesLogic.ScaleParameter, KthulhuWantsMe
-    - Name: Multiplier
-      Entry: 4
-      Data: 1.1
+    - Name: Formula
+      Entry: 1
+      Data: base + x * 2
     - Name: 
       Entry: 8
       Data: 
@@ -69,9 +69,9 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 3|KthulhuWantsMe.Source.Gameplay.WavesLogic.ScaleParameter, KthulhuWantsMe
-    - Name: Multiplier
-      Entry: 4
-      Data: 1.2
+    - Name: Formula
+      Entry: 1
+      Data: 'base + x '
     - Name: 
       Entry: 8
       Data: 
