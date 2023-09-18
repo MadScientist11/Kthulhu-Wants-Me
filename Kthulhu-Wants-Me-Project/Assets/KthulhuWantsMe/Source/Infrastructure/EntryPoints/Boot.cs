@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -30,7 +31,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
         public async UniTask StartAsync(CancellationToken cancellation)
         {
             await _dataProvider.Initialize();
-            Debug.Log(_dataProvider.TentacleConfig);
             List<UniTask> initializationTasks = Enumerable.Select(_services, service =>
             {
                 service.IsInitialized = true;

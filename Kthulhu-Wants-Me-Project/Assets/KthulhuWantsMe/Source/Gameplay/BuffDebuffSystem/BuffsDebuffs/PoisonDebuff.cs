@@ -66,6 +66,9 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 
         public void CancelEffect(IEffectReceiver effectReceiver)
         {
+            if (_poisonVFXInstance.gameObject == null)
+                return;
+            
             GameObject.Destroy(_poisonVFXInstance.gameObject);
         }
     }

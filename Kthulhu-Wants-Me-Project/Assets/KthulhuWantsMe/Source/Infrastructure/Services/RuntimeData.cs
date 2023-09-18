@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
@@ -32,7 +33,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
         public UniTask Initialize()
         {
-            _tentacleSettings = _dataProvider.TentacleConfig.AsRuntimeSettings();
+//            _tentacleSettings = _dataProvider.TentacleConfig.AsRuntimeSettings();
             return UniTask.CompletedTask;
         }
     }

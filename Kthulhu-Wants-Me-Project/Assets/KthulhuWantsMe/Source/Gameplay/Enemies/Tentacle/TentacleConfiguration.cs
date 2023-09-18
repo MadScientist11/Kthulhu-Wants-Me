@@ -8,7 +8,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
     public class TentacleConfiguration : ScriptableObject
     {
         public GameObject TentaclePrefab;
-        public MinionsSpawnSpell MinionsSpawnSpell;
 
         public float MaxHealth;
 

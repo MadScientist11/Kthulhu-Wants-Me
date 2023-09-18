@@ -16,7 +16,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     public interface IPortalSystem
     {
         void Init();
-        void SpawnPortals();
     }
 
     public class PortalSystem : IPortalSystem, ITickable
@@ -41,7 +40,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         public void Init()
         {
             _isInitialized = true;
-            _coroutineRunner.StartRoutine(Reappear());
+            //_coroutineRunner.StartRoutine(Reappear());
         }
 
         public void Tick()
@@ -52,9 +51,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
           
         }
 
-        public void SpawnPortals()
-        {
-        }
+   
 
         private void SpawnPortal()
         {
@@ -67,8 +64,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                 if (IsValidPortalSpawnPoint(orientedRandomPoint))
                 {
                     Portal portal = _portalFactory.GetOrCreatePortal(orientedRandomPoint, spawnZone.Rotation,
-                        PortalFactory.PortalType.TentaclePortal);
-                    portal.StartEnemySpawn();
+                        EnemyType.Tentacle);
+                    portal.StartEnemySpawn(EnemyType.Cyeagha);
                     break;
                 }
 
@@ -86,15 +83,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         }
 
 
-        private IEnumerator Reappear()
-        {
-            while (true)
-            {
-                SpawnPortal();
-                yield return Utilities.WaitForSeconds.Wait(20f);
-            }
-        }
-
         private Vector3 GetRandomPointInZone(PortalZone spawnZone)
         {
             float randomX = Random.Range(-0.5f, 0.5f);
@@ -103,6 +91,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             Vector3 orientedRandomPoint =
                 spawnZone.LocalToWrold * new Vector4(randomPoint.x, randomPoint.y, randomPoint.z, 1);
             return orientedRandomPoint;
+        }
+
+        private IEnumerator Reappear()
+        {
+            while (true)
+            {
+                SpawnPortal();
+                yield return Utilities.WaitForSeconds.Wait(20f);
+            }
         }
     }
 }

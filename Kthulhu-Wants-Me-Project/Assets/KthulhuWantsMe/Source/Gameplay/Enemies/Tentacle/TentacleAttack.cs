@@ -1,41 +1,34 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
-{    
-    public enum DamageModifierId
-    {
-        None = 0,
-        Poison = 1,
-        Bleed = 2,
-    }
-
+{
     public class TentacleAttack : Attack
     {
 
         public bool IsAttacking => _isAttacking;
         
-        protected override float BaseDamage => _tentacleConfig.BaseDamage;
+        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.Damage];
         
+        [SerializeField] private Enemy _enemy;
         [SerializeField] private TentacleAnimator _tentacleAnimator;
-        [SerializeField] private TentacleAIBrain _tentacleAIBrain;
         [SerializeField] private DamageModifier _damageModifier;
 
         private bool _isAttacking;
         private float _attackCooldown;
         
+        [SerializeField] private float _attackRadius;
+        [SerializeField] private float _tentacleGrabDamage;
+        [SerializeField] private float _attackEffectiveDistance;
+        [SerializeField] private float _attackCooldownTime;
         
-        private TentacleConfiguration _tentacleConfig;
-
-        [Inject]
-        public void Construct(IDataProvider dataProvider) => 
-            _tentacleConfig = dataProvider.TentacleConfig;
-
         private void Update()
         {
             _attackCooldown -= Time.deltaTime;
@@ -43,7 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         protected override void OnAttack()
         {
-            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfig.AttackRadius,
+            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _attackRadius,
                     LayerMasks.PlayerMask, out Transform player))
                 return;
 
@@ -54,7 +47,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         protected override void OnAttackEnd()
         {
             _isAttacking = false;
-            _attackCooldown = _tentacleConfig.AttackCooldown;
+            _attackCooldown = _attackCooldownTime;
         }
 
         public void PerformAttack()
@@ -71,7 +64,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private Vector3 AttackStartPoint()
         {
             return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-                   transform.forward * _tentacleConfig.AttackEffectiveDistance;
+                   transform.forward * _attackEffectiveDistance;
         }
     }
 }

@@ -65,7 +65,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public override void TakeDamage(float damage, IDamageProvider damageProvider)
         {
             base.TakeDamage(damage);
-            Debug.Log($"Player took {damage}");
+            //Debug.Log($"Player took {damage}");
             if (CurrentHealth <= 0)
             {
                 Die();
@@ -101,11 +101,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             }
         }
 
-        private void CancelAllActiveEffects()
-        {
-            _buffDebuffService.CancelAllEffectsOnEntity(_entityBuffDebuffContainer);
-        }
-
         private void ReceiveDamageVisual()
         {
             _playerAnimator.PlayImpact();
@@ -121,7 +116,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _playerAnimator.PlayDie();
             _movementController.ToggleMotor(false);
-            CancelAllActiveEffects();
         }
     }
 }

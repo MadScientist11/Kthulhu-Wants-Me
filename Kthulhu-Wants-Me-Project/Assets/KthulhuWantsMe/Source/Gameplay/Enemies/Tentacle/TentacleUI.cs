@@ -1,23 +1,15 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.UI;
 using UnityEngine;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleUI : MonoBehaviour
     {
+        [SerializeField] private Enemy _enemy;
         [SerializeField] private TentacleHealth _tentacleHealth;
         [SerializeField] private HpBar _hpBar;
         
-        private TentacleConfiguration _tentacleConfig;
-
-        [Inject]
-        public void Construct(IDataProvider dataProvider)
-        {
-            _tentacleConfig = dataProvider.TentacleConfig;
-        }
-
         private void Awake()
         {
             _tentacleHealth.Changed += UpdateHpBar;
@@ -36,7 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void UpdateHpBar(float newValue)
         {
-            _hpBar.SetValue(newValue, _tentacleConfig.MaxHealth);
+            _hpBar.SetValue(newValue, _enemy.EnemyStats.Stats[StatType.Health]);
         }
     }
 }

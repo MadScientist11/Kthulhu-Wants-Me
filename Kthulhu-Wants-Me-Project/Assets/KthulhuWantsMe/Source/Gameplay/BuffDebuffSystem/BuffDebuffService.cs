@@ -15,34 +15,29 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
         void CancelAllEffectsOnEntity(IEffectReceiver entity);
     }
 
- 
+
     public class BuffDebuffService : IBuffDebuffService, ITickable
     {
-
         public Dictionary<IEffectReceiver, List<IBuffDebuff>> ActiveEffectReceivers { get; } = new();
 
         private readonly List<Action> _queuedCancellations = new();
 
         public void ApplyEffect(IBuffDebuff effect, IEffectReceiver to)
         {
-           
-            if (effect is IUpdatableEffect updatableEffect)
+            if (ActiveEffectReceivers.TryGetValue(to, out List<IBuffDebuff> effects))
             {
-                if (ActiveEffectReceivers.TryGetValue(to, out List<IBuffDebuff> effects))
+                if (EntityDoesntHaveTheEffectApplied(effect, effects))
                 {
-                    if (effects.FirstOrDefault(e => e.GetType() == effect.GetType()) == null)
-                    {
-                        effects.Add(effect);
-                        effect.ApplyEffect(to);
-                    }
-                }
-                else
-                {
-                    ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() {effect});
-                    effect.ApplyEffect(to);
+                    ApplyEffectInternal(effect, to);
                 }
             }
+            else
+            {
+              
+                ApplyEffectInternal(effect, to);
+            }
         }
+
 
         public void Tick()
         {
@@ -50,7 +45,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             {
                 foreach (IBuffDebuff buffDebuff in valuePair.Value)
                 {
-                    if (buffDebuff is IUpdatableEffect updatableEffect) 
+                    if (buffDebuff is IUpdatableEffect updatableEffect)
                         updatableEffect.UpdateEffect();
                 }
             }
@@ -59,30 +54,68 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             {
                 queuedCancellation?.Invoke();
             }
-            
+
             _queuedCancellations.Clear();
         }
 
         public void CancelEffect(IBuffDebuff effect, IEffectReceiver onEffectReceiver)
         {
+            if (effect is not IUpdatableEffect)
+            {
+                CancelEffectInternal(effect, onEffectReceiver);
+                return;
+            }
+
             _queuedCancellations.Add(() => CancelEffectInternal(effect, onEffectReceiver));
         }
 
         public void CancelAllEffectsOnEntity(IEffectReceiver entity)
         {
-            foreach (IBuffDebuff effect in ActiveEffectReceivers[entity])
+            if (ActiveEffectReceivers.TryGetValue(entity, out List<IBuffDebuff> effects))
             {
-                _queuedCancellations.Add(() => CancelEffectInternal(effect, entity));
+                foreach (IBuffDebuff effect in effects)
+                    CancelEffect(effect, entity);
             }
+         
+        }
+
+        private void ApplyEffectInternal(IBuffDebuff effect, IEffectReceiver to)
+        {
+            effect.ApplyEffect(to);
+            AddEffect(effect, to);
+
+            if (IsInstaEffect(effect))
+                CancelEffectInternal(effect, to);
+
         }
 
         private void CancelEffectInternal(IBuffDebuff effect, IEffectReceiver onEffectReceiver)
         {
             if (effect is IUpdatableEffect updatableEffect)
-            {
                 updatableEffect.CancelEffect(onEffectReceiver);
-                ActiveEffectReceivers[onEffectReceiver].Remove(effect);
-            }
+
+            ActiveEffectReceivers[onEffectReceiver].Remove(effect);
+
+            if (ActiveEffectReceivers[onEffectReceiver] == null || ActiveEffectReceivers[onEffectReceiver].Count == 0)
+                ActiveEffectReceivers.Remove(onEffectReceiver);
+        }
+
+        private void AddEffect(IBuffDebuff effect, IEffectReceiver to)
+        {
+            if (!ActiveEffectReceivers.ContainsKey(to))
+                ActiveEffectReceivers.Add(to, new List<IBuffDebuff>() { effect });
+            else
+                ActiveEffectReceivers[to].Add(effect);
+        }
+
+        private bool EntityDoesntHaveTheEffectApplied(IBuffDebuff effect, List<IBuffDebuff> effects)
+        {
+            return effects.FirstOrDefault(e => e.GetType() == effect.GetType()) == null;
+        }
+
+        private bool IsInstaEffect(IBuffDebuff effect)
+        {
+            return effect is not IUpdatableEffect;
         }
     }
 }

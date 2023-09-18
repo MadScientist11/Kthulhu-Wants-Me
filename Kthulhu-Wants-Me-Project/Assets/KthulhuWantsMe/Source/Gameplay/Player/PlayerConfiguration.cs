@@ -26,7 +26,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public Vector3 Gravity = new(0, -30f, 0);
         [BoxGroup("Locomotion")]
         public float DashStrength;
-        
+        [BoxGroup("Locomotion")] 
+        public Input InputType;
         [HorizontalLine(color: EColor.Violet)]
         [BoxGroup("Attack")]
         public float AttackRadius;
@@ -34,8 +35,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float AttackEffectiveDistance;
         [BoxGroup("Attack")]
         public float BaseDamage;
-        [BoxGroup("Attack")]
-        public List<Attack> AttackComboSet;
+    
         
         [HorizontalLine(color: EColor.Violet)]
         [BoxGroup("Lunge")]

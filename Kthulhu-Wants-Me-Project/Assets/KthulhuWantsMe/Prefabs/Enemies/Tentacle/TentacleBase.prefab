@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 1111827956587594819}
   - component: {fileID: 8468133202256745413}
   - component: {fileID: 2400385304639991808}
+  - component: {fileID: 8187939092874492644}
   - component: {fileID: 8662503218968821094}
   - component: {fileID: 1336930687297924091}
   - component: {fileID: 7749225858506147541}
@@ -267,8 +268,9 @@ GameObject:
   - component: {fileID: 3629999761114246035}
   - component: {fileID: 7743905234635742817}
   - component: {fileID: 423395108823978285}
-  - component: {fileID: -8437970798004524629}
-  - component: {fileID: -8854100897847997932}
+  - component: {fileID: 1366331452263209347}
+  - component: {fileID: 2119516100063412033}
+  - component: {fileID: -8978431778437181689}
   m_Layer: 10
   m_Name: TentacleBase
   m_TagString: Untagged
@@ -387,6 +389,18 @@ MonoBehaviour:
   - m_Rig: {fileID: 3086530469526707658}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &8187939092874492644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2543864529464768167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e4e0982d5049a99dc8b8f09636e291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8662503218968821094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,6 +414,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <TentacleAnimator>k__BackingField: {fileID: 7893959025167172210}
+  <TentacleAIBrain>k__BackingField: {fileID: -2563807488164230852}
+  <TentacleHealth>k__BackingField: {fileID: 1336930687297924091}
+  <TentacleSpellCastingAbility>k__BackingField: {fileID: 7743905234635742817}
   <GrabTarget>k__BackingField: {fileID: 1241455327053050249}
 --- !u!114 &1336930687297924091
 MonoBehaviour:
@@ -413,6 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8246a5c7c142cb8335885848941e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 8187939092874492644}
   _tentacleAnimator: {fileID: 7893959025167172210}
 --- !u!114 &7749225858506147541
 MonoBehaviour:
@@ -426,6 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd210bd5ae44979ad84807507885a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 8187939092874492644}
   _tentacleHealth: {fileID: 1336930687297924091}
   _hpBar: {fileID: 4168230298860864657}
 --- !u!114 &-2563807488164230852
@@ -476,8 +495,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8eaed4a866d4d12aad1c26ebc1e3b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: 8187939092874492644}
   _tentacleAnimator: {fileID: 7893959025167172210}
-  _tentacleAIBrain: {fileID: -2563807488164230852}
+  _damageModifier: {fileID: 0}
+  _attackRadius: 1
+  _tentacleGrabDamage: 0
+  _attackEffectiveDistance: 1
+  _attackCooldownTime: 1
 --- !u!114 &3629999761114246035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,6 +517,9 @@ MonoBehaviour:
   GrabTarget: {fileID: 1241455327053050249}
   _tentacleAnimator: {fileID: 7893959025167172210}
   _tentacleAIBrain: {fileID: -2563807488164230852}
+  _attackRadius: 1
+  _tentacleGrabDamage: 100
+  _attackEffectiveDistance: 1
 --- !u!114 &7743905234635742817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,7 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tentacleAnimator: {fileID: 7893959025167172210}
---- !u!114 &-8437970798004524629
+--- !u!114 &1366331452263209347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -528,13 +555,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2543864529464768167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90412ebb56124813b86ec7086b20fbda, type: 3}
+  m_Script: {fileID: 11500000, guid: 20e58d7dbb384857a832c5d6981eec83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyHeight: 5
+  EmergenceDuration: 3
+  _closePortalOnEmerge: 0
   _tentacleAnimator: {fileID: 7893959025167172210}
-  _tentacleHealth: {fileID: 1336930687297924091}
-  _tentacleAIBrain: {fileID: -2563807488164230852}
---- !u!114 &-8854100897847997932
+  _tentacleFacade: {fileID: 8662503218968821094}
+--- !u!114 &2119516100063412033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -543,14 +572,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 2543864529464768167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf6f3a7b003148a59079a05ddff346cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a70c1dcba794e01b65d425bb69afd37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tentacleAnimator: {fileID: 7893959025167172210}
-  _tentacleEmergence: {fileID: -8437970798004524629}
-  _tentacleAIBrain: {fileID: -2563807488164230852}
-  _tentacleHealth: {fileID: 1336930687297924091}
-  _tentacleSpellCastingAbility: {fileID: 7743905234635742817}
+  RetreatDuration: 3
+  _enemyHealth: {fileID: 1336930687297924091}
+  _tentacleFacade: {fileID: 8662503218968821094}
+--- !u!114 &-8978431778437181689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2543864529464768167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c18c7c07ec4ae9ae65740534d28b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2728249646138068946
 GameObject:
   m_ObjectHideFlags: 0

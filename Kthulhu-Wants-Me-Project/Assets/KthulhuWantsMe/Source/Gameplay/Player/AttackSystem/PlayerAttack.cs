@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Effects;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
@@ -6,6 +7,7 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.Weapons;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -25,6 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
+        [SerializeField] private DamageModifier _playerDamageModifier;
 
         private int _comboAttackIndex;
         private WeaponItem _activeWeapon;
@@ -66,8 +69,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         {
             _isAttacking = true;
             _canProceedWithCombo = false;
-            Debug.Log("WindUp");
-
         }
 
         protected override void OnContactPhase()
@@ -76,11 +77,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
                     LayerMasks.EnemyMask, out IDamageable damageable))
                 return;
 
-            Debug.Log("Contact");
 
             _weaponTrails.Play(_comboAttackIndex);
             TargetFeedbacks.PlayFeedbacks(AttackStartPoint());
             ApplyDamage(damageable);
+            if (damageable.Transform.TryGetComponent(out IEffectReceiver effectReceiver))
+            {
+                _playerDamageModifier?.ApplyTo(effectReceiver);
+
+            }
         }
 
         protected override void OnRecoveryPhase()
@@ -88,8 +93,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _canProceedWithCombo = true;
             _comboAttackIndex++;
             _comboAttackIndex %= _activeWeapon.WeaponData.WeaponMoveSet.MoveSetAttackCount;
-            Debug.Log("Recovery");
-
         }
 
         protected override void OnAttackEnd()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7342667127769428846}
   - component: {fileID: 4302006736190205134}
   - component: {fileID: 2074288089250755570}
+  - component: {fileID: -6736657406163995852}
   - component: {fileID: 1528546947026360114}
   - component: {fileID: 1805378254231291091}
   - component: {fileID: 6832438006561834181}
@@ -111,6 +112,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-6736657406163995852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900409656979045455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8e4e0982d5049a99dc8b8f09636e291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1528546947026360114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385bc1cc14ea4316be5202bb2284a147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemy: {fileID: -6736657406163995852}
   _hitFeedbacks: {fileID: 0}
 --- !u!114 &6832438006561834181
 MonoBehaviour:
@@ -175,6 +189,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _enemy: {fileID: -6736657406163995852}
 --- !u!114 &4389780604326016033
 MonoBehaviour:
   m_ObjectHideFlags: 0

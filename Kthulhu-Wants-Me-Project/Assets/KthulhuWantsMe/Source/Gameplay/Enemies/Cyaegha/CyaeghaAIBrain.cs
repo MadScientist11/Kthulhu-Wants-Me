@@ -1,6 +1,7 @@
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer;
 
@@ -16,12 +17,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private float _attackDelayTime;
 
         private PlayerFacade _player;
-        private YithConfiguration _yithConfiguration;
 
         [Inject]
-        public void Construct(IDataProvider dataProvider, IGameFactory gameFactory, IRandomService randomService)
+        public void Construct(IGameFactory gameFactory)
         {
-            _yithConfiguration = dataProvider.YithConfig;
             _player = gameFactory.Player;
         }
 
@@ -74,7 +73,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             _attackDelayTime -= Time.deltaTime;
 
         private void ResetAttackDelayCountdown() => 
-            _attackDelayTime = _yithConfiguration.AttackDelay;
+            _attackDelayTime = 1f;
 
         private bool AttackDelayCountdownIsUp() 
             => _attackDelayTime <= 0;

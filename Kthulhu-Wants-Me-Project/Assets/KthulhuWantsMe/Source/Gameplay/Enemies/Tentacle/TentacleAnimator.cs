@@ -1,6 +1,7 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.AnimatorHelpers;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.StaterResetter;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -54,16 +55,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _tentacleMaterial = _tentacleRenderer.material;
         }
 
-        public void PlayGrabPlayerAnimation(Transform playerFollowTarget)
-        {
-            //_playerFollowTarget = playerFollowTarget;
-        }
-
         private void Update()
         {
             _tentacleMaterial.SetFloat(Radius, _tentacleGrabRadius);
             _tentacleMaterial.SetFloat(TwirlStrength, _twirlStrength);
             _tentacleMaterial.SetVector(InteractPos, _grabTarget.localPosition + _tentacleGrabOffset);
+        }
+        
+        public void PlayGrabPlayerAnimation(Transform playerFollowTarget)
+        {
+            //_playerFollowTarget = playerFollowTarget;
         }
 
         public void PlayGrabPlayerAttack()
@@ -95,7 +96,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _chainTarget.position = _player.transform.position;
             _tentacleAnimator.SetTrigger(Attack);
         }
-        
+
         public void CancelAttack()
         {
             _tentacleAnimator.SetBool(Attack, false);
@@ -128,9 +129,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _tentacleAnimator.SetBool(Retreat, true);
             _tentacleRig.weight = 0;
         }
-        
-        
 
-       
     }
 }

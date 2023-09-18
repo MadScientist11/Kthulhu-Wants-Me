@@ -1,7 +1,9 @@
+using System;
 using Freya;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
@@ -9,11 +11,15 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
+    public enum Input
+    {
+        AscentLike = 0,
+        RelativeToMouse = 1,
+    }
     public class PlayerLocomotion : MonoBehaviour
     {
         public bool IsMoving =>
             _movementController.CurrentVelocity.XZ().sqrMagnitude > 0.1f && _motor.enabled;
-        
         
         public PlayerMovementController MovementController => _movementController;
 
@@ -24,7 +30,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private bool _blockMovement;
 
         private PlayerMovementController _movementController;
-        private PlayerConfiguration _playerConfiguration;
         private IInputService _inputService;
         private PlayerConfiguration _playerConfig;
         private ICoroutineRunner _coroutineRunner;
@@ -78,9 +83,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 _lastLookDirection = (hitPointXZ - transform.position).normalized;
             }
 
-            Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
-                .XZ();
+            //Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ();
 
+            Vector2 movementInput = _playerConfig.InputType switch
+            {
+                Input.AscentLike => -_inputService.GameplayScenario.MovementInput.YX(),
+                Input.RelativeToMouse => transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
             _movementController.SetInputs(movementInput, _lastLookDirection);
         }
 

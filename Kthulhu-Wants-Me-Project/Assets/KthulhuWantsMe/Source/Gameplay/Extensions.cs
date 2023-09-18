@@ -14,6 +14,11 @@ namespace KthulhuWantsMe.Source.Gameplay
             material.SetColor(cachedColorProperty, color);
         }
 
+        public static Vector3 AddY(this Vector3 vec, float offset)
+        {
+            return new Vector3(vec.x, vec.y + offset, vec.z);
+        }
+
         public static bool IsDamageable(this Collider obj, out IDamageable damageable)
         {
             return obj.TryGetComponent(out damageable);

@@ -4,7 +4,8 @@
     {
         Tentacle = 0,
         PoisonousTentacle = 1,
-        Yith = 2,
-        Cyeagha = 3,
+        BleedTentacle = 2,
+        Yith = 3,
+        Cyeagha = 4,
     }
 }

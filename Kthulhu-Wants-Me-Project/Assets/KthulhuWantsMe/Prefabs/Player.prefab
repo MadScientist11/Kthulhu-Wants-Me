@@ -30965,6 +30965,7 @@ GameObject:
   - component: {fileID: -2573202685680207158}
   - component: {fileID: 8209058745014812478}
   - component: {fileID: -6425494656952559277}
+  - component: {fileID: 7600791777054640040}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -31201,6 +31202,7 @@ MonoBehaviour:
   _playerHealth: {fileID: 6482385733598322139}
   _playerLocomotion: {fileID: 5663912579931136821}
   tentacleGrabAbilityResponse: {fileID: -2573202685680207158}
+  _playerDamageModifier: {fileID: 7600791777054640040}
 --- !u!114 &302771739074157513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31334,6 +31336,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c18c7c07ec4ae9ae65740534d28b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7600791777054640040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5112094726857054722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a20a2c63ed492681573dfcee15620a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageModifierId: 3
+  _poisonVFXPrefab: {fileID: 2005289586766902498, guid: 37b85ea7737640948ba25d4e1828eadf,
+    type: 3}
 --- !u!1 &5272480011812278617
 GameObject:
   m_ObjectHideFlags: 0

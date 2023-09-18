@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using VContainer;
@@ -22,8 +23,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<DataProvider>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
+   
             builder
-                .Register<RuntimeData>(Lifetime.Singleton)
+                .Register<ProgressService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
             builder
