@@ -9,11 +9,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
 {
     public class TestLifetimeScope : LifetimeScope
     {
-        public Location Location;
-        
         protected override void Configure(IContainerBuilder builder)
         {
-          builder.Install(new GameInstaller(Location));
+          builder.Install(new GameInstaller());
           builder.RegisterEntryPoint<TestEntryPoint>();
         }
     }

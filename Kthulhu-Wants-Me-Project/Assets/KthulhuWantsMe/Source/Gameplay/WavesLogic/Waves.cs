@@ -10,6 +10,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         public EnemyScaling BaseEnemyScaling;
         public List<WaveData> WaveData;
         
-
+        public WaveData this[int index] => WaveData[index];
     }
 }
