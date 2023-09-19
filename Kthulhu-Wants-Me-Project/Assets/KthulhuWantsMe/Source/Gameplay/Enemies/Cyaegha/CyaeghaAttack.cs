@@ -44,34 +44,49 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             _isAttacking = true;
             
             FaceTarget(lastPlayerPosition);
+            bool damaged = false;
 
             for (float t = 0; t < 1; t += Time.deltaTime * 2f)
             {
                 transform.position = Vector3.Lerp(jumpStartPos, dest, t)
                                      + Vector3.up * HeightCurve.Evaluate(t);
+
+                if (TryDamage(.4f, out IDamageable player) && !damaged)
+                {
+                    ApplyDamage(to: player);
+                    damaged = true;
+                }
                 yield return null;
             }
             
-
-            if (PhysicsUtility.HitFirst(transform,
-                    AttackStartPoint(),
-                    .75f,
-                    LayerMasks.PlayerMask,
-                    out IDamageable damageable))
+            if (TryDamage(.6f, out IDamageable damageable) && !damaged)
             {
                 ApplyDamage(to: damageable);
             }
 
-            //NavMesh SamplePosition?
-
-            if (NavMesh.SamplePosition(lastPlayerPosition, out NavMeshHit hit,1f,_cyaeghaNavMesh.areaMask))
-            {
-                _cyaeghaNavMesh.Warp(hit.position);
-            }
+          
 
             _isAttacking = false;
             _attackCooldown = 1f;
         }
+
+        private bool TryDamage(float damageRadius, out IDamageable damageable)
+        {
+            if (PhysicsUtility.HitFirst(transform,
+                    transform.position,
+                    damageRadius,
+                    LayerMasks.PlayerMask,
+                    out IDamageable dmg))
+            {
+                damageable = dmg;
+                return true;
+            }
+
+            damageable = null;
+            return false;
+            
+        }
+
         private void FaceTarget(Vector3 destination)
         {
             Vector3 lookPos = destination - transform.position;

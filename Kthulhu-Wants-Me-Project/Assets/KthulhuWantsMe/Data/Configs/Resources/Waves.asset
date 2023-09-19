@@ -27,5 +27,13 @@ MonoBehaviour:
     WaveEnemies:
     - EnemyType: 4
       Quantity: 1
+    - EnemyType: 0
+      Quantity: 1
+    - EnemyType: 2
+      Quantity: 1
+    - EnemyType: 1
+      Quantity: 1
   - WaveObjective: 0
-    WaveEnemies: []
+    WaveEnemies:
+    - EnemyType: 4
+      Quantity: 2
