@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
     public enum LocationId
     {
         GameLocation = 0,
+        TestScene = 1,
         Unknown = 10000,
     }
     [CreateAssetMenu(menuName = "Create Location", fileName = "Location", order = 0)]

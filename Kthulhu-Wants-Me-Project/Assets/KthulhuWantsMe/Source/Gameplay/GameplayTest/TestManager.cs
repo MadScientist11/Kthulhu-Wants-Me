@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.Spell;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using NaughtyAttributes;
 using UnityEngine;
 using VContainer;
@@ -19,14 +20,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
         private IGameFactory _gameFactory;
         private IPortalFactory _portalFactory;
         private Location _location;
-        private IRuntimeData _runtimeData;
 
         [Inject]
-        public void Construct(IPortalFactory portalFactory, IGameFactory gameFactory, IRuntimeData runtimeData, Location location)
+        public void Construct(IPortalFactory portalFactory, IGameFactory gameFactory,  IDataProvider dataProvider)
         {
-            _runtimeData = runtimeData;
             _portalFactory = portalFactory;
-            _location = location;
+            _location = dataProvider.Locations[LocationId.TestScene];
             _gameFactory = gameFactory;
         }
 
@@ -34,6 +33,29 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
         {
             if (AutoSpawnPlayer)
                 SpawnPlayer();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.Tentacle);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.Cyeagha);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.Yith);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.BleedTentacle);
+            }
         }
 
         [Button()]
