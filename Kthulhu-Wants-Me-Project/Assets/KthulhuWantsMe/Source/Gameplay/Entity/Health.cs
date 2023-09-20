@@ -36,6 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
                 if (_currentHealth == 0)
                 {
                     Died?.Invoke();
+                    Died = null;
                     IsDead = true;
                 }
             }

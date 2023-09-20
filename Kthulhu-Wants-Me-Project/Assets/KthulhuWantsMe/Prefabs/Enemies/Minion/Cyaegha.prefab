@@ -190,6 +190,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _enemy: {fileID: -6736657406163995852}
+  _cyaeghaNavMesh: {fileID: 2074288089250755570}
 --- !u!114 &4389780604326016033
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,11 +30,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         private Collider[] _obstacles = new Collider[1];
 
         [Inject]
-        public void Construct(IPortalFactory portalFactory, ICoroutineRunner coroutineRunner, Location location)
+        public void Construct(IPortalFactory portalFactory, ICoroutineRunner coroutineRunner)
         {
             _coroutineRunner = coroutineRunner;
             _portalFactory = portalFactory;
-            _portalSpawnZones = location.PortalSpawnZones;
+            //_portalSpawnZones = location.PortalSpawnZones;
         }
 
         public void Init()

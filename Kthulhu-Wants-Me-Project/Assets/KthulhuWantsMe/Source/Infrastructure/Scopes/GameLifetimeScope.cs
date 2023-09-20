@@ -14,12 +14,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
 {
     public class GameLifetimeScope : LifetimeScope
     {
-        [SerializeField] private Location _location;
-
-
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Install(new GameInstaller(_location));
+            builder.Install(new GameInstaller());
             builder.RegisterEntryPoint<GameEntryPoint>();
         }
 

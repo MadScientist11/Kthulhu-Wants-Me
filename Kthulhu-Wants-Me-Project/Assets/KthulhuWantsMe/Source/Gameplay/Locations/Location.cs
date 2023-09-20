@@ -9,9 +9,15 @@ using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Locations
 {
+    public enum LocationId
+    {
+        GameLocation = 0,
+        Unknown = 10000,
+    }
     [CreateAssetMenu(menuName = "Create Location", fileName = "Location", order = 0)]
     public class Location : ScriptableObject
     {
+        public LocationId LocationId;
         public Vector3 PlayerSpawnPosition;
         public Quaternion PlayerSpawnRotation;
         public List<PortalZone> PortalSpawnZones;

@@ -15,13 +15,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
     {
         private readonly IReadOnlyList<IInitializableService> _services;
         private readonly IGameFactory _gameFactory;
-        private readonly Location _location;
         private readonly IInputService _inputService;
 
-        public TestEntryPoint(IReadOnlyList<IInitializableService> services, IGameFactory gameFactory, Location location, IInputService inputService)
+        public TestEntryPoint(IReadOnlyList<IInitializableService> services, IGameFactory gameFactory, IInputService inputService)
         {
             _inputService = inputService;
-            _location = location;
             _gameFactory = gameFactory;
             _services = services;
         }
