@@ -41,6 +41,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _playerConfig = dataProvider.PlayerConfig;
             _inputService = inputService;
             _movementController = new PlayerMovementController(_motor, _playerConfig);
+
+            Debug.Log(new Vector2(0.5f, 0.5f).normalized);
+   
         }
 
         private void Update()
@@ -85,14 +88,43 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             //Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ();
 
-            Vector2 movementInput = _playerConfig.InputType switch
+            Vector2 movementInput;
+            switch (_playerConfig.InputType)
             {
-                Input.AscentLike => -_inputService.GameplayScenario.MovementInput.YX(),
-                Input.RelativeToMouse => transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ(),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            _movementController.SetInputs(movementInput, _lastLookDirection);
+                case Input.AscentLike:
+                    movementInput = -_inputService.GameplayScenario.MovementInput;
+
+                    movementInput = GetMovementDirection(movementInput);
+               
+                    break;
+                case Input.RelativeToMouse:
+                    movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
+                        .XZ();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _movementController.SetInputs(movementInput, movementInput.XZtoXYZ());
         }
+
+
+        private Vector2 GetMovementDirection(Vector2 movementInput)
+        {
+            return (movementInput.x, movementInput.y) switch
+            {
+                (-1f, 0) => new Vector2(-0.71f, 0.71f).normalized,
+                (0f, -1f) => new Vector2(-0.71f, -0.71f).normalized,         
+                (1f, 0) => new Vector2(0.71f, -0.71f).normalized,
+                (0f, 1f) => new Vector2(0.71f, 0.71f).normalized,
+                var (x, y) when x * y > 0 && x < 0 => new Vector2(-1f, 0f).normalized,
+                var (x, y) when x * y > 0 && x > 0 => new Vector2(1f, 0f).normalized,
+                (< 0, _) => new Vector2(0f, 1f).normalized,
+                (> 0, _) => new Vector2(0f, -1f).normalized,
+                _ => Vector2.zero
+            };
+        }
+
 
         private bool CanMove()
         {
