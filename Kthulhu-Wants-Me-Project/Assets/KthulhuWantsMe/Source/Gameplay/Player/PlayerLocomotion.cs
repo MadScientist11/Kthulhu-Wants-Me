@@ -16,11 +16,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         AscentLike = 0,
         RelativeToMouse = 1,
     }
+
     public class PlayerLocomotion : MonoBehaviour
     {
         public bool IsMoving =>
             _movementController.CurrentVelocity.XZ().sqrMagnitude > 0.1f && _motor.enabled;
-        
+
         public PlayerMovementController MovementController => _movementController;
 
         [SerializeField] private KinematicCharacterMotor _motor;
@@ -28,6 +29,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private PlayerAttack _playerAttack;
 
         private bool _blockMovement;
+        private Vector3 _lastLookDirection;
 
         private PlayerMovementController _movementController;
         private IInputService _inputService;
@@ -43,7 +45,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _movementController = new PlayerMovementController(_motor, _playerConfig);
 
             Debug.Log(new Vector2(0.5f, 0.5f).normalized);
-   
         }
 
         private void Update()
@@ -54,7 +55,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                     _playerAnimator.Move();
                 else
                     _playerAnimator.StopMoving();
-                
+
                 ProcessInput();
                 return;
             }
@@ -70,9 +71,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _coroutineRunner.ExecuteAfter(timeFor, () => _blockMovement = false);
         }
 
-        private Vector3 _lastLookDirection;
-
-        private void ProcessInput()
+        public void FaceMouse()
         {
             Ray ray = MousePointer.GetWorldRay(UnityEngine.Camera.main);
 
@@ -85,27 +84,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 Vector3 hitPointXZ = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
                 _lastLookDirection = (hitPointXZ - transform.position).normalized;
             }
+        }
 
+        private void ProcessInput()
+        {
             //Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ();
+            //movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
 
-            Vector2 movementInput;
-            switch (_playerConfig.InputType)
+            Vector2 movementInput = -_inputService.GameplayScenario.MovementInput;
+            movementInput = GetMovementDirection(movementInput);
+            
+            if (movementInput.sqrMagnitude > 0)
             {
-                case Input.AscentLike:
-                    movementInput = -_inputService.GameplayScenario.MovementInput;
-
-                    movementInput = GetMovementDirection(movementInput);
-               
-                    break;
-                case Input.RelativeToMouse:
-                    movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
-                        .XZ();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                _lastLookDirection = movementInput.XZtoXYZ();
             }
 
-            _movementController.SetInputs(movementInput, movementInput.XZtoXYZ());
+
+            _movementController.SetInputs(movementInput, _lastLookDirection);
         }
 
 
@@ -114,7 +109,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             return (movementInput.x, movementInput.y) switch
             {
                 (-1f, 0) => new Vector2(-0.71f, 0.71f).normalized,
-                (0f, -1f) => new Vector2(-0.71f, -0.71f).normalized,         
+                (0f, -1f) => new Vector2(-0.71f, -0.71f).normalized,
                 (1f, 0) => new Vector2(0.71f, -0.71f).normalized,
                 (0f, 1f) => new Vector2(0.71f, 0.71f).normalized,
                 var (x, y) when x * y > 0 && x < 0 => new Vector2(-1f, 0f).normalized,
