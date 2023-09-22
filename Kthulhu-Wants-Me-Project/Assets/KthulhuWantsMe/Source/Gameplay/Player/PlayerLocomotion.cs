@@ -1,6 +1,7 @@
 using System;
 using Freya;
 using KinematicCharacterController;
+using KthulhuWantsMe.Source.Gameplay.Camera;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -35,16 +36,22 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private IInputService _inputService;
         private PlayerConfiguration _playerConfig;
         private ICoroutineRunner _coroutineRunner;
+        private CinemachineCameraPanning _cameraPanningLogic;
+        private IGameFactory _gameFactory;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, ICoroutineRunner coroutineRunner)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ICoroutineRunner coroutineRunner, IGameFactory gameFactory)
         {
+            _gameFactory = gameFactory;
             _coroutineRunner = coroutineRunner;
             _playerConfig = dataProvider.PlayerConfig;
             _inputService = inputService;
             _movementController = new PlayerMovementController(_motor, _playerConfig);
+        }
 
-            Debug.Log(new Vector2(0.5f, 0.5f).normalized);
+        private void Start()
+        {
+            _cameraPanningLogic = _gameFactory.Player.GetCameraPanningLogic();
         }
 
         private void Update()
@@ -52,7 +59,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             if (CanMove())
             {
                 if (MovementInputDetected())
+                {
                     _playerAnimator.Move();
+                    _cameraPanningLogic.DisablePanning = true;
+                }
                 else
                     _playerAnimator.StopMoving();
 
@@ -62,6 +72,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             _movementController.SetInputs(Vector2.zero, _lastLookDirection);
             _playerAnimator.StopMoving();
+            _cameraPanningLogic.DisablePanning = false;
+
         }
 
         public void BlockMovement(float timeFor)

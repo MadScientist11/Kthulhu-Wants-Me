@@ -103,10 +103,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         private void PerformAttack()
         {
+            Debug.Log("Try attack");
             if (CantAttack())
                 return;
 
-
+            Debug.Log("Attack");
+            _playerLocomotion.BlockMovement(0.5f);
             _playerAnimator.PlayAttack(_comboAttackIndex);
         }
 
