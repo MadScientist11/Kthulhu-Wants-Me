@@ -84,7 +84,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
         public WaveSystem(IDataProvider dataProvider, IGameFactory gameFactory, IProgressService progressService)
         {
-            _location = dataProvider.Locations[LocationId.GameLocation];
+            _location = dataProvider.Locations[dataProvider.GameConfig.LocationId];
             _progressService = progressService;
             _gameFactory = gameFactory;
             _wavesData = dataProvider.Waves;

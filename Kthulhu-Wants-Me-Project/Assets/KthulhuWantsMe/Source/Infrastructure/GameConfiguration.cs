@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using KthulhuWantsMe.Source.Gameplay.Locations;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Scopes
@@ -7,6 +8,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
     public class GameConfiguration : ScriptableObject
     {
         [Scene] public string MainScene;
+        public LocationId LocationId;
 
     }
 }

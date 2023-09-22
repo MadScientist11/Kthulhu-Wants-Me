@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GameConfiguration
   m_EditorClassIdentifier: 
   MainScene: MainGame
+  LocationId: 1

@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
@@ -17,6 +18,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         Waves Waves { get; }
         EnemyConfigsProvider EnemyConfigsProvider { get; }
         Dictionary<LocationId, Location> Locations { get; }
+        GameConfiguration GameConfig { get; }
     }
 
     public class DataProvider : IDataProvider
@@ -26,12 +28,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         private const string PortalConfigurationPath = "PortalConfiguration";
         private const string BuffItemsPath = "BuffItemsContainer";
         private const string WavesPath = "Waves";
+        private const string GameConfiguration = "GameConfiguration";
         public PlayerConfiguration PlayerConfig { get; private set; }
         public PortalConfiguration PortalConfig { get; private set; }
         public BuffItemsContainer BuffItems { get; private set; }
         public Waves Waves { get; private set; }
 
-        public Dictionary<LocationId, Location> Locations { get; private set; } 
+        public Dictionary<LocationId, Location> Locations { get; private set; }
+        public GameConfiguration GameConfig { get; private set; }
         public EnemyConfigsProvider EnemyConfigsProvider { get; private set; }
 
         public async UniTask Initialize()
@@ -42,8 +46,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
             PlayerConfig = (PlayerConfiguration)await Resources.LoadAsync<PlayerConfiguration>(PlayerConfigurationPath);
             PortalConfig = (PortalConfiguration)await Resources.LoadAsync<PortalConfiguration>(PortalConfigurationPath);
             BuffItems = (BuffItemsContainer)await Resources.LoadAsync<BuffItemsContainer>(BuffItemsPath);
-            Waves= (Waves)await Resources.LoadAsync<Waves>(WavesPath);
-
+            Waves = (Waves)await Resources.LoadAsync<Waves>(WavesPath);
+            GameConfig = (GameConfiguration)await Resources.LoadAsync<GameConfiguration>(GameConfiguration);
         }
 
         private void LoadLocations()
