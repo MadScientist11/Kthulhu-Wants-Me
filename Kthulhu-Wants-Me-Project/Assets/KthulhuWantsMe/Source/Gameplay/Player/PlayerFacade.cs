@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using KthulhuWantsMe.Source.Gameplay.Camera;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using UnityEngine;
 
@@ -13,5 +14,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [field: SerializeField]  public PlayerInteractionAbility PlayerInteractionAbility { get; private set; }
         [field: SerializeField]  public TentacleSpellResponse TentacleSpellResponse { get; private set;  }
         public CinemachineVirtualCamera PlayerVirtualCamera { get; set; }
+
+        public CinemachineCameraPanning GetCameraPanningLogic() => 
+            PlayerVirtualCamera.GetComponent<CinemachineCameraPanning>();
     }
 }
