@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Locations;
@@ -91,7 +92,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
         public void Initialize()
         {
-            Debug.Log("Iniwgiwgw");
             IWaveScenario eliminateAllEnemiesScenario = new EliminateAllEnemiesScenario(this, _wavesData);
             _waveScenarios  = new() {
                 { WaveObjective.KillAllEnemies, eliminateAllEnemiesScenario }
@@ -127,7 +127,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                 for (int i = 0; i < waveEnemy.Quantity; i++)
                 {
                     EnemySpawnZoneData spawnZone =
-                        _location.EnemySpawnZones[Random.Range(0, _location.PortalSpawnZones.Count)];
+                        FindNearPlayerSpawnZone();
                     Vector3 randomPoint = Mathfs.Abs(Random.insideUnitSphere * spawnZone.Radius);
 
                     Vector3 spawnPosition =
@@ -145,6 +145,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             }
 
             return waveEnemies;
+        }
+
+        private EnemySpawnZoneData FindNearPlayerSpawnZone()
+        {
+            List<EnemySpawnZoneData> enemySpawnZones = _location.EnemySpawnZones.OrderBy(sp =>
+                Vector3.Distance(sp.Position, _gameFactory.Player.transform.position)).ToList();
+
+            return enemySpawnZones[0];
         }
     }
 }

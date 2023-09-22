@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/KthulhuWantsMe/Scenes/Game.unity
     guid: fb53bbc961baf1f40a4fadbe9c9e8c7c
   - enabled: 1
+    path: Assets/KthulhuWantsMe/Scenes/MainGame.unity
+    guid: cdc53027e61fa774b903ab6ac38ea00d
+  - enabled: 1
     path: Assets/KthulhuWantsMe/Scenes/TestScene.unity
     guid: b554c31522c3c69479b1a11a68922c14
   - enabled: 1
