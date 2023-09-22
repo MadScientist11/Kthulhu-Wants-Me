@@ -25,7 +25,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
         public void Construct(IPortalFactory portalFactory, IGameFactory gameFactory,  IDataProvider dataProvider)
         {
             _portalFactory = portalFactory;
-            _location = dataProvider.Locations[LocationId.TestScene];
+            //_location = dataProvider.Locations[LocationId.TestScene];
             _gameFactory = gameFactory;
         }
 
