@@ -37,3 +37,5 @@ MonoBehaviour:
     WaveEnemies:
     - EnemyType: 4
       Quantity: 2
+    - EnemyType: 3
+      Quantity: 2
