@@ -20,7 +20,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IPortalSystem portalSystem, IInputService inputService,
             IDataProvider dataProvider)
         {
-            _location = dataProvider.Locations[LocationId.GameLocation];
+            _location = dataProvider.Locations[dataProvider.GameConfig.LocationId];
             _portalSystem = portalSystem;
             _inputService = inputService;
             _gameFactory = gameFactory;

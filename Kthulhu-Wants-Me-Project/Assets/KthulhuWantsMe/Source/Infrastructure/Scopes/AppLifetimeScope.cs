@@ -7,7 +7,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
 {
     public class AppLifetimeScope : LifetimeScope
     {
-        public GameConfiguration GameConfiguration;
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Install(new ServicesInstaller());
