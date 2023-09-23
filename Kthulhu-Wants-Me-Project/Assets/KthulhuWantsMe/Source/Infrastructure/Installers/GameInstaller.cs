@@ -15,11 +15,21 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
 {
     public class GameInstaller : IInstaller
     {
+        private readonly SceneDataProvider _sceneDataProvider;
+
+        public GameInstaller(SceneDataProvider sceneDataProvider)
+        {
+            _sceneDataProvider = sceneDataProvider;
+        }
         
         public void Install(IContainerBuilder builder)
         {
             builder
                 .Register<GameFactory>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+
+            builder
+                .RegisterComponent(_sceneDataProvider)
                 .AsImplementedInterfaces();
             
       

@@ -5,6 +5,7 @@ using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -73,18 +74,19 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             private set;
         }
         
-        private Waves _wavesData;
-        private IGameFactory _gameFactory;
-        private IProgressService _progressService;
-        private Location _location;
-
         private Dictionary<WaveObjective, IWaveScenario> _waveScenarios;
         private IWaveScenario _currentWaveScenario;
+        
+        
+        private readonly IProgressService _progressService;
+        private readonly IGameFactory _gameFactory;
+        private ISceneDataProvider _sceneDataProvider;
+        private readonly Waves _wavesData;
 
 
-        public WaveSystem(IDataProvider dataProvider, IGameFactory gameFactory, IProgressService progressService)
+        public WaveSystem(ISceneDataProvider sceneDataProvider, IDataProvider dataProvider, IGameFactory gameFactory, IProgressService progressService)
         {
-            _location = dataProvider.Locations[dataProvider.GameConfig.LocationId];
+            _sceneDataProvider = sceneDataProvider;
             _progressService = progressService;
             _gameFactory = gameFactory;
             _wavesData = dataProvider.Waves;
@@ -149,7 +151,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
         private EnemySpawnZoneData FindNearPlayerSpawnZone()
         {
-            List<EnemySpawnZoneData> enemySpawnZones = _location.EnemySpawnZones.OrderBy(sp =>
+            List<EnemySpawnZoneData> enemySpawnZones = _sceneDataProvider.AllSpawnPoints[SpawnPointType.EnemySpawner].Select(sp => new EnemySpawnZoneData()
+            {
+                Position = sp.Position
+            }).OrderBy(sp =>
                 Vector3.Distance(sp.Position, _gameFactory.Player.transform.position)).ToList();
 
             return enemySpawnZones[0];
