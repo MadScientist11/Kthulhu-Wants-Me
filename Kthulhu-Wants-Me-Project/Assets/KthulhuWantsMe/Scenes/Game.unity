@@ -613,7 +613,7 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 132496220}
   - {fileID: 2025044148}
-  _sceneDataProvider: {fileID: 0}
+  _sceneDataProvider: {fileID: 91478440}
 --- !u!1 &386463091
 GameObject:
   m_ObjectHideFlags: 0
