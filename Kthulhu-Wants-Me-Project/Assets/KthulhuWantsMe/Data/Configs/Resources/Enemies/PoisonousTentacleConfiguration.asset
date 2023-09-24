@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Stats
+    - Name: BaseStats
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[KthulhuWantsMe.Source.Gameplay.WavesLogic.StatType,
         KthulhuWantsMe],[System.Single, mscorlib]], mscorlib
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 10
+      Data: 15
     - Name: 
       Entry: 8
       Data: 

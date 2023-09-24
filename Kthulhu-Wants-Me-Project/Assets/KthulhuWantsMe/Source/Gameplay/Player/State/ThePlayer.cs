@@ -50,7 +50,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public void TakeDamage(IDamageProvider damageProvider)
         {
-            if (ModifyCurrentHp(damageProvider.ProvideDamage()))
+            if (ModifyCurrentHp(-damageProvider.ProvideDamage()))
             {
                 TookDamage?.Invoke(damageProvider);
             }

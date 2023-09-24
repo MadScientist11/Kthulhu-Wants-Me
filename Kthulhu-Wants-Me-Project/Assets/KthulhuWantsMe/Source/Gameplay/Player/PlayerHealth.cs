@@ -69,8 +69,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _player.TakeDamage(new Damage(damage));
         }
 
-        public override void Heal(float amount) => 
-            CurrentHealth += amount;
+        public override void Heal(float amount)
+        {
+            _player.Heal(amount);
+        }
 
         private void OnTookDamage(IDamageProvider damageProvider)
         {

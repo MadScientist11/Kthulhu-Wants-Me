@@ -7,6 +7,7 @@ using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
@@ -16,11 +17,13 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly GameStateMachine _gameStateMachine;
         private readonly IGameFactory _gameFactory;
         private readonly IInputService _inputService;
-        private ISceneDataProvider _sceneDataProvider;
+        private readonly ISceneDataProvider _sceneDataProvider;
+        private readonly IUIService _uiService;
 
         public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IInputService inputService,
-            ISceneDataProvider sceneDataProvider)
+            ISceneDataProvider sceneDataProvider, IUIService uiService)
         {
+            _uiService = uiService;
             _sceneDataProvider = sceneDataProvider;
             _inputService = inputService;
             _gameFactory = gameFactory;
@@ -38,7 +41,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             }
             
             _gameFactory.CreatePlayer(playerSpawnPoint.Position, playerSpawnPoint.Rotation);
-            _inputService.SwitchInputScenario(InputScenario.Gameplay); 
+            _inputService.SwitchInputScenario(InputScenario.Gameplay);
+            _uiService.ShowPlayerHUD();
             _gameStateMachine.SwitchState<WaveOngoingState>();
         }
 
