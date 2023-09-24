@@ -1,5 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -25,8 +26,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         public event Action<HealthChange> HealthChanged;
         public event Action<IDamageProvider> TookDamage;
         public event Action Died;
+        
+        
+        public PlayerInventory Inventory { get; private set; }
 
-        //State where state is IsAttacking, Immortal...
         public float CurrentHp => _playerStats.CurrentHp;
 
         public float MaxHealth => _playerStats.BaseStats[StatType.MaxHealth];
@@ -40,6 +43,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         public ThePlayer(IDataProvider dataProvider)
         {
             _playerConfiguration = dataProvider.PlayerConfig;
+            Inventory = new PlayerInventory();
         }
 
         public void Initialize()
@@ -47,7 +51,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             _playerStats = new PlayerStats(_playerConfiguration);
             RestoreHp();
         }
-
+        
         public void TakeDamage(IDamageProvider damageProvider)
         {
             if (ModifyCurrentHp(-damageProvider.ProvideDamage()))

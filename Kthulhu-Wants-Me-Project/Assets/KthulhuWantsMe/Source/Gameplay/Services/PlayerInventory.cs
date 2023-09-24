@@ -4,21 +4,8 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
 {
-    public interface IInventorySystem
+    public class PlayerInventory 
     {
-        event Action<IPickable> OnItemAdded;
-        event Action<IPickable> OnItemRemoved;
-        event Action<IPickable, IPickable> OnItemSwitched;
-        event Action<IPickable> OnCurrentItemChanged;
-        IPickable CurrentItem { get; }
-        void ReplaceItem(IPickable item,Action<IPickable> onItemAdded, Action<IPickable> onItemRemoved);
-        void SwitchItem(int index, Action<IPickable, IPickable> onItemSwitched);
-        void RemoveItem(IPickable item);
-    }
-
-    public class InventorySystem : IInventorySystem
-    {
-        public bool IsInitialized { get; set; }
         public IReadOnlyList<IPickable> EquippedItems => _items;
         public IPickable CurrentItem => _items[_currentIndex];
 

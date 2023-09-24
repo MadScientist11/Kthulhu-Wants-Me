@@ -37,40 +37,45 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         private PlayerConfiguration _playerConfiguration;
         private IInputService _inputService;
-        private IInventorySystem _inventorySystem;
         private WeaponParticleTrailEffect _weaponTrails;
         private ThePlayer _player;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player,
-            IInventorySystem inventorySystem)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player)
         {
             _player = player;
-            _inventorySystem = inventorySystem;
             _inputService = inputService;
             _playerConfiguration = dataProvider.PlayerConfig;
 
             _inputService.GameplayScenario.Attack += PerformAttack;
             _playerHealth.TookDamage += ResetAttackState;
-            _inventorySystem.OnCurrentItemChanged += UpdateActiveWeaponStatus;
+            player.Inventory.OnCurrentItemChanged += UpdateActiveWeaponStatus;
         }
 
         private void OnDestroy()
         {
             _inputService.GameplayScenario.Attack -= PerformAttack;
             _playerHealth.TookDamage -= ResetAttackState;
-            _inventorySystem.OnCurrentItemChanged -= UpdateActiveWeaponStatus;
+            _player.Inventory.OnCurrentItemChanged -= UpdateActiveWeaponStatus;
         }
 
         public override float ProvideDamage() =>
             base.ProvideDamage() + _activeWeapon.WeaponData.BaseDamage +
             _activeWeapon.WeaponData.WeaponMoveSet.AttackMoveDamage[_comboAttackIndex];
 
+        public void ResetAttackState()
+        {
+            _isAttacking = false;
+            _canProceedWithCombo = false;
+            _comboAttackIndex = 0;
+        }
+
         protected override void OnWindUpPhase()
         {
             _isAttacking = true;
             _canProceedWithCombo = false;
             _playerLocomotion.FaceMouse();
+            Debug.Log("WindUp");
         }
 
         protected override void OnContactPhase()
@@ -112,14 +117,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _playerLocomotion.BlockMovement(0.5f);
             _playerAnimator.PlayAttack(_comboAttackIndex);
         }
-
-        private void ResetAttackState()
-        {
-            _isAttacking = false;
-            _canProceedWithCombo = false;
-            _comboAttackIndex = 0;
-        }
-
 
         private Vector3 AttackStartPoint() =>
             new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z) +

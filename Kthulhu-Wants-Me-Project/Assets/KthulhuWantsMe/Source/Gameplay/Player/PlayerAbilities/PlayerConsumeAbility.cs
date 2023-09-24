@@ -9,23 +9,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 {
     public class PlayerConsumeAbility : MonoBehaviour, IAbility
     {
-        [SerializeField] private PlayerHealth _playerHealth;
-        private IInventorySystem _inventorySystem;
-
-        [Inject]
-        public void Construct(IGameFactory gameFactory,IInventorySystem inventorySystem)
-        {
-            _inventorySystem = inventorySystem;
-        }
-
-        public void Consume(IConsumable consumable)
-        {
-            consumable.RemainingUses--;
-            if (consumable.RemainingUses == 0)
-            {
-                
-            }
-            consumable.RespondTo(this);
-        }
+        
     }
 }

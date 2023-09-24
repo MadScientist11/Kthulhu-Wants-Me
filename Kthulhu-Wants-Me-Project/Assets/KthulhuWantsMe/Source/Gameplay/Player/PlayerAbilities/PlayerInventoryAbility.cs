@@ -3,6 +3,7 @@ using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;
@@ -29,20 +30,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private IAbilityResponse<PlayerInventoryAbility> _currentResponse;
 
-        private IInventorySystem _inventorySystem;
         private IInputService _inputService;
-
-        public PlayerInventoryAbility(Transform itemParent)
-        {
-            ItemParent = itemParent;
-        }
-
+        private ThePlayer _player;
 
         [Inject]
-        public void Construct(IInventorySystem inventorySystem, IInputService inputService)
+        public void Construct(ThePlayer player, IInputService inputService)
         {
+            _player = player;
             _inputService = inputService;
-            _inventorySystem = inventorySystem;
             inputService.GameplayScenario.SwitchItem += SwitchItem;
         }
 
@@ -55,7 +50,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             if (PhysicsUtility.HitFirst(transform, transform.position, 3, IgnoreEquippedItem, out IPickable item))
             {
-                _inventorySystem.ReplaceItem(item, onItemAdded: Equip, onItemRemoved: UnEquip);
+                _player.Inventory.ReplaceItem(item, onItemAdded: Equip, onItemRemoved: UnEquip);
                 return true;
             }
 
@@ -64,7 +59,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public void PickUpItem(IPickable item)
         {
-            _inventorySystem.ReplaceItem(item, onItemAdded: Equip, onItemRemoved: UnEquip);
+            _player.Inventory.ReplaceItem(item, onItemAdded: Equip, onItemRemoved: UnEquip);
         }
 
 
@@ -82,7 +77,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void SwitchItem(int index)
         {
-            _inventorySystem.SwitchItem(index, (newItem, prevItem) =>
+            _player.Inventory.SwitchItem(index, (newItem, prevItem) =>
             {
                 if (newItem != null)
                     Show(newItem);
@@ -106,7 +101,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private bool IgnoreEquippedItem(IPickable item)
         {
-            if (item == _inventorySystem.CurrentItem)
+            if (item == _player.Inventory.CurrentItem)
                 return false;
 
 

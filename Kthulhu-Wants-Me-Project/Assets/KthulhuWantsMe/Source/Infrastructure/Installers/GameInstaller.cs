@@ -38,10 +38,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder.Register<ThePlayer>(Lifetime.Singleton).As<IInitializable>().AsSelf();
             
             builder
-                .Register<InventorySystem>(Lifetime.Scoped)
-                .AsImplementedInterfaces();
-            
-            builder
                 .Register<LootService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
