@@ -16,7 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
     public class CyaeghaAttack : Attack
     {
-        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.Damage];
+        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.BaseDamage];
 
 
         public AnimationCurve HeightCurve;

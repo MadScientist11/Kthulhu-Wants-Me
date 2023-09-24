@@ -4,10 +4,12 @@ using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore;
 using KthulhuWantsMe.Source.Gameplay.Locations;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using UnityEditor.Compilation;
 using VContainer;
 using VContainer.Unity;
 
@@ -31,8 +33,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .RegisterComponent(_sceneDataProvider)
                 .AsImplementedInterfaces();
+
+
+            builder.Register<ThePlayer>(Lifetime.Singleton).As<IInitializable>().AsSelf();
             
-      
             builder
                 .Register<InventorySystem>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
@@ -41,9 +45,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<LootService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
-            builder
-                .Register<PlayerStats>(Lifetime.Scoped)
-                .AsImplementedInterfaces();
 
             builder
                 .Register<PortalSystem>(Lifetime.Scoped)

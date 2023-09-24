@@ -2,17 +2,14 @@
 {
     public enum StatType
     {
-        Health = 0,
-        Damage = 100,
-        AttackSpeed = 300,
+        MaxHealth = 0,
+        BaseDamage = 100,
+        
+        //HpRegen...
         
       
-        SpecialAttack1Dmg
+        
     }
 
-    public enum SpecialAttackId
-    {
-        SpecialAttack1
-    }
     
 }

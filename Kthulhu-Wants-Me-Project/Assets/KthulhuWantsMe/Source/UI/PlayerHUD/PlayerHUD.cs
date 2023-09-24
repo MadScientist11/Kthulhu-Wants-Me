@@ -21,5 +21,6 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         {
             
         }
+        
     }
 }

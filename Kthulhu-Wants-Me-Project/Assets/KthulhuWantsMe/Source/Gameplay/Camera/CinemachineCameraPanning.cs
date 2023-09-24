@@ -37,7 +37,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
 
             float f = TestCurve.Evaluate(t.x);
             float f1 = TestCurve.Evaluate(t.y);
-            Debug.Log(f);
             Vector2 lerped = Mathfs.Lerp(-PanRange, PanRange, new Vector2(f,f1));
 
             _targetOffset += lerped.XYtoXYZ();

@@ -8,6 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.SpawnSystem
     {
         public Vector3 Position => transform.position;
         public Quaternion Rotation => transform.rotation;
+
         
         public SpawnPointType SpawnPointType;
         

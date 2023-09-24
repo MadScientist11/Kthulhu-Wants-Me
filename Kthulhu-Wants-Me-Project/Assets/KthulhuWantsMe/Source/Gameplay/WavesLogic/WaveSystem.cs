@@ -153,7 +153,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         {
             List<EnemySpawnZoneData> enemySpawnZones = _sceneDataProvider.AllSpawnPoints[SpawnPointType.EnemySpawner].Select(sp => new EnemySpawnZoneData()
             {
-                Position = sp.Position
+                Position = sp.Position,
+                Radius = 5f,
             }).OrderBy(sp =>
                 Vector3.Distance(sp.Position, _gameFactory.Player.transform.position)).ToList();
 

@@ -10,7 +10,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public void Initialize(EnemyStats enemyStats)
         {
             EnemyStats = enemyStats;
-            Debug.Log($"Enemy {gameObject.name} initialized with {EnemyStats.Stats[StatType.Health]} hp");
+            Debug.Log($"Enemy {gameObject.name} initialized with {EnemyStats.Stats[StatType.MaxHealth]} hp");
         }
     }
 }

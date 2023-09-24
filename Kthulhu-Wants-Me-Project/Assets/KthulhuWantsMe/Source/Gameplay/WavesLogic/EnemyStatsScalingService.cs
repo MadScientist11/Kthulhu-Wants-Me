@@ -11,7 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         {
             EnemyStats enemyStats = new();
             enemyStats.Stats = new();
-            foreach ((StatType statType, float baseValue) in config.Stats)
+            foreach ((StatType statType, float baseValue) in config.BaseStats)
             {
                 if (enemyScaling.StatsScaling.TryGetValue(statType, out ScaleParameter scale))
                 {
@@ -22,7 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                 }
                 else
                 {
-                    enemyStats.Stats[statType] = config.Stats[statType];
+                    enemyStats.Stats[statType] = config.BaseStats[statType];
                 }
             }
             
