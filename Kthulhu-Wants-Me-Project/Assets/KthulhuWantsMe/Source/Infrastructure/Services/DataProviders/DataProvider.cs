@@ -17,7 +17,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         BuffItemsContainer BuffItems { get; }
         Waves Waves { get; }
         EnemyConfigsProvider EnemyConfigsProvider { get; }
-        Dictionary<LocationId, Location> Locations { get; }
         GameConfiguration GameConfig { get; }
     }
 
@@ -33,8 +32,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         public PortalConfiguration PortalConfig { get; private set; }
         public BuffItemsContainer BuffItems { get; private set; }
         public Waves Waves { get; private set; }
-
-        public Dictionary<LocationId, Location> Locations { get; private set; }
+        
         public GameConfiguration GameConfig { get; private set; }
         public EnemyConfigsProvider EnemyConfigsProvider { get; private set; }
 
@@ -42,22 +40,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         {
             IsInitialized = true;
             InitEnemyConfigs();
-            LoadLocations();
             PlayerConfig = (PlayerConfiguration)await Resources.LoadAsync<PlayerConfiguration>(PlayerConfigurationPath);
             PortalConfig = (PortalConfiguration)await Resources.LoadAsync<PortalConfiguration>(PortalConfigurationPath);
             BuffItems = (BuffItemsContainer)await Resources.LoadAsync<BuffItemsContainer>(BuffItemsPath);
             Waves = (Waves)await Resources.LoadAsync<Waves>(WavesPath);
             GameConfig = (GameConfiguration)await Resources.LoadAsync<GameConfiguration>(GameConfiguration);
         }
-
-        private void LoadLocations()
-        {
-            Locations = new();
-            foreach (Location location in Resources.LoadAll<Location>("Locations"))
-            {
-                Locations.Add(location.LocationId, location);
-            }
-        }
+        
 
         private void InitEnemyConfigs()
         {

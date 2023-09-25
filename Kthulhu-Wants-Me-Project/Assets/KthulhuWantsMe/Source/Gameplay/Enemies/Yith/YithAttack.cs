@@ -13,7 +13,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
     public class YithAttack : Attack
     {
-        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.Damage];
+        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.BaseDamage];
         
         [SerializeField] private Enemy _enemy;
         [SerializeField] private MMFeedbacks _attackFeedback;

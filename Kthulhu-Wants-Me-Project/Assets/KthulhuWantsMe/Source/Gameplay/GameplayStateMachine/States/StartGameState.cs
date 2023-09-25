@@ -1,10 +1,13 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
+﻿using System.Linq;
+using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
@@ -14,14 +17,14 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly GameStateMachine _gameStateMachine;
         private readonly IGameFactory _gameFactory;
         private readonly IInputService _inputService;
-        private readonly Location _location;
-        private readonly IPortalSystem _portalSystem;
+        private readonly ISceneDataProvider _sceneDataProvider;
+        private readonly IUIService _uiService;
 
-        public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IPortalSystem portalSystem, IInputService inputService,
-            IDataProvider dataProvider)
+        public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IInputService inputService,
+            ISceneDataProvider sceneDataProvider, IUIService uiService)
         {
-            _location = dataProvider.Locations[dataProvider.GameConfig.LocationId];
-            _portalSystem = portalSystem;
+            _uiService = uiService;
+            _sceneDataProvider = sceneDataProvider;
             _inputService = inputService;
             _gameFactory = gameFactory;
             _gameStateMachine = gameStateMachine;
@@ -29,8 +32,17 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 
         public void Enter()
         {
-            _gameFactory.CreatePlayer(_location.PlayerSpawnPosition, _location.PlayerSpawnRotation);
-            _inputService.SwitchInputScenario(InputScenario.Gameplay); 
+            SpawnPoint playerSpawnPoint = _sceneDataProvider.AllSpawnPoints[SpawnPointType.PlayerSpawnPoint].FirstOrDefault(); 
+            
+            if (playerSpawnPoint == null)
+            {
+                Debug.LogError("No Player SpawnPoint in the scene");
+                return;
+            }
+            
+            _gameFactory.CreatePlayer(playerSpawnPoint.Position, playerSpawnPoint.Rotation);
+            _inputService.SwitchInputScenario(InputScenario.Gameplay);
+            _uiService.ShowPlayerHUD();
             _gameStateMachine.SwitchState<WaveOngoingState>();
         }
 

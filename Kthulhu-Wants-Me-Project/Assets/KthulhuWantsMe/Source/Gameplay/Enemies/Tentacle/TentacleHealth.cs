@@ -6,7 +6,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleHealth : Health
     {
-        public override float MaxHealth => _enemy.EnemyStats.Stats[StatType.Health];
+        public override float MaxHealth => _enemy.EnemyStats.Stats[StatType.MaxHealth];
 
         [SerializeField] private Enemy _enemy;
         [SerializeField] private TentacleAnimator _tentacleAnimator;

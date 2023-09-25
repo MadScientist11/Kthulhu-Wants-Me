@@ -15,7 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         public bool IsAttacking => _isAttacking;
         
-        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.Damage];
+        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.BaseDamage];
         
         [SerializeField] private Enemy _enemy;
         [SerializeField] private TentacleAnimator _tentacleAnimator;

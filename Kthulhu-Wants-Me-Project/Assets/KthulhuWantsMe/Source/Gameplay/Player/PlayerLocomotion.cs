@@ -37,21 +37,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private PlayerConfiguration _playerConfig;
         private ICoroutineRunner _coroutineRunner;
         private CinemachineCameraPanning _cameraPanningLogic;
-        private IGameFactory _gameFactory;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, ICoroutineRunner coroutineRunner, IGameFactory gameFactory)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ICoroutineRunner coroutineRunner)
         {
-            _gameFactory = gameFactory;
             _coroutineRunner = coroutineRunner;
             _playerConfig = dataProvider.PlayerConfig;
             _inputService = inputService;
             _movementController = new PlayerMovementController(_motor, _playerConfig);
-        }
-
-        private void Start()
-        {
-            _cameraPanningLogic = _gameFactory.Player.GetCameraPanningLogic();
         }
 
         private void Update()
@@ -61,7 +54,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 if (MovementInputDetected())
                 {
                     _playerAnimator.Move();
-                    _cameraPanningLogic.DisablePanning = true;
                 }
                 else
                     _playerAnimator.StopMoving();
@@ -72,8 +64,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             _movementController.SetInputs(Vector2.zero, _lastLookDirection);
             _playerAnimator.StopMoving();
-            _cameraPanningLogic.DisablePanning = false;
-
         }
 
         public void BlockMovement(float timeFor)

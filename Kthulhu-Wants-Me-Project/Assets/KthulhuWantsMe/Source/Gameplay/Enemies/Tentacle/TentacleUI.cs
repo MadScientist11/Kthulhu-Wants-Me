@@ -28,7 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void UpdateHpBar(float newValue)
         {
-            _hpBar.SetValue(newValue, _enemy.EnemyStats.Stats[StatType.Health]);
+            _hpBar.SetValue(newValue, _enemy.EnemyStats.Stats[StatType.MaxHealth]);
         }
     }
 }

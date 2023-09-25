@@ -12,11 +12,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
     {
         [SerializeField] private PlayerFacade _player;
         [SerializeField] private TentacleGrabAbilityResponse _grabAbilityResponse;
-
+        
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
         
         private IInputService _inputService;
         private PlayerConfiguration _playerConfig;
+
+        private float _nextDashTime;
 
         [Inject]
         public void Construct(IInputService inputService, IDataProvider dataProvider)
@@ -35,7 +37,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private void PerformDash()
         {
             if (CanDash())
+            {
                 Dash();
+                _nextDashTime = Time.time + _playerConfig.DashCooldown;
+            }
         }
 
         private void Dash()
@@ -45,7 +50,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private bool CanDash()
         {
-            return !_grabAbilityResponse.Grabbed && PlayerLocomotion.IsMoving;
+            return !_grabAbilityResponse.Grabbed && PlayerLocomotion.IsMoving && Time.time >= _nextDashTime;
         }
     }
 }
