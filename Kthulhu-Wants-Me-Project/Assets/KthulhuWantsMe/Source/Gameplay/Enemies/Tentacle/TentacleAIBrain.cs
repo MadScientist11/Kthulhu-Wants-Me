@@ -81,7 +81,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             switch (attackDecision)
             {
                 case AttackDecision.BasicAttack:
-                    _tentacleAttack.PerformAttack();
+                    _tentacleSpellCastingAbility.CastSpell(TentacleSpell.BasicAttackSpell).Forget();
                     break;
                 case AttackDecision.GrabAbility:
                     _tentacleGrabAbility.GrabPlayer();

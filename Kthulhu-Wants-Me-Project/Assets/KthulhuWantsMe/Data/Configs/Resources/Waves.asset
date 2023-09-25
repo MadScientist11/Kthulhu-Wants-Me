@@ -28,6 +28,9 @@ MonoBehaviour:
     - EnemyType: 0
       Quantity: 1
       SpawnAt: 3
+    - EnemyType: 1
+      Quantity: 1
+      SpawnAt: 2
   - WaveObjective: 0
     WaveEnemies:
     - EnemyType: 4
