@@ -1,5 +1,6 @@
 using System;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.SpawnSystem
@@ -11,6 +12,9 @@ namespace KthulhuWantsMe.Source.Gameplay.SpawnSystem
 
         
         public SpawnPointType SpawnPointType;
+
+        [ShowIf("SpawnPointType", SpawnPointType.EnemySpawner)]
+        public EnemySpawnerId EnemySpawnerId;
         
         [SerializeField] private Color _gizmoColor;
         [SerializeField] private float _gizmoSize;

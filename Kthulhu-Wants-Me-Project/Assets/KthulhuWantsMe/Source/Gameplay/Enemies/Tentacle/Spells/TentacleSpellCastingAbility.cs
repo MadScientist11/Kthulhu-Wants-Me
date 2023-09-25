@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 {
     public class TentacleSpellCastingAbility : MonoBehaviour, IAbility
     {
-        public bool CastingSpell { get; private set; }
+        public bool CastingSpell { get; set; }
 
         public Transform SpellSpawnPoint;
 
@@ -20,12 +21,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
 
         private IGameFactory _gameFactory;
+        private ThePlayer _playerModel;
 
         [Inject]
-        public void Construct(IDataProvider dataProvider, IGameFactory gameFactory)
+        public void Construct(IDataProvider dataProvider, IGameFactory gameFactory, ThePlayer playerModel)
         {
+            _playerModel = playerModel;
             _gameFactory = gameFactory;
-            
         }
 
         private void Start() =>
@@ -34,9 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public async UniTaskVoid CastSpell(TentacleSpell spell)
         {
             //In collection, cancel if 
-            CastingSpell = true;
             await _tentacleSpells[spell].Cast();
-            CastingSpell = false;
             _activeSpells.Add(spell);
         }
 
@@ -71,11 +71,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
             SpawnMinionsSpell spawnMinionsSpell
                 = new SpawnMinionsSpell(_gameFactory, this);
+            
+            BasicAttackSpell basicAttackSpell
+                = new BasicAttackSpell(this, _gameFactory.Player, _playerModel);
+            
+            basicAttackSpell.Init();
 
             _tentacleSpells = new()
             {
                 { TentacleSpell.PlayerCantUseHealthItems, prohibitHealthItemsUsageSpell },
                 { TentacleSpell.MinionsSpawnSpell, spawnMinionsSpell },
+                { TentacleSpell.BasicAttackSpell, basicAttackSpell },
             };
         }
     }

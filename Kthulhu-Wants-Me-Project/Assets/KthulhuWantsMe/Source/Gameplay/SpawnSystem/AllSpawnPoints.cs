@@ -18,6 +18,8 @@ namespace KthulhuWantsMe.Source.Gameplay.SpawnSystem
             foreach (SpawnPoint spawnPoint in GetComponentsInChildren<SpawnPoint>())
             {
                 _spawnPoints.Add(spawnPoint);
+                if(spawnPoint.EnemySpawnerId == EnemySpawnerId.Default && spawnPoint.SpawnPointType == SpawnPointType.EnemySpawner)
+                    Debug.LogWarning("EnemySpawner's id is not set");
             }
         }
     }
