@@ -36,8 +36,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public async UniTaskVoid CastSpell(TentacleSpell spell)
         {
             //In collection, cancel if 
-            await _tentacleSpells[spell].Cast();
             _activeSpells.Add(spell);
+            await _tentacleSpells[spell].Cast();
         }
 
         public void CancelActiveSpells()
@@ -52,15 +52,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
         public async UniTaskVoid CancelSpell(TentacleSpell spell)
         {
+            Debug.Log("Cancel Spell");
             await _tentacleSpells[spell].Undo();
         }
 
-        public bool CanCastSpell(TentacleSpell spell) => !CastingSpell && !IsActive(spell) && 
+        public bool CanCastSpell(TentacleSpell spell) => !CastingSpell && !IsActive(spell) && IsNotOnCooldown(spell) &&
             !_gameFactory.Player.TentacleSpellResponse.IsActiveDebuff(spell);
 
         public bool IsActive(TentacleSpell spell)
             => _tentacleSpells[spell].Active;
 
+        public bool IsNotOnCooldown(TentacleSpell spell)
+            => !_tentacleSpells[spell].InCooldown;
         public ITentacleSpell Get(TentacleSpell spell) => 
             _tentacleSpells[spell];
 
