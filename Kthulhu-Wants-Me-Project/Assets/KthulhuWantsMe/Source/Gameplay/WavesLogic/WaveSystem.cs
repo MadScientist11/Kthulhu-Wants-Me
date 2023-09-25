@@ -128,8 +128,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             {
                 for (int i = 0; i < waveEnemy.Quantity; i++)
                 {
-                    EnemySpawnZoneData spawnZone =
-                        FindNearPlayerSpawnZone();
+                    EnemySpawnZoneData spawnZone = GetSpawnZone(waveEnemy.SpawnAt);
                     Vector3 randomPoint = Mathfs.Abs(Random.insideUnitSphere * spawnZone.Radius);
 
                     Vector3 spawnPosition =
@@ -149,16 +148,41 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             return waveEnemies;
         }
 
+        private EnemySpawnZoneData GetSpawnZone(EnemySpawnerId enemySpawnerId)
+        {
+
+            if (enemySpawnerId == EnemySpawnerId.Default)
+                return FindNearPlayerSpawnZone();
+            
+            
+            EnemySpawnZoneData spawnZone = _sceneDataProvider.AllSpawnPoints[SpawnPointType.EnemySpawner]
+                .Where(sp => sp.EnemySpawnerId == enemySpawnerId)
+                .Select(ToSpawnZone).First();
+
+            if (spawnZone == null)
+            {
+                Debug.LogError($"Couldn't find EnemySpawner with the {enemySpawnerId} id");
+            }
+            
+            return spawnZone;
+        }
+
         private EnemySpawnZoneData FindNearPlayerSpawnZone()
         {
-            List<EnemySpawnZoneData> enemySpawnZones = _sceneDataProvider.AllSpawnPoints[SpawnPointType.EnemySpawner].Select(sp => new EnemySpawnZoneData()
-            {
-                Position = sp.Position,
-                Radius = 5f,
-            }).OrderBy(sp =>
+            List<EnemySpawnZoneData> enemySpawnZones = _sceneDataProvider.AllSpawnPoints[SpawnPointType.EnemySpawner]
+                .Select(ToSpawnZone).OrderBy(sp =>
                 Vector3.Distance(sp.Position, _gameFactory.Player.transform.position)).ToList();
 
             return enemySpawnZones[0];
+        }
+
+        private EnemySpawnZoneData ToSpawnZone(SpawnPoint spawnPoint)
+        {
+            return new EnemySpawnZoneData()
+            {
+                Position = spawnPoint.Position,
+                Radius = 5f,
+            };
         }
     }
 }

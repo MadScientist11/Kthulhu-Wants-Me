@@ -1,5 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 
 namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 {
@@ -8,5 +9,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
     {
         public EnemyType EnemyType;
         public int Quantity;
+        public EnemySpawnerId SpawnAt;
     }
 }

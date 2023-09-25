@@ -31155,6 +31155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAnimator: {fileID: -4856184112398116678}
   _playerLocomotion: {fileID: 5663912579931136821}
+  _playerAttack: {fileID: -8648004300217098860}
   _entityBuffDebuffContainer: {fileID: -6425494656952559277}
   _healFeedback: {fileID: 7787773168558362494}
 --- !u!114 &-4856184112398116678
@@ -31298,7 +31299,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c77c14e58cf4eed9c1c84ea9e8b8d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHealth: {fileID: 6482385733598322139}
 --- !u!114 &-2573202685680207158
 MonoBehaviour:
   m_ObjectHideFlags: 0
