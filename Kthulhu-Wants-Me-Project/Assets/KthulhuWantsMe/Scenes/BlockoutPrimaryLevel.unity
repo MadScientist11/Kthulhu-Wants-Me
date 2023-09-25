@@ -20132,6 +20132,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockoutPrimaryLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 6262651766337720051, guid: 4b2b4a9601b87fa4397ecbc9400d75d1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
