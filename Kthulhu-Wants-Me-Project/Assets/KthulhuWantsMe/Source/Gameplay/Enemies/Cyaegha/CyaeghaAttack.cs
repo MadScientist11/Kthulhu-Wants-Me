@@ -16,12 +16,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
     public class CyaeghaAttack : Attack
     {
-        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.BaseDamage];
+        protected override float BaseDamage => enemyStatsContainer.EnemyStats.Stats[StatType.BaseDamage];
 
 
         public AnimationCurve HeightCurve;
 
-        [SerializeField] private Enemy _enemy;
+        [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private NavMeshAgent _cyaeghaNavMesh;
         
         private float _attackCooldown;

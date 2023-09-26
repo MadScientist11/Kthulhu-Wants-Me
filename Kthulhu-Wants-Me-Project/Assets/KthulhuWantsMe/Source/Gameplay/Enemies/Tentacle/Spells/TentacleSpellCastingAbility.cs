@@ -67,8 +67,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public ITentacleSpell Get(TentacleSpell spell) => 
             _tentacleSpells[spell];
 
-        private void CreateSpells()
+        private async UniTaskVoid CreateSpells()
         {
+            AllSpells allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpells");
+            
             ProhibitHealthItemsUsageSpell prohibitHealthItemsUsageSpell
                 = new ProhibitHealthItemsUsageSpell(_gameFactory.Player, this);
 
@@ -76,9 +78,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
                 = new SpawnMinionsSpell(_gameFactory, this);
             
             BasicAttackSpell basicAttackSpell
-                = new BasicAttackSpell(this, _gameFactory.Player, _playerModel);
+                = new BasicAttackSpell(this,allSpells[TentacleSpell.BasicAttackSpell], _gameFactory.Player, _playerModel);
             
-            basicAttackSpell.Init();
 
             _tentacleSpells = new()
             {

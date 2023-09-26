@@ -39,7 +39,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
         public void Initialize()
         {
-            foreach (Enemy waveEnemy in _waveSystem.CurrentWaveEnemies)
+            foreach (EnemyStatsContainer waveEnemy in _waveSystem.CurrentWaveEnemies)
             {
                 waveEnemy.GetComponent<Health>().Died += DecreaseEnemyCount;
             }
@@ -68,7 +68,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
     public class WaveSystem : IWaveSystem, IInitializable
     {
-        public List<Enemy> CurrentWaveEnemies
+        public List<EnemyStatsContainer> CurrentWaveEnemies
         {
             get;
             private set;
@@ -121,9 +121,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         }
 
         
-        private List<Enemy> SpawnWaveEnemies(List<WaveEnemy> waveEnemiesData)
+        private List<EnemyStatsContainer> SpawnWaveEnemies(List<WaveEnemy> waveEnemiesData)
         {
-            List<Enemy> waveEnemies = new();
+            List<EnemyStatsContainer> waveEnemies = new();
             foreach (WaveEnemy waveEnemy in waveEnemiesData)
             {
                 for (int i = 0; i < waveEnemy.Quantity; i++)
@@ -140,7 +140,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                             _gameFactory.CreatePortalWithEnemy(hitInfo.point + Vector3.one * 0.05f, Quaternion.identity,
                                 waveEnemy.EnemyType);
                         GameObject enemy = portal.LastSpawnedEnemy;
-                        waveEnemies.Add(enemy.GetComponent<Enemy>());
+                        waveEnemies.Add(enemy.GetComponent<EnemyStatsContainer>());
                     }
                 }
             }

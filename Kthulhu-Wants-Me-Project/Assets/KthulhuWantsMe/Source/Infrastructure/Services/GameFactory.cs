@@ -72,10 +72,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             GameObject enemyPrefab = _dataProvider.EnemyConfigsProvider.EnemyConfigs[enemyType].Prefab;
             GameObject instance = _instantiator.Instantiate(enemyPrefab, position, rotation);
 
-            if (instance.TryGetComponent(out Enemy enemy))
+            if (instance.TryGetComponent(out EnemyStatsContainer enemy))
             {
                 EnemyStats enemyStats = _enemyStatsProvider.StatsFor(enemyType, _progressService.ProgressData.WaveIndex);
-                enemy.Initialize(enemyStats);
+                enemy.Initialize(enemyType, enemyStats);
             }
 
 

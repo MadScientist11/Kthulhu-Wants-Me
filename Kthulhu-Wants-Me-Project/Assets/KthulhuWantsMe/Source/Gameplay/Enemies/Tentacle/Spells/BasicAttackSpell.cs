@@ -10,10 +10,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public bool Active { get; private set; }
         public bool InCooldown { get; private set; }
 
-        private const string TentacleBasicAttackSpell = "TentacleBasicAttackSpell";
         
         private GameObject _spellInstance;
-        private GameObject _spellPrefab;
 
 
         private float _spellEffectiveRadius = 3f;
@@ -23,31 +21,29 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         private readonly PlayerFacade _player;
         private readonly ThePlayer _playerModel;
         private readonly TentacleSpellCastingAbility _spellCastingAbility;
+        private SpellConfiguration _spellConfiguration;
 
-        public BasicAttackSpell(TentacleSpellCastingAbility spellCastingAbility,PlayerFacade player, ThePlayer playerModel)
+        public BasicAttackSpell(TentacleSpellCastingAbility spellCastingAbility, SpellConfiguration spellConfiguration,
+            PlayerFacade player, ThePlayer playerModel)
         {
+            _spellConfiguration = spellConfiguration;
             _spellCastingAbility = spellCastingAbility;
             _playerModel = playerModel;
             _player = player;
         }
 
-        public async void Init()
-        {
-            _spellPrefab = (GameObject)await Resources.LoadAsync(TentacleBasicAttackSpell);
-        }
-       
         public async UniTask Cast()
         {
             InCooldown = true;
             
             _spellCastingAbility.CastingSpell = true;
             Vector3 spellCastPosition = _player.transform.position;
-            _spellInstance = Object.Instantiate(_spellPrefab, spellCastPosition, Quaternion.identity);
+            _spellInstance = Object.Instantiate(_spellConfiguration.Prefab, spellCastPosition, Quaternion.identity);
             Active = true;
             await UniTask.Delay(2000);
             _spellCastingAbility.CastingSpell = false;
             
-            if (Vector3.Distance(spellCastPosition, _player.transform.position) < _spellEffectiveRadius)
+            if (Vector3.Distance(spellCastPosition, _player.transform.position) < _spellConfiguration.EffectiveRange)
             {
                 _playerModel.TakeDamage(new Damage(15f));
             }
@@ -65,7 +61,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
         private async UniTaskVoid StartCooldown()
         {
-            await UniTask.Delay(Mathf.FloorToInt(_spellCastCooldown * 1000));
+            await UniTask.Delay(Mathf.FloorToInt(_spellConfiguration.Cooldown * 1000));
             InCooldown = false;
         }
     }
