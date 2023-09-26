@@ -75,16 +75,16 @@ MonoBehaviour:
     type: 3}
   PlayerCameraPrefab: {fileID: 6843986045684515988, guid: 0326cc12476ef5845b6d23d3849d0cda,
     type: 3}
-  MoveSpeed: 5
+  MoveSpeed: 4.65
   Gravity: {x: 0, y: -30, z: 0}
-  DashStrength: 40
-  DashCooldown: 0.5
+  DashStrength: 30
+  DashCooldown: 0.85
   AttackRadius: 0.75
   AttackEffectiveDistance: 1
   LungeBaseDamage: 100
   LungeRadius: 2
   StableMovementSharpness: 15
-  OrientationSharpness: 50
+  OrientationSharpness: 35
   MaxAirMoveSpeed: 10
   AirAccelerationSpeed: 5
   Drag: 0.1
