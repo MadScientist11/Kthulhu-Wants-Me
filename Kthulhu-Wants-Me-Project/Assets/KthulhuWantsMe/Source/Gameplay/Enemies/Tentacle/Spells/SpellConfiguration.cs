@@ -10,7 +10,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public GameObject Prefab;
         public float EffectiveRange;
         public float Cooldown;
-        
-        
+        public float ActivationTime;
+
+
     }
 }
