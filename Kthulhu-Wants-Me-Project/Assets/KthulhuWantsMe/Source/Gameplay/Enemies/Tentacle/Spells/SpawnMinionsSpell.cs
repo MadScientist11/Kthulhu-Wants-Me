@@ -8,6 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
     public class SpawnMinionsSpell : ITentacleSpell
     {
         public bool Active { get; private set; }
+        public bool InCooldown { get; } 
 
         private readonly IGameFactory _gameFactory;
         private readonly TentacleSpellCastingAbility _tentacleSpellCastingAbility;

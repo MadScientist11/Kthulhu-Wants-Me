@@ -2,6 +2,7 @@
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
@@ -10,7 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
     {
         public bool BlockProcessing { get; private set; }
         
-        [SerializeField] private Enemy _enemy;
+        [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private YithHealth _yithHealth;
         [SerializeField] private YithAttack _yithAttack;
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;

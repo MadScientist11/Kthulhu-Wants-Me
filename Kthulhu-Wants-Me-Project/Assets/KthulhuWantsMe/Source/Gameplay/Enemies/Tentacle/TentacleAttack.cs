@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using VContainer;
 
@@ -15,9 +16,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         public bool IsAttacking => _isAttacking;
         
-        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.BaseDamage];
+        protected override float BaseDamage => enemyStatsContainer.EnemyStats.Stats[StatType.BaseDamage];
         
-        [SerializeField] private Enemy _enemy;
+        [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private DamageModifier _damageModifier;
 

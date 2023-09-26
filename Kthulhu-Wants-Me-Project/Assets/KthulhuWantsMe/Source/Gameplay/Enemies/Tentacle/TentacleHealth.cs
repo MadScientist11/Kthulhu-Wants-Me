@@ -1,14 +1,15 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleHealth : Health
     {
-        public override float MaxHealth => _enemy.EnemyStats.Stats[StatType.MaxHealth];
+        public override float MaxHealth => enemyStatsContainer.EnemyStats.Stats[StatType.MaxHealth];
 
-        [SerializeField] private Enemy _enemy;
+        [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         
         private ILootService _lootService;

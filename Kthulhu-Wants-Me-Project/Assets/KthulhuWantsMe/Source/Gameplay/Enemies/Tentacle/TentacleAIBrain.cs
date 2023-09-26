@@ -116,7 +116,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             Random.value < GrabAbilityChance && _tentacleAggro.HasAggro;
 
         private bool CanDoBasicAttack() =>
-            _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro;
+            _tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.BasicAttackSpell) && _tentacleAggro.HasAggro;
 
         private bool CanNotAttack() =>
             _tentacleGrabAbility.HoldsPlayer || _tentacleAttack.IsAttacking || _reconsiderationTime > 0 || Stunned;

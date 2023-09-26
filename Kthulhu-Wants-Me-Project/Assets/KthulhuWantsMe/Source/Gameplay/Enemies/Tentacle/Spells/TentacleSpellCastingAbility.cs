@@ -36,8 +36,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public async UniTaskVoid CastSpell(TentacleSpell spell)
         {
             //In collection, cancel if 
-            await _tentacleSpells[spell].Cast();
             _activeSpells.Add(spell);
+            await _tentacleSpells[spell].Cast();
         }
 
         public void CancelActiveSpells()
@@ -52,20 +52,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
         public async UniTaskVoid CancelSpell(TentacleSpell spell)
         {
+            Debug.Log("Cancel Spell");
             await _tentacleSpells[spell].Undo();
         }
 
-        public bool CanCastSpell(TentacleSpell spell) => !CastingSpell && !IsActive(spell) && 
+        public bool CanCastSpell(TentacleSpell spell) => !CastingSpell && !IsActive(spell) && IsNotOnCooldown(spell) &&
             !_gameFactory.Player.TentacleSpellResponse.IsActiveDebuff(spell);
 
         public bool IsActive(TentacleSpell spell)
             => _tentacleSpells[spell].Active;
 
+        public bool IsNotOnCooldown(TentacleSpell spell)
+            => !_tentacleSpells[spell].InCooldown;
         public ITentacleSpell Get(TentacleSpell spell) => 
             _tentacleSpells[spell];
 
-        private void CreateSpells()
+        private async UniTaskVoid CreateSpells()
         {
+            AllSpells allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpells");
+            
             ProhibitHealthItemsUsageSpell prohibitHealthItemsUsageSpell
                 = new ProhibitHealthItemsUsageSpell(_gameFactory.Player, this);
 
@@ -73,9 +78,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
                 = new SpawnMinionsSpell(_gameFactory, this);
             
             BasicAttackSpell basicAttackSpell
-                = new BasicAttackSpell(this, _gameFactory.Player, _playerModel);
+                = new BasicAttackSpell(this,allSpells[TentacleSpell.BasicAttackSpell], _gameFactory.Player, _playerModel);
             
-            basicAttackSpell.Init();
 
             _tentacleSpells = new()
             {

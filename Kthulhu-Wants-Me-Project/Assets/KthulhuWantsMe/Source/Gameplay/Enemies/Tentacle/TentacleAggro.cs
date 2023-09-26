@@ -1,5 +1,7 @@
+using System;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer;
 
@@ -10,14 +12,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public bool HasAggro { get; private set; }
         
         [SerializeField] private TentacleAnimator _tentacleAnimator;
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
+        
         private PlayerFacade _player;
+        private TentacleConfiguration _tentacleConfiguration;
 
         [Inject]
         public void Construct(IGameFactory gameFactory)
         {
             _player = gameFactory.Player;
         }
-        
+
+        private void Start()
+        {
+            Debug.Log(_enemyStatsContainer.Config);
+            _tentacleConfiguration = (TentacleConfiguration)_enemyStatsContainer.Config;
+        }
+
         private void Update()
         {
             if (PlayerInRange())
@@ -33,7 +44,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         
         private bool PlayerInRange()
         {
-            return DistanceToPlayer() < 5f;
+            return DistanceToPlayer() < _tentacleConfiguration.AggroRange;
         }
         
         private float DistanceToPlayer()
