@@ -78,3 +78,7 @@ MonoBehaviour:
   TentacleGrabDamage: 100
   GrabAbilityChance: 0.1
   AggroRange: 10
+  ReconsiderationTime: 2
+  AttackRadius: 1
+  AttackEffectiveDistance: 1
+  AttackCooldownTime: 1

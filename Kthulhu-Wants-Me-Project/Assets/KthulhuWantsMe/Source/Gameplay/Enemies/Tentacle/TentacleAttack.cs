@@ -2,12 +2,8 @@
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
@@ -25,11 +21,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private bool _isAttacking;
         private float _attackCooldown;
         
-        [SerializeField] private float _attackRadius;
-        [SerializeField] private float _tentacleGrabDamage;
-        [SerializeField] private float _attackEffectiveDistance;
-        [SerializeField] private float _attackCooldownTime;
         
+        private TentacleConfiguration _tentacleConfiguration;
+
+        private void Start()
+        {
+            _tentacleConfiguration = (TentacleConfiguration)enemyStatsContainer.Config;
+        }
+
         private void Update()
         {
             _attackCooldown -= Time.deltaTime;
@@ -37,7 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         protected override void OnAttack()
         {
-            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _attackRadius,
+            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfiguration.AttackRadius,
                     LayerMasks.PlayerMask, out Transform player))
                 return;
 
@@ -48,7 +47,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         protected override void OnAttackEnd()
         {
             _isAttacking = false;
-            _attackCooldown = _attackCooldownTime;
+            _attackCooldown = _tentacleConfiguration.AttackCooldownTime;
         }
 
         public void PerformAttack()
@@ -65,7 +64,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private Vector3 AttackStartPoint()
         {
             return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-                   transform.forward * _attackEffectiveDistance;
+                   transform.forward * _tentacleConfiguration.AttackEffectiveDistance;
         }
     }
 }

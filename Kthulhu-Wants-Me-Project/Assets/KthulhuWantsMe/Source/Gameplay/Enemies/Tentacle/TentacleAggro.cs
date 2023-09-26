@@ -10,6 +10,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
     public class TentacleAggro : MonoBehaviour
     {
         public bool HasAggro { get; private set; }
+        public bool IsPlayerInFront { get; private set; }
         
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
@@ -35,10 +36,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             {
                 _tentacleAnimator.PlayAggroIdle();
                 HasAggro = true;
+                
+                Vector3 directionToPlayer = _player.transform.position - transform.position;
+                directionToPlayer.Normalize();
+
+                if (DistanceToPlayer() < 3 && Vector3.Dot(transform.forward, directionToPlayer) > 0.7f)
+                {
+                    IsPlayerInFront = true;
+                }
+                else
+                {
+                    IsPlayerInFront = false;
+                }
             }
             else
             {
                 HasAggro = false;
+                IsPlayerInFront = false;
             }
         }
         

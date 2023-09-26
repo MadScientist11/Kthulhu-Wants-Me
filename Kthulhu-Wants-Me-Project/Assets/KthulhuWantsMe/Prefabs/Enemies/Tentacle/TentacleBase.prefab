@@ -463,6 +463,7 @@ MonoBehaviour:
   _tentacleGrabAbility: {fileID: 3629999761114246035}
   _tentacleSpellCastingAbility: {fileID: 7743905234635742817}
   _tentacleAggro: {fileID: 423395108823978285}
+  _enemyStatsContainer: {fileID: 8187939092874492644}
 --- !u!114 &7893959025167172210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,10 +499,6 @@ MonoBehaviour:
   enemyStatsContainer: {fileID: 8187939092874492644}
   _tentacleAnimator: {fileID: 7893959025167172210}
   _damageModifier: {fileID: 0}
-  _attackRadius: 1
-  _tentacleGrabDamage: 0
-  _attackEffectiveDistance: 1
-  _attackCooldownTime: 1
 --- !u!114 &3629999761114246035
 MonoBehaviour:
   m_ObjectHideFlags: 0
