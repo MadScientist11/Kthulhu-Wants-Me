@@ -12,11 +12,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         [SerializeField] private CyaeghaHealth _cyaeghaHealth;
         [SerializeField] private CyaeghaAttack _cyaeghaAttack;
         [SerializeField] private FollowLogic _followLogic;
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
         private bool _isDead;
         private float _attackDelayTime;
 
         private PlayerFacade _player;
+        private CyaeghaConfiguration _cyaeghaConfiguration;
 
         [Inject]
         public void Construct(IGameFactory gameFactory)
@@ -27,6 +29,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private void Start()
         {
             _followLogic.Init(_player.transform, Mathf.Infinity, 3f);
+            _cyaeghaConfiguration = (CyaeghaConfiguration)_enemyStatsContainer.Config;
+            _followLogic.FollowSpeed = _cyaeghaConfiguration.MoveSpeed;
         }
 
         private void Update() => 
