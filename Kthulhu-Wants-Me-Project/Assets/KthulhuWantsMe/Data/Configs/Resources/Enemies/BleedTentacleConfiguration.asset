@@ -47,7 +47,7 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  EnemyType: 0
+  EnemyType: 2
   Prefab: {fileID: 20238592154022058, guid: 6f95f578e7442b34bac6f7bcec6fba2e, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
   StunWearOffTime: 3

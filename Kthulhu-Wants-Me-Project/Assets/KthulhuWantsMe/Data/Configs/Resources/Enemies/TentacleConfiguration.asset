@@ -77,4 +77,4 @@ MonoBehaviour:
   StunWearOffTime: 3
   TentacleGrabDamage: 100
   GrabAbilityChance: 0.1
-  AggroRange: 0
+  AggroRange: 10
