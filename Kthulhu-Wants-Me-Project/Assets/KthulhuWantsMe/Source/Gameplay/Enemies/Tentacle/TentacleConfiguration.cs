@@ -12,5 +12,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public float GrabAbilityChance;
 
         public float AggroRange;
+        
+        [Tooltip("Action cooldown")]
+        public float ReconsiderationTime;
+
+        public float AttackRadius;
+        public float AttackEffectiveDistance;
+        public float AttackCooldownTime;
     }
 }
