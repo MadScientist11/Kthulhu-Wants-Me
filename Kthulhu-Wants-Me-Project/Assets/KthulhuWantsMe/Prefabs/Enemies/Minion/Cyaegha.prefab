@@ -139,6 +139,7 @@ MonoBehaviour:
   _cyaeghaHealth: {fileID: 1805378254231291091}
   _cyaeghaAttack: {fileID: 6832438006561834181}
   _followLogic: {fileID: 4389780604326016033}
+  _enemyStatsContainer: {fileID: -6736657406163995852}
 --- !u!114 &1805378254231291091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 385bc1cc14ea4316be5202bb2284a147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: -6736657406163995852}
+  enemyStatsContainer: {fileID: -6736657406163995852}
   _hitFeedbacks: {fileID: 0}
 --- !u!114 &6832438006561834181
 MonoBehaviour:
@@ -189,7 +190,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _enemy: {fileID: -6736657406163995852}
+  _enemyStatsContainer: {fileID: -6736657406163995852}
   _cyaeghaNavMesh: {fileID: 2074288089250755570}
 --- !u!114 &4389780604326016033
 MonoBehaviour:
