@@ -1,7 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
+using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
 using Unity.VisualScripting.YamlDotNet.Core;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
 
@@ -9,24 +11,30 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
     public interface IUIService : IInitializableService
     {
+        MiscUI MiscUIContainer { get; }
         UniTaskVoid ShowPlayerHUD();
         void HidePlayerHUD();
+        UniTask InitializeGameUI();
     }
 
     public class UIService : IUIService
     {
         public PlayerHUD PlayerHUD { get; private set; }
+        public MiscUI MiscUIContainer { get; private set; }
 
         public bool IsInitialized { get; set; }
 
+
         public const string GameUIPath = "GameUI";
 
+        
         private bool _gameUISceneLoaded;
         private bool _gameUISceneLoading;
         
         private ISceneLoader _sceneLoader;
         
         private IUIFactory _uiFactory;
+
 
         [Inject]
         public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory)
@@ -35,10 +43,16 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _sceneLoader = sceneLoader;
         }
         
-        public UniTask Initialize()
+        public  UniTask Initialize()
         {
             IsInitialized = true;
             return UniTask.CompletedTask;
+        }
+        
+        public  async UniTask InitializeGameUI()
+        {
+            await LoadGameUISceneIfNeeded();
+            await LoadMiscUIContainer();
         }
 
         public void OpenWindow(WindowId windowId)
@@ -53,9 +67,19 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         
         public void ShowNotification() { }
 
+        public async UniTask<MiscUI> LoadMiscUIContainer()
+        {
+
+            if (MiscUIContainer == null)
+            {
+                MiscUIContainer = await _uiFactory.CreateMiscUI();
+            }
+
+            return MiscUIContainer;
+        }
+
         public async UniTaskVoid ShowPlayerHUD()
         {
-            await LoadGameUISceneIfNeeded();
 
             if (PlayerHUD == null)
             {
@@ -71,9 +95,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             {
                 PlayerHUD.Hide();
             }
-        }
+            
 
-        private async UniTask LoadGameUISceneIfNeeded()
+        }
+        public async UniTask LoadGameUISceneIfNeeded()
         {
             if(_gameUISceneLoaded || _gameUISceneLoading)
                 return;
@@ -83,5 +108,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _gameUISceneLoading = false;
             _gameUISceneLoaded = true;
         }
+
+       
     }
 }
