@@ -30,7 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _gameStateMachine = gameStateMachine;
         }
 
-        public void Enter()
+        public async void Enter()
         {
             SpawnPoint playerSpawnPoint = _sceneDataProvider.AllSpawnPoints[SpawnPointType.PlayerSpawnPoint].FirstOrDefault(); 
             
@@ -42,6 +42,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             
             _gameFactory.CreatePlayer(playerSpawnPoint.Position, playerSpawnPoint.Rotation);
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
+
+            await _uiService.InitializeGameUI();
             _uiService.ShowPlayerHUD();
             _gameStateMachine.SwitchState<WaveOngoingState>();
         }

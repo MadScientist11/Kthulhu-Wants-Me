@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
@@ -60,7 +62,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _movementController = _playerLocomotion.MovementController;
         }
-
+        
         public override void TakeDamage(float damage, IDamageProvider damageProvider)
         {
             _player.TakeDamage(damageProvider);

@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
@@ -16,13 +20,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 {
     public interface IWaveScenario
     {
-        event Action OnWaveCompleted;
         void Initialize();
     }
 
     public class EliminateAllEnemiesScenario : IWaveScenario
     {
-        public event Action OnWaveCompleted;
 
         private int EnemiesCount => _waveSystem.CurrentWaveEnemies.Count;
         private int _currentEnemyCount;
@@ -53,7 +55,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
             if (_currentEnemyCount == 0)
             {
-                OnWaveCompleted?.Invoke();
+                _waveSystem.CompleteWave().Forget();
             }
 
             Debug.Log("Decrese amount");
@@ -63,29 +65,40 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
     public interface IWaveSystem
     {
+        event Action OnWaveCompleted;
         void StartNextWave();
+        IWaveScenario CurrentScenario { get; }
     }
 
     public class WaveSystem : IWaveSystem, IInitializable
     {
+        public event Action OnWaveCompleted;
         public List<EnemyStatsContainer> CurrentWaveEnemies
         {
             get;
             private set;
         }
+
+        public IWaveScenario CurrentScenario => _currentWaveScenario;
+     
         
         private Dictionary<WaveObjective, IWaveScenario> _waveScenarios;
         private IWaveScenario _currentWaveScenario;
+
+        private const int NextWaveAfterSeconds = 10;
         
         
         private readonly IProgressService _progressService;
         private readonly IGameFactory _gameFactory;
-        private ISceneDataProvider _sceneDataProvider;
+        private readonly ISceneDataProvider _sceneDataProvider;
         private readonly Waves _wavesData;
+        private GameStateMachine _gameStateMachine;
 
 
-        public WaveSystem(ISceneDataProvider sceneDataProvider, IDataProvider dataProvider, IGameFactory gameFactory, IProgressService progressService)
+        public WaveSystem(ISceneDataProvider sceneDataProvider, IDataProvider dataProvider, IGameFactory gameFactory, IProgressService progressService,
+            GameStateMachine gameStateMachine)
         {
+            _gameStateMachine = gameStateMachine;
             _sceneDataProvider = sceneDataProvider;
             _progressService = progressService;
             _gameFactory = gameFactory;
@@ -100,6 +113,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             };
         }
 
+        public async UniTask CompleteWave()
+        {
+            OnWaveCompleted?.Invoke();
+
+            _gameStateMachine.SwitchState<BetweenWavesState>();
+        }
+
+     
         public void StartNextWave()
         {
             int waveIndex = _progressService.ProgressData.WaveIndex;
@@ -109,16 +130,16 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             CurrentWaveEnemies = SpawnWaveEnemies(waveEnemies);
             _currentWaveScenario = _waveScenarios[waveData.WaveObjective];
             _currentWaveScenario.Initialize();
-            _currentWaveScenario.OnWaveCompleted += OnWaveCompleted;
         }
 
-        private void OnWaveCompleted()
-        {
-            _currentWaveScenario.OnWaveCompleted -= OnWaveCompleted;
-
-            _progressService.ProgressData.WaveIndex++;
-            StartNextWave();
-        }
+        //private async void OnWaveCompleted()
+        //{
+        //    _currentWaveScenario.OnWaveCompleted -= OnWaveCompleted;
+//
+        //    _progressService.ProgressData.WaveIndex++;
+        //    await UniTask.Delay(5000);
+        //    StartNextWave();
+        //}
 
         
         private List<EnemyStatsContainer> SpawnWaveEnemies(List<WaveEnemy> waveEnemiesData)
