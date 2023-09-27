@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -26,8 +28,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         public event Action<HealthChange> HealthChanged;
         public event Action<IDamageProvider> TookDamage;
         public event Action Died;
-        
-        
+
+
         public PlayerInventory Inventory { get; private set; }
 
         public float CurrentHp => _playerStats.CurrentHp;
@@ -51,12 +53,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             _playerStats = new PlayerStats(_playerConfiguration);
             RestoreHp();
         }
-        
+
         public void TakeDamage(IDamageProvider damageProvider)
         {
+            if (_playerStats.Immortal)
+                return;
+
             if (ModifyCurrentHp(-damageProvider.ProvideDamage()))
             {
                 TookDamage?.Invoke(damageProvider);
+                SetPlayerImmortalAfterDamageFor(.5f).Forget();
             }
         }
 
@@ -87,6 +93,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         private void Kill()
         {
             Died?.Invoke();
+        }
+
+        private async UniTaskVoid SetPlayerImmortalAfterDamageFor(float seconds)
+        {
+            _playerStats.Immortal = true;
+            await UniTask.Delay((int)(seconds * 1000));
+            _playerStats.Immortal = false;
         }
     }
 }

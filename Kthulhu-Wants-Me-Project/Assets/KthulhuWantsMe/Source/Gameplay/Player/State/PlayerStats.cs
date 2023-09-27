@@ -9,6 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
     public class PlayerStats
     {
         public float CurrentHp;
+        public bool Immortal;
         public Dictionary<StatType, float> BaseStats;
         
 
