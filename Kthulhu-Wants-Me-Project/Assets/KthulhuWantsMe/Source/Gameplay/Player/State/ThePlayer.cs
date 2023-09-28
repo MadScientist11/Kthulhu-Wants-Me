@@ -62,7 +62,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             if (ModifyCurrentHp(-damageProvider.ProvideDamage()))
             {
                 TookDamage?.Invoke(damageProvider);
-                SetPlayerImmortalAfterDamageFor(.5f).Forget();
+                SetPlayerImmortalAfterDamageFor(.7f).Forget();
             }
         }
 

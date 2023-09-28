@@ -75,7 +75,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _isAttacking = true;
             _canProceedWithCombo = false;
             _playerLocomotion.FaceMouse();
-            _playerLocomotion.MovementController.AddVelocity(transform.forward * 10);
+            _playerLocomotion.MovementController.AddVelocity(transform.forward * 15);
             Debug.Log("WindUp");
         }
 
