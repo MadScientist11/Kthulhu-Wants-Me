@@ -11,18 +11,15 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
     {
         private IUIService _uiService;
         private IWaveSystem _waveSystem;
-        private IProgressService _progressService;
 
-        public BetweenWavesState(IUIService uiService, IWaveSystem waveSystem, IProgressService progressService)
+        public BetweenWavesState(IUIService uiService, IWaveSystem waveSystem)
         {
-            _progressService = progressService;
             _waveSystem = waveSystem;
             _uiService = uiService;
         }
         public async void Enter()
         {
             await StartNextWaveCounter(new CancellationTokenSource());
-            _progressService.ProgressData.WaveIndex++;
             _waveSystem.StartNextWave();
         }
 
