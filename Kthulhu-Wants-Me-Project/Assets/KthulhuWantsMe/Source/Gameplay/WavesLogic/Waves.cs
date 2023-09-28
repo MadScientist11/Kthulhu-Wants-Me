@@ -8,7 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
     public class Waves : SerializedScriptableObject
     {
         public EnemyScaling BaseEnemyScaling;
-        [TableList(ShowPaging = true, DrawScrollView = true)]
+        [TableList()]
         public List<WaveData> WaveData;
         
         public WaveData this[int index] => WaveData[index];

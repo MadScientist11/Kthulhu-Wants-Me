@@ -10,6 +10,7 @@ using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
+using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -42,7 +43,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         {
             foreach (EnemyStatsContainer waveEnemy in _waveSystem.CurrentWaveEnemies)
             {
-                waveEnemy.GetComponent<Health>().Died += DecreaseEnemyCount;
+               // waveEnemy.GetComponent<Health>().Died += DecreaseEnemyCount;
             }
 
             _currentEnemyCount = EnemiesCount;
@@ -54,7 +55,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
             if (_currentEnemyCount == 0)
             {
-                _waveSystem.CompleteWave().Forget();
+                //_waveSystem.CompleteWave().Forget();
             }
 
             Debug.Log("Decrese amount");
@@ -89,6 +90,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         private const int NextWaveAfterSeconds = 10;
 
         private Dictionary<EnemySpawnerId, Spawner> _enemySpawners;
+        private Dictionary<EnemySpawnerId, List<Health>> _aliveEnemies = new();
 
         private readonly IProgressService _progressService;
         private readonly IGameFactory _gameFactory;
@@ -133,10 +135,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         }
 
 
-        public async UniTask CompleteWave()
+        public void CompleteWave()
         {
+            _currentBatch = 0;
+            _progressService.ProgressData.WaveIndex++;
             OnWaveCompleted?.Invoke();
-
             _gameStateMachine.SwitchState<BetweenWavesState>();
         }
 
@@ -150,7 +153,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         }
 
         private int _currentBatch;
-        private List<Health> _waveEnemies = new();
+        private int AliveEnemiesLeft => _aliveEnemies.Select(spawner => spawner.Value.Count).Sum();
 
         private void SwitchState(WaveState waveState)
         {
@@ -163,9 +166,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                     ProcessBatch();
                     break;
                 case WaveState.WaveEnd:
-                    _currentBatch = 0;
-                    _progressService.ProgressData.WaveIndex++;
-                    SwitchState(WaveState.WaveStart);
+                    CompleteWave();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(waveState), waveState, null);
@@ -174,24 +175,31 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
         private void ProcessBatch()
         {
-            List<Health> batchEnemies = SpawnBatch().ToList();
-            foreach (Health enemy in batchEnemies)
+            List<(EnemySpawnerId spawnedAt, Health enemyHealth)> batchEnemies = SpawnBatch().ToList();
+            foreach (var enemy in batchEnemies)
             {
-                enemy.Died += () =>
-                {
-                    _waveEnemies.Remove(enemy);
-                    Debug.Log(_waveEnemies.Count);
-                    if(_waveEnemies.Count == 0)
-                        SwitchState(WaveState.WaveEnd);
-                };
+                _aliveEnemies.GetOrCreate(enemy.spawnedAt).Add(enemy.enemyHealth);
+                
+                enemy.enemyHealth.Died += 
+                    () => TrackEnemiesDeath(enemy.spawnedAt, enemy.enemyHealth);
             }
-            _waveEnemies.AddRange(batchEnemies);
-            
             
             _currentBatch++;
             SpawnNextBatchIfAny().Forget();
         }
-        private IEnumerable<Health> SpawnBatch()
+
+        private void TrackEnemiesDeath(EnemySpawnerId wasSpawnedAt, Health deathHealth)
+        {
+            int waveIndex = _progressService.ProgressData.WaveIndex;
+            WaveData waveData = _wavesData[waveIndex];
+            
+            _aliveEnemies[wasSpawnedAt].Remove(deathHealth);
+
+            
+            if (AliveEnemiesLeft == 0 && waveData.Batches.Count <= _currentBatch)
+                SwitchState(WaveState.WaveEnd);
+        }
+        private IEnumerable<(EnemySpawnerId spawnerId, Health)> SpawnBatch()
         {
             int waveIndex = _progressService.ProgressData.WaveIndex;
             WaveData waveData = _wavesData[waveIndex];
@@ -202,14 +210,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                 if (waveEnemy.SpawnAt == EnemySpawnerId.Default)
                 {
                     foreach (Health enemyHealth in _enemySpawners[EnemySpawnerId.EnemySpawner1].Spawn(waveEnemy))
-                        yield return enemyHealth;
+                        yield return (EnemySpawnerId.EnemySpawner1, enemyHealth);
 
                     // Spawn at nearest to player spawner
                     continue;
                 }
 
                 foreach (Health enemyHealth in _enemySpawners[waveEnemy.SpawnAt].Spawn(waveEnemy))
-                    yield return enemyHealth;
+                    yield return (waveEnemy.SpawnAt, enemyHealth);
             }
         }
 
@@ -267,6 +275,15 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             return enemySpawnZones[0];
         }
 
+        private Spawner FindClosestSpawner()
+        {
+            return _enemySpawners
+                    .Select(spawner => spawner.Value)
+                    .OrderBy(spawner => Vector3.Distance(spawner.Position, _gameFactory.Player.transform.position))
+                    .First();
+
+        }
+
         private List<EnemyStatsContainer> SpawnWaveEnemies(List<WaveEnemy> waveEnemiesData)
         {
             List<EnemyStatsContainer> waveEnemies = new();
@@ -306,8 +323,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
     public class Spawner
     {
-        private IGameFactory _gameFactory;
-        private SpawnPoint _spawnPoint;
+        public Vector3 Position => _spawnPoint.Position;
+        
+        private readonly IGameFactory _gameFactory;
+        private readonly SpawnPoint _spawnPoint;
 
         public Spawner(IGameFactory gameFactory, SpawnPoint spawnPoint)
         {
@@ -316,7 +335,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         }
 
 
-        public List<Health> Spawn(WaveEnemy waveEnemy)
+        public IEnumerable<Health> Spawn(WaveEnemy waveEnemy)
         {
             List<Health> enemies = new();
             for (int i = 0; i < waveEnemy.Quantity; i++)
