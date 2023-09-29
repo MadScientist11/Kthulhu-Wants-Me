@@ -2,6 +2,7 @@ using System;
 using Freya;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Camera;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -12,16 +13,13 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    public enum Input
-    {
-        AscentLike = 0,
-        RelativeToMouse = 1,
-    }
-
-    public class PlayerLocomotion : MonoBehaviour
+    public class PlayerLocomotion : MonoBehaviour, IInterceptionCompliant
     {
         public bool IsMoving =>
             _movementController.CurrentVelocity.XZ().sqrMagnitude > 0.1f && _motor.enabled;
+
+        public Vector3 AverageVelocity => MovementController.AverageVelocity;
+
 
         public PlayerMovementController MovementController => _movementController;
 
@@ -132,5 +130,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             return _inputService.GameplayScenario.MovementInput.sqrMagnitude > 0.1f;
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using KinematicCharacterController;
+﻿using System.Collections.Generic;
+using KinematicCharacterController;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
@@ -22,6 +23,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _playerConfiguration = playerConfiguration;
             _motor = motor;
             motor.CharacterController = this;
+
+            MaxQueueSize = Mathf.CeilToInt(1f / _historicalPositionInterval * _historicalPositionDuration);
+            _historicalVelocities = new Queue<Vector3>(MaxQueueSize);
         }
 
         public void SetInputs(Vector2 moveInput, Vector3 lookDirection)
@@ -32,8 +36,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _lookInputVector = cameraPlanarDirection;
         }
 
-        public void ResetInputs() => 
-            _moveInputVector  =Vector3.zero;
+        public void ResetInputs() =>
+            _moveInputVector = Vector3.zero;
 
         public void KillVelocity() =>
             _killVelocity = true;
@@ -124,11 +128,43 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 currentVelocity += _internalVelocityAdd;
                 _internalVelocityAdd = Vector3.zero;
             }
-
         }
+
+        private float _historicalPositionDuration = 1f;
+        private float _historicalPositionInterval = 0.1f;
+
+        public Vector3 AverageVelocity
+        {
+            get
+            {
+                Vector3 average = Vector3.zero;
+                foreach (Vector3 historicalVelocity in _historicalVelocities)
+                {
+                    average += historicalVelocity;
+                }
+
+                average.y = 0;
+
+                return average / _historicalVelocities.Count;
+            }
+        }
+
+        private Queue<Vector3> _historicalVelocities;
+        private float _lastPositionTime;
+        private int MaxQueueSize;
 
         public void AfterCharacterUpdate(float deltaTime)
         {
+            if (_lastPositionTime + _historicalPositionInterval <= Time.time)
+            {
+                if(_historicalVelocities.Count == MaxQueueSize)
+                {
+                    _historicalVelocities.Dequeue();
+                }
+                
+                _historicalVelocities.Enqueue(CurrentVelocity);
+                _lastPositionTime = Time.time;
+            }
         }
 
         public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint,
