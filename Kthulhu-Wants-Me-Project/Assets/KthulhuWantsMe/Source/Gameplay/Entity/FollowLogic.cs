@@ -40,16 +40,53 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             if (_interceptTarget != null)
             {
-                Debug.Log(_interceptTarget.AverageVelocity);
-                _movementMotor.MoveTo(_followTarget.position + _interceptTarget.AverageVelocity * MovementPredictionTime);
-                
+
+                float timeToPlayer = Vector3.Distance(_followTarget.position, transform.position) /
+                                     FollowSpeed;
+
+                if (timeToPlayer > MovementPredictionTime)
+                {
+                    timeToPlayer = MovementPredictionTime;
+                }
+
+                Vector3 targetPosition = _followTarget.position + _interceptTarget.AverageVelocity * timeToPlayer;
+
+                Vector3 directionToTarget = (targetPosition - transform.position).normalized;
+                Vector3 directionToPlayer = (_followTarget.position - transform.position).normalized;
+
+                float dot = Vector3.Dot(directionToPlayer, directionToTarget);
+
+                if (dot < MovementPredictionThreshold)
+                {
+                    targetPosition = _followTarget.position;
+                }
+                _movementMotor.MoveTo(targetPosition);
             }
         }
 
         private void OnDrawGizmos()
         {
+            float timeToPlayer = Vector3.Distance(_followTarget.position, transform.position) /
+                                 FollowSpeed;
+
+            if (timeToPlayer > MovementPredictionTime)
+            {
+                timeToPlayer = MovementPredictionTime;
+            }
+
+            Vector3 targetPosition = _followTarget.position + _interceptTarget.AverageVelocity * timeToPlayer;
+
+            Vector3 directionToTarget = (targetPosition - transform.position).normalized;
+            Vector3 directionToPlayer = (_followTarget.position - transform.position).normalized;
+
+            float dot = Vector3.Dot(directionToPlayer, directionToTarget);
+
+            if (dot < MovementPredictionThreshold)
+            {
+                targetPosition = _followTarget.position;
+            }
             Gizmos.color = Color.green;
-            Gizmos.DrawSphere(_followTarget.position + _interceptTarget.AverageVelocity * MovementPredictionTime, .3f);
+            Gizmos.DrawSphere(targetPosition, .3f);
         }
 
 
