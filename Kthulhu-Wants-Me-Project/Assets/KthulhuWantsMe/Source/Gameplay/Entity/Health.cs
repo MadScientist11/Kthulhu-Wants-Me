@@ -25,9 +25,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
                     return;
 
                 float newHealth = Mathf.Clamp(value, 0, MaxHealth);
-                
+                Debug.Log(newHealth);
+                Debug.Log(_currentHealth);
+
                 if (newHealth < _currentHealth)
+                {
                     TookDamage?.Invoke();
+                    Debug.Log("TOoksfwsf");
+                }
 
                 _currentHealth = newHealth;
 
