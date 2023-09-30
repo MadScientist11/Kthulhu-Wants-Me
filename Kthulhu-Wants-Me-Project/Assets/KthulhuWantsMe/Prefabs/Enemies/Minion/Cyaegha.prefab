@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyStatsContainer: {fileID: -6736657406163995852}
+  _collider: {fileID: 4302006736190205134}
   _hitFeedbacks: {fileID: 0}
 --- !u!114 &6832438006561834181
 MonoBehaviour:
@@ -205,6 +206,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementMotor: {fileID: 5283784153911277938}
+  MovementPredictionThreshold: 0
+  MovementPredictionTime: 1
 --- !u!114 &5283784153911277938
 MonoBehaviour:
   m_ObjectHideFlags: 0

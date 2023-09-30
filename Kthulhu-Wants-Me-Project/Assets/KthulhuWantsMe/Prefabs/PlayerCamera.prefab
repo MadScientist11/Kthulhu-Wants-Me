@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de6b2bdb3c314fe0bf9c608d60153af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraPanning: {fileID: -1373756758685588982}
+  _cinemachineBrain: {fileID: 0}
 --- !u!114 &-1373756758685588982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d44d4dc8de6fb64e8c72fd243ecebd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanRange: {x: 2, y: 2}
+  PanRange: {x: 1.5, y: 1.5}
   TestCurve:
     serializedVersion: 2
     m_Curve:
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 12
+  m_CameraDistance: 8
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0

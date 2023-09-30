@@ -14,7 +14,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
-        private bool _isDead;
         private float _attackDelayTime;
 
         private PlayerFacade _player;

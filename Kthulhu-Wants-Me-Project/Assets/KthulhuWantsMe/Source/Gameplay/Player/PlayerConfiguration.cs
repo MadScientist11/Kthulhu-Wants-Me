@@ -22,6 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float DashCooldown;
         public float AttackRadius;
         public float AttackEffectiveDistance;
+        public float AttackStep;
     
         
         public float LungeBaseDamage;
