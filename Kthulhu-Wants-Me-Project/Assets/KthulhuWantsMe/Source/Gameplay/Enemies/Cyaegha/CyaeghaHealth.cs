@@ -17,6 +17,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         [SerializeField] private Collider _collider;
         [SerializeField] private MMFeedbacks _hitFeedbacks;
         [SerializeField] private NavMeshMovement _movementMotor;
+        [SerializeField] private AnimationCurve _knockbackCurve;
 
         private bool _doKnockback;
         private void Start()
@@ -46,7 +47,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         
             for (float t = 0; t < 1; t += Time.deltaTime * 2f)
             {
-                transform.position = Vector3.Lerp(jumpStartPos, dest, t);
+                transform.position = Vector3.Lerp(jumpStartPos, dest, _knockbackCurve.Evaluate(t));
                 yield return null;
             }
             _movementMotor.enabled = true;
