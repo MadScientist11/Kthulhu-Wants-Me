@@ -346,7 +346,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6fba48bb534d3cb15a6b3ae64b2a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyStatsContainer: {fileID: 8151728752701681097}
   _yithHealth: {fileID: 877950398925464152}
   _yithAttack: {fileID: 6624409593950422001}
   _yithRageComboAbility: {fileID: 2838533250784125204}
@@ -364,6 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyStatsContainer: {fileID: 8151728752701681097}
+  _collider: {fileID: 9033666309106188953}
   _hitFeedbacks: {fileID: 7172276037332111135}
 --- !u!114 &-8257174440324719655
 MonoBehaviour:

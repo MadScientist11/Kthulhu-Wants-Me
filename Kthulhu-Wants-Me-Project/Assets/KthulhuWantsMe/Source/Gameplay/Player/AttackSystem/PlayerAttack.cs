@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Effects;
@@ -81,19 +82,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         protected override void OnContactPhase()
         {
-            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _playerConfiguration.AttackRadius,
-                    LayerMasks.EnemyMask, out IDamageable damageable))
+            if (!PhysicsUtility.HitMany(AttackStartPoint(), _playerConfiguration.AttackRadius,
+                    LayerMasks.EnemyMask, out List<IDamageable> damageables))
                 return;
 
 
             _weaponTrails.Play(_comboAttackIndex);
             TargetFeedbacks.PlayFeedbacks(AttackStartPoint());
-            ApplyDamage(damageable);
-            if (damageable.Transform.TryGetComponent(out IEffectReceiver effectReceiver))
-            {
-                _playerDamageModifier?.ApplyTo(effectReceiver);
 
+            foreach (IDamageable damageable in damageables)
+            {
+                ApplyDamage(damageable);
+                
+                if (damageable.Transform.TryGetComponent(out IEffectReceiver effectReceiver))
+                {
+                    _playerDamageModifier?.ApplyTo(effectReceiver);
+                }
             }
+
+          
         }
 
         protected override void OnRecoveryPhase()
