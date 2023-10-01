@@ -663,8 +663,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementMotor: {fileID: 5283784153911277938}
-  MovementPredictionThreshold: 0
-  MovementPredictionTime: 1
+  MovementPredictionThreshold: 0.33
+  MovementPredictionTime: 1.653
 --- !u!114 &5283784153911277938
 MonoBehaviour:
   m_ObjectHideFlags: 0
