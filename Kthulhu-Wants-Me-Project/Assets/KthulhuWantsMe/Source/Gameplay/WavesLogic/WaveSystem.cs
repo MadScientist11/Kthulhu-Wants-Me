@@ -155,7 +155,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             Batch batch = waveData.Batches[_currentBatch];
             SpawnBatch(batch);
             
-            _currentBatch++;
             _batchSpawnCancellationToken = new();
             SpawnNextBatchIfAny(_batchSpawnCancellationToken.Token).Forget();
         }
@@ -202,7 +201,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             int batchDelay = (int)waveData.Batches[_currentBatch].NextBatchDelay;
             await UniTask.Delay(TimeSpan.FromSeconds(batchDelay),false, PlayerLoopTiming.Update, batchSpawnCancellationToken);
 
-           
+            _currentBatch++;
             ProcessBatch();
         }
 
