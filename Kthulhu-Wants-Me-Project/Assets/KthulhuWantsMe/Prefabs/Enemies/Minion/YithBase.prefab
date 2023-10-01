@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 6624409593950422001}
   - component: {fileID: 2838533250784125204}
   m_Layer: 10
-  m_Name: Yith
+  m_Name: YithBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -420,8 +420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14bab3f9d6e4460abb22dffdd43cd06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyStatsContainer: {fileID: 8151728752701681097}
   _followLogic: {fileID: 289277531940907717}
   _comboFeedback: {fileID: 5463552140370051989}
+  _comboCount: 1
 --- !u!1 &2522923863610313792
 GameObject:
   m_ObjectHideFlags: 0

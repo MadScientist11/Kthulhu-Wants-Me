@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96f582f133014e23b3e40ed91f95b4af, type: 3}
-  m_Name: PlayerConfiguration
+  m_Script: {fileID: 11500000, guid: e349d6c580be4ec18655ab40b08bae33, type: 3}
+  m_Name: YithCombo2Configuration
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 100
+      Data: 50
     - Name: 
       Entry: 8
       Data: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 5
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -71,21 +71,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  PlayerPrefab: {fileID: -5172653069112829316, guid: 31e400d6a849a5a4baaa2f5ca4f48386,
-    type: 3}
-  PlayerCameraPrefab: {fileID: 6843986045684515988, guid: 0326cc12476ef5845b6d23d3849d0cda,
-    type: 3}
-  MoveSpeed: 4.65
-  Gravity: {x: 0, y: -1000, z: 0}
-  DashStrength: 30
-  DashCooldown: 0.85
-  AttackRadius: 2
-  AttackEffectiveDistance: 1
-  AttackStep: 17
-  LungeBaseDamage: 100
-  LungeRadius: 2
-  StableMovementSharpness: 17
-  OrientationSharpness: 35
-  MaxAirMoveSpeed: 10
-  AirAccelerationSpeed: 5
-  Drag: 0.1
+  EnemyType: 100
+  Prefab: {fileID: 1590797425616401305, guid: 54888d6d0d7a09b47b42a914067f3bb8, type: 3}
+  EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
+  ComboAttackCooldown: 10
+  DelayBetweenComboAttacks: 0.75
+  ComboFollowSpeedIncrement: 6

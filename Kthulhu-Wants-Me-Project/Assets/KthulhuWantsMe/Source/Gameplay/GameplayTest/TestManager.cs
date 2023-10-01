@@ -47,11 +47,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayTest
                 _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.Cyeagha);
             }
             
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.Yith);
-            }
-            
+    
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 _gameFactory.CreateEnemy(EnemySpawnPoint.position, EnemySpawnPoint.rotation, EnemyType.BleedTentacle);

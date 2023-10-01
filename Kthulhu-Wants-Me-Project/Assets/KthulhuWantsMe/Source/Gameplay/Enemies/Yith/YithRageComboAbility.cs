@@ -12,13 +12,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
     {
         public bool InProcess => _isAttacking;
         
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
         [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private MMFeedbacks _comboFeedback;
 
+        [SerializeField] private int _comboCount;
+        
         private bool _isAttacking;
         private float _comboAttackCooldown;
 
-        private const float ComboAttackCooldownTime = 10f;
+        private YithConfiguration _yithConfiguration;
+
+        private void Start()
+        {
+            _yithConfiguration = (YithConfiguration)_enemyStatsContainer.Config;
+        }
 
         private void Update()
         {
@@ -32,22 +40,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         private IEnumerator ComboAttack()
         {
-            _followLogic.FollowSpeed += 6;
+            _followLogic.FollowSpeed += _yithConfiguration.ComboFollowSpeedIncrement;
             _isAttacking = true;
 
-            PerformAttack();
-            _comboFeedback.PlayFeedbacks();
-            yield return new WaitForSeconds(0.75f);
-            PerformAttack();
-            _comboFeedback.PlayFeedbacks();
-            yield return new WaitForSeconds(0.75f);
-            PerformAttack();
-            _comboFeedback.PlayFeedbacks();
-            yield return new WaitForSeconds(0.75f);
+
+            for (int i = 0; i < _comboCount; i++)
+            {
+                PerformAttack();
+                _comboFeedback.PlayFeedbacks();
+                yield return new WaitForSeconds(_yithConfiguration.DelayBetweenComboAttacks);
+            }
+     
             
             _isAttacking = false;
-            _comboAttackCooldown = ComboAttackCooldownTime;
-            _followLogic.FollowSpeed -= 6;
+            _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
+            _followLogic.FollowSpeed -= _yithConfiguration.ComboFollowSpeedIncrement;
         }
 
         private void PerformAttack()
