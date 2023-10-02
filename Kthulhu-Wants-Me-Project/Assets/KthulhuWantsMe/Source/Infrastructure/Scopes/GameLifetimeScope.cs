@@ -3,7 +3,7 @@ using System.Linq;
 using KthulhuWantsMe.Source.Infrastructure.EntryPoints;
 using KthulhuWantsMe.Source.Infrastructure.Installers;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using NaughtyAttributes;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

@@ -43,10 +43,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
         {
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 1000f))
             {
-                Debug.Log(hit.transform.gameObject.name);
-
-            
-
                 if (hit.transform.TryGetComponent(out Renderer rendererComponent))
                 {
                     if (rendererComponent.material.renderQueue == (int)UnityEngine.Rendering.RenderQueue.Transparent && (_inCameraView == null ||hit.transform != _inCameraView.transform))
@@ -59,7 +55,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
                 
                 if (_inCameraView != null && hit.transform != _inCameraView.transform )
                 {
-                    Debug.Log("Called?");
                     StartCoroutine(DoUnFadeObject(_inCameraView));
                     _inCameraView = null;
                 }

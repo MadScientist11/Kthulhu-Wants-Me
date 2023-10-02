@@ -186,8 +186,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             _aliveEnemies[wasSpawnedAt].Remove(deathHealth);
 
 
-            if (AliveEnemiesLeft == 0 && waveData.Batches.Count <= _currentBatch)
+            if (AliveEnemiesLeft == 0 && waveData.Batches.Count -1 <= _currentBatch)
+            {
                 CompleteWave();
+                
+            }
         }
 
         private async UniTaskVoid SpawnNextBatchIfAny(CancellationToken batchSpawnCancellationToken)
@@ -195,7 +198,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             int waveIndex = _progressService.ProgressData.WaveIndex;
             WaveData waveData = _wavesData[waveIndex];
             
-            if (waveData.Batches.Count <= _currentBatch)
+            if (waveData.Batches.Count - 1 <= _currentBatch)
                 return;
 
             int batchDelay = (int)waveData.Batches[_currentBatch].NextBatchDelay;

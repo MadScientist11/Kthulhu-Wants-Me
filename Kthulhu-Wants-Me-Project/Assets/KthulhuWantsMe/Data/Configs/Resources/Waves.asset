@@ -29,16 +29,11 @@ MonoBehaviour:
       - EnemyType: 3
         Quantity: 2
         SpawnAt: 0
-      NextBatchDelay: 0
+      NextBatchDelay: 15
   - WaveObjective: 0
     Batches:
     - WaveEnemies:
-      - EnemyType: 3
-        Quantity: 20
+      - EnemyType: 0
+        Quantity: 2
         SpawnAt: 0
-      NextBatchDelay: 0
-    - WaveEnemies:
-      - EnemyType: 3
-        Quantity: 0
-        SpawnAt: 0
-      NextBatchDelay: 0
+      NextBatchDelay: 10
