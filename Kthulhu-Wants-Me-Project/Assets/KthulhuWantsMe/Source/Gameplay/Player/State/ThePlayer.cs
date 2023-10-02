@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer.Unity;
@@ -34,9 +35,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public float CurrentHp => _playerStats.CurrentHp;
 
-        public float MaxHealth => _playerStats.BaseStats[StatType.MaxHealth];
-        public float BaseDamage => _playerStats.BaseStats[StatType.BaseDamage];
-
+        public float MaxHealth => _playerStats.BaseStats[StatType.MaxHealth] +
+                                  _playerStats.Mods.GetOrCreate(StatType.MaxHealth);
+        public float BaseDamage => _playerStats.BaseStats[StatType.BaseDamage] + _playerStats.Mods.GetOrCreate(StatType.BaseDamage);
+        public PlayerStats PlayerStats => _playerStats;
 
         private PlayerStats _playerStats;
 

@@ -11,6 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         public float CurrentHp;
         public bool Immortal;
         public Dictionary<StatType, float> BaseStats;
+        public Dictionary<StatType, float> Mods = new();
         
 
         private PlayerConfiguration _playerConfiguration;

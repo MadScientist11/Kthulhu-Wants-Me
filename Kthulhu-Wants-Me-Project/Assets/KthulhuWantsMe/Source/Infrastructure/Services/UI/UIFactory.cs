@@ -14,12 +14,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
     {
         UniTask<PlayerHUD> CreatePlayerHUD();
         UniTask<MiscUI> CreateMiscUI();
+        UniTask<UpgradeWindow> CreateUpgradeWindow();
     }
 
     public class UIFactory : IUIFactory
     {
         public const string PlayerHUDPath = "PlayerHUD";
         public const string MiscUIPath = "MiscUI";
+        public const string UpgradeWindowPath = "UpgradeWindow";
         
         public const string GameUIPath = "GameUI";
 
@@ -50,6 +52,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         {
             MiscUI prefab = await _resourceManager.ProvideAsset<MiscUI>(MiscUIPath);
             MiscUI miscUI = LifetimeScope.Find<GameUILifetimeScope>().Container.Instantiate(prefab);
+            return miscUI;
+        }
+        
+        public async UniTask<UpgradeWindow> CreateUpgradeWindow()
+        {
+            UpgradeWindow prefab = await _resourceManager.ProvideAsset<UpgradeWindow>(UpgradeWindowPath);
+            UpgradeWindow miscUI = LifetimeScope.Find<GameUILifetimeScope>().Container.Instantiate(prefab);
             return miscUI;
         }
 

@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
@@ -6,6 +7,7 @@ using Unity.VisualScripting.YamlDotNet.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
+using Object = UnityEngine.Object;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
@@ -15,6 +17,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         UniTaskVoid ShowPlayerHUD();
         void HidePlayerHUD();
         UniTask InitializeGameUI();
+        UniTask<BaseWindow> OpenWindow(WindowId windowId);
+        void OpenPopUp(PopUpId popUpId);
     }
 
     public class UIService : IUIService
@@ -55,9 +59,16 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             await LoadMiscUIContainer();
         }
 
-        public void OpenWindow(WindowId windowId)
+        public async UniTask<BaseWindow> OpenWindow(WindowId windowId)
         {
-            
+            switch (windowId)
+            {
+                case WindowId.UpgradeWindow:
+                   return await _uiFactory.CreateUpgradeWindow();
+                    break;
+            }
+
+            return null;
         }
 
         public void OpenPopUp(PopUpId popUpId)

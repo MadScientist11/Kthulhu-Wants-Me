@@ -2,6 +2,6 @@
 {
     public enum WindowId
     {
-
+        UpgradeWindow = 0,
     }
 }
