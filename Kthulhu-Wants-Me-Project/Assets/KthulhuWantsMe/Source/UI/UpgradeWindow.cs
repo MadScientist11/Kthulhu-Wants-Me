@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.Upgrades;
 using UnityEngine;
 
@@ -14,10 +15,12 @@ namespace KthulhuWantsMe.Source.UI
         [SerializeField] private Transform _upgradesParent;
         
         private List<IUpgrade> _upgrades;
+        
+        public Action OnUpgradePicked { get; private set; }
 
-       
-        public void Init(List<IUpgrade> upgrades)
+        public void Init(List<IUpgrade> upgrades, Action onUpgradePicked)
         {
+            OnUpgradePicked = onUpgradePicked;
             _upgrades = upgrades;
             UpdateUI(upgrades);
         }

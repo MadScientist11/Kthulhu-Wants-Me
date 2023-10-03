@@ -9,7 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Upgrades
         public UpgradeInfo UpgradeInfo => new UpgradeInfo()
         {
             Name = "Damage Upgrade",
-            Description = "Increase damage by 10"
+            Description = $"Increase damage by {_value}"
         };
         
         private readonly ThePlayer _player;

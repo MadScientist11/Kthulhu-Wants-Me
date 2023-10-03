@@ -33,6 +33,7 @@ namespace KthulhuWantsMe.Source.UI
         {
             _upgrade.DoUpgrade();
             Destroy(_upgradeWindow.gameObject);
+            _upgradeWindow.OnUpgradePicked?.Invoke();
         }
     }
 }

@@ -27,17 +27,26 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             UpgradeWindow window = (UpgradeWindow)await _uiService.OpenWindow(WindowId.UpgradeWindow);
             HealthUpgrade healthUpgrade = new HealthUpgrade(_player, 10);
+            DamageUpgrade damageUpgrade = new DamageUpgrade(_player, 1);
+            EvadeRecoveryUpgrade evadeUpgrade = new EvadeRecoveryUpgrade(_player, .5f);
             window.Init(new List<IUpgrade>()
             {
-                healthUpgrade
-            });
-            await StartNextWaveCounter(new CancellationTokenSource());
-            _waveSystem.StartNextWave();
+                healthUpgrade,
+                damageUpgrade,
+                evadeUpgrade
+            }, OnUpgradePicked);
+         
         }
 
         public void Exit()
         {
             
+        }
+
+        private async void OnUpgradePicked()
+        {
+            await StartNextWaveCounter(new CancellationTokenSource());
+            _waveSystem.StartNextWave();
         }
         
         public async UniTask StartNextWaveCounter(CancellationTokenSource cancellationToken)

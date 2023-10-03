@@ -1,5 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -16,16 +17,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
         
         private IInputService _inputService;
-        private PlayerConfiguration _playerConfig;
+        private PlayerStats _playerStats;
 
         private float _nextDashTime;
+        private PlayerConfiguration _playerConfig;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider)
+        public void Construct(IInputService inputService,IDataProvider dataProvider, ThePlayer player)
         {
             _inputService = inputService;
+            _playerStats = player.PlayerStats;
             _playerConfig = dataProvider.PlayerConfig;
-
             _inputService.GameplayScenario.Dash += PerformDash;
         }
 
@@ -39,7 +41,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             if (CanDash())
             {
                 Dash();
-                _nextDashTime = Time.time + _playerConfig.DashCooldown;
+                _nextDashTime = Time.time + _playerStats.EvadeDelay;
             }
         }
 
