@@ -4,7 +4,7 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 {
-    public class FireDebuff : IBuffDebuff, IUpdatableEffect, IDamageProvider
+    public class  FireDebuff : IBuffDebuff, IUpdatableEffect, IDamageProvider
     {
         private float _damagePerSecond;
         private float _duration;

@@ -16,9 +16,5 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
                 EnemyConfigs.Add(enemy.EnemyType, enemy);
             }
         }
-
-     
-
-      
     }
 }

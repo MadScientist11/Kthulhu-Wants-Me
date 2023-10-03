@@ -16,7 +16,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             BasicAttack = 0,
             GrabAbility = 1,
             SpellCast = 2,
-            Nothing = 3,
+            CastBuff = 3,
+            Nothing = 100,
         }
         
         public bool BlockProcessing { get; set; }
@@ -38,12 +39,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private TentacleAggro _tentacleAggro;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
+        [SerializeField] private bool _specialTentacle;
+
         private float _livingTime;
         private float _reconsiderationTime;
         private bool _stunned;
 
-    
-        
         private TentacleConfiguration _tentacleConfiguration;
 
 
@@ -95,6 +96,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                 case AttackDecision.SpellCast:
                     _tentacleSpellCastingAbility.CastSpell(TentacleSpell.BasicAttackSpell).Forget();
                     break;
+                case AttackDecision.CastBuff:
+                    _tentacleSpellCastingAbility.CastSpell(TentacleSpell.Buff).Forget();
+                    break;
                 case AttackDecision.Nothing:
                     break;
                 default:
@@ -104,6 +108,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private AttackDecision MakeAttackDecision()
         {
+            if (_specialTentacle)
+                return AttackDecision.CastBuff;
             if (CanGrabPlayer())
                 return AttackDecision.GrabAbility;
             else if(CanDoBasicAttack())

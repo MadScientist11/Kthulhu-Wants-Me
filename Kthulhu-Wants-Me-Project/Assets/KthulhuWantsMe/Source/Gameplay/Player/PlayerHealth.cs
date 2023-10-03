@@ -92,7 +92,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             RaiseHealthChangedEvent(healthChange.Current);
             if (healthChange.Current > healthChange.Previous)
             {
-                _healFeedback.PlayFeedbacks(transform.position);
+                //_healFeedback.PlayFeedbacks(transform.position);
             }
         }
 

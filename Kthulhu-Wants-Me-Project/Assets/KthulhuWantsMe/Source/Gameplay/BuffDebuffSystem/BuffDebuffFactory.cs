@@ -1,4 +1,8 @@
-﻿using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
+﻿using System;
+using System.Collections.Generic;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs;
+using PlasticGui.WorkspaceWindow.Diff;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
@@ -10,6 +14,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
 
     public class BuffDebuffFactory : IBuffDebuffFactory
     {
+        private Dictionary<Type, IBuffDebuff> _cache = new();
         private IObjectResolver _instantiator;
 
         public BuffDebuffFactory(IObjectResolver instantiator)

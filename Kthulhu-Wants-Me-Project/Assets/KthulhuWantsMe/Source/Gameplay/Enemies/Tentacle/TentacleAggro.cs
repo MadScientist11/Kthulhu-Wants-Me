@@ -26,7 +26,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void Start()
         {
-            Debug.Log(_enemyStatsContainer.Config);
             _tentacleConfiguration = (TentacleConfiguration)_enemyStatsContainer.Config;
         }
 

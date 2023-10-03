@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Freya;
-using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace KthulhuWantsMe.Source.UI.CompassUI
+namespace KthulhuWantsMe.Source.UI.Compass
 {
     public class Marker
     {
@@ -17,17 +17,23 @@ namespace KthulhuWantsMe.Source.UI.CompassUI
         [SerializeField] private GameObject _markerPrefab;
 
 
-        private Dictionary<Marker, GameObject> _markerViews = new();
-        private List<Marker> _markers;
+        private readonly Dictionary<Marker, GameObject> _markerViews = new();
+        private readonly List<Marker> _markers = new();
         
         private Transform _player;
         private float _compassUnit;
+        private bool _initialized;
 
         public void Init(Transform player)
         {
             _player = player;
             _compassUnit = _compassImage.rectTransform.rect.width / 360f;
+            _initialized = true;
         }
+
+        public void Show() => gameObject.SwitchOn();
+        
+        public void Hide() => gameObject.SwitchOff();
 
         public void AddMarker(Marker marker)
         {
@@ -46,6 +52,9 @@ namespace KthulhuWantsMe.Source.UI.CompassUI
 
         private void Update()
         {
+            if(!_initialized)
+                return;
+            
             _compassImage.uvRect = new Rect(_player.localEulerAngles.y / 360f, 0f, 1f, 1f);
             
             foreach (Marker marker in _markers)

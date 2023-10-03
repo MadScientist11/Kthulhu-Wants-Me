@@ -9,5 +9,6 @@
         YithCombo1 = 3,
         YithCombo2 = 100,
         YithCombo3 = 200,
+        TentacleSpecial = 300,
     }
 }

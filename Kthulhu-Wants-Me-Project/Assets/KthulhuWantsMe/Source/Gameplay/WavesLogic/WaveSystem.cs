@@ -7,11 +7,13 @@ using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Locations;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.UI.Compass;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -20,6 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
     public interface IWaveScenario
     {
         void Initialize(WaveData currentWave);
+        void Dispose();
         void StartWaveScenario();
     }
 
@@ -27,11 +30,15 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
     {
         private readonly WaveSystem _waveSystem;
         private readonly IUIService _uiService;
+        private readonly IGameFactory _gameFactory;
         private WaveData _currentWave;
+        private CompassUI _compassUI;
+        private CancellationTokenSource _timerToken;
 
 
-        public KillTentaclesSpecialScenario(WaveSystem waveSystem, IUIService uiService)
+        public KillTentaclesSpecialScenario(WaveSystem waveSystem, IUIService uiService, IGameFactory gameFactory)
         {
+            _gameFactory = gameFactory;
             _uiService = uiService;
             _waveSystem = waveSystem;
         }
@@ -39,19 +46,51 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         public void Initialize(WaveData currentWave)
         {
             _currentWave = currentWave;
+            _waveSystem.OnWaveCompleted += OnScenarioCompleted;
+        }
+
+        public void Dispose()
+        {
+            _waveSystem.OnWaveCompleted -= OnScenarioCompleted;
         }
 
         public void StartWaveScenario()
         {
             _waveSystem.ProcessBatch();
+            ShowEnemiesOnCompass();
             StartTimer();
+        }
+
+        private void OnScenarioCompleted()
+        {
+            _compassUI.Hide();
+            _timerToken.Cancel();
         }
 
         private void StartTimer()
         {
-            StartWaveTimer(new CancellationTokenSource(), 300).Forget();
+            _timerToken = new CancellationTokenSource();
+            StartWaveTimer(_timerToken, 300).Forget();
         }
-        
+
+        private void ShowEnemiesOnCompass()
+        {
+            _compassUI = _uiService.MiscUIContainer.GetCompassUI();
+            _compassUI.Show();
+            _compassUI.Init(_gameFactory.Player.transform);
+            
+            foreach (Health aliveEnemy in _waveSystem.AliveEnemies)
+            {
+                Marker marker = new Marker()
+                {
+                    TrackedObject = aliveEnemy.transform
+                };
+                _compassUI.AddMarker(marker);
+
+                aliveEnemy.Died += () => { _compassUI.RemoveMarker(marker);};
+            }
+        }
+
         private async UniTask StartWaveTimer(CancellationTokenSource cancellationToken, int timeInSeconds)
         {
             int countdown = timeInSeconds;
@@ -63,6 +102,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                 if (countdown == 0)
                 {
                     cancellationToken.Cancel();
+                    _compassUI.Hide();
                 }
             }
         }
@@ -88,6 +128,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
           
         }
 
+        public void Dispose()
+        {
+            
+        }
+
         public void StartWaveScenario()
         {
             _waveSystem.ProcessBatch();
@@ -108,6 +153,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         public List<EnemyStatsContainer> CurrentWaveEnemies { get; private set; }
 
         public IWaveScenario CurrentScenario => _currentWaveScenario;
+        public IEnumerable<Health> AliveEnemies => _aliveEnemies.Values.SelectMany(enemyList => enemyList);
         
         private int AliveEnemiesLeft => _aliveEnemies.Select(spawner => spawner.Value.Count).Sum();
 
@@ -146,7 +192,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         public void Initialize()
         {
             IWaveScenario eliminateAllEnemiesScenario = new EliminateAllEnemiesScenario(this, _wavesData);
-            IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService);
+            IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService, _gameFactory);
             _waveScenarios = new()
             {
                 { WaveObjective.KillAllEnemies, eliminateAllEnemiesScenario },
@@ -173,7 +219,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         {
             int waveIndex = _progressService.ProgressData.WaveIndex;
             WaveData waveData = _wavesData[waveIndex];
-            _waveScenarios[waveData.WaveObjective].StartWaveScenario();
+            _currentWaveScenario = _waveScenarios[waveData.WaveObjective];
+            _currentWaveScenario.Initialize(waveData);
+            _currentWaveScenario.StartWaveScenario();
         }
 
         public void CompleteWave()
@@ -182,6 +230,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             _progressService.ProgressData.WaveIndex++;
             _batchSpawnCancellationToken.Cancel();
             OnWaveCompleted?.Invoke();
+            _currentWaveScenario.Dispose();
             _gameStateMachine.SwitchState<BetweenWavesState>();
         }
 

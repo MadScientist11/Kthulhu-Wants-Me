@@ -23,17 +23,10 @@ MonoBehaviour:
     SerializationNodes: []
   BaseEnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
   WaveData:
-  - WaveObjective: 0
-    Batches:
-    - WaveEnemies:
-      - EnemyType: 3
-        Quantity: 2
-        SpawnAt: 0
-      NextBatchDelay: 15
-  - WaveObjective: 0
+  - WaveObjective: 1
     Batches:
     - WaveEnemies:
       - EnemyType: 0
-        Quantity: 2
+        Quantity: 0
         SpawnAt: 0
-      NextBatchDelay: 10
+      NextBatchDelay: 0
