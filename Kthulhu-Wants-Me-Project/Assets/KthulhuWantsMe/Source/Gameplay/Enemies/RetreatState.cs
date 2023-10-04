@@ -14,12 +14,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         protected Vector3 InitialPoint { get; private set; }
         
         private Portal _boundPortal;
-        private float _height;
+        private float _height = 2;
+
+        private bool _withoutNotify;
+        private Action _customCallback;
 
         public void Init(float height, Portal boundPortal)
         {
             _height = height;
             _boundPortal = boundPortal;
+            _withoutNotify = false;
             _enemyHealth.Died += Retreat;
         }
 
@@ -30,6 +34,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
         public void Retreat() => 
             StartCoroutine(RetreatToPortal(transform.position.AddY(-_height)));
+        
+        public void RetreatWithoutNotify()
+        {
+            _withoutNotify = true;
+            StartCoroutine(RetreatToPortal(transform.position.AddY(-_height)));
+        }
 
         protected virtual void OnRetreat() {}
 
@@ -59,7 +69,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             if(_boundPortal != null)
                 _boundPortal.ClosePortal();
             
-            OnRetreated();
+            if(!_withoutNotify)
+                OnRetreated();
+            else
+                Destroy(gameObject);
         }
     }
 }

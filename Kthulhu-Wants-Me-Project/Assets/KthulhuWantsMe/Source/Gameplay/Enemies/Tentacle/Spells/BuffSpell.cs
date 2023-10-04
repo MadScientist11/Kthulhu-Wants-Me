@@ -60,7 +60,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
                 }
             }
 
-            _spellCastingAbility.CancelSpell(TentacleSpell.BasicAttackSpell).Forget();
+            _spellCastingAbility.CancelSpell(TentacleSpell.Buff).Forget();
         }
 
         public UniTask Undo()

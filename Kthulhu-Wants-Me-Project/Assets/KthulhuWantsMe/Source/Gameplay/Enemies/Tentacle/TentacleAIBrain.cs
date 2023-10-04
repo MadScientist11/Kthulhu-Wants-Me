@@ -108,8 +108,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private AttackDecision MakeAttackDecision()
         {
-            if (_specialTentacle)
+            if (_specialTentacle && _tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.Buff))
                 return AttackDecision.CastBuff;
+            else if (_specialTentacle)
+                return AttackDecision.Nothing;
+            
+            
+            
             if (CanGrabPlayer())
                 return AttackDecision.GrabAbility;
             else if(CanDoBasicAttack())

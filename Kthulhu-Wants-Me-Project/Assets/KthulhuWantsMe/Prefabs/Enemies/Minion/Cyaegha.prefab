@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6832438006561834181}
   - component: {fileID: 4389780604326016033}
   - component: {fileID: 5283784153911277938}
+  - component: {fileID: -7685609292636036432}
   m_Layer: 10
   m_Name: Cyaegha
   m_TagString: Untagged
@@ -678,6 +679,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 2074288089250755570}
+--- !u!114 &-7685609292636036432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900409656979045455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddda88d6c3fd49a5ae249430ab7b7188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RetreatDuration: 2
+  _enemyHealth: {fileID: 1805378254231291091}
 --- !u!1 &6247246419053900879
 GameObject:
   m_ObjectHideFlags: 0
