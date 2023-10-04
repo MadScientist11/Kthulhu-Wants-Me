@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1727db5f4f489848a541c9857af5ff1, type: 3}
+  m_Name: ActionSuspense
+  m_EditorClassIdentifier: 
+  reverbTail: 3.75
+  intensityClips:
+  - {fileID: 8300000, guid: c81ad3ca41194d14fab218b13eecd8e3, type: 3}
+  - {fileID: 8300000, guid: 1de8ea34fc590384fb9197b4050414b2, type: 3}
+  - {fileID: 8300000, guid: 56d5c9c55ed46fc4282ee9526db033c2, type: 3}
