@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a043335b7a46df93a05b55ba034ae2, type: 3}
-  m_Name: Waves
+  m_Script: {fileID: 11500000, guid: 3aaa55c89d814567a474f0034bfe0e35, type: 3}
+  m_Name: BasicAttack
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,12 +21,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  BaseEnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  WaveData:
-  - WaveObjective: 1
-    Batches:
-    - WaveEnemies:
-      - EnemyType: 300
-        Quantity: 1
-        SpawnAt: 0
-      NextBatchDelay: 0
+  SpellId: 3
+  Prefab: {fileID: 3858957136978303227, guid: a6c6ea91ada8e554db05531afa8602fd, type: 3}
+  EffectiveRange: 4
+  Cooldown: 2
+  ActivationTime: 1

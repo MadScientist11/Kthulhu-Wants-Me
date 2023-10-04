@@ -71,8 +71,8 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  EnemyType: 0
-  Prefab: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2, type: 3}
+  EnemyType: 300
+  Prefab: {fileID: 1546379097491449038, guid: d5fbd92956236554f91bc2cd4c2103d7, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
   StunWearOffTime: 3
   TentacleGrabDamage: 100

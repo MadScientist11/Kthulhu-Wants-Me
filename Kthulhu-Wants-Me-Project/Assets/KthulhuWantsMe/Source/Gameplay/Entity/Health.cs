@@ -25,8 +25,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
                     return;
 
                 float newHealth = Mathf.Clamp(value, 0, MaxHealth);
-           
-
                 if (newHealth < _currentHealth)
                 {
                     TookDamage?.Invoke();
@@ -60,7 +58,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public virtual void TakeDamage(float damage, IDamageProvider damageProvider) =>
             CurrentHealth -= damage;
 
-        public virtual void TakeDamage(float damage) =>
+        public virtual void TakeDamage(float damage) => 
             CurrentHealth -= damage;
 
         public virtual void Heal(float amount) =>

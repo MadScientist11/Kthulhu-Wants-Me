@@ -88,7 +88,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
                     _playerModel);
 
             BuffSpell buffSpell
-                = new BuffSpell(this, allSpells[TentacleSpell.BasicAttackSpell], _buffDebuffFactory);
+                = new BuffSpell(this, allSpells[TentacleSpell.Buff], _buffDebuffFactory);
 
 
             _tentacleSpells = new()

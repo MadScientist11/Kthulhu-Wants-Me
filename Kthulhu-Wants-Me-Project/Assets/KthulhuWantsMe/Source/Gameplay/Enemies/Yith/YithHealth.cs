@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,6 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         private void Start()
         {
+            Revive();
             Died += HandleDeath;
         }
 
@@ -22,7 +24,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             Died -= HandleDeath;
         }
-        
+
         private void HandleDeath()
         {
             _collider.enabled = false;
