@@ -21,8 +21,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  SpellId: 3
-  Prefab: {fileID: 3858957136978303227, guid: a6c6ea91ada8e554db05531afa8602fd, type: 3}
+  SpellId: 4
+  Prefab: {fileID: 7986504087968017091, guid: 5de81f0a4f75b4642ad95d779fb6465b, type: 3}
   EffectiveRange: 4
   Cooldown: 2
   ActivationTime: 1
