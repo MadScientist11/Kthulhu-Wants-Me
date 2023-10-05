@@ -2,6 +2,7 @@
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
@@ -10,13 +11,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
     {
         public bool BlockProcessing { get; private set; }
         
-        [SerializeField] private Enemy _enemy;
         [SerializeField] private YithHealth _yithHealth;
         [SerializeField] private YithAttack _yithAttack;
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
         [SerializeField] private FollowLogic _followLogic;
 
-        private bool _isDead;
         private float _attackDelayTime;
         private float _rageComboRandom;
 
@@ -29,14 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             _player = gameFactory.Player;
             
-            _yithHealth.Died += TriggerDeath;
-            
             randomService.ProvideRandomValue(value => _rageComboRandom = value, ComboAttackReavaluationTime);
-        }
-
-        private void OnDestroy()
-        {
-            _yithHealth.Died -= TriggerDeath;
         }
 
         private void Start()
@@ -53,7 +45,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void DecideStrategy()
         {
-            if(_isDead || BlockProcessing)
+            if(_yithHealth.IsDead || BlockProcessing)
                 return;
             
             DecideMoveStrategy();
@@ -92,11 +84,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             }
         }
 
-        private void TriggerDeath()
-        {
-            _yithHealth.HandleDeath();
-            _isDead = true;
-        }
+   
 
         private void UpdateAttackDelayCountdown() => 
             _attackDelayTime -= Time.deltaTime;

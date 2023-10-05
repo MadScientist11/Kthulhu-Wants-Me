@@ -1,21 +1,18 @@
-﻿using System.Collections;
-using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using MoreMountains.Feedbacks;
 using UnityEngine;
-using VContainer;
+using UnityEngine.Serialization;
 using Time = UnityEngine.Time;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
     public class YithAttack : Attack
     {
-        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.Damage];
+        protected override float BaseDamage => enemyStatsContainer.EnemyStats.Stats[StatType.BaseDamage];
         
-        [SerializeField] private Enemy _enemy;
+        [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private MMFeedbacks _attackFeedback;
         [SerializeField] private FollowLogic _followLogic;
 

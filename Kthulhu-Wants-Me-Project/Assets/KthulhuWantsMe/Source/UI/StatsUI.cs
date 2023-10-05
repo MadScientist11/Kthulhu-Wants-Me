@@ -11,18 +11,6 @@ namespace KthulhuWantsMe.Source.UI
         public TextMeshProUGUI HpStatText;
         public TextMeshProUGUI AttackStatText;
         
-        private IPlayerStats _playerStats;
-
-        [Inject]
-        public void Construct(IPlayerStats playerStats)
-        {
-            _playerStats = playerStats;
-        }
-
-        private void Update()
-        {
-            HpStatText.text = $"HP: {(int)_playerStats.Stats.Health}";
-            AttackStatText.text = $"ATK: {_playerStats.GetOverallDamage()}";
-        }
+       
     }
 }

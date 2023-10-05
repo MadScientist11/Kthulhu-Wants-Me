@@ -2,6 +2,7 @@
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -15,15 +16,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         
         [SerializeField] private PlayerAnimator _playerAnimator;
         
-        private IInputService _inputService;
-        private IInventorySystem _inventorySystem;
-
         private WeaponItem _currentWeapon;
 
+        private IInputService _inputService;
+        private ThePlayer _player;
+
         [Inject]
-        public void Construct(IInputService inputService, IInventorySystem inventorySystem)
+        public void Construct(IInputService inputService, ThePlayer player)
         {
-            _inventorySystem = inventorySystem;
+            _player = player;
             _inputService = inputService;
 
             _inputService.GameplayScenario.SpecialAttack += PerformSpecialAttack;
@@ -42,7 +43,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void PerformSpecialAttack()
         {
-            if (_inventorySystem.CurrentItem is WeaponItem weapon && weapon.WeaponData.WeaponMoveSet.HasSpecialAttack)
+            if (_player.Inventory.CurrentItem is WeaponItem weapon && weapon.WeaponData.WeaponMoveSet.HasSpecialAttack)
             {
                 Debug.Log("Special Attack");
                 _currentWeapon = weapon;

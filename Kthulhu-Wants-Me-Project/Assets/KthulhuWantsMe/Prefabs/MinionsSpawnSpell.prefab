@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 102191422635246371}
   - component: {fileID: 2175072655083291658}
   - component: {fileID: 2243264468310685946}
-  - component: {fileID: 364244572452489457}
   m_Layer: 10
   m_Name: MinionsSpawnSpell
   m_TagString: Untagged
@@ -84,15 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &364244572452489457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352957224557205103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeabf93d00a749ebb535a15b3c2ca9ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

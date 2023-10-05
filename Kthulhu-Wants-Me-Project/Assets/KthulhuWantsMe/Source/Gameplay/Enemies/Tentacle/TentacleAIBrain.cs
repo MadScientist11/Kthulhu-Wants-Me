@@ -36,15 +36,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private TentacleGrabAbility _tentacleGrabAbility;
         [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
         [SerializeField] private TentacleAggro _tentacleAggro;
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
         private float _livingTime;
         private float _reconsiderationTime;
         private bool _stunned;
 
-        public const float ReconsiderationTime = 1f;
-        public const float GrabAbilityChance = .2f;
-        public const float StunWearOffTime = 1f;
+    
         
+        private TentacleConfiguration _tentacleConfiguration;
+
+
+        private void Start()
+        {
+            _tentacleConfiguration = (TentacleConfiguration)_enemyStatsContainer.Config;
+        }
 
         private void Update()
         {
@@ -74,7 +80,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                 return;
 
 
-            _reconsiderationTime = ReconsiderationTime;
+            _reconsiderationTime = _tentacleConfiguration.ReconsiderationTime;
 
             AttackDecision attackDecision = MakeAttackDecision();
 
@@ -87,6 +93,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                     _tentacleGrabAbility.GrabPlayer();
                     break;
                 case AttackDecision.SpellCast:
+                    _tentacleSpellCastingAbility.CastSpell(TentacleSpell.BasicAttackSpell).Forget();
+                    break;
                 case AttackDecision.Nothing:
                     break;
                 default:
@@ -96,27 +104,30 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private AttackDecision MakeAttackDecision()
         {
-            float decisionValue = Random.value;
-
-            if (CanGrabPlayer() && decisionValue < GrabAbilityChance)
+            if (CanGrabPlayer())
                 return AttackDecision.GrabAbility;
             else if(CanDoBasicAttack())
                 return AttackDecision.BasicAttack;
+            else if(CanCastAttackSpell())
+                return AttackDecision.SpellCast;
             else
                 return AttackDecision.Nothing;
         }
 
         private IEnumerator StunWearOff()
         {
-            yield return Utilities.WaitForSeconds.Wait(StunWearOffTime);
+            yield return Utilities.WaitForSeconds.Wait(_tentacleConfiguration.StunWearOffTime);
             Stunned = false;
         }
 
         private bool CanGrabPlayer() =>
-            Random.value < GrabAbilityChance && _tentacleAggro.HasAggro;
+            Random.value < _tentacleConfiguration.GrabAbilityChance && _tentacleAggro.HasAggro;
 
         private bool CanDoBasicAttack() =>
-            _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro;
+            _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro && _tentacleAggro.IsPlayerInFront;
+        
+        private bool CanCastAttackSpell() =>
+            _tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.BasicAttackSpell) && _tentacleAggro.HasAggro;
 
         private bool CanNotAttack() =>
             _tentacleGrabAbility.HoldsPlayer || _tentacleAttack.IsAttacking || _reconsiderationTime > 0 || Stunned;

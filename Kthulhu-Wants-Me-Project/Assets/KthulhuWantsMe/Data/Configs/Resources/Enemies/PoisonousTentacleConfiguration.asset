@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9697cac2d550411492ba4ef18d7180d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e54fa5f97ed4118862d7f7f64d19599, type: 3}
   m_Name: PoisonousTentacleConfiguration
   m_EditorClassIdentifier: 
   serializationData:
@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Stats
+    - Name: BaseStats
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[KthulhuWantsMe.Source.Gameplay.WavesLogic.StatType,
         KthulhuWantsMe],[System.Single, mscorlib]], mscorlib
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 10
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -74,3 +74,11 @@ MonoBehaviour:
   EnemyType: 1
   Prefab: {fileID: 7040502946091595901, guid: fa6485ad9671b57469481f88c6d60ee2, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
+  StunWearOffTime: 3
+  TentacleGrabDamage: 100
+  GrabAbilityChance: 0.1
+  AggroRange: 10
+  ReconsiderationTime: 2
+  AttackRadius: 1
+  AttackEffectiveDistance: 1
+  AttackCooldownTime: 1

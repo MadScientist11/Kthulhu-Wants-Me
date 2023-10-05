@@ -11,7 +11,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Scopes
     {
         protected override void Configure(IContainerBuilder builder)
         {
-          builder.Install(new GameInstaller());
+          builder.Install(new GameInstaller(null));
           builder.RegisterEntryPoint<TestEntryPoint>();
         }
     }

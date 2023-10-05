@@ -1,9 +1,11 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Effects;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.Weapons;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -17,7 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 {
     public class PlayerAttack : Entity.Attack
     {
-        protected override float BaseDamage => _playerStats.BaseDamage;
+        protected override float BaseDamage => _player.BaseDamage;
 
         public bool IsAttacking => _isAttacking;
 
@@ -35,58 +37,70 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         private bool _canProceedWithCombo;
 
         private PlayerConfiguration _playerConfiguration;
-        private Stats _playerStats;
         private IInputService _inputService;
-        private IInventorySystem _inventorySystem;
         private WeaponParticleTrailEffect _weaponTrails;
+        private ThePlayer _player;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, IPlayerStats playerStats,
-            IInventorySystem inventorySystem)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player)
         {
-            _inventorySystem = inventorySystem;
+            _player = player;
             _inputService = inputService;
             _playerConfiguration = dataProvider.PlayerConfig;
-            _playerStats = playerStats.Stats;
 
             _inputService.GameplayScenario.Attack += PerformAttack;
             _playerHealth.TookDamage += ResetAttackState;
-            _inventorySystem.OnCurrentItemChanged += UpdateActiveWeaponStatus;
+            player.Inventory.OnCurrentItemChanged += UpdateActiveWeaponStatus;
         }
 
         private void OnDestroy()
         {
             _inputService.GameplayScenario.Attack -= PerformAttack;
             _playerHealth.TookDamage -= ResetAttackState;
-            _inventorySystem.OnCurrentItemChanged -= UpdateActiveWeaponStatus;
+            _player.Inventory.OnCurrentItemChanged -= UpdateActiveWeaponStatus;
         }
 
         public override float ProvideDamage() =>
             base.ProvideDamage() + _activeWeapon.WeaponData.BaseDamage +
             _activeWeapon.WeaponData.WeaponMoveSet.AttackMoveDamage[_comboAttackIndex];
 
+        public void ResetAttackState()
+        {
+            _isAttacking = false;
+            _canProceedWithCombo = false;
+            _comboAttackIndex = 0;
+        }
+
         protected override void OnWindUpPhase()
         {
             _isAttacking = true;
             _canProceedWithCombo = false;
             _playerLocomotion.FaceMouse();
+            _playerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfiguration.AttackStep);
+            Debug.Log("WindUp");
         }
 
         protected override void OnContactPhase()
         {
-            if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _playerConfiguration.AttackRadius,
-                    LayerMasks.EnemyMask, out IDamageable damageable))
+            if (!PhysicsUtility.HitMany(AttackStartPoint(), _playerConfiguration.AttackRadius,
+                    LayerMasks.EnemyMask, out List<IDamageable> damageables))
                 return;
 
 
             _weaponTrails.Play(_comboAttackIndex);
             TargetFeedbacks.PlayFeedbacks(AttackStartPoint());
-            ApplyDamage(damageable);
-            if (damageable.Transform.TryGetComponent(out IEffectReceiver effectReceiver))
-            {
-                _playerDamageModifier?.ApplyTo(effectReceiver);
 
+            foreach (IDamageable damageable in damageables)
+            {
+                ApplyDamage(damageable);
+                
+                if (damageable.Transform.TryGetComponent(out IEffectReceiver effectReceiver))
+                {
+                    _playerDamageModifier?.ApplyTo(effectReceiver);
+                }
             }
+
+          
         }
 
         protected override void OnRecoveryPhase()
@@ -103,22 +117,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         private void PerformAttack()
         {
-            Debug.Log("Try attack");
             if (CantAttack())
                 return;
 
-            Debug.Log("Attack");
             _playerLocomotion.BlockMovement(0.5f);
             _playerAnimator.PlayAttack(_comboAttackIndex);
         }
-
-        private void ResetAttackState()
-        {
-            _isAttacking = false;
-            _canProceedWithCombo = false;
-            _comboAttackIndex = 0;
-        }
-
 
         private Vector3 AttackStartPoint() =>
             new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z) +

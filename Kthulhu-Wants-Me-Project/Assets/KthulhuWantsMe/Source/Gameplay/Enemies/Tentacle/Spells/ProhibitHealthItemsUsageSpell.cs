@@ -7,6 +7,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
     public class ProhibitHealthItemsUsageSpell : ITentacleSpell
     {
         public bool Active { get; private set; }
+        public bool InCooldown { get; } 
         private readonly PlayerFacade _player;
         private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
 

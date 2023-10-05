@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8246a5c7c142cb8335885848941e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 8187939092874492644}
+  enemyStatsContainer: {fileID: 8187939092874492644}
   _tentacleAnimator: {fileID: 7893959025167172210}
 --- !u!114 &7749225858506147541
 MonoBehaviour:
@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd210bd5ae44979ad84807507885a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 8187939092874492644}
+  enemyStatsContainer: {fileID: 8187939092874492644}
   _tentacleHealth: {fileID: 1336930687297924091}
   _hpBar: {fileID: 4168230298860864657}
 --- !u!114 &-2563807488164230852
@@ -463,6 +463,7 @@ MonoBehaviour:
   _tentacleGrabAbility: {fileID: 3629999761114246035}
   _tentacleSpellCastingAbility: {fileID: 7743905234635742817}
   _tentacleAggro: {fileID: 423395108823978285}
+  _enemyStatsContainer: {fileID: 8187939092874492644}
 --- !u!114 &7893959025167172210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,13 +496,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8eaed4a866d4d12aad1c26ebc1e3b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 8187939092874492644}
+  enemyStatsContainer: {fileID: 8187939092874492644}
   _tentacleAnimator: {fileID: 7893959025167172210}
   _damageModifier: {fileID: 0}
-  _attackRadius: 1
-  _tentacleGrabDamage: 0
-  _attackEffectiveDistance: 1
-  _attackCooldownTime: 1
 --- !u!114 &3629999761114246035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,6 +543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tentacleAnimator: {fileID: 7893959025167172210}
+  _enemyStatsContainer: {fileID: 8187939092874492644}
 --- !u!114 &1366331452263209347
 MonoBehaviour:
   m_ObjectHideFlags: 0

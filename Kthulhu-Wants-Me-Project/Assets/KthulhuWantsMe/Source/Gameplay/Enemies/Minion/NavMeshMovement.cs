@@ -16,8 +16,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
         [SerializeField] private NavMeshAgent _navMeshAgent;
         private Transform _followTarget;
 
-        private void OnValidate() => 
+        private void OnValidate()
+        {
             _navMeshAgent = GetComponent<NavMeshAgent>();
+        }
 
         public void MoveTo(Vector3 destination) => 
             _navMeshAgent.destination = destination;

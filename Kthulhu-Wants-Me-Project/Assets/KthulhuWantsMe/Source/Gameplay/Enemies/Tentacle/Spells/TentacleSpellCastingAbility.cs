@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 {
     public class TentacleSpellCastingAbility : MonoBehaviour, IAbility
     {
-        public bool CastingSpell { get; private set; }
+        public bool CastingSpell { get; set; }
 
         public Transform SpellSpawnPoint;
 
@@ -20,12 +21,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
 
         private IGameFactory _gameFactory;
+        private ThePlayer _playerModel;
 
         [Inject]
-        public void Construct(IDataProvider dataProvider, IGameFactory gameFactory)
+        public void Construct(IDataProvider dataProvider, IGameFactory gameFactory, ThePlayer playerModel)
         {
+            _playerModel = playerModel;
             _gameFactory = gameFactory;
-            
         }
 
         private void Start() =>
@@ -34,10 +36,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public async UniTaskVoid CastSpell(TentacleSpell spell)
         {
             //In collection, cancel if 
-            CastingSpell = true;
-            await _tentacleSpells[spell].Cast();
-            CastingSpell = false;
             _activeSpells.Add(spell);
+            await _tentacleSpells[spell].Cast();
         }
 
         public void CancelActiveSpells()
@@ -52,30 +52,40 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
         public async UniTaskVoid CancelSpell(TentacleSpell spell)
         {
+            Debug.Log("Cancel Spell");
             await _tentacleSpells[spell].Undo();
         }
 
-        public bool CanCastSpell(TentacleSpell spell) => !CastingSpell && !IsActive(spell) && 
+        public bool CanCastSpell(TentacleSpell spell) => !CastingSpell && !IsActive(spell) && IsNotOnCooldown(spell) &&
             !_gameFactory.Player.TentacleSpellResponse.IsActiveDebuff(spell);
 
         public bool IsActive(TentacleSpell spell)
             => _tentacleSpells[spell].Active;
 
+        public bool IsNotOnCooldown(TentacleSpell spell)
+            => !_tentacleSpells[spell].InCooldown;
         public ITentacleSpell Get(TentacleSpell spell) => 
             _tentacleSpells[spell];
 
-        private void CreateSpells()
+        private async UniTaskVoid CreateSpells()
         {
+            AllSpells allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpells");
+            
             ProhibitHealthItemsUsageSpell prohibitHealthItemsUsageSpell
                 = new ProhibitHealthItemsUsageSpell(_gameFactory.Player, this);
 
             SpawnMinionsSpell spawnMinionsSpell
                 = new SpawnMinionsSpell(_gameFactory, this);
+            
+            BasicAttackSpell basicAttackSpell
+                = new BasicAttackSpell(this,allSpells[TentacleSpell.BasicAttackSpell], _gameFactory.Player, _playerModel);
+            
 
             _tentacleSpells = new()
             {
                 { TentacleSpell.PlayerCantUseHealthItems, prohibitHealthItemsUsageSpell },
                 { TentacleSpell.MinionsSpawnSpell, spawnMinionsSpell },
+                { TentacleSpell.BasicAttackSpell, basicAttackSpell },
             };
         }
     }

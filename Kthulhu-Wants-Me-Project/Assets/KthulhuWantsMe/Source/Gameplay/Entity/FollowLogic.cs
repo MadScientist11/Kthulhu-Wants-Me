@@ -1,8 +1,13 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
+﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
+    public interface IInterceptionCompliant
+    {
+        Vector3 AverageVelocity { get; }
+    }
     [RequireComponent(typeof(NavMeshMovement))]
     public class FollowLogic : MonoBehaviour
     {
@@ -19,22 +24,77 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private NavMeshMovement _movementMotor;
         
         private Transform _followTarget;
+        private IInterceptionCompliant _interceptTarget;
         private float _maxFollowDistance;
         private float _reachDistance;
+        
+        [Range(-1f, 1f)]
+        public float MovementPredictionThreshold = 0;
+        [Range(0.25f, 2f)]
+        public float MovementPredictionTime = 1;
 
         private void OnValidate() => 
             _movementMotor = GetComponent<NavMeshMovement>();
 
         private void Update()
         {
-            _movementMotor.MoveTo(_followTarget.position);
+            if (_interceptTarget != null)
+            {
+
+                float timeToPlayer = Vector3.Distance(_followTarget.position, transform.position) /
+                                     FollowSpeed;
+
+                if (timeToPlayer > MovementPredictionTime)
+                {
+                    timeToPlayer = MovementPredictionTime;
+                }
+
+                Vector3 targetPosition = _followTarget.position + _interceptTarget.AverageVelocity * timeToPlayer;
+
+                Vector3 directionToTarget = (targetPosition - transform.position).normalized;
+                Vector3 directionToPlayer = (_followTarget.position - transform.position).normalized;
+
+                float dot = Vector3.Dot(directionToPlayer, directionToTarget);
+
+                if (dot < MovementPredictionThreshold)
+                {
+                    targetPosition = _followTarget.position;
+                }
+                _movementMotor.MoveTo(targetPosition);
+            }
         }
 
-        public void Init(Transform followTarget, float maxFollowDistance, float reachDistance, bool followOnStart = false)
+        private void OnDrawGizmos()
+        {
+            float timeToPlayer = Vector3.Distance(_followTarget.position, transform.position) /
+                                 FollowSpeed;
+
+            if (timeToPlayer > MovementPredictionTime)
+            {
+                timeToPlayer = MovementPredictionTime;
+            }
+
+            Vector3 targetPosition = _followTarget.position + _interceptTarget.AverageVelocity * timeToPlayer;
+
+            Vector3 directionToTarget = (targetPosition - transform.position).normalized;
+            Vector3 directionToPlayer = (_followTarget.position - transform.position).normalized;
+
+            float dot = Vector3.Dot(directionToPlayer, directionToTarget);
+
+            if (dot < MovementPredictionThreshold)
+            {
+                targetPosition = _followTarget.position;
+            }
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(targetPosition, .3f);
+        }
+
+
+        public void Init(Transform target, float maxFollowDistance, float reachDistance, bool followOnStart = false)
         {
             _reachDistance = reachDistance;
             _maxFollowDistance = maxFollowDistance;
-            SetFollowTarget(followTarget);
+            SetFollowTarget(target);
             // SetStoppingDistance
             
             if(followOnStart)
@@ -43,9 +103,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 StopFollowing();
         }
 
-        public void SetFollowTarget(Transform target) => 
+        public void SetFollowTarget(Transform target)
+        {
             _followTarget = target;
-        
+            if(_followTarget.TryGetComponent(out IInterceptionCompliant interceptionCompliant))
+            {
+                _interceptTarget = interceptionCompliant;
+            }
+        }
+
         public void Follow() => 
             _movementMotor.Enable();
         

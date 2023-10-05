@@ -16,17 +16,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
     public class CyaeghaAttack : Attack
     {
-        protected override float BaseDamage => _enemy.EnemyStats.Stats[StatType.Damage];
+        protected override float BaseDamage => _enemyStatsContainer.EnemyStats.Stats[StatType.BaseDamage];
 
 
         public AnimationCurve HeightCurve;
 
-        [SerializeField] private Enemy _enemy;
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
         [SerializeField] private NavMeshAgent _cyaeghaNavMesh;
         
         private float _attackCooldown;
         private bool _isAttacking;
-    
+        
+        private CyaeghaConfiguration _cyaeghaConfiguration;
+
+        private void Start()
+        {
+            _cyaeghaConfiguration = (CyaeghaConfiguration)_enemyStatsContainer.Config;
+        }
+
         private void Update()
         {
             _attackCooldown -= Time.deltaTime;
@@ -67,7 +74,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
           
 
             _isAttacking = false;
-            _attackCooldown = 1f;
+            _attackCooldown = _cyaeghaConfiguration.AttackCooldown;
         }
 
         private bool TryDamage(float damageRadius, out IDamageable damageable)

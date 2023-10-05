@@ -2,6 +2,7 @@
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using VContainer;
 using VContainer.Unity;
 
@@ -26,6 +27,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
    
             builder
                 .Register<ProgressService>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
+            builder
+                .Register<UIFactory>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
+            builder
+                .Register<UIService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
             builder

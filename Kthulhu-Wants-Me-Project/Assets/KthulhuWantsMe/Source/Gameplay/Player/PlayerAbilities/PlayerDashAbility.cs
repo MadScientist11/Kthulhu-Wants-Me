@@ -1,5 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -12,18 +13,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
     {
         [SerializeField] private PlayerFacade _player;
         [SerializeField] private TentacleGrabAbilityResponse _grabAbilityResponse;
-
+        
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
         
         private IInputService _inputService;
+        private PlayerStats _playerStats;
+
+        private float _nextDashTime;
         private PlayerConfiguration _playerConfig;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider)
+        public void Construct(IInputService inputService,IDataProvider dataProvider, ThePlayer player)
         {
             _inputService = inputService;
+            _playerStats = player.PlayerStats;
             _playerConfig = dataProvider.PlayerConfig;
-
             _inputService.GameplayScenario.Dash += PerformDash;
         }
 
@@ -35,7 +39,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private void PerformDash()
         {
             if (CanDash())
+            {
                 Dash();
+                _nextDashTime = Time.time + _playerStats.EvadeDelay;
+            }
         }
 
         private void Dash()
@@ -45,7 +52,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private bool CanDash()
         {
-            return !_grabAbilityResponse.Grabbed && PlayerLocomotion.IsMoving;
+            return !_grabAbilityResponse.Grabbed && PlayerLocomotion.IsMoving && Time.time >= _nextDashTime;
         }
     }
 }

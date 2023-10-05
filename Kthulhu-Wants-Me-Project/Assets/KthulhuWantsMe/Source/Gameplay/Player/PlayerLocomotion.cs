@@ -2,6 +2,7 @@ using System;
 using Freya;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Camera;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -12,16 +13,13 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
-    public enum Input
-    {
-        AscentLike = 0,
-        RelativeToMouse = 1,
-    }
-
-    public class PlayerLocomotion : MonoBehaviour
+    public class PlayerLocomotion : MonoBehaviour, IInterceptionCompliant
     {
         public bool IsMoving =>
             _movementController.CurrentVelocity.XZ().sqrMagnitude > 0.1f && _motor.enabled;
+
+        public Vector3 AverageVelocity => MovementController.AverageVelocity;
+
 
         public PlayerMovementController MovementController => _movementController;
 
@@ -37,21 +35,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private PlayerConfiguration _playerConfig;
         private ICoroutineRunner _coroutineRunner;
         private CinemachineCameraPanning _cameraPanningLogic;
-        private IGameFactory _gameFactory;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, ICoroutineRunner coroutineRunner, IGameFactory gameFactory)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ICoroutineRunner coroutineRunner)
         {
-            _gameFactory = gameFactory;
             _coroutineRunner = coroutineRunner;
             _playerConfig = dataProvider.PlayerConfig;
             _inputService = inputService;
             _movementController = new PlayerMovementController(_motor, _playerConfig);
-        }
-
-        private void Start()
-        {
-            _cameraPanningLogic = _gameFactory.Player.GetCameraPanningLogic();
         }
 
         private void Update()
@@ -61,7 +52,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 if (MovementInputDetected())
                 {
                     _playerAnimator.Move();
-                    _cameraPanningLogic.DisablePanning = true;
                 }
                 else
                     _playerAnimator.StopMoving();
@@ -72,8 +62,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             _movementController.SetInputs(Vector2.zero, _lastLookDirection);
             _playerAnimator.StopMoving();
-            _cameraPanningLogic.DisablePanning = false;
-
         }
 
         public void BlockMovement(float timeFor)
@@ -142,5 +130,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             return _inputService.GameplayScenario.MovementInput.sqrMagnitude > 0.1f;
         }
+
     }
 }

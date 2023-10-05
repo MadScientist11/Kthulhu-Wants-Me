@@ -12,22 +12,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f582f133014e23b3e40ed91f95b4af, type: 3}
   m_Name: PlayerConfiguration
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: BaseStats
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[KthulhuWantsMe.Source.Gameplay.WavesLogic.StatType,
+        KthulhuWantsMe],[System.Single, mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[KthulhuWantsMe.Source.Gameplay.WavesLogic.StatType,
+        KthulhuWantsMe]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 4
+      Data: 100
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 100
+    - Name: $v
+      Entry: 4
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   PlayerPrefab: {fileID: -5172653069112829316, guid: 31e400d6a849a5a4baaa2f5ca4f48386,
     type: 3}
   PlayerCameraPrefab: {fileID: 6843986045684515988, guid: 0326cc12476ef5845b6d23d3849d0cda,
     type: 3}
-  MaxHealth: 100
-  MoveSpeed: 5
-  Gravity: {x: 0, y: -30, z: 0}
-  DashStrength: 40
-  InputType: 0
-  AttackRadius: 0.5
+  MoveSpeed: 4.65
+  Gravity: {x: 0, y: -1000, z: 0}
+  DashStrength: 30
+  DashCooldown: 0.85
+  AttackRadius: 2
   AttackEffectiveDistance: 1
-  BaseDamage: 10
+  AttackStep: 17
   LungeBaseDamage: 100
   LungeRadius: 2
-  StableMovementSharpness: 15
-  OrientationSharpness: 50
+  StableMovementSharpness: 17
+  OrientationSharpness: 35
   MaxAirMoveSpeed: 10
   AirAccelerationSpeed: 5
   Drag: 0.1
