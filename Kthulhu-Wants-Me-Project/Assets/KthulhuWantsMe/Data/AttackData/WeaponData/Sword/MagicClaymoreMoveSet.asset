@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MagicClaymoreMoveSet
   m_EditorClassIdentifier: 
   MoveSetAttackCount: 3
-  MoveSetAnimations: {fileID: 22100000, guid: 231e11e9e4fd1df498ddcf851b3504f0, type: 2}
+  MoveSetAnimations: {fileID: 22100000, guid: 749742a7b0c20fa4ab311babb7b1c428, type: 2}
   AttackMoveDamage:
   - 3
   - 5
