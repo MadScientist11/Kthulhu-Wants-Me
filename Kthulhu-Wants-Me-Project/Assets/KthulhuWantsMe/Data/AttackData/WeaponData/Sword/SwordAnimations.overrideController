@@ -7,13 +7,13 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SwordAnimations
-  m_Controller: {fileID: 9100000, guid: c653f409fd5f7c14e92d836112dd8725, type: 2}
+  m_Controller: {fileID: 9100000, guid: 506d28300d0d64d40a15e1818612ee34, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: a48681af679ca35498aa3da40483be0a, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: bb911b0a882dfb7428b0a4f9dfa0173b, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 98a2f4ffa5d6e2c4d9b45cec35ff7079, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 9abba58c6c820954bbd5abfa3cf9f9de, type: 2}
-  - m_OriginalClip: {fileID: 7400000, guid: ba4937b17ef0ac44484cd2c3392c2eb6, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 3d5fb13c6de9a5c4ea826771abd3bf0e, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 258782e63f6a748448d395c8775b574c, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 58076ef5061ab9b4491108978ca99d62, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ba4937b17ef0ac44484cd2c3392c2eb6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3d5fb13c6de9a5c4ea826771abd3bf0e, type: 2}
