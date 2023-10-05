@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: 
   Description: 
-  ItemInHandPosition: {x: 0.076, y: -0.018, z: 0}
-  ItemInHandRotation: {x: 0.09065, y: -0.15534075, z: 0.49110198, w: 0.8523325}
+  ItemInHandPosition: {x: -0.111, y: -0.154, z: -0.115}
+  ItemInHandRotation: {x: 0.15758966, y: -0.1638771, z: 0.06178846, w: 0.97184974}
   WeaponType: 1
   BaseDamage: 10
   WeaponMoveSet: {fileID: 11400000, guid: eec6806aa787fab47b70ed570fc16182, type: 2}
