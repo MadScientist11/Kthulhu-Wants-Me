@@ -6,9 +6,9 @@ using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 {
-    public class Spawner
+    public class EnemySpawner
     {
         public Vector3 Position => _spawnPoint.Position;
         public EnemySpawnerId Id => _spawnPoint.EnemySpawnerId;
@@ -16,14 +16,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         private readonly IGameFactory _gameFactory;
         private readonly SpawnPoint _spawnPoint;
 
-        public Spawner(IGameFactory gameFactory, SpawnPoint spawnPoint)
+        public EnemySpawner(IGameFactory gameFactory, SpawnPoint spawnPoint)
         {
             _spawnPoint = spawnPoint;
             _gameFactory = gameFactory;
         }
 
 
-        public Health Spawn(SingleEnemy enemyPrototype)
+        public Health Spawn(EnemyType enemyType)
         {
             Vector3 randomPoint = Mathfs.Abs(Random.insideUnitSphere * 3f);
             Vector3 spawnPosition = _spawnPoint.Position + randomPoint;
@@ -32,7 +32,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             {
                 Portal portal =
                     _gameFactory.CreatePortalWithEnemy(hitInfo.point + Vector3.one * 0.05f, Quaternion.identity,
-                        enemyPrototype.EnemyType);
+                        enemyType);
                 GameObject enemy = portal.LastSpawnedEnemy;
 
                 return enemy.GetComponent<Health>();

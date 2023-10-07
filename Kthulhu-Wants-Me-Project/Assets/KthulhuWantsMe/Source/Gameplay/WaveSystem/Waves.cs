@@ -2,12 +2,12 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     [CreateAssetMenu(menuName = "Create Waves", fileName = "Waves", order = 0)]
     public class Waves : SerializedScriptableObject
     {
-        public EnemyScaling BaseEnemyScaling;
+        public EnemyScaling.EnemyScaling BaseEnemyScaling;
         [TableList()]
         public List<WaveData> WaveData;
         

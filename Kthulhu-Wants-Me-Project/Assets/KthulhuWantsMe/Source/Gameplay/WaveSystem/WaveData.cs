@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     [Serializable]
     public class Batch
     {
-        public List<WaveEnemy> WaveEnemies;
+        public List<EnemyPack> WaveEnemies;
         public float NextBatchDelay;
     }
     [Serializable]

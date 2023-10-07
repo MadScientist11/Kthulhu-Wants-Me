@@ -36,7 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _gameStateMachine = gameStateMachine;
         }
 
-        public async void Enter()
+        public void Enter()
         {
             SpawnPoint playerSpawnPoint = _sceneDataProvider.AllSpawnPoints[SpawnPointType.PlayerSpawnPoint].FirstOrDefault(); 
             

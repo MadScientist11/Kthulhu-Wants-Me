@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Upgrades;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.UI;
@@ -14,12 +15,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
     public class WaveCompleteState : IGameplayState
     {
         private IUIService _uiService;
-        private IWaveSystem _waveSystem;
+        private IWaveSystemDirector _waveSystem;
         private ThePlayer _player;
         private GameStateMachine _gameStateMachine;
         private IProgressService _progressService;
 
-        public WaveCompleteState(GameStateMachine gameStateMachine, IProgressService progressService, IUIService uiService, IWaveSystem waveSystem, ThePlayer player)
+        public WaveCompleteState(GameStateMachine gameStateMachine, IProgressService progressService, IUIService uiService, IWaveSystemDirector waveSystem, ThePlayer player)
         {
             _progressService = progressService;
             _gameStateMachine = gameStateMachine;
@@ -27,7 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _waveSystem = waveSystem;
             _uiService = uiService;
         }
-        public async void Enter()
+        public void Enter()
         {
             _progressService.ProgressData.DefeatedWaveIndex++;
             

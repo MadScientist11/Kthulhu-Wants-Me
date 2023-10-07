@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.EnemyScaling
 {
     [Serializable]
     public class ScaleParameter

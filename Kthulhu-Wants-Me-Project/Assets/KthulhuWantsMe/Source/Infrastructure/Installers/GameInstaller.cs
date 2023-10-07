@@ -8,6 +8,7 @@ using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEditor.Compilation;
 using VContainer;
@@ -71,7 +72,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsSelf();
             
             builder
-                .Register<WaveSystem>(Lifetime.Scoped)
+                .Register<WaveSystemDirector>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
             builder

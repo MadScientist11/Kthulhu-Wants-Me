@@ -19,7 +19,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         public UniTask Initialize()
         {
             IsInitialized = true;
-            ProgressData.DefeatedWaveIndex = 0;
+            ProgressData.DefeatedWaveIndex = -1;
             return UniTask.CompletedTask;
         }
     }

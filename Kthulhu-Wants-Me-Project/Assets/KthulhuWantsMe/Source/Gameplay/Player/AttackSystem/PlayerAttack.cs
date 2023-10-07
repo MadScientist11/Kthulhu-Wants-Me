@@ -77,7 +77,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _canProceedWithCombo = false;
             _playerLocomotion.FaceMouse();
             _playerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfiguration.AttackStep);
-            Debug.Log("WindUp");
         }
 
         protected override void OnContactPhase()

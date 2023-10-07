@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 
 namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
@@ -6,10 +7,10 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
     public class WaveStartState : IGameplayState
     {
         private GameStateMachine _gameStateMachine;
-        private readonly IWaveSystem _waveSystem;
+        private readonly IWaveSystemDirector _waveSystem;
         private IProgressService _progressService;
 
-        public WaveStartState(GameStateMachine gameStateMachine, IWaveSystem waveSystem, IProgressService progressService)
+        public WaveStartState(GameStateMachine gameStateMachine, IWaveSystemDirector waveSystem, IProgressService progressService)
         {
             _progressService = progressService;
             _waveSystem = waveSystem;

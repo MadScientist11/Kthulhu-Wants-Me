@@ -2,10 +2,10 @@
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     [Serializable]
-    public class WaveEnemy
+    public class EnemyPack
     {
         public EnemyType EnemyType;
         public int Quantity;

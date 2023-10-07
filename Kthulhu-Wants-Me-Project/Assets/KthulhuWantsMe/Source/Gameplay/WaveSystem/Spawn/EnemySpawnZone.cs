@@ -1,8 +1,7 @@
 using System;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 {
     [Serializable]
     public class EnemySpawnZoneData
