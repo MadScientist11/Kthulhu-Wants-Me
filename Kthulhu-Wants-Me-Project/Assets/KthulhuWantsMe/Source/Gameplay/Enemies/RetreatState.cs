@@ -8,46 +8,82 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
     public class RetreatState : MonoBehaviour
     {
         public float RetreatDuration;
-
+        public float Height;
+        
         [SerializeField] private Health _enemyHealth;
-        
+
         protected Vector3 InitialPoint { get; private set; }
-        
+
         private Portal _boundPortal;
         private float _height = 2;
-
-        private bool _withoutNotify;
-        private Action _customCallback;
 
         public void Init(float height, Portal boundPortal)
         {
             _height = height;
             _boundPortal = boundPortal;
-            _withoutNotify = false;
-            _enemyHealth.Died += Retreat;
+            _enemyHealth.Died += RetreatDefeated;
         }
 
         private void OnDestroy()
         {
-            _enemyHealth.Died -= Retreat;
+            _enemyHealth.Died -= RetreatDefeated;
         }
 
-        public void Retreat() => 
-            StartCoroutine(RetreatToPortal(transform.position.AddY(-_height)));
-        
-        public void RetreatWithoutNotify()
+        public void RetreatDefeated() =>
+            StartCoroutine(RetreatToPortalDefeated(transform.position.AddY(-Height)));
+
+        public void Retreat()
         {
-            _withoutNotify = true;
-            StartCoroutine(RetreatToPortal(transform.position.AddY(-_height)));
+            StartCoroutine(RetreatToPortal(transform.position.AddY(-Height)));
         }
 
-        protected virtual void OnRetreat() {}
+        protected virtual void OnRetreat()
+        {
+        }
 
-        protected virtual void OnRetreated() {}
+        protected virtual void OnRetreated()
+        {
+        }
+        
+        protected virtual void OnRetreatDefeated()
+        {
+        }
+
+        protected virtual void OnRetreatedDefeated()
+        {
+        }
+        
 
         private IEnumerator RetreatToPortal(Vector3 to)
         {
+            _boundPortal.gameObject.SetActive(true);
+            _boundPortal.transform.position = transform.position;
             OnRetreat();
+            Vector3 initialPosition = transform.position;
+            InitialPoint = initialPosition;
+            Vector3 targetPosition = to;
+
+            float duration = RetreatDuration;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                float t = elapsedTime / duration;
+                transform.position = Vector3.Lerp(initialPosition, targetPosition, t);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            if (_boundPortal != null)
+                _boundPortal.ClosePortal();
+
+            OnRetreated();
+        }
+        
+        private IEnumerator RetreatToPortalDefeated(Vector3 to)
+        {
+            OnRetreatDefeated();
+            
             Vector3 initialPosition = transform.position;
             InitialPoint = initialPosition;
             Vector3 targetPosition = to;
@@ -66,13 +102,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
                 yield return null;
             }
 
-            if(_boundPortal != null)
+            if (_boundPortal != null)
                 _boundPortal.ClosePortal();
-            
-            if(!_withoutNotify)
-                OnRetreated();
-            else
-                Destroy(gameObject);
+
+            OnRetreatedDefeated();
         }
     }
 }
+

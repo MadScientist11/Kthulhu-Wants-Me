@@ -1,44 +1,46 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
-using Unity.VisualScripting.YamlDotNet.Core;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
-using Object = UnityEngine.Object;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
-    public interface IUIService : IInitializableService
+    public interface IUIService
     {
-        MiscUI MiscUIContainer { get; }
-        UniTaskVoid ShowPlayerHUD();
-        void HidePlayerHUD();
-        UniTask InitializeGameUI();
-        UniTask<BaseWindow> OpenWindow(WindowId windowId);
-        void OpenPopUp(PopUpId popUpId);
+        BaseWindow OpenWindow(WindowId windowId);
+        MiscUI MiscUI { get; }
+        void HideHUD();
+        void ShowHUD();
     }
 
     public class UIService : IUIService
+    
     {
-        public PlayerHUD PlayerHUD { get; private set; }
-        public MiscUI MiscUIContainer { get; private set; }
-
         public bool IsInitialized { get; set; }
 
+        public MiscUI MiscUI
+        {
+            get
+            {
+                if (_miscUI == null)
+                {
+                    _miscUI = _uiFactory.CreateMiscUI();
+                }
 
-        public const string GameUIPath = "GameUI";
+                return _miscUI;
+            }
+        }
 
-        
-        private bool _gameUISceneLoaded;
-        private bool _gameUISceneLoading;
-        
+
+        private PlayerHUD _playerHUD;
+        private MiscUI _miscUI;
+
         private ISceneLoader _sceneLoader;
-        
         private IUIFactory _uiFactory;
-
 
         [Inject]
         public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory)
@@ -47,79 +49,32 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _sceneLoader = sceneLoader;
         }
         
-        public  UniTask Initialize()
-        {
-            IsInitialized = true;
-            return UniTask.CompletedTask;
-        }
-        
-        public  async UniTask InitializeGameUI()
-        {
-            await LoadGameUISceneIfNeeded();
-            await LoadMiscUIContainer();
-        }
-
-        public async UniTask<BaseWindow> OpenWindow(WindowId windowId)
+        public BaseWindow OpenWindow(WindowId windowId)
         {
             switch (windowId)
             {
                 case WindowId.UpgradeWindow:
-                   return await _uiFactory.CreateUpgradeWindow();
-                    break;
+                    UpgradeWindow upgradeWindow = _uiFactory.CreateUpgradeWindow();
+                    return upgradeWindow;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(windowId), windowId, null);
             }
-
-            return null;
         }
 
-        public void OpenPopUp(PopUpId popUpId)
+        public void ShowHUD()
         {
+            if (_playerHUD == null)
+            {
+                _playerHUD = _uiFactory.CreatePlayerHUD();
+            }
             
+            _playerHUD.Show();
         }
         
-        public void ShowNotification() { }
-
-        public async UniTask<MiscUI> LoadMiscUIContainer()
+        public void HideHUD()
         {
-
-            if (MiscUIContainer == null)
-            {
-                MiscUIContainer = await _uiFactory.CreateMiscUI();
-            }
-
-            return MiscUIContainer;
-        }
-
-        public async UniTaskVoid ShowPlayerHUD()
-        {
-
-            if (PlayerHUD == null)
-            {
-                PlayerHUD = await _uiFactory.CreatePlayerHUD();
-            } 
-            
-            PlayerHUD.Show();
+            _playerHUD?.Hide();
         }
         
-        public void HidePlayerHUD()
-        {
-            if (PlayerHUD != null)
-            {
-                PlayerHUD.Hide();
-            }
-            
-
-        }
-        public async UniTask LoadGameUISceneIfNeeded()
-        {
-            if(_gameUISceneLoaded || _gameUISceneLoading)
-                return;
-
-            _gameUISceneLoading = true;
-            await _sceneLoader.LoadScene(GameUIPath, LoadSceneMode.Additive);
-            _gameUISceneLoading = false;
-            _gameUISceneLoaded = true;
-        }
-
-       
     }
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e56b45870ff4ac8af3c234d5a00043b, type: 3}
   m_Name: GameConfiguration
   m_EditorClassIdentifier: 
+  UIScene: GameUI
   MainScene: MainGame
-  LocationId: 0

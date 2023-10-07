@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies
 {
@@ -9,7 +10,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public float EnemyHeight;
         public float EmergenceDuration;
         
-        [SerializeField] private bool _closePortalOnEmerge;
+        [SerializeField] private bool _hidePortalOnEmerge;
         
         private Portal _boundPortal;
 
@@ -50,18 +51,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
                 yield return null;
             }
        
-            if (_closePortalOnEmerge)
-                ClosePortal();
+            if(_hidePortalOnEmerge)
+                _boundPortal.gameObject.SetActive(false);
             
             OnEmerged();
-        }
-        
-  
-
-        private void ClosePortal()
-        {
-            if(_boundPortal != null)
-                _boundPortal.ClosePortal();
         }
     }
 }

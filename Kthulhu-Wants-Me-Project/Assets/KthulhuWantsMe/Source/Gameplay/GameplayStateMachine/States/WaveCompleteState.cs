@@ -11,21 +11,27 @@ using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 {
-    public class BetweenWavesState : IGameplayState
+    public class WaveCompleteState : IGameplayState
     {
         private IUIService _uiService;
         private IWaveSystem _waveSystem;
         private ThePlayer _player;
+        private GameStateMachine _gameStateMachine;
+        private IProgressService _progressService;
 
-        public BetweenWavesState(IUIService uiService, IWaveSystem waveSystem, ThePlayer player)
+        public WaveCompleteState(GameStateMachine gameStateMachine, IProgressService progressService, IUIService uiService, IWaveSystem waveSystem, ThePlayer player)
         {
+            _progressService = progressService;
+            _gameStateMachine = gameStateMachine;
             _player = player;
             _waveSystem = waveSystem;
             _uiService = uiService;
         }
         public async void Enter()
         {
-            UpgradeWindow window = (UpgradeWindow)await _uiService.OpenWindow(WindowId.UpgradeWindow);
+            _progressService.ProgressData.DefeatedWaveIndex++;
+            
+            UpgradeWindow window = (UpgradeWindow) _uiService.OpenWindow(WindowId.UpgradeWindow);
             HealthUpgrade healthUpgrade = new HealthUpgrade(_player, 10);
             DamageUpgrade damageUpgrade = new DamageUpgrade(_player, 1);
             EvadeRecoveryUpgrade evadeUpgrade = new EvadeRecoveryUpgrade(_player, .5f);
@@ -40,13 +46,27 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 
         public void Exit()
         {
-            
+        }
+
+        private async UniTaskVoid ShowUpgradeWindow()
+        {
+            UpgradeWindow window = (UpgradeWindow)_uiService.OpenWindow(WindowId.UpgradeWindow);
+            HealthUpgrade healthUpgrade = new HealthUpgrade(_player, 10);
+            DamageUpgrade damageUpgrade = new DamageUpgrade(_player, 1);
+            EvadeRecoveryUpgrade evadeUpgrade = new EvadeRecoveryUpgrade(_player, .5f);
+            window.Init(new List<IUpgrade>()
+            {
+                healthUpgrade,
+                damageUpgrade,
+                evadeUpgrade
+            }, OnUpgradePicked);
         }
 
         private async void OnUpgradePicked()
         {
             await StartNextWaveCounter(new CancellationTokenSource());
-            _waveSystem.StartNextWave();
+            
+            _gameStateMachine.SwitchState<WaveStartState>();
         }
         
         public async UniTask StartNextWaveCounter(CancellationTokenSource cancellationToken)
@@ -56,7 +76,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             {
                 await UniTask.Delay(1000);
                 countdown--;
-                _uiService.MiscUIContainer.UpdateWaveCountdownText(countdown);
+                _uiService.MiscUI.UpdateWaveCountdownText(countdown);
                 if (countdown == 0)
                 {
                     cancellationToken.Cancel();

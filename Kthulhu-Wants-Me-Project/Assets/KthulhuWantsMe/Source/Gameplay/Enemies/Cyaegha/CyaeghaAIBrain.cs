@@ -7,13 +7,18 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
-    public class CyaeghaAIBrain : MonoBehaviour
+    public interface IEnemyAIBrain
+    {
+        bool BlockProcessing { get; }
+    }
+    public class CyaeghaAIBrain : MonoBehaviour, IEnemyAIBrain
     {
         [SerializeField] private CyaeghaHealth _cyaeghaHealth;
         [SerializeField] private CyaeghaAttack _cyaeghaAttack;
         [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
+        public bool BlockProcessing { get; }
         private float _attackDelayTime;
 
         private PlayerFacade _player;
@@ -93,5 +98,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         }
 
 
+ 
     }
 }

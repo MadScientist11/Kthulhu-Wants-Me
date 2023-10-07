@@ -7,7 +7,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
     public interface IResourceManager : IInitializableService
     {
-        UniTask<T> ProvideAsset<T>(string path) where T : Object;
+        UniTask<T> ProvideAssetAsync<T>(string path) where T : Object;
     }
 
     public class ResourcesManager : IResourceManager
@@ -20,9 +20,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             await UniTask.CompletedTask;
         }
 
-        public async UniTask<T> ProvideAsset<T>(string path) where T : Object
+        public async UniTask<T> ProvideAssetAsync<T>(string path) where T : Object
         {
             return await Resources.LoadAsync<T>(path) as T;
+        }
+        
+        public T[] ProvideAssets<T>(string path) where T : Object
+        {
+            return Resources.LoadAll<T>(path);
         }
     }
 }

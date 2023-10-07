@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -37,6 +38,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         private CancellationTokenSource _timerToken;
 
         private int _remainingTentacles;
+
         public KillTentaclesSpecialScenario(WaveSystem waveSystem, IUIService uiService, IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
@@ -48,18 +50,18 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         {
             _currentWave = currentWave;
             _waveSystem.OnWaveCompleted += OnScenarioCompleted;
-            _waveSystem.OnBatchSpawned +=  ProcessSpecialTentacles;
+            _waveSystem.OnBatchSpawned += ProcessSpecialTentacles;
         }
 
         public void Dispose()
         {
             _waveSystem.OnWaveCompleted -= OnScenarioCompleted;
-            _waveSystem.OnBatchSpawned -=  ProcessSpecialTentacles;
+            _waveSystem.OnBatchSpawned -= ProcessSpecialTentacles;
         }
 
         public void StartWaveScenario()
         {
-            _waveSystem.ProcessBatch();
+            //_waveSystem.ProcessBatch();
             ShowEnemiesOnCompass();
             StartTimer();
         }
@@ -73,12 +75,12 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         private void StartTimer()
         {
             _timerToken = new CancellationTokenSource();
-            StartWaveTimer(_timerToken, 10).Forget();
+            StartWaveTimer(_timerToken, _currentWave.TimeConstraint).Forget();
         }
 
         private void ShowEnemiesOnCompass()
         {
-            _compassUI = _uiService.MiscUIContainer.GetCompassUI();
+            _compassUI = _uiService.MiscUI.GetCompassUI();
             _compassUI.Show();
             _compassUI.Init(_gameFactory.Player.transform);
 
@@ -101,7 +103,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                 if (aliveEnemy.TryGetComponent(out TentacleAIBrain tentacleAIBrain))
                 {
                     _remainingTentacles++;
-                    
+
                     aliveEnemy.Died += () =>
                     {
                         _remainingTentacles--;
@@ -120,7 +122,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
             while (!cancellationToken.IsCancellationRequested)
             {
                 await UniTask.Delay(1000);
-                _uiService.MiscUIContainer.UpdateWaveCountdownText(countdown);
+                _uiService.MiscUI.UpdateWaveCountdownText(countdown);
                 countdown--;
                 if (countdown == 0)
                 {
@@ -131,15 +133,13 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                     {
                         if (aliveEnemy.TryGetComponent(out RetreatState retreatState))
                         {
-                            retreatState.RetreatWithoutNotify();
-                            
+                            retreatState.Retreat();
                         }
                     }
+
                     await UniTask.Delay(2000);
                     _waveSystem.CompleteWave();
                 }
-
-               
             }
         }
     }
@@ -169,15 +169,205 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
 
         public void StartWaveScenario()
         {
-            _waveSystem.ProcessBatch();
+            //_waveSystem.ProcessBatch();
         }
     }
 
     public interface IWaveSystem
     {
         event Action OnWaveCompleted;
-        void StartNextWave();
+        void StartWave(int waveIndex);
         IWaveScenario CurrentScenario { get; }
+    }
+
+    public class WaveState
+    {
+        public event Action BatchCleared;
+        public event Action WaveCleared;
+
+        public WaveObjective WaveObjective
+        {
+            get { return _waveData.WaveObjective; }
+        }
+
+        public Batch CurrentBatchData
+        {
+            get { return _waveData.Batches[_currentBatchIndex]; }
+        }
+
+        public int CurrentBatchIndex
+        {
+            get
+            {
+                return _currentBatchIndex;
+            }
+        }
+
+        public Dictionary<EnemySpawnerId, List<Health>> AliveEnemiesByPlace
+        {
+            get { return _aliveEnemiesByPlace; }
+        }
+
+
+        private readonly Dictionary<EnemySpawnerId, List<Health>> _aliveEnemiesByPlace = new();
+        private readonly List<Health> _aliveEnemies = new();
+
+        private readonly WaveData _waveData;
+        private int _currentBatchIndex;
+
+        public WaveState(WaveData waveData)
+        {
+            _waveData = waveData;
+        }
+
+        public void RegisterEnemy(EnemySpawnerId enemySpawnPlace, Health enemy)
+        {
+            _aliveEnemiesByPlace.GetOrCreate(enemySpawnPlace).Add(enemy);
+            _aliveEnemies.Add(enemy);
+
+            enemy.Died += () => TrackEnemiesDeath(enemySpawnPlace, enemy);
+        }
+
+        public void ModifyBatchIndex(int index)
+        {
+            _currentBatchIndex = index;
+        }
+
+        private void TrackEnemiesDeath(EnemySpawnerId wasSpawnedAt, Health deathHealth)
+        {
+            _aliveEnemiesByPlace[wasSpawnedAt].Remove(deathHealth);
+            _aliveEnemies.Remove(deathHealth);
+
+            if (NoEnemiesLeft())
+            {
+                if (IsLastBatch())
+                {
+                    BatchCleared?.Invoke();
+                    WaveCleared?.Invoke();
+                    CleanUp();
+                    return;
+                }
+
+                BatchCleared?.Invoke();
+                _currentBatchIndex++;
+            }
+        }
+
+        private void CleanUp()
+        {
+            _aliveEnemiesByPlace.Clear();
+            _aliveEnemies.Clear();
+            _currentBatchIndex = 0;
+
+            WaveCleared = null;
+            BatchCleared = null;
+        }
+
+        private bool NoEnemiesLeft()
+        {
+            return _aliveEnemies.Count == 0;
+        }
+
+        public bool IsLastBatch()
+        {
+            return _waveData.Batches.Count - 1 <= _currentBatchIndex;
+        }
+    }
+
+    public class WaveSpawner
+    {
+        public IOrderedEnumerable<Spawner> ClosestSpawners
+        {
+            get
+            {
+                return _enemySpawners
+                    .Select(spawner => spawner.Value)
+                    .OrderBy(spawner => Vector3.Distance(spawner.Position, _gameFactory.Player.transform.position));
+            }
+        }
+
+        public Spawner ClosestSpawner
+        {
+            get { return ClosestSpawners.First(); }
+        }
+
+
+        private Dictionary<EnemySpawnerId, Spawner> _enemySpawners;
+        private WaveState _waveState;
+
+        private readonly IGameFactory _gameFactory;
+        private readonly ISceneDataProvider _sceneDataProvider;
+
+        public WaveSpawner(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider)
+        {
+            _sceneDataProvider = sceneDataProvider;
+            _gameFactory = gameFactory;
+        }
+
+        public void Initialize(WaveState waveState)
+        {
+            _enemySpawners = _sceneDataProvider.AllSpawnPoints[SpawnPointType.EnemySpawner]
+                .ToDictionary(sp => sp.EnemySpawnerId, CreateSpawnerFrom);
+
+            Spawner CreateSpawnerFrom(SpawnPoint sp)
+            {
+                Spawner spawner = new Spawner(_gameFactory, sp);
+                return spawner;
+            }
+
+            _waveState = waveState;
+        }
+
+        public IEnumerable<Health> SpawnBatch(Batch batch)
+        {
+            List<Health> batchEnemies = new();
+            foreach (WaveEnemy batchEntry in batch.WaveEnemies)
+                batchEnemies.AddRange(SpawnBatchEnemy(batchEntry));
+            return batchEnemies;
+        }
+
+        private IEnumerable<Health> SpawnBatchEnemy(WaveEnemy batchEntry)
+        {
+            SingleEnemy singleEnemy = new SingleEnemy(batchEntry);
+            for (int i = 0; i < batchEntry.Quantity; i++)
+            {
+                Spawner spawner = FindAppropriateSpawnerFor(batchEntry);
+                Health enemyHealth = spawner.Spawn(singleEnemy);
+                _waveState.RegisterEnemy(spawner.Id, enemyHealth);
+                yield return enemyHealth;
+            }
+        }
+
+
+        private Spawner FindAppropriateSpawnerFor(WaveEnemy batchEntry)
+        {
+            if (batchEntry.SpawnAt == EnemySpawnerId.Default &&
+                (batchEntry.EnemyType == EnemyType.Tentacle || batchEntry.EnemyType == EnemyType.BleedTentacle ||
+                 batchEntry.EnemyType == EnemyType.PoisonousTentacle))
+                return FindUnoccupiedSpawner();
+            else
+                return ClosestSpawner;
+        }
+
+        private Spawner FindUnoccupiedSpawner()
+        {
+            foreach (Spawner closestSpawner in ClosestSpawners)
+            {
+                if (!_waveState.AliveEnemiesByPlace.TryGetValue(closestSpawner.Id, out List<Health> enemies) ||
+                    enemies == null)
+                {
+                    return closestSpawner;
+                }
+
+                if (enemies.All(enemy =>
+                        enemy.GetComponent<EnemyStatsContainer>().Config.EnemyType != EnemyType.Tentacle))
+                {
+                    return closestSpawner;
+                }
+            }
+
+            return null;
+        }
     }
 
 
@@ -190,18 +380,18 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         public IWaveScenario CurrentScenario => _currentWaveScenario;
         public IEnumerable<Health> AliveEnemies => _aliveEnemies.Values.SelectMany(enemyList => enemyList);
 
-        private int AliveEnemiesLeft => _aliveEnemies.Select(spawner => spawner.Value.Count).Sum();
-
 
         private Dictionary<WaveObjective, IWaveScenario> _waveScenarios;
         private IWaveScenario _currentWaveScenario;
 
 
-        private int _currentBatch;
-        private CancellationTokenSource _batchSpawnCancellationToken;
 
         private Dictionary<EnemySpawnerId, Spawner> _enemySpawners;
         private readonly Dictionary<EnemySpawnerId, List<Health>> _aliveEnemies = new();
+
+
+        private WaveState _currentWaveState;
+        private WaveSpawner _waveSpawner;
 
         private readonly IProgressService _progressService;
         private readonly IGameFactory _gameFactory;
@@ -234,146 +424,56 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
                 { WaveObjective.KillTentaclesSpecial, killTentaclesSpecial }
             };
 
-
-            InitSpawners();
+            _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider);
         }
 
-        private void InitSpawners()
-        {
-            _enemySpawners = _sceneDataProvider.AllSpawnPoints[SpawnPointType.EnemySpawner]
-                .ToDictionary(sp => sp.EnemySpawnerId, CreateSpawnerFrom);
 
-            Spawner CreateSpawnerFrom(SpawnPoint sp)
-            {
-                Spawner spawner = new Spawner(_gameFactory, sp);
-                return spawner;
-            }
-        }
-
-        public void StartNextWave()
+        public void StartWave(int waveIndex)
         {
-            int waveIndex = _progressService.ProgressData.WaveIndex;
             WaveData waveData = _wavesData[waveIndex];
-            _currentWaveScenario = _waveScenarios[waveData.WaveObjective];
-            _currentWaveScenario.Initialize(waveData);
-            _currentWaveScenario.StartWaveScenario();
+
+            _currentWaveState = new WaveState(waveData);
+            _currentWaveState.BatchCleared += OnBatchCleared;
+            _currentWaveState.WaveCleared += OnWaveCleared;
+
+
+            _waveSpawner.Initialize(_currentWaveState);
+            _waveSpawner.SpawnBatch(_currentWaveState.CurrentBatchData);
+
+
+
+            //int waveIndex = _progressService.ProgressData.WaveIndex;
+            //WaveData waveData = _wavesData[waveIndex];
+            //_currentWaveScenario = _waveScenarios[waveData.WaveObjective];
+            //_currentWaveScenario.Initialize(waveData);
+            //_currentWaveScenario.StartWaveScenario();
         }
 
         public void CompleteWave()
         {
-            _currentBatch = 0;
-            _progressService.ProgressData.WaveIndex++;
-            _batchSpawnCancellationToken.Cancel();
+            _progressService.ProgressData.DefeatedWaveIndex++;
             OnWaveCompleted?.Invoke();
             _currentWaveScenario.Dispose();
-            _gameStateMachine.SwitchState<BetweenWavesState>();
+            _gameStateMachine.SwitchState<WaveCompleteState>();
         }
 
-        public void ProcessBatch()
+        private void OnBatchCleared()
         {
-            int waveIndex = _progressService.ProgressData.WaveIndex;
-            WaveData waveData = _wavesData[waveIndex];
-            Batch batch = waveData.Batches[_currentBatch];
-            IEnumerable<Health> batchEnemies = SpawnBatch(batch);
-            OnBatchSpawned?.Invoke(batchEnemies);
-
-            _batchSpawnCancellationToken = new();
-            SpawnNextBatchIfAny(_batchSpawnCancellationToken.Token).Forget();
-        }
-
-        private IEnumerable<Health> SpawnBatch(Batch batch)
-        {
-            List<Health> batchEnemies = new();
-            foreach (WaveEnemy batchEntry in batch.WaveEnemies)
-                batchEnemies.AddRange(SpawnWaveEnemy(batchEntry));
-            return batchEnemies;
-        }
-
-        private IEnumerable<Health> SpawnWaveEnemy(WaveEnemy batchEntry)
-        {
-            SingleEnemy singleEnemy = new SingleEnemy(batchEntry);
-            for (int i = 0; i < batchEntry.Quantity; i++)
+            if (!_currentWaveState.IsLastBatch())
             {
-                Spawner spawner = FindAppropriateSpawnerFor(batchEntry);
-                Health enemyHealth = spawner.Spawn(singleEnemy);
-                enemyHealth.Died +=
-                    () => TrackEnemiesDeath(spawner.Id, enemyHealth);
-                _aliveEnemies.GetOrCreate(spawner.Id).Add(enemyHealth);
-                yield return enemyHealth;
-            }
-
-        }
-
-        private void TrackEnemiesDeath(EnemySpawnerId wasSpawnedAt, Health deathHealth)
-        {
-            int waveIndex = _progressService.ProgressData.WaveIndex;
-            WaveData waveData = _wavesData[waveIndex];
-
-            _aliveEnemies[wasSpawnedAt].Remove(deathHealth);
-
-
-            if (AliveEnemiesLeft == 0 && waveData.Batches.Count - 1 <= _currentBatch)
-            {
-                CompleteWave();
+                SpawnNextBatch();
             }
         }
 
-        private async UniTaskVoid SpawnNextBatchIfAny(CancellationToken batchSpawnCancellationToken)
+        private void OnWaveCleared()
         {
-            int waveIndex = _progressService.ProgressData.WaveIndex;
-            WaveData waveData = _wavesData[waveIndex];
-
-            if (waveData.Batches.Count - 1 <= _currentBatch)
-                return;
-
-            int batchDelay = (int)waveData.Batches[_currentBatch].NextBatchDelay;
-            await UniTask.Delay(TimeSpan.FromSeconds(batchDelay), false, PlayerLoopTiming.Update,
-                batchSpawnCancellationToken);
-
-            _currentBatch++;
-            ProcessBatch();
+            _gameStateMachine.SwitchState<WaveCompleteState>();
         }
 
-        private Spawner FindAppropriateSpawnerFor(WaveEnemy batchEntry)
+        private void SpawnNextBatch()
         {
-            if (batchEntry.SpawnAt == EnemySpawnerId.Default &&
-                (batchEntry.EnemyType == EnemyType.Tentacle || batchEntry.EnemyType == EnemyType.BleedTentacle ||
-                 batchEntry.EnemyType == EnemyType.PoisonousTentacle))
-                return FindUnoccupiedSpawner();
-            else
-                return FindClosestSpawner();
-        }
-
-        private Spawner FindUnoccupiedSpawner()
-        {
-            foreach (Spawner closestSpawner in GetSortedClosestSpawners())
-            {
-                if (!_aliveEnemies.TryGetValue(closestSpawner.Id, out List<Health> enemies) || enemies == null)
-                {
-                    return closestSpawner;
-                }
-
-                if (enemies.All(enemy =>
-                        enemy.GetComponent<EnemyStatsContainer>().Config.EnemyType != EnemyType.Tentacle))
-                {
-                    return closestSpawner;
-                }
-            }
-
-            return null;
-        }
-
-        private Spawner FindClosestSpawner()
-        {
-            return GetSortedClosestSpawners()
-                .First();
-        }
-
-        private IOrderedEnumerable<Spawner> GetSortedClosestSpawners()
-        {
-            return _enemySpawners
-                .Select(spawner => spawner.Value)
-                .OrderBy(spawner => Vector3.Distance(spawner.Position, _gameFactory.Player.transform.position));
+            _currentWaveState.ModifyBatchIndex(_currentWaveState.CurrentBatchIndex + 1);
+            _waveSpawner.SpawnBatch(_currentWaveState.CurrentBatchData);
         }
 
         public void KillAllAliveEnemies()

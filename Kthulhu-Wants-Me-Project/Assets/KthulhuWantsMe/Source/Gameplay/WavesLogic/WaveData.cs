@@ -17,6 +17,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
         [LabelWidth(10)]
         public WaveObjective WaveObjective;
         public List<Batch> Batches;
+        
+        [ShowIf("WaveObjective", WaveObjective.KillTentaclesSpecial)]
+        public int TimeConstraint;
 
         // enum
         //

@@ -85,8 +85,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder.Register<StatesFactory>(Lifetime.Singleton);
             builder.Register<GameStateMachine>(Lifetime.Singleton);
             builder.Register<StartGameState>(Lifetime.Singleton);
-            builder.Register<WaveOngoingState>(Lifetime.Singleton);
-            builder.Register<BetweenWavesState>(Lifetime.Singleton);
+            builder.Register<WaveStartState>(Lifetime.Singleton);
+            builder.Register<WaveCompleteState>(Lifetime.Singleton);
         }
     }
 }

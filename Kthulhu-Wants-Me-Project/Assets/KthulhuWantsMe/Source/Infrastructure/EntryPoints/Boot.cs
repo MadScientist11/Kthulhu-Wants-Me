@@ -6,8 +6,10 @@ using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using VContainer;
 using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
@@ -36,7 +38,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
                 service.IsInitialized = true;
                 return service.Initialize();
             }).ToList();
+            
             await UniTask.WhenAll(initializationTasks);
+            
             await _sceneLoader
                 .LoadSceneInjected(_dataProvider.GameConfig.MainScene, LoadSceneMode.Additive, _appLifetimeScope);
         }
