@@ -1,126 +1,120 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
-using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.UI.Compass;
+using Sirenix.Utilities;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     public class KillTentaclesSpecialScenario : IWaveScenario
     {
-        private readonly WaveSystemDirector _waveSystemDirector;
-        private readonly IUIService _uiService;
-        private readonly IGameFactory _gameFactory;
         private WaveData _currentWave;
         private CompassUI _compassUI;
         private CancellationTokenSource _timerToken;
 
         private int _remainingTentacles;
+        
+        private readonly IWaveSystemDirector _waveSystemDirector;
+        private readonly IUIService _uiService;
 
-        public KillTentaclesSpecialScenario(WaveSystemDirector waveSystemDirector, IUIService uiService, IGameFactory gameFactory)
+        public KillTentaclesSpecialScenario(IWaveSystemDirector waveSystemDirector, IUIService uiService)
         {
-            _gameFactory = gameFactory;
             _uiService = uiService;
             _waveSystemDirector = waveSystemDirector;
         }
 
-
         public void Initialize()
         {
+            _compassUI = _uiService.MiscUI.GetCompassUI();
+            _compassUI.Show();
             
+            StartWaveLossTimer().Forget();
+
+            _waveSystemDirector.WaveSpawner.BatchSpawned += OnBatchSpawned;
+            _waveSystemDirector.WaveCompleted += OnWaveCompleted;
         }
 
         public void Dispose()
         {
-           
+            _waveSystemDirector.WaveCompleted -= OnWaveCompleted;
         }
 
-        public void StartWaveScenario()
-        {
-            //_waveSystem.ProcessBatch();
-            ShowEnemiesOnCompass();
-            StartTimer();
-        }
-
-        private void OnScenarioCompleted()
+        private void OnWaveCompleted()
         {
             _compassUI.Hide();
-            _timerToken.Cancel();
         }
 
-        private void StartTimer()
+        private void OnBatchSpawned(IEnumerable<Health> enemies)
+        {
+            _remainingTentacles = enemies
+                .Where(enemy => enemy.TryGetComponent(out TentacleAIBrain _))
+                .ForEach(TrackTentacleDeath).Count();
+        }
+
+        private async UniTaskVoid StartWaveLossTimer()
         {
             _timerToken = new CancellationTokenSource();
-            StartWaveTimer(_timerToken, _currentWave.TimeConstraint).Forget();
-        }
 
-        private void ShowEnemiesOnCompass()
-        {
-            _compassUI = _uiService.MiscUI.GetCompassUI();
-            _compassUI.Show();
-            _compassUI.Init(_gameFactory.Player.transform);
+            TimeSpan tick = TimeSpan.FromSeconds(1);
 
-            foreach (Health aliveEnemy in _waveSystemDirector.CurrentWaveState.AliveEnemies)
+            int countdown = 10;
+
+            while (!_timerToken.IsCancellationRequested)
             {
-                Marker marker = new Marker()
-                {
-                    TrackedObject = aliveEnemy.transform
-                };
-                _compassUI.AddMarker(marker);
-
-                aliveEnemy.Died += () => { _compassUI.RemoveMarker(marker); };
-            }
-        }
-
-        private void ProcessSpecialTentacles(IEnumerable<Health> batchEnemies)
-        {
-            foreach (Health aliveEnemy in batchEnemies)
-            {
-                if (aliveEnemy.TryGetComponent(out TentacleAIBrain tentacleAIBrain))
-                {
-                    _remainingTentacles++;
-
-                    aliveEnemy.Died += () =>
-                    {
-                        _remainingTentacles--;
-                        if (_remainingTentacles == 0)
-                        {
-                            _waveSystemDirector.KillAllAliveEnemies();
-                        }
-                    };
-                }
-            }
-        }
-
-        private async UniTask StartWaveTimer(CancellationTokenSource cancellationToken, int timeInSeconds)
-        {
-            int countdown = timeInSeconds;
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                await UniTask.Delay(1000);
-                _uiService.MiscUI.UpdateWaveCountdownText(countdown);
+                await UniTask.Delay(tick);
                 countdown--;
+
+                OnWaveLossTimerTick(countdown);
+
                 if (countdown == 0)
                 {
-                    cancellationToken.Cancel();
-                    _compassUI.Hide();
-                    List<Health> waveSystemAliveEnemies = _waveSystemDirector.CurrentWaveState.AliveEnemies.ToList();
-                    foreach (Health aliveEnemy in waveSystemAliveEnemies)
-                    {
-                        if (aliveEnemy.TryGetComponent(out RetreatState retreatState))
-                        {
-                            retreatState.Retreat();
-                        }
-                    }
-
-                    await UniTask.Delay(2000);
+                    _timerToken.Cancel();
+                    RetreatAllEnemies();
                     _waveSystemDirector.CompleteWave();
                 }
             }
+        }
+
+        private void OnWaveLossTimerTick(int countdown)
+        {
+            _uiService.MiscUI.UpdateWaveCountdownText(countdown);
+        }
+        
+        private void RetreatAllEnemies()
+        {
+            for (var index = 0; index < _waveSystemDirector.CurrentWaveState.AliveEnemies.Count; index++)
+            {
+                var aliveEnemy = _waveSystemDirector.CurrentWaveState.AliveEnemies[index];
+                if (aliveEnemy.TryGetComponent(out RetreatState retreatState))
+                {
+                    retreatState.Retreat();
+                }
+            }
+        }
+
+        private void TrackTentacleDeath(Health tentacleHealth)
+        {
+            Marker marker = new Marker()
+            {
+                TrackedObject = tentacleHealth.transform
+            };
+            _compassUI.AddMarker(marker);
+            
+            tentacleHealth.Died += () =>
+            {
+                _compassUI.RemoveMarker(marker);
+                _remainingTentacles--;
+
+                if (_remainingTentacles == 0)
+                {
+                    _waveSystemDirector.CompleteWave();
+                }
+            };
         }
     }
 }

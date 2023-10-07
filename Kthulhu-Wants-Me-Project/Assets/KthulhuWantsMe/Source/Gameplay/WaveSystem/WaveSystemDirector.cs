@@ -17,7 +17,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     public interface IWaveSystemDirector
     {
+        event Action WaveCompleted;
         WaveState CurrentWaveState { get; }
+        WaveSpawner WaveSpawner { get; }
         void StartWave(int waveIndex);
         void CompleteWave();
     }
@@ -25,11 +27,23 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
     public class WaveSystemDirector : IWaveSystemDirector, IInitializable
     {
+
+        public event Action WaveCompleted;
+        public event Action<IEnumerable<Health>> BatchSpawned;
+
         public WaveState CurrentWaveState
         {
             get
             {
                 return _currentWaveState;
+            }
+        }
+        
+        public WaveSpawner WaveSpawner
+        {
+            get
+            {
+                return _waveSpawner;
             }
         }
 
@@ -62,7 +76,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public void Initialize()
         {
             IWaveScenario eliminateAllEnemiesScenario = new EliminateAllEnemiesScenario(this);
-            IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService, _gameFactory);
+            IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService);
             _waveScenarios = new()
             {
                 { WaveObjective.KillAllEnemies, eliminateAllEnemiesScenario },
@@ -80,16 +94,17 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _currentWaveState = new WaveState(waveData);
             _currentWaveState.BatchCleared += OnBatchCleared;
             _currentWaveState.WaveCleared += OnWaveCleared;
-
-            _waveSpawner.Initialize(_currentWaveState);
-            _waveSpawner.SpawnBatch(_currentWaveState.CurrentBatchData);
-
+            
             _currentWaveScenario = _waveScenarios[_currentWaveState.WaveObjective];
             _currentWaveScenario.Initialize();
+
+            _waveSpawner.Initialize(_currentWaveState);
+            _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
         }
 
         public void CompleteWave()
         {
+            WaveCompleted?.Invoke();
             _currentWaveState.CleanUp();
             _currentWaveScenario.Dispose();
             _gameStateMachine.SwitchState<WaveCompleteState>();
@@ -112,16 +127,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             TimeSpan nextBatchDelay = TimeSpan.FromSeconds(_currentWaveState.CurrentBatchData.NextBatchDelay);
             await UniTask.Delay(nextBatchDelay);
             _currentWaveState.ModifyBatchIndex(_currentWaveState.CurrentBatchIndex + 1);
-            _waveSpawner.SpawnBatch(_currentWaveState.CurrentBatchData);
-        }
-
-        public void KillAllAliveEnemies()
-        {
-            //List<Health> enemies = AliveEnemies.ToList();
-            //foreach (Health aliveEnemy in enemies)
-            //{
-            //    aliveEnemy.TakeDamage(100000);
-            //}
+            _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
         }
     }
 }

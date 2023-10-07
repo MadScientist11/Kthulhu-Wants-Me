@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace KthulhuWantsMe.Source.UI.Compass
 {
@@ -16,24 +18,34 @@ namespace KthulhuWantsMe.Source.UI.Compass
         [SerializeField] private RawImage _compassImage;
         [SerializeField] private GameObject _markerPrefab;
 
-
         private readonly Dictionary<Marker, GameObject> _markerViews = new();
         private readonly List<Marker> _markers = new();
         
         private Transform _player;
         private float _compassUnit;
         private bool _initialized;
+        
+        private IGameFactory _gameFactory;
 
-        public void Init(Transform player)
+        [Inject]
+        public void Construct(IGameFactory gameFactory)
         {
-            _player = player;
+            _gameFactory = gameFactory;
+        }
+
+        public void Show()
+        {
+            gameObject.SwitchOn();
+            _player = _gameFactory.Player.transform;
             _compassUnit = _compassImage.rectTransform.rect.width / 360f;
             _initialized = true;
         }
 
-        public void Show() => gameObject.SwitchOn();
-        
-        public void Hide() => gameObject.SwitchOff();
+        public void Hide()
+        {
+            gameObject.SwitchOff();
+            _initialized = false;
+        }
 
         public void AddMarker(Marker marker)
         {

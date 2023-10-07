@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
@@ -9,6 +10,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 {
     public class WaveSpawner
     {
+        
+        public event Action<IEnumerable<Health>> BatchSpawned;
+        
         public IOrderedEnumerable<EnemySpawner> ClosestSpawners
         {
             get
@@ -54,7 +58,13 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             _waveState = waveState;
         }
 
-        public IEnumerable<Health> SpawnBatch(Batch batch)
+        public void SpawnBatchNotified(Batch batch)
+        {
+            IEnumerable<Health> spawnedBatch = SpawnBatch(batch);
+            BatchSpawned?.Invoke(spawnedBatch);
+        }
+
+        private IEnumerable<Health> SpawnBatch(Batch batch)
         {
             List<Health> batchEnemies = new();
             foreach (EnemyPack enemyPack in batch.WaveEnemies)
