@@ -8,7 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
     public class Batch
     {
         public List<EnemyPack> WaveEnemies;
-        public float NextBatchDelay;
+        public int NextBatchDelay;
     }
     [Serializable]
     public class WaveData

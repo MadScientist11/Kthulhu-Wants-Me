@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
@@ -9,6 +10,7 @@ using KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
@@ -97,7 +99,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             if (!_currentWaveState.IsLastBatch())
             {
-                SpawnNextBatch();
+                SpawnNextBatch().Forget();
             }
         }
 
@@ -105,8 +107,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
         }
 
-        private void SpawnNextBatch()
+        private async UniTaskVoid SpawnNextBatch()
         {
+            TimeSpan nextBatchDelay = TimeSpan.FromSeconds(_currentWaveState.CurrentBatchData.NextBatchDelay);
+            await UniTask.Delay(nextBatchDelay);
             _currentWaveState.ModifyBatchIndex(_currentWaveState.CurrentBatchIndex + 1);
             _waveSpawner.SpawnBatch(_currentWaveState.CurrentBatchData);
         }

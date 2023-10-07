@@ -111,7 +111,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         protected override void OnAttackEnd()
         {
-            Debug.Log("Attack end");
             ResetAttackState();
         }
 

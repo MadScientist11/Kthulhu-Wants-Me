@@ -21,7 +21,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public EnemySpawner ClosestSpawner
         {
-            get { return ClosestSpawners.First(); }
+            get
+            {
+                return ClosestSpawners.First();
+            }
         }
 
 
@@ -76,6 +79,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 (batchEntry.EnemyType == EnemyType.Tentacle || batchEntry.EnemyType == EnemyType.BleedTentacle ||
                  batchEntry.EnemyType == EnemyType.PoisonousTentacle))
                 return FindUnoccupiedSpawner();
+            else if (batchEntry.SpawnAt != EnemySpawnerId.Default)
+                return _enemySpawners[batchEntry.SpawnAt];
             else
                 return ClosestSpawner;
         }

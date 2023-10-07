@@ -49,8 +49,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _gameFactory.CreatePlayer(playerSpawnPoint.Position, playerSpawnPoint.Rotation);
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
 
-           
-            
             _uiService.ShowHUD();
             _gameStateMachine.SwitchState<WaveStartState>();
         }

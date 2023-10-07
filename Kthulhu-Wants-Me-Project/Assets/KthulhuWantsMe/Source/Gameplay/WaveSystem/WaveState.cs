@@ -18,7 +18,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public Batch CurrentBatchData
         {
-            get { return _waveData.Batches[_currentBatchIndex]; }
+            get
+            {
+                return _waveData.Batches[_currentBatchIndex];
+            }
         }
 
         public int CurrentBatchIndex
@@ -95,7 +98,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
                 }
 
                 BatchCleared?.Invoke();
-                _currentBatchIndex++;
             }
         }
 
