@@ -30,10 +30,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
             if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100))
             {
-                Portal portal =
+                GameObject enemy =
                     _gameFactory.CreatePortalWithEnemy(hitInfo.point + Vector3.one * 0.05f, Quaternion.identity,
                         enemyType);
-                GameObject enemy = portal.LastSpawnedEnemy;
 
                 return enemy.GetComponent<Health>();
             }

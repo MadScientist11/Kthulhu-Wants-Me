@@ -22,7 +22,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         T CreatePrefabInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object;
         MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation);
         BuffItem CreateHealItem(Vector3 position, Quaternion rotation);
-        Portal CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
+        GameObject CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
     }
 
     public class GameFactory : IGameFactory
@@ -59,11 +59,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             return playerFacade;
         }
 
-        public Portal CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
+        public GameObject CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
         {
-            Portal portal = _portalFactory.GetOrCreatePortal(position, rotation, enemyType);
-            portal.StartEnemySpawn(enemyType);
-            return portal;
+            GameObject enemy = CreateEnemy(position, rotation, enemyType);
+
+            if (enemy.TryGetComponent(out ISpawnBehaviour spawnBehaviour))
+            {
+                spawnBehaviour.OnSpawn();
+            }
+            return enemy;
         }
 
         public GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)

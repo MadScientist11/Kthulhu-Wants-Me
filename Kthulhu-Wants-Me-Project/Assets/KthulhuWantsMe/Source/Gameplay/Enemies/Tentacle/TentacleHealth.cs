@@ -1,7 +1,9 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Services;
+﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
@@ -11,9 +13,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private TentacleAnimator _tentacleAnimator;
-        
-        private ILootService _lootService;
+        [SerializeField] private TentacleRetreat _tentacleRetreat;
 
+        private void Start()
+        {
+            Died += OnDie;
+        }
+
+        private void OnDestroy()
+        {
+            Died -= OnDie;
+        }
 
         public override void TakeDamage(float damage)
         {
@@ -23,5 +33,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void DoDamageImpact() => 
             _tentacleAnimator.PlayImpact();
+
+        private void OnDie()
+        {
+            _tentacleRetreat.RetreatDefeated();
+            Debug.Log("rete");
+        }
     }
 }

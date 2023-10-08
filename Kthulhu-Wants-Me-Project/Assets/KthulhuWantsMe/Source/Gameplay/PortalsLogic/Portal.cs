@@ -39,9 +39,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
                 return;
             }
             
-            emergeState.Init(this);
-            Vector3 from = transform.position.AddY(-emergeState.EnemyHeight);
-            emergeState.Emerge(from, transform.position);
+            
         }
         
 

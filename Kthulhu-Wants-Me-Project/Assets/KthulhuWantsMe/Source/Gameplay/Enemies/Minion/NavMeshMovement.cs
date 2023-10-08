@@ -7,6 +7,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     [RequireComponent(typeof(NavMeshAgent))]
     public class NavMeshMovement : MonoBehaviour
     {
+        public bool Enabled => _navMeshAgent.enabled;
+        
         public float MoveSpeed
         {
             get => _navMeshAgent.speed;
@@ -21,11 +23,28 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
             _navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
-        public void MoveTo(Vector3 destination) => 
-            _navMeshAgent.destination = destination;
+        public void MoveTo(Vector3 destination)
+        {
+            if(_navMeshAgent.enabled)
+                _navMeshAgent.destination = destination;
+        }
 
-        public void Disable() => _navMeshAgent.isStopped = true;
-        public void Enable() => _navMeshAgent.isStopped = false;
+        public void HaltMovement()
+        {
+            if(_navMeshAgent.enabled)
+                _navMeshAgent.isStopped = true;
+        }
+
+        public void ResumeMovement()
+        {
+            if(_navMeshAgent.enabled)
+                _navMeshAgent.isStopped = false;
+        }
+
+        public void Disable() => _navMeshAgent.SwitchOff();
+
+        public void Enable() => _navMeshAgent.SwitchOn();
         
+
     }
 }

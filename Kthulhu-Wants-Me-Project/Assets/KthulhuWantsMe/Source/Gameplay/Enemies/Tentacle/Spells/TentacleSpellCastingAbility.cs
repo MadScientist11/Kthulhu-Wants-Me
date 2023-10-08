@@ -56,7 +56,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
         public async UniTaskVoid CancelSpell(TentacleSpell spell)
         {
-            Debug.Log("Cancel Spell");
             await _tentacleSpells[spell].Undo();
         }
 

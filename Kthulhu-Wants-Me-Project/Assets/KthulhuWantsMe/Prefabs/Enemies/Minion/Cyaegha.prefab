@@ -13,13 +13,14 @@ GameObject:
   - component: {fileID: 4302006736190205134}
   - component: {fileID: 2074288089250755570}
   - component: {fileID: -6736657406163995852}
+  - component: {fileID: -5520324125612971702}
   - component: {fileID: 1528546947026360114}
   - component: {fileID: 1805378254231291091}
   - component: {fileID: 6832438006561834181}
   - component: {fileID: 4389780604326016033}
   - component: {fileID: 5283784153911277938}
-  - component: {fileID: -1913755119506678742}
-  - component: {fileID: 5550660492278065731}
+  - component: {fileID: -783408374575774920}
+  - component: {fileID: -4650963413232870384}
   m_Layer: 10
   m_Name: Cyaegha
   m_TagString: Untagged
@@ -126,6 +127,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e4e0982d5049a99dc8b8f09636e291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5520324125612971702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900409656979045455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53964dce8d854f25bee212ffcf14bd9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cyaeghaAIBrain: {fileID: 1528546947026360114}
+  _followLogic: {fileID: 4389780604326016033}
 --- !u!114 &1528546947026360114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -680,7 +695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 2074288089250755570}
---- !u!114 &-1913755119506678742
+--- !u!114 &-783408374575774920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -689,13 +704,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3900409656979045455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4087d4a792f740dfa3bfe0a1523d7902, type: 3}
+  m_Script: {fileID: 11500000, guid: a34f091654ea44a389a6c3fa48464a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyHeight: 0
-  EmergenceDuration: 0
-  _hidePortalOnEmerge: 1
---- !u!114 &5550660492278065731
+  _height: 2
+--- !u!114 &-4650963413232870384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -704,12 +717,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3900409656979045455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3e9d91fdead3ce4a8351afb8d578bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 03e4f1df479a4fbc94d6dd3ed2060614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RetreatDuration: 2
-  Height: 2
-  _enemyHealth: {fileID: 1805378254231291091}
 --- !u!1 &6247246419053900879
 GameObject:
   m_ObjectHideFlags: 0

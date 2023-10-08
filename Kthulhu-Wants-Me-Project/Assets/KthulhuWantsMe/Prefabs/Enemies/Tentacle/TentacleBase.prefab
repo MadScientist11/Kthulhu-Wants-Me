@@ -267,8 +267,8 @@ GameObject:
   - component: {fileID: 3629999761114246035}
   - component: {fileID: 7743905234635742817}
   - component: {fileID: 423395108823978285}
-  - component: {fileID: 1366331452263209347}
-  - component: {fileID: 2119516100063412033}
+  - component: {fileID: 7442634767459381635}
+  - component: {fileID: 2735146877405214494}
   - component: {fileID: -8978431778437181689}
   m_Layer: 10
   m_Name: TentacleBase
@@ -431,6 +431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStatsContainer: {fileID: 8187939092874492644}
   _tentacleAnimator: {fileID: 7893959025167172210}
+  _tentacleRetreat: {fileID: 2735146877405214494}
 --- !u!114 &-2563807488164230852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,7 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tentacleAnimator: {fileID: 7893959025167172210}
   _enemyStatsContainer: {fileID: 8187939092874492644}
---- !u!114 &1366331452263209347
+--- !u!114 &7442634767459381635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -538,15 +539,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2543864529464768167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20e58d7dbb384857a832c5d6981eec83, type: 3}
+  m_Script: {fileID: 11500000, guid: 0903052c2192401d852eb157bb9e8038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyHeight: 5
-  EmergenceDuration: 3
-  _hidePortalOnEmerge: 0
   _tentacleAnimator: {fileID: 7893959025167172210}
   _tentacleFacade: {fileID: 8662503218968821094}
---- !u!114 &2119516100063412033
+  _emergeDuration: 2
+  _height: 5
+--- !u!114 &2735146877405214494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -555,13 +555,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2543864529464768167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a70c1dcba794e01b65d425bb69afd37, type: 3}
+  m_Script: {fileID: 11500000, guid: c1951a4a6d524e12ab71568e2a2fa1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RetreatDuration: 3
-  Height: 5
   _enemyHealth: {fileID: 1336930687297924091}
   _tentacleFacade: {fileID: 8662503218968821094}
+  _retreatDuration: 2
+  _height: 5
 --- !u!114 &-8978431778437181689
 MonoBehaviour:
   m_ObjectHideFlags: 0

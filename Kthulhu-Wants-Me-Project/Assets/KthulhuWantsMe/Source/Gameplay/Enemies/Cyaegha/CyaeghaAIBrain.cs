@@ -11,6 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
     {
         bool BlockProcessing { get; }
     }
+
     public class CyaeghaAIBrain : MonoBehaviour, IEnemyAIBrain
     {
         [SerializeField] private CyaeghaHealth _cyaeghaHealth;
@@ -18,7 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
-        public bool BlockProcessing { get; }
+        public bool BlockProcessing { get; set; }
         private float _attackDelayTime;
 
         private PlayerFacade _player;
@@ -38,18 +39,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             _cyaeghaHealth.Revive();
         }
 
-        private void Update() => 
+        private void Update() =>
             DecideStrategy();
 
-        public void ResetState()
+        public void ResetAI()
         {
         }
 
         private void DecideStrategy()
         {
-            if(_cyaeghaHealth.IsDead)
+            if (_cyaeghaHealth.IsDead || BlockProcessing)
                 return;
-            
+
             DecideMoveStrategy();
             DecideAttackStrategy();
         }
@@ -61,14 +62,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             else
                 _followLogic.StopFollowing();
         }
-        
+
         private void DecideAttackStrategy()
         {
-            if(_followLogic.TargetReached)
+            if (_followLogic.TargetReached)
                 UpdateAttackDelayCountdown();
             else
                 ResetAttackDelayCountdown();
-
 
 
             if (CanDoBasicAttack())
@@ -78,26 +78,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             }
         }
 
-        private void UpdateAttackDelayCountdown() => 
+        private void UpdateAttackDelayCountdown() =>
             _attackDelayTime -= Time.deltaTime;
 
-        private void ResetAttackDelayCountdown() => 
+        private void ResetAttackDelayCountdown() =>
             _attackDelayTime = 1f;
 
-        private bool AttackDelayCountdownIsUp() 
+        private bool AttackDelayCountdownIsUp()
             => _attackDelayTime <= 0;
 
-        private bool ShouldFollow() => 
+        private bool ShouldFollow() =>
             _followLogic.CanFollow() && !_followLogic.TargetReached;
 
         private bool CanDoBasicAttack()
         {
             return _followLogic.TargetReached
-                   && _cyaeghaAttack.CanAttack() 
+                   && _cyaeghaAttack.CanAttack()
                    && AttackDelayCountdownIsUp();
         }
-
-
- 
     }
 }

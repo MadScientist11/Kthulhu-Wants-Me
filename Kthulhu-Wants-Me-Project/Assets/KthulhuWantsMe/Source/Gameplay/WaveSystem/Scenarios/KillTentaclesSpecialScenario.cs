@@ -86,10 +86,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             for (var index = 0; index < _waveSystemDirector.CurrentWaveState.AliveEnemies.Count; index++)
             {
-                var aliveEnemy = _waveSystemDirector.CurrentWaveState.AliveEnemies[index];
-                if (aliveEnemy.TryGetComponent(out RetreatState retreatState))
+                Health aliveEnemy = _waveSystemDirector.CurrentWaveState.AliveEnemies[index];
+                if (aliveEnemy.TryGetComponent(out IRetreatBehaviour retreatBehaviour))
                 {
-                    retreatState.Retreat();
+                    retreatBehaviour.Retreat();
                 }
             }
         }

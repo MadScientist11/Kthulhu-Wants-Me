@@ -38,6 +38,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void Update()
         {
+            if(!_movementMotor.Enabled)
+                return;
+            
             if (_interceptTarget != null)
             {
 
@@ -113,10 +116,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         }
 
         public void Follow() => 
-            _movementMotor.Enable();
+            _movementMotor.ResumeMovement();
         
         public void StopFollowing() => 
+            _movementMotor.HaltMovement();
+
+        public void DisableMotor() =>
             _movementMotor.Disable();
+        
+        public void EnableMotor() =>
+            _movementMotor.Enable();
 
             
         public bool CanFollow() => Vector3.Distance(transform.position, _followTarget.position) <= _maxFollowDistance;
