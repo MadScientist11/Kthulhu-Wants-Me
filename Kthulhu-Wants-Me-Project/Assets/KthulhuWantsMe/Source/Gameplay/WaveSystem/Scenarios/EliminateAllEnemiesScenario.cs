@@ -11,12 +11,12 @@
 
         public void Initialize()
         {
-            _waveSystemDirector.CurrentWaveState.WaveCleared += _waveSystemDirector.CompleteWave;
+            _waveSystemDirector.CurrentWaveState.WaveCleared += _waveSystemDirector.CompleteWaveAsVictory;
         }
 
         public void Dispose()
         {
-            _waveSystemDirector.CurrentWaveState.WaveCleared -= _waveSystemDirector.CompleteWave;
+            _waveSystemDirector.CurrentWaveState.WaveCleared -= _waveSystemDirector.CompleteWaveAsVictory;
         }
     }
 }

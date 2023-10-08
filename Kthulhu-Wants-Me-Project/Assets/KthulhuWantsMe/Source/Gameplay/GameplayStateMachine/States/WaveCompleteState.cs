@@ -2,7 +2,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
-using KthulhuWantsMe.Source.Gameplay.Upgrades;
+using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -32,19 +32,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         }
         public void Enter()
         {
-            _progressService.ProgressData.DefeatedWaveIndex++;
+            _progressService.ProgressData.CompletedWaveIndex++;
             _inputService.SwitchInputScenario(InputScenario.UI);
             
             UpgradeWindow window = (UpgradeWindow) _uiService.OpenWindow(WindowId.UpgradeWindow);
-            HealthUpgrade healthUpgrade = new HealthUpgrade(_player, 10);
-            DamageUpgrade damageUpgrade = new DamageUpgrade(_player, 1);
-            EvadeRecoveryUpgrade evadeUpgrade = new EvadeRecoveryUpgrade(_player, .5f);
-            window.Init(new List<IUpgrade>()
-            {
-                healthUpgrade,
-                damageUpgrade,
-                evadeUpgrade
-            }, OnUpgradePicked);
+           
+            //window.Init(OnUpgradePicked);
          
         }
 
@@ -52,24 +45,9 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
         }
 
-        private async UniTaskVoid ShowUpgradeWindow()
-        {
-            UpgradeWindow window = (UpgradeWindow)_uiService.OpenWindow(WindowId.UpgradeWindow);
-            HealthUpgrade healthUpgrade = new HealthUpgrade(_player, 10);
-            DamageUpgrade damageUpgrade = new DamageUpgrade(_player, 1);
-            EvadeRecoveryUpgrade evadeUpgrade = new EvadeRecoveryUpgrade(_player, .5f);
-            window.Init(new List<IUpgrade>()
-            {
-                healthUpgrade,
-                damageUpgrade,
-                evadeUpgrade
-            }, OnUpgradePicked);
-        }
-
         private async void OnUpgradePicked()
         {
             await StartNextWaveCounter(new CancellationTokenSource());
-            
             _gameplayStateMachine.SwitchState<WaveStartState>();
         }
         

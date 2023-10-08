@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 9033666309106188953}
   - component: {fileID: 5174677676976298968}
   - component: {fileID: 8151728752701681097}
+  - component: {fileID: 966470111195878177}
   - component: {fileID: 3944748895859747068}
   - component: {fileID: 877950398925464152}
   - component: {fileID: -8257174440324719655}
@@ -227,6 +228,8 @@ GameObject:
   - component: {fileID: 6624409593950422001}
   - component: {fileID: 2838533250784125204}
   - component: {fileID: 3316429485802251377}
+  - component: {fileID: 434910997372253643}
+  - component: {fileID: 3015342729217227977}
   m_Layer: 10
   m_Name: YithBase
   m_TagString: Untagged
@@ -336,6 +339,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e4e0982d5049a99dc8b8f09636e291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &966470111195878177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590797425616401305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da9bbeb99be48b88ca870a354993735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _yithAIBrain: {fileID: 3944748895859747068}
+  _followLogic: {fileID: 289277531940907717}
 --- !u!114 &3944748895859747068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,6 +453,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c18c7c07ec4ae9ae65740534d28b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &434910997372253643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590797425616401305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34f091654ea44a389a6c3fa48464a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _height: 5
+--- !u!114 &3015342729217227977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590797425616401305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e4f1df479a4fbc94d6dd3ed2060614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2522923863610313792

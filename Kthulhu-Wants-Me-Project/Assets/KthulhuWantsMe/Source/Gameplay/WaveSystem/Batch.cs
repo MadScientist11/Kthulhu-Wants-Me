@@ -8,6 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
     public class Batch
     {
         public List<EnemyPack> EnemyPack;
+        public bool WaitForBatchClearance;
         public int NextBatchDelay;
     }
 }

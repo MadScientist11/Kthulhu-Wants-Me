@@ -9,7 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
     public class YithAIBrain : MonoBehaviour
     {
-        public bool BlockProcessing { get; private set; }
+        public bool BlockProcessing { get; set; }
         
         [SerializeField] private YithHealth _yithHealth;
         [SerializeField] private YithAttack _yithAttack;

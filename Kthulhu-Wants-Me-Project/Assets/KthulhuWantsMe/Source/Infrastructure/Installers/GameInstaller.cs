@@ -46,6 +46,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<PauseService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
+            builder
+                .Register<UpgradeService>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
+            
 
             builder
                 .Register<PortalSystem>(Lifetime.Scoped)
@@ -91,7 +95,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder.Register<GameplayStateMachine>(Lifetime.Singleton);
             builder.Register<StartGameState>(Lifetime.Singleton);
             builder.Register<WaveStartState>(Lifetime.Singleton);
-            builder.Register<WaveCompleteState>(Lifetime.Singleton);
+            builder.Register<WaveVictoryState>(Lifetime.Singleton);
+            builder.Register<WaveFailState>(Lifetime.Singleton);
         }
     }
 }

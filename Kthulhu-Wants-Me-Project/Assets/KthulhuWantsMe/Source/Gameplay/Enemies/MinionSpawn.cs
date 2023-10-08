@@ -23,7 +23,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         
         public void OnSpawn()
         {
-            Debug.Log(transform.position);
             GetComponent<IStoppable>().StopEntityLogic();
             _desiredPosition = transform.position;
             transform.position = transform.position.AddY(-_height);

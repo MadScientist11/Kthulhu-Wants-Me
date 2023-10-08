@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
@@ -22,6 +23,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         WaveSpawner WaveSpawner { get; }
         void StartWave(int waveIndex);
         void CompleteWave();
+        void CompleteWaveAsVictory();
+        void CompleteWaveAsFailure();
     }
 
 
@@ -51,6 +54,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private IWaveScenario _currentWaveScenario;
 
         private WaveSpawner _waveSpawner;
+
+        private bool _batchCleared;
         
         private Dictionary<WaveObjective, IWaveScenario> _waveScenarios;
 
@@ -80,7 +85,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _waveScenarios = new()
             {
                 { WaveObjective.KillAllEnemies, eliminateAllEnemiesScenario },
-                { WaveObjective.KillTentaclesSpecial, killTentaclesSpecial }
+                { WaveObjective.KillTentaclesSpecial, killTentaclesSpecial },
             };
 
             _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider);
@@ -99,7 +104,20 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _currentWaveScenario.Initialize();
 
             _waveSpawner.Initialize(_currentWaveState);
-            _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
+            
+            SpawnBatchLoop().Forget();
+        }
+
+        public void CompleteWaveAsFailure()
+        {
+            _gameplayStateMachine.SwitchState<WaveFailState>();
+            CompleteWave();
+        }
+
+        public void CompleteWaveAsVictory()
+        {
+            _gameplayStateMachine.SwitchState<WaveVictoryState>();
+            CompleteWave();
         }
 
         public void CompleteWave()
@@ -107,25 +125,53 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             WaveCompleted?.Invoke();
             _currentWaveState.CleanUp();
             _currentWaveScenario.Dispose();
-            _gameplayStateMachine.SwitchState<WaveCompleteState>();
         }
 
         private void OnBatchCleared()
         {
-            if (!_currentWaveState.IsLastBatch())
-            {
-                SpawnNextBatch().Forget();
-            }
+            _batchCleared = true;
         }
 
         private void OnWaveCleared()
         {
         }
 
-        private async UniTaskVoid SpawnNextBatch()
+        private async UniTaskVoid SpawnBatchLoop()
         {
-            TimeSpan nextBatchDelay = TimeSpan.FromSeconds(_currentWaveState.CurrentBatchData.NextBatchDelay);
-            await UniTask.Delay(nextBatchDelay);
+            CancellationTokenSource spawnLoopToken = new CancellationTokenSource();
+            
+            // Spawn first wave
+            _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
+            
+            while (!spawnLoopToken.IsCancellationRequested)
+            {
+                if (_currentWaveState.IsLastBatch())
+                {
+                    spawnLoopToken.Cancel();
+                    return;
+                }
+                
+                if (_currentWaveState.CurrentBatchData.WaitForBatchClearance)
+                {
+                    // Wait until the batch is cleared and spawn next batch then
+                    while (!_batchCleared)
+                    {
+                        await UniTask.Yield();
+                    }
+                }
+                
+
+                TimeSpan nextBatchDelay = TimeSpan.FromSeconds(_currentWaveState.CurrentBatchData.NextBatchDelay);
+                await UniTask.Delay(nextBatchDelay);
+
+                SpawnNextBatch();
+                
+                _batchCleared = false;
+            }
+        }
+
+        private void SpawnNextBatch()
+        {
             _currentWaveState.ModifyBatchIndex(_currentWaveState.CurrentBatchIndex + 1);
             _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
         }

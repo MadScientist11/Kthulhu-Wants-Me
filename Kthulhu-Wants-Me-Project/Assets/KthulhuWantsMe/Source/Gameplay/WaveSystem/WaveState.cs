@@ -48,6 +48,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             }
         }
 
+        public WaveData CurrentWaveData
+        {
+            get
+            {
+                return _waveData;
+            }
+        }
+
 
         private readonly Dictionary<EnemySpawnerId, List<Health>> _aliveEnemiesByPlace = new();
         private readonly List<Health> _aliveEnemies = new();

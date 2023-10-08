@@ -19,7 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         
         public void Enter()
         {
-            int newWaveIndex = _progressService.ProgressData.DefeatedWaveIndex + 1;
+            int newWaveIndex = _progressService.ProgressData.CompletedWaveIndex + 1;
             _waveSystem.StartWave(newWaveIndex);
         }
 

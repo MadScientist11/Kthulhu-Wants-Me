@@ -28,7 +28,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         public void StopEntityLogic()
         {
             _followLogic.DisableMotor();
-            Debug.Log("Disable?");
             BlockAIProcessing();
         }
 

@@ -4,7 +4,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
     public class ProgressData
     {
-        public int DefeatedWaveIndex;
+        public int CompletedWaveIndex;
     }
     public interface IProgressService
     {
@@ -19,7 +19,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         public UniTask Initialize()
         {
             IsInitialized = true;
-            ProgressData.DefeatedWaveIndex = -1;
+            ProgressData.CompletedWaveIndex = -1;
             return UniTask.CompletedTask;
         }
     }

@@ -22,7 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay
 
         private void Update()
         {
-            if (!_unlocked && _progressService.ProgressData.DefeatedWaveIndex >= _unlockOnWave)
+            if (!_unlocked && _progressService.ProgressData.CompletedWaveIndex >= _unlockOnWave)
             {
                 _unlocked = true;
                 gameObject.SetActive(false);

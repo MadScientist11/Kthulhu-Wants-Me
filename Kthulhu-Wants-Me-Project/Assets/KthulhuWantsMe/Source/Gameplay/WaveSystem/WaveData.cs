@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using Sirenix.OdinInspector;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
@@ -14,6 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         
         [ShowIf("WaveObjective", WaveObjective.KillTentaclesSpecial)]
         public int TimeConstraint;
-
+        
+        public List<UpgradeData> UpgradeRewards;
     }
 }

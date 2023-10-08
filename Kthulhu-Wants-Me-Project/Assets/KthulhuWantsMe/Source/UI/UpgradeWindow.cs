@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.Upgrades;
+using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using UnityEngine;
 
@@ -10,21 +11,21 @@ namespace KthulhuWantsMe.Source.UI
     {
         [SerializeField] private UpgradeUI _upgradeUIPrefab;
         [SerializeField] private Transform _upgradesParent;
-        
-        private List<IUpgrade> _upgrades;
-        
-        public Action OnUpgradePicked { get; private set; }
 
-        public void Init(List<IUpgrade> upgrades, Action onUpgradePicked)
+        public Action OnUpgradePicked { get; private set; }
+        
+        private List<UpgradeData> _upgrades;
+
+        public void Init(List<UpgradeData> upgrades, Action onUpgradePicked)
         {
             OnUpgradePicked = onUpgradePicked;
             _upgrades = upgrades;
-            UpdateUI(upgrades);
+            UpdateUI();
         }
 
-        public void UpdateUI(List<IUpgrade> upgrades)
+        public void UpdateUI()
         {
-            foreach (IUpgrade upgrade in upgrades)
+            foreach (UpgradeData upgrade in _upgrades)
             {
                 UpgradeUI upgradeUI = Instantiate(_upgradeUIPrefab, _upgradesParent);
                 upgradeUI.Init(upgrade, this);
