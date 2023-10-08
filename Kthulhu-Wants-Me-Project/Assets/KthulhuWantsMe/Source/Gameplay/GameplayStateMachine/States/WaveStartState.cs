@@ -6,15 +6,15 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 {
     public class WaveStartState : IGameplayState
     {
-        private GameStateMachine _gameStateMachine;
+        private GameplayStateMachine _gameplayStateMachine;
         private readonly IWaveSystemDirector _waveSystem;
         private IProgressService _progressService;
 
-        public WaveStartState(GameStateMachine gameStateMachine, IWaveSystemDirector waveSystem, IProgressService progressService)
+        public WaveStartState(GameplayStateMachine gameplayStateMachine, IWaveSystemDirector waveSystem, IProgressService progressService)
         {
             _progressService = progressService;
             _waveSystem = waveSystem;
-            _gameStateMachine = gameStateMachine;
+            _gameplayStateMachine = gameplayStateMachine;
         }
         
         public void Enter()

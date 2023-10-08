@@ -2,12 +2,12 @@
 
 namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine
 {
-    public class GameStateMachine
+    public class GameplayStateMachine
     {
         private IGameplayState _activeState;
         private readonly StatesFactory _statesFactory;
 
-        public GameStateMachine(StatesFactory statesFactory)
+        public GameplayStateMachine(StatesFactory statesFactory)
         {
             _statesFactory = statesFactory;
         }

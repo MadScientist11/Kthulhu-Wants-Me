@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.Upgrades;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.UI;
 using UnityEngine;
@@ -15,22 +16,24 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
     public class WaveCompleteState : IGameplayState
     {
         private IUIService _uiService;
-        private IWaveSystemDirector _waveSystem;
         private ThePlayer _player;
-        private GameStateMachine _gameStateMachine;
+        private GameplayStateMachine _gameplayStateMachine;
         private IProgressService _progressService;
+        private IInputService _inputService;
 
-        public WaveCompleteState(GameStateMachine gameStateMachine, IProgressService progressService, IUIService uiService, IWaveSystemDirector waveSystem, ThePlayer player)
+        public WaveCompleteState(GameplayStateMachine gameplayStateMachine, IProgressService progressService, 
+            IUIService uiService, IInputService inputService,  ThePlayer player)
         {
+            _inputService = inputService;
             _progressService = progressService;
-            _gameStateMachine = gameStateMachine;
+            _gameplayStateMachine = gameplayStateMachine;
             _player = player;
-            _waveSystem = waveSystem;
             _uiService = uiService;
         }
         public void Enter()
         {
             _progressService.ProgressData.DefeatedWaveIndex++;
+            _inputService.SwitchInputScenario(InputScenario.UI);
             
             UpgradeWindow window = (UpgradeWindow) _uiService.OpenWindow(WindowId.UpgradeWindow);
             HealthUpgrade healthUpgrade = new HealthUpgrade(_player, 10);
@@ -67,7 +70,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             await StartNextWaveCounter(new CancellationTokenSource());
             
-            _gameStateMachine.SwitchState<WaveStartState>();
+            _gameplayStateMachine.SwitchState<WaveStartState>();
         }
         
         public async UniTask StartNextWaveCounter(CancellationTokenSource cancellationToken)

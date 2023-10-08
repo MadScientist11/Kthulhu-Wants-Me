@@ -22,4 +22,12 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   BaseEnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  WaveData: []
+  WaveData:
+  - WaveObjective: 1
+    Batches:
+    - WaveEnemies:
+      - EnemyType: 300
+        Quantity: 1
+        SpawnAt: 0
+      NextBatchDelay: 0
+    TimeConstraint: 3

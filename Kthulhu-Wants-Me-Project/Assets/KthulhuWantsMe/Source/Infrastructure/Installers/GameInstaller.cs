@@ -42,6 +42,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<LootService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
+            builder
+                .Register<PauseService>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
+            
 
             builder
                 .Register<PortalSystem>(Lifetime.Scoped)
@@ -84,7 +88,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
         private static void RegisterGameplayFsm(IContainerBuilder builder)
         {
             builder.Register<StatesFactory>(Lifetime.Singleton);
-            builder.Register<GameStateMachine>(Lifetime.Singleton);
+            builder.Register<GameplayStateMachine>(Lifetime.Singleton);
             builder.Register<StartGameState>(Lifetime.Singleton);
             builder.Register<WaveStartState>(Lifetime.Singleton);
             builder.Register<WaveCompleteState>(Lifetime.Singleton);

@@ -57,17 +57,17 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private readonly IGameFactory _gameFactory;
         private readonly ISceneDataProvider _sceneDataProvider;
         private readonly Waves _wavesData;
-        private readonly GameStateMachine _gameStateMachine;
+        private readonly GameplayStateMachine.GameplayStateMachine _gameplayStateMachine;
         private readonly IUIService _uiService;
 
 
         public WaveSystemDirector(ISceneDataProvider sceneDataProvider, IDataProvider dataProvider,
             IGameFactory gameFactory,
             IUIService uiService,
-            GameStateMachine gameStateMachine)
+            GameplayStateMachine.GameplayStateMachine gameplayStateMachine)
         {
             _uiService = uiService;
-            _gameStateMachine = gameStateMachine;
+            _gameplayStateMachine = gameplayStateMachine;
             _sceneDataProvider = sceneDataProvider;
             _gameFactory = gameFactory;
             _wavesData = dataProvider.Waves;
@@ -107,7 +107,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             WaveCompleted?.Invoke();
             _currentWaveState.CleanUp();
             _currentWaveScenario.Dispose();
-            _gameStateMachine.SwitchState<WaveCompleteState>();
+            _gameplayStateMachine.SwitchState<WaveCompleteState>();
         }
 
         private void OnBatchCleared()

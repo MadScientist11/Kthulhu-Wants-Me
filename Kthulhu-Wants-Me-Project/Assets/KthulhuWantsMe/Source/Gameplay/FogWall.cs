@@ -1,5 +1,3 @@
-using System;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
@@ -11,9 +9,9 @@ namespace KthulhuWantsMe.Source.Gameplay
     {
         [SerializeField] private int _unlockOnWave;
         
+        private bool _unlocked;
         
         private IProgressService _progressService;
-        private bool _unlocked;
 
         [Inject]
         public void Construct(IProgressService progressService)

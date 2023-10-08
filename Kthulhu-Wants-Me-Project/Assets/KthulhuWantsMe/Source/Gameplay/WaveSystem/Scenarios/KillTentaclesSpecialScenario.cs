@@ -18,6 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private CancellationTokenSource _timerToken;
 
         private int _remainingTentacles;
+        private readonly int _waitForEnemiesRetreatDelay = 3;
         
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly IUIService _uiService;
@@ -36,17 +37,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             StartWaveLossTimer().Forget();
 
             _waveSystemDirector.WaveSpawner.BatchSpawned += OnBatchSpawned;
-            _waveSystemDirector.WaveCompleted += OnWaveCompleted;
         }
 
         public void Dispose()
         {
-            _waveSystemDirector.WaveCompleted -= OnWaveCompleted;
-        }
-
-        private void OnWaveCompleted()
-        {
-            _compassUI.Hide();
+            _waveSystemDirector.WaveSpawner.BatchSpawned += OnBatchSpawned;
         }
 
         private void OnBatchSpawned(IEnumerable<Health> enemies)
@@ -75,6 +70,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
                 {
                     _timerToken.Cancel();
                     RetreatAllEnemies();
+                    _compassUI.Hide();
+                    await UniTask.Delay(_waitForEnemiesRetreatDelay * 1000);
                     _waveSystemDirector.CompleteWave();
                 }
             }

@@ -16,16 +16,14 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 {
     public class StartGameState : IGameplayState
     {
-        
-        
-        private readonly GameStateMachine _gameStateMachine;
+        private readonly GameplayStateMachine _gameplayStateMachine;
         private readonly IGameFactory _gameFactory;
         private readonly IInputService _inputService;
         private readonly ISceneDataProvider _sceneDataProvider;
         private readonly IUIService _uiService;
         private readonly ISceneLoader _sceneLoader;
 
-        public StartGameState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IInputService inputService,
+        public StartGameState(GameplayStateMachine gameplayStateMachine, IGameFactory gameFactory, IInputService inputService,
             ISceneDataProvider sceneDataProvider, IUIService uiService, ISceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
@@ -33,7 +31,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _sceneDataProvider = sceneDataProvider;
             _inputService = inputService;
             _gameFactory = gameFactory;
-            _gameStateMachine = gameStateMachine;
+            _gameplayStateMachine = gameplayStateMachine;
         }
 
         public void Enter()
@@ -50,7 +48,10 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
 
             _uiService.ShowHUD();
-            _gameStateMachine.SwitchState<WaveStartState>();
+
+            
+            
+            _gameplayStateMachine.SwitchState<WaveStartState>();
         }
 
         public void Exit()
