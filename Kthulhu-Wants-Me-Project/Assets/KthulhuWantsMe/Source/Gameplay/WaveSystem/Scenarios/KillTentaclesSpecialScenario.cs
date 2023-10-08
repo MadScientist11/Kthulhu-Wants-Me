@@ -65,7 +65,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
                 OnWaveLossTimerTick(countdown);
 
-                if (countdown == 0)
+                if (countdown <= 0)
                 {
                     _timerToken.Cancel();
                     RetreatAllEnemies();

@@ -23,6 +23,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation);
         BuffItem CreateHealItem(Vector3 position, Quaternion rotation);
         GameObject CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
+        T CreatePrefabInjected<T>(T prefab, Transform parent) where T : Object;
     }
 
     public class GameFactory : IGameFactory
@@ -103,6 +104,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         public T CreatePrefabInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object
         {
             return _instantiator.Instantiate(prefab, position, rotation);
+        }
+        public T CreatePrefabInjected<T>(T prefab, Transform parent) where T : Object
+        {
+            return _instantiator.Instantiate(prefab, parent);
         }
     }
 }

@@ -12,8 +12,10 @@ namespace KthulhuWantsMe.Source.Gameplay.UpgradeSystem
         public UpgradeType UpgradeType;
 
         [ShowIf("UpgradeType", UpgradeType.StatUpgrade)]
+        [EnumPaging]
         public StatType StatType;
-
+        
+        [EnumToggleButtons]        
         public UpgradeValueType UpgradeValueType;
         public float Value;
     }

@@ -50,7 +50,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<UpgradeService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
-
             builder
                 .Register<PortalSystem>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
@@ -76,22 +75,20 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsSelf();
             
             builder
-                .Register<EnemyStatsScalingService>(Lifetime.Scoped)
-                .AsSelf();
-            
-            builder
                 .Register<WaveSystemDirector>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
             builder
                 .Register<ProjectileArcFactory>(Lifetime.Scoped)
                 .AsSelf();
+            
             RegisterGameplayFsm(builder);
         }
 
         private static void RegisterGameplayFsm(IContainerBuilder builder)
         {
             builder.Register<StatesFactory>(Lifetime.Singleton);
+            
             builder.Register<GameplayStateMachine>(Lifetime.Singleton);
             builder.Register<StartGameState>(Lifetime.Singleton);
             builder.Register<WaveStartState>(Lifetime.Singleton);

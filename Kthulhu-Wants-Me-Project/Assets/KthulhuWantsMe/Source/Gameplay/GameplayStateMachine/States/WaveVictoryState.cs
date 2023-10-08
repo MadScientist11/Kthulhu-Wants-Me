@@ -26,13 +26,14 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _progressService = progressService;
         }
         
-        public void Enter()
+        public async void Enter()
         {
             _progressService.ProgressData.CompletedWaveIndex++;
             _inputService.SwitchInputScenario(InputScenario.UI);
+
+            await UniTask.Delay(1500);
             
             UpgradeWindow window = (UpgradeWindow) _uiService.OpenWindow(WindowId.UpgradeWindow);
-           
             window.Init(_waveSystemDirector.CurrentWaveState.CurrentWaveData.UpgradeRewards, OnUpgradePicked);
         }
 
@@ -43,6 +44,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         
         private async void OnUpgradePicked()
         {
+            _inputService.SwitchInputScenario(InputScenario.Gameplay);
             await StartNextWaveCounter(new CancellationTokenSource());
         }
         

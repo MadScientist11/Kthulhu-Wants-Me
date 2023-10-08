@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+﻿using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 
 namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine
 {
