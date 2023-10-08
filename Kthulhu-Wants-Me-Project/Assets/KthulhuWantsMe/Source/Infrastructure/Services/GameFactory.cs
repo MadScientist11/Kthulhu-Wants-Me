@@ -83,7 +83,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
                 enemy.Initialize(enemyType, enemyStats);
             }
 
-
             return instance;
         }
 

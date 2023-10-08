@@ -26,9 +26,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         public Health Spawn(EnemyType enemyType)
         {
             Vector3 randomPoint = Mathfs.Abs(Random.insideUnitSphere * 3f);
-            Vector3 spawnPosition = _spawnPoint.Position + randomPoint;
+            Vector3 spawnPosition = _spawnPoint.Position.AddY(5) + randomPoint;
 
-            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100))
+            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100, LayerMasks.GroundMask))
             {
                 GameObject enemy =
                     _gameFactory.CreatePortalWithEnemy(hitInfo.point + Vector3.one * 0.05f, Quaternion.identity,
@@ -37,6 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 return enemy.GetComponent<Health>();
             }
 
+            Debug.LogError("Couldn't spawn an enemy");
             return null;
         }
     }

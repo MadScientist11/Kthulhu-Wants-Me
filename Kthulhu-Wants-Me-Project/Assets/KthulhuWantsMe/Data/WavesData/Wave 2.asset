@@ -13,23 +13,17 @@ MonoBehaviour:
   m_Name: Wave 2
   m_EditorClassIdentifier: 
   WaveData:
-    WaveObjective: 1
+    WaveObjective: 0
     Batches:
     - EnemyPack:
-      - EnemyType: 300
-        Quantity: 1
-        SpawnAt: 0
       - EnemyType: 4
-        Quantity: 5
+        Quantity: 1
         SpawnAt: 0
       WaitForBatchClearance: 1
       NextBatchDelay: 5
     - EnemyPack:
-      - EnemyType: 3
-        Quantity: 10
-        SpawnAt: 0
-      - EnemyType: 4
-        Quantity: 20
+      - EnemyType: 0
+        Quantity: 2
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 0
