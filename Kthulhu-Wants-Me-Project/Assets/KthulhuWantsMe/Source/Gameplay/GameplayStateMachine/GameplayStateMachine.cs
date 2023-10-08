@@ -5,6 +5,14 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine
 {
     public class GameplayStateMachine
     {
+        public IGameplayState CurrentState
+        {
+            get
+            {
+                return _activeState;
+            }
+        }
+        
         private IGameplayState _activeState;
         private readonly StatesFactory _statesFactory;
 

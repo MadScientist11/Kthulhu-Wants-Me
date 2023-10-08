@@ -19,7 +19,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float MoveSpeed;
         public Vector3 Gravity = new(0, -30f, 0);
         public float DashStrength;
-        public float DashCooldown;
         public float AttackRadius;
         public float AttackEffectiveDistance;
         public float AttackStep;

@@ -32,7 +32,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         private IEnumerator DoSpawnEnemy()
         {
             Portal portal = _portalFactory.GetOrCreatePortal(_desiredPosition, Quaternion.identity, EnemyType.Tentacle);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(2f);
             transform.position = _desiredPosition;
             portal.ClosePortal();
             GetComponent<IStoppable>().ResumeEntityLogic();

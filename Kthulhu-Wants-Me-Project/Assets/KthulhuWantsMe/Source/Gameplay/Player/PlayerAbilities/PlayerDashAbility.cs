@@ -1,6 +1,7 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
+using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -41,7 +42,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             if (CanDash())
             {
                 Dash();
-                _nextDashTime = Time.time + _playerStats.EvadeDelay;
+                _nextDashTime = Time.time + _playerStats.MainStats[StatType.EvadeCooldown];
             }
         }
 

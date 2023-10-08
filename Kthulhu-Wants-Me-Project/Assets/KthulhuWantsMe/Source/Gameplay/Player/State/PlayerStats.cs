@@ -8,11 +8,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 {
     public class PlayerStats
     {
+        public event Action<StatType, float> StatChanged;
+        
         public float CurrentHp;
         public bool Immortal;
-        public float EvadeDelay;
-        public Dictionary<StatType, float> BaseStats;
-        public Dictionary<StatType, float> Mods = new();
+
+        public IReadOnlyDictionary<StatType, float> MainStats
+        {
+            get
+            {
+                return _mainStats;
+            }
+        }
+
+        private readonly Dictionary<StatType, float> _mainStats;
         
 
         private PlayerConfiguration _playerConfiguration;
@@ -20,12 +29,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         public PlayerStats(PlayerConfiguration playerConfiguration)
         {
             _playerConfiguration = playerConfiguration;
-            BaseStats = playerConfiguration.BaseStats.ToDictionary(entry => entry.Key,
+            _mainStats = playerConfiguration.BaseStats.ToDictionary(entry => entry.Key,
                 entry => entry.Value);
 
-            EvadeDelay = _playerConfiguration.DashCooldown;
         }
 
-       
+        public void ChangeStat(StatType statType, float newValue)
+        {
+            _mainStats[statType] = newValue;
+            StatChanged?.Invoke(statType, _mainStats[statType]);
+        }
     }
 }

@@ -56,6 +56,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private WaveSpawner _waveSpawner;
 
         private bool _batchCleared;
+        private bool _waveOngoing;
         
         private Dictionary<WaveObjective, IWaveScenario> _waveScenarios;
 
@@ -106,22 +107,30 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _waveSpawner.Initialize(_currentWaveState);
             
             SpawnBatchLoop().Forget();
+            _waveOngoing = true;
         }
 
         public void CompleteWaveAsFailure()
         {
+            if(!_waveOngoing)
+                return;
+            
             _gameplayStateMachine.SwitchState<WaveFailState>();
             CompleteWave();
         }
 
         public void CompleteWaveAsVictory()
         {
+            if(!_waveOngoing)
+                return;
+            
             _gameplayStateMachine.SwitchState<WaveVictoryState>();
             CompleteWave();
         }
 
         public void CompleteWave()
         {
+            _waveOngoing = false;
             WaveCompleted?.Invoke();
             _currentWaveState.CleanUp();
             _currentWaveScenario.Dispose();
@@ -133,6 +142,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         }
 
         private void OnWaveCleared()
+        {
+        }
+
+        private void WaveIsOngoing()
         {
         }
 

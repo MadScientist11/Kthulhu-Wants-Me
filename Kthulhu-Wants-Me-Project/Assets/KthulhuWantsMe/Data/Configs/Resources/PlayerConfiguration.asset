@@ -40,7 +40,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
@@ -66,6 +66,18 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 501
+    - Name: $v
+      Entry: 4
+      Data: 0.75
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -78,7 +90,6 @@ MonoBehaviour:
   MoveSpeed: 4.65
   Gravity: {x: 0, y: -1000, z: 0}
   DashStrength: 30
-  DashCooldown: 0.85
   AttackRadius: 2
   AttackEffectiveDistance: 1
   AttackStep: 17

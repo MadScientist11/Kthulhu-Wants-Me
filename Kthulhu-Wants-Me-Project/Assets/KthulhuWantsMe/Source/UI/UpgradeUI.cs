@@ -29,7 +29,7 @@ namespace KthulhuWantsMe.Source.UI
         {
             _upgradeWindow = upgradeWindow;
             _upgradeData = upgradeData;
-            _upgradeDescription.text = upgradeData.UpgradeText;
+            _upgradeDescription.text = string.Format(upgradeData.UpgradeText, upgradeData.Value);
             _upgradeButton.onClick.AddListener(OnUpgrade);
         }
 
