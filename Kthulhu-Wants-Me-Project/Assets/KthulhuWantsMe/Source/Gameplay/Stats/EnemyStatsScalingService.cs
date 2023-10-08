@@ -8,7 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
     public class EnemyStatsScalingService
     {
        
-        public EnemyStats ScaleFor<TConfig>(TConfig config, EnemyScaling enemyScaling, int level) where TConfig : EnemyConfiguration
+        public EnemyStats ScaleFor<TConfig>(TConfig config, EnemyScalingSO enemyScaling, int level) where TConfig : EnemyConfiguration
         {
             EnemyStats enemyStats = new();
             enemyStats.Stats = new();

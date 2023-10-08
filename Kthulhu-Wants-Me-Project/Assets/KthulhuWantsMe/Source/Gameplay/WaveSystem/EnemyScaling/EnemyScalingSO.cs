@@ -6,7 +6,7 @@ using UnityEngine;
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.EnemyScaling
 {
     [CreateAssetMenu(menuName = "Create EnemyScaling", fileName = "EnemyScaling", order = 0)]
-    public class EnemyScaling : SerializedScriptableObject
+    public class EnemyScalingSO : SerializedScriptableObject
     {
         //health curve
         public Dictionary<StatType, ScaleParameter> StatsScaling;

@@ -57,7 +57,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
             TimeSpan tick = TimeSpan.FromSeconds(1);
 
-            int countdown = 10;
+            int countdown = _currentWave.TimeConstraint;
 
             while (!_timerToken.IsCancellationRequested)
             {

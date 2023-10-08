@@ -67,7 +67,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         private IEnumerable<Health> SpawnBatch(Batch batch)
         {
             List<Health> batchEnemies = new();
-            foreach (EnemyPack enemyPack in batch.WaveEnemies)
+            foreach (EnemyPack enemyPack in batch.EnemyPack)
                 batchEnemies.AddRange(SpawnEnemyPack(enemyPack));
             return batchEnemies;
         }

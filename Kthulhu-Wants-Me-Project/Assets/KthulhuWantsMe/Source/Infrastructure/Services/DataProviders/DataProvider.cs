@@ -16,7 +16,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         PlayerConfiguration PlayerConfig { get; }
         PortalConfiguration PortalConfig { get; }
         BuffItemsContainer BuffItems { get; }
-        Waves Waves { get; }
+        WavesTemplate Waves { get; }
         EnemyConfigsProvider EnemyConfigsProvider { get; }
         GameConfiguration GameConfig { get; }
     }
@@ -32,7 +32,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         public PlayerConfiguration PlayerConfig { get; private set; }
         public PortalConfiguration PortalConfig { get; private set; }
         public BuffItemsContainer BuffItems { get; private set; }
-        public Waves Waves { get; private set; }
+        public WavesTemplate Waves { get; private set; }
         
         public GameConfiguration GameConfig { get; private set; }
         public EnemyConfigsProvider EnemyConfigsProvider { get; private set; }
@@ -44,7 +44,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
             PlayerConfig = (PlayerConfiguration)await Resources.LoadAsync<PlayerConfiguration>(PlayerConfigurationPath);
             PortalConfig = (PortalConfiguration)await Resources.LoadAsync<PortalConfiguration>(PortalConfigurationPath);
             BuffItems = (BuffItemsContainer)await Resources.LoadAsync<BuffItemsContainer>(BuffItemsPath);
-            Waves = (Waves)await Resources.LoadAsync<Waves>(WavesPath);
+            Waves = (WavesTemplate)await Resources.LoadAsync<WavesTemplate>(WavesPath);
             GameConfig = (GameConfiguration)await Resources.LoadAsync<GameConfiguration>(GameConfiguration);
         }
         

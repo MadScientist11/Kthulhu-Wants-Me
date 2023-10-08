@@ -56,7 +56,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         private readonly IGameFactory _gameFactory;
         private readonly ISceneDataProvider _sceneDataProvider;
-        private readonly Waves _wavesData;
+        private readonly WavesTemplate _wavesData;
         private readonly GameplayStateMachine.GameplayStateMachine _gameplayStateMachine;
         private readonly IUIService _uiService;
 

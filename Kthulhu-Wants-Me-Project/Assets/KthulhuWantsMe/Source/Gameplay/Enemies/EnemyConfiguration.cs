@@ -12,6 +12,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public EnemyType EnemyType;
         public GameObject Prefab;
         public Dictionary<StatType, float> BaseStats = new();
-        public EnemyScaling EnemyScaling;
+        public EnemyScalingSO EnemyScaling;
     }
 }

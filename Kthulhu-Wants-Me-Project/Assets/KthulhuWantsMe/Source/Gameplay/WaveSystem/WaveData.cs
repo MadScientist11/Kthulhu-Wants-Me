@@ -5,12 +5,6 @@ using Sirenix.OdinInspector;
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     [Serializable]
-    public class Batch
-    {
-        public List<EnemyPack> WaveEnemies;
-        public int NextBatchDelay;
-    }
-    [Serializable]
     public class WaveData
     {
         [TableColumnWidth(10)]
@@ -21,7 +15,5 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         [ShowIf("WaveObjective", WaveObjective.KillTentaclesSpecial)]
         public int TimeConstraint;
 
-        // enum
-        //
     }
 }
