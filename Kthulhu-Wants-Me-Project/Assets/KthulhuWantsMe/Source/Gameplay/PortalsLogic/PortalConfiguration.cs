@@ -6,5 +6,6 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
     public class PortalConfiguration : ScriptableObject
     {
         public Portal TentaclePortalPrefab;
+        public Portal MinionsPortalPrefab;
     }
 }

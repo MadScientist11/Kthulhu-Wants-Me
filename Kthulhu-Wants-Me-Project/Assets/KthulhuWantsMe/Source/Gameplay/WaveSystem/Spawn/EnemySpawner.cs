@@ -11,6 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
     public class EnemySpawner
     {
         public Vector3 Position => _spawnPoint.Position;
+        public float Radius => _spawnPoint.Radius;
         public EnemySpawnerId Id => _spawnPoint.EnemySpawnerId;
 
         private readonly IGameFactory _gameFactory;
@@ -25,8 +26,12 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public Health Spawn(EnemyType enemyType)
         {
-            Vector3 randomPoint = Mathfs.Abs(Random.insideUnitSphere * 3f);
+            Vector3 randomPoint = Random.insideUnitCircle.XZtoXYZ() * Radius;
             Vector3 spawnPosition = _spawnPoint.Position.AddY(5) + randomPoint;
+
+            if (enemyType == EnemyType.Tentacle || enemyType == EnemyType.BleedTentacle ||
+                enemyType == EnemyType.TentacleSpecial || enemyType == EnemyType.PoisonousTentacle)
+                spawnPosition = Position.AddY(5);
 
             if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100, LayerMasks.GroundMask))
             {

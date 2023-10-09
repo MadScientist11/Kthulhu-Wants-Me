@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
+using Sirenix.Utilities;
 using UnityEngine;
 using VContainer;
 
@@ -19,13 +20,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         
         private IInputService _inputService;
         private PlayerStats _playerStats;
+        private ICoroutineRunner _coroutineRunner;
 
         private float _nextDashTime;
         private PlayerConfiguration _playerConfig;
 
         [Inject]
-        public void Construct(IInputService inputService,IDataProvider dataProvider, ThePlayer player)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player, ICoroutineRunner coroutineRunner)
         {
+            _coroutineRunner = coroutineRunner;
             _inputService = inputService;
             _playerStats = player.PlayerStats;
             _playerConfig = dataProvider.PlayerConfig;

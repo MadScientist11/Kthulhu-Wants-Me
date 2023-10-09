@@ -36,7 +36,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             _followLogic.Init(_player.transform, Mathf.Infinity, 3f);
             _cyaeghaConfiguration = (CyaeghaConfiguration)_enemyStatsContainer.Config;
             _followLogic.FollowSpeed = Random.Range((int)_cyaeghaConfiguration.MoveSpeed.x, (int)_cyaeghaConfiguration.MoveSpeed.y);
-            Debug.Log(_followLogic.FollowSpeed);
             _cyaeghaHealth.Revive();
         }
 

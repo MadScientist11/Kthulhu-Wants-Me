@@ -30,6 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         
         public void OnSpawn()
         {
+            GetComponent<Collider>().enabled = false;
             Portal portal = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity, EnemyType.Tentacle);
             GetComponent<TentacleRetreat>().Init(portal);
             StartCoroutine(EmergeFromPortal(transform.position.AddY(-_height), transform.position));
@@ -57,6 +58,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             }
             
             OnEmerged();
+            yield return new WaitForSeconds(1f);
+            GetComponent<Collider>().enabled = true;
         }
 
         private void OnEmerge()
