@@ -23,5 +23,6 @@ MonoBehaviour:
     SerializationNodes: []
   WavesData:
   - {fileID: 11400000, guid: 321d4830dcebdfc4f835ec9de836e225, type: 2}
-  - {fileID: 11400000, guid: a9ccede89440e5b45904cd43b983cb12, type: 2}
-  - {fileID: 11400000, guid: 21a7cb99d5eb89d45a035b3de22b82cb, type: 2}
+  - {fileID: 11400000, guid: 4441b904e390aca448ba7e11eb57492c, type: 2}
+  - {fileID: 11400000, guid: 58ba7aa71b98a2846a8b33a7fb5db7c9, type: 2}
+  - {fileID: 11400000, guid: c4c6c86bf083dfe489c9c9fb1dbe1a99, type: 2}

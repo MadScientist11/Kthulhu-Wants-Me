@@ -10,29 +10,56 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4dfc45407f9e43bda9cfeed5d2bf05f0, type: 3}
-  m_Name: Wave 1
+  m_Name: Wave 8
   m_EditorClassIdentifier: 
   WaveData:
     WaveObjective: 0
     Batches:
     - EnemyPack:
       - EnemyType: 4
+        Quantity: 8
+        SpawnAt: 0
+      - EnemyType: 100
         Quantity: 2
-        SpawnAt: 0
-      WaitForBatchClearance: 1
-      NextBatchDelay: 3
-    - EnemyPack:
-      - EnemyType: 4
-        Quantity: 4
-        SpawnAt: 0
-      WaitForBatchClearance: 0
-      NextBatchDelay: 3
-    - EnemyPack:
-      - EnemyType: 4
-        Quantity: 6
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 5
+    - EnemyPack:
+      - EnemyType: 4
+        Quantity: 10
+        SpawnAt: 0
+      - EnemyType: 100
+        Quantity: 3
+        SpawnAt: 0
+      - EnemyType: 0
+        Quantity: 1
+        SpawnAt: 0
+      WaitForBatchClearance: 0
+      NextBatchDelay: 7
+    - EnemyPack:
+      - EnemyType: 4
+        Quantity: 12
+        SpawnAt: 0
+      - EnemyType: 100
+        Quantity: 4
+        SpawnAt: 0
+      - EnemyType: 0
+        Quantity: 1
+        SpawnAt: 0
+      WaitForBatchClearance: 0
+      NextBatchDelay: 9
+    - EnemyPack:
+      - EnemyType: 4
+        Quantity: 12
+        SpawnAt: 0
+      - EnemyType: 100
+        Quantity: 4
+        SpawnAt: 0
+      - EnemyType: 1
+        Quantity: 1
+        SpawnAt: 0
+      WaitForBatchClearance: 0
+      NextBatchDelay: 11
     TimeConstraint: 25
     UpgradeRewards:
     - UpgradeTitle: Increase Max Health by +{0}
@@ -48,7 +75,7 @@ MonoBehaviour:
       UpgradeValueType: 0
       Value: 15
     - UpgradeTitle: Decrease Evade Cooldown by {0}
-      UpgradeText: Drecrease Evade Cooldown by {0}
+      UpgradeText: Decrease Evade Cooldown by {0}
       UpgradeType: 0
       StatType: 501
       UpgradeValueType: 1

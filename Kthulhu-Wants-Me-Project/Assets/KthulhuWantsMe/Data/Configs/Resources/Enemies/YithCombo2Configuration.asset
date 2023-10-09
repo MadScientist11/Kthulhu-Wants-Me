@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 200
+      Data: 35
     - Name: 
       Entry: 8
       Data: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 3
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -74,6 +74,6 @@ MonoBehaviour:
   EnemyType: 100
   Prefab: {fileID: 7098061404560363266, guid: 0e0430ac71304254cab291abf3909ba5, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  ComboAttackCooldown: 10
+  ComboAttackCooldown: 5
   DelayBetweenComboAttacks: 0.75
   ComboFollowSpeedIncrement: 6
