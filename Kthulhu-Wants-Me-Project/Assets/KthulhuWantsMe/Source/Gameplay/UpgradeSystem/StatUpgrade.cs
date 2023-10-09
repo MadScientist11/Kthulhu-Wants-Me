@@ -1,5 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
+using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 
 namespace KthulhuWantsMe.Source.Gameplay.UpgradeSystem
 {
@@ -18,6 +19,11 @@ namespace KthulhuWantsMe.Source.Gameplay.UpgradeSystem
         {
             float newValue = CalculateStat(_player.PlayerStats.MainStats[_upgrade.StatType], _upgrade);
             _player.PlayerStats.ChangeStat(_upgrade.StatType, newValue);
+
+            //if (_upgrade.StatType == StatType.MaxHealth)
+            //{
+            //    _player.RestoreHp();
+            //}
         }
 
         private float CalculateStat(float baseValue, UpgradeData upgrade)

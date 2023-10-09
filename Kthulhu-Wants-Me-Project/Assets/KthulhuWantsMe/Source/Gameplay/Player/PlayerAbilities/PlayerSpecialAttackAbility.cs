@@ -37,7 +37,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void OnSpecialAttack()
         {
-            Debug.Log("Special attack");
             _currentWeapon.GetComponent<ISpecialAttack>().RespondTo(this);
         }
 
@@ -45,7 +44,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             if (_player.Inventory.CurrentItem is WeaponItem weapon && weapon.WeaponData.WeaponMoveSet.HasSpecialAttack)
             {
-                Debug.Log("Special Attack");
                 _currentWeapon = weapon;
                 _playerAnimator.PlaySpecialAttack();
             }

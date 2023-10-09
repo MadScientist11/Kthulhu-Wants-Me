@@ -21,13 +21,10 @@ MonoBehaviour:
         SpawnAt: 0
       WaitForBatchClearance: 1
       NextBatchDelay: 5
-    - EnemyPack: []
-      WaitForBatchClearance: 0
-      NextBatchDelay: 0
     TimeConstraint: 10
     UpgradeRewards:
-    - UpgradeTitle: Base Damage (+100)
-      UpgradeText: Base Damage (+100)
+    - UpgradeTitle: Health upgrade (+{0})
+      UpgradeText: Health upgrade (+{0})
       UpgradeType: 0
       StatType: 0
       UpgradeValueType: 0

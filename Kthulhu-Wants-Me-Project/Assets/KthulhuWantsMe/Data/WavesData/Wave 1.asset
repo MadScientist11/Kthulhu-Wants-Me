@@ -38,3 +38,9 @@ MonoBehaviour:
       StatType: 100
       UpgradeValueType: 0
       Value: 1000
+    - UpgradeTitle: Health +{0}
+      UpgradeText: Health +{0}
+      UpgradeType: 0
+      StatType: 0
+      UpgradeValueType: 0
+      Value: 50

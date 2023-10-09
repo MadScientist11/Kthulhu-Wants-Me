@@ -1,6 +1,7 @@
 ﻿using Cinemachine;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
@@ -68,6 +69,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
             {
                 spawnBehaviour.OnSpawn();
             }
+
             return enemy;
         }
 

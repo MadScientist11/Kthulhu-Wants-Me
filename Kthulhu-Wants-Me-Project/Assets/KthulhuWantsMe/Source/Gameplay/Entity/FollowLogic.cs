@@ -1,6 +1,7 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
@@ -32,6 +33,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public float MovementPredictionThreshold = 0;
         [Range(0.25f, 2f)]
         public float MovementPredictionTime = 1;
+
+        private void Start()
+        {
+            FollowSpeed = Random.Range(4, 7);
+        }
 
         private void OnValidate() => 
             _movementMotor = GetComponent<NavMeshMovement>();
