@@ -18,7 +18,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         public event Action LungeHold;
         public event Action SpecialAttack;
         public event Action Interact;
-        public event Action PauseGame;
 
 
         public GameplayScenario(GameInput.GameplayActions gameplayActions)
@@ -94,14 +93,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             if (context.performed)
             {
                 Interact?.Invoke();
-            }
-        }
-
-        public void OnPauseGame(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                PauseGame?.Invoke();
             }
         }
 

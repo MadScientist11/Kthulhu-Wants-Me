@@ -109,15 +109,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PauseGame"",
-                    ""type"": ""Button"",
-                    ""id"": ""beddc62a-94a8-4cd7-b036-8b710b1e31c7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -307,17 +298,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fcb4711c-23cb-43c5-ac4a-26dc48437d56"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PauseGame"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -326,6 +306,34 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             ""id"": ""b6986af2-74a9-4c03-bd4b-6fc52a789e49"",
             ""actions"": [],
             ""bindings"": []
+        },
+        {
+            ""name"": ""Game"",
+            ""id"": ""2054e860-42e3-406f-a802-e5422ac7735f"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""64ae93b8-d24a-4935-8878-d84e9c62c9bb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b0795b10-bea8-4a95-a392-7914399b7e85"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -341,9 +349,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             m_Gameplay_Lunge = m_Gameplay.FindAction("Lunge", throwIfNotFound: true);
             m_Gameplay_SpecialAttack = m_Gameplay.FindAction("SpecialAttack", throwIfNotFound: true);
             m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
-            m_Gameplay_PauseGame = m_Gameplay.FindAction("PauseGame", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+            // Game
+            m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
+            m_Game_Pause = m_Game.FindAction("Pause", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -414,7 +424,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         private readonly InputAction m_Gameplay_Lunge;
         private readonly InputAction m_Gameplay_SpecialAttack;
         private readonly InputAction m_Gameplay_Interact;
-        private readonly InputAction m_Gameplay_PauseGame;
         public struct GameplayActions
         {
             private @GameInput m_Wrapper;
@@ -428,7 +437,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             public InputAction @Lunge => m_Wrapper.m_Gameplay_Lunge;
             public InputAction @SpecialAttack => m_Wrapper.m_Gameplay_SpecialAttack;
             public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
-            public InputAction @PauseGame => m_Wrapper.m_Gameplay_PauseGame;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -465,9 +473,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @PauseGame.started += instance.OnPauseGame;
-                @PauseGame.performed += instance.OnPauseGame;
-                @PauseGame.canceled += instance.OnPauseGame;
             }
 
             private void UnregisterCallbacks(IGameplayActions instance)
@@ -499,9 +504,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
-                @PauseGame.started -= instance.OnPauseGame;
-                @PauseGame.performed -= instance.OnPauseGame;
-                @PauseGame.canceled -= instance.OnPauseGame;
             }
 
             public void RemoveCallbacks(IGameplayActions instance)
@@ -557,6 +559,52 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             }
         }
         public UIActions @UI => new UIActions(this);
+
+        // Game
+        private readonly InputActionMap m_Game;
+        private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
+        private readonly InputAction m_Game_Pause;
+        public struct GameActions
+        {
+            private @GameInput m_Wrapper;
+            public GameActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Pause => m_Wrapper.m_Game_Pause;
+            public InputActionMap Get() { return m_Wrapper.m_Game; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(GameActions set) { return set.Get(); }
+            public void AddCallbacks(IGameActions instance)
+            {
+                if (instance == null || m_Wrapper.m_GameActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_GameActionsCallbackInterfaces.Add(instance);
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+
+            private void UnregisterCallbacks(IGameActions instance)
+            {
+                @Pause.started -= instance.OnPause;
+                @Pause.performed -= instance.OnPause;
+                @Pause.canceled -= instance.OnPause;
+            }
+
+            public void RemoveCallbacks(IGameActions instance)
+            {
+                if (m_Wrapper.m_GameActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IGameActions instance)
+            {
+                foreach (var item in m_Wrapper.m_GameActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_GameActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public GameActions @Game => new GameActions(this);
         public interface IGameplayActions
         {
             void OnMovement(InputAction.CallbackContext context);
@@ -568,10 +616,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             void OnLunge(InputAction.CallbackContext context);
             void OnSpecialAttack(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
-            void OnPauseGame(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
+        }
+        public interface IGameActions
+        {
+            void OnPause(InputAction.CallbackContext context);
         }
     }
 }

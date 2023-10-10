@@ -9,6 +9,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
     {
         GameplayScenario GameplayScenario { get; }
         UIScenario UIScenario { get; }
+        GameScenario GameScenario { get; }
+        IInputScenario ActiveScenario { get; }
         void SwitchInputScenario(InputScenario inputScenario);
     }
 
@@ -26,8 +28,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
 
         private IInputScenario _activeInputScenario;
 
+        public IInputScenario ActiveScenario => _activeInputScenario;
+
         public GameplayScenario GameplayScenario { get; private set; }
         public UIScenario UIScenario { get; private set; }
+        public GameScenario GameScenario { get; private set; }
         
         
         public UniTask Initialize()
@@ -35,9 +40,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             _input = new GameInput();
             GameplayScenario = new GameplayScenario(_input.Gameplay);
             UIScenario = new UIScenario(_input.UI);
+            GameScenario = new GameScenario(_input.Game);
 
             _input.UI.SetCallbacks(UIScenario);
             _input.Gameplay.SetCallbacks(GameplayScenario);
+            _input.Game.SetCallbacks(GameScenario);
+            GameScenario.Enable();
 
             _inputScenarios = new()
             {
@@ -49,6 +57,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
 
         public void SwitchInputScenario(InputScenario inputScenario)
         {
+            if (inputScenario == InputScenario.None)
+            {
+                _activeInputScenario?.Disable();
+                return;
+            }
             _activeInputScenario?.Disable();
             _activeInputScenario = _inputScenarios[inputScenario];
             _activeInputScenario.Enable();

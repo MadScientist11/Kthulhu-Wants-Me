@@ -4,5 +4,6 @@
     {
         Gameplay = 0,
         UI = 1,
+        None = 2,
     }
 }
