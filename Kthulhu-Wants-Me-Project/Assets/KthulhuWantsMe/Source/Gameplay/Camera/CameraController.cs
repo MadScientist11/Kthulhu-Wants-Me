@@ -56,7 +56,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
             Vector3 dir = _gameFactory.Player.transform.position - transform.position;
             Ray ray = new Ray(transform.position, dir.normalized);
 
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (Physics.SphereCast(ray, 1f, out RaycastHit hit, dir.magnitude, LayerMasks.FadeableObjectMask))
             {
                 if (hit.transform.TryGetComponent(out Renderer rendererComponent))
                 {
@@ -64,16 +64,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
                         (_inCameraView == null || hit.transform != _inCameraView.transform))
                     {
                         StartCoroutine(DoFadeObject(rendererComponent));
-
                         _inCameraView = rendererComponent;
                     }
                 }
 
-                if (_inCameraView != null && hit.transform != _inCameraView.transform)
-                {
-                    StartCoroutine(DoUnFadeObject(_inCameraView));
-                    _inCameraView = null;
-                }
+                return;
+
+               
+            }
+            if (_inCameraView != null)
+            {
+                StartCoroutine(DoUnFadeObject(_inCameraView));
+                _inCameraView = null;
             }
           
         }

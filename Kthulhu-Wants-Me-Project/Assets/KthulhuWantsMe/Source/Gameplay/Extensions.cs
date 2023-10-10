@@ -13,6 +13,11 @@ namespace KthulhuWantsMe.Source.Gameplay
             color.a = value;
             material.SetColor(cachedColorProperty, color);
         }
+        
+        public static bool IsTransparent(this Material material)
+        {
+            return material.renderQueue == (int)UnityEngine.Rendering.RenderQueue.Transparent;
+        }
 
         public static Vector3 AddY(this Vector3 vec, float offset)
         {

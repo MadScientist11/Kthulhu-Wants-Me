@@ -30,7 +30,7 @@ MonoBehaviour:
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 5
-    TimeConstraint: 25
+    TimeConstraint: 4
     UpgradeRewards:
     - UpgradeTitle: Base Damage {0}
       UpgradeText: Base Damage {0}

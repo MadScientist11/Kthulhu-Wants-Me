@@ -74,7 +74,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if (ComboAttackConditionsFulfilled())
             {
                 _yithRageComboAbility.PerformCombo();
-                Debug.Log("Combo");
             }
 
             if (CanDoBasicAttack())

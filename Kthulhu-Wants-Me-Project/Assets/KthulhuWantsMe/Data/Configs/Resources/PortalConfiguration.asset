@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1bd7a3634a49e280b213704ef23a27, type: 3}
   m_Name: PortalConfiguration
   m_EditorClassIdentifier: 
-  PortalPrefab: {fileID: 1556028068222277247, guid: 510342187213ed0498380c6fa0163dc4,
-    type: 3}
   TentaclePortalPrefab: {fileID: 3073858835776937556, guid: 510342187213ed0498380c6fa0163dc4,
+    type: 3}
+  MinionsPortalPrefab: {fileID: -5077711390793651878, guid: 6856ff33a38af6b4a8e1baf991349052,
     type: 3}
