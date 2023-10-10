@@ -21,6 +21,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private readonly int _waitForEnemiesRetreatDelay = 3;
 
         private readonly EnemyType[] _additionalEnemies = { EnemyType.Cyeagha, EnemyType.YithCombo1, EnemyType.YithCombo2, EnemyType.YithCombo3 };
+        private int _additionalEnemiesCounter;
         
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly IUIService _uiService;
@@ -81,7 +82,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private void OnWaveLossTimerTick(int countdown)
         {
             WaveData currentWaveData = _waveSystemDirector.CurrentWaveState.CurrentWaveData;
-            if (countdown % currentWaveData.SpawnRandomEnemyEverySeconds == 0)
+            
+            if (countdown % currentWaveData.SpawnRandomEnemyEverySeconds == 0 && _additionalEnemiesCounter < currentWaveData.SpawnedEnemiesCap)
             {
                 SpawnAdditionalEnemy();
             }
@@ -98,6 +100,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         private void SpawnAdditionalEnemy()
         {
+            _additionalEnemiesCounter++;
             EnemyType randomAdditionalEnemy = _additionalEnemies[Random.Range(0, _additionalEnemies.Length)];
             _waveSystemDirector.WaveSpawner.SpawnEnemyClosestToPlayer(randomAdditionalEnemy);
         }
