@@ -13,7 +13,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 {
     public class PlayerSpecialAttackAbility : MonoBehaviour, IAbility
     {
-        
         [SerializeField] private PlayerAnimator _playerAnimator;
         
         private WeaponItem _currentWeapon;

@@ -25,6 +25,9 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
 
         public void ApplyTo(IEffectReceiver effectReceiver)
         {
+            if(_damageModifierId == DamageModifierId.None)
+                return;
+            
             _buffDebuffService.ApplyEffect(CreateEffect(), effectReceiver);
         }
 
