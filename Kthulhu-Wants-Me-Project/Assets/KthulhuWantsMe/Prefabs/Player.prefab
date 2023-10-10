@@ -3228,6 +3228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: -5172653069112829316}
+  _playerAnimator: {fileID: -4856184112398116678}
   _grabAbilityResponse: {fileID: -2573202685680207158}
 --- !u!114 &1575893109066662898
 MonoBehaviour:

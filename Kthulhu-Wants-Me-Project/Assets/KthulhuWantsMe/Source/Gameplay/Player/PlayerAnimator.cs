@@ -48,6 +48,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _animator.SetBool(LungeCharge, true);
         }
+        
+        public void PlayEvade()
+        {
+            _animator.SetTrigger("Evade");
+        }
 
         public void StopLungeCharge()
         {

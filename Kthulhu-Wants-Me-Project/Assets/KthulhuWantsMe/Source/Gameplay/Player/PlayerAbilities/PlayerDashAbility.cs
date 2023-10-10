@@ -14,6 +14,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
     public class PlayerDashAbility : MonoBehaviour, IAbility
     {
         [SerializeField] private PlayerFacade _player;
+        [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private TentacleGrabAbilityResponse _grabAbilityResponse;
         
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
@@ -51,6 +52,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void Dash()
         {
+            _playerAnimator.PlayEvade();
             PlayerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfig.DashStrength);
         }
 
