@@ -52,8 +52,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void Dash()
         {
+            PlayerLocomotion.MovementController.DisableCollisionDetection();
             _playerAnimator.PlayEvade();
             PlayerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfig.DashStrength);
+            _coroutineRunner.ExecuteAfter(1f, PlayerLocomotion.MovementController.EnableCollisionDetection);
         }
 
         private bool CanDash()
