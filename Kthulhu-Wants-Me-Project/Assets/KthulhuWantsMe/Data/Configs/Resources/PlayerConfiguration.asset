@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 100
+      Data: 50
     - Name: 
       Entry: 8
       Data: 
@@ -73,7 +73,7 @@ MonoBehaviour:
       Data: 501
     - Name: $v
       Entry: 4
-      Data: 0.75
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -87,10 +87,10 @@ MonoBehaviour:
     type: 3}
   PlayerCameraPrefab: {fileID: 6843986045684515988, guid: 0326cc12476ef5845b6d23d3849d0cda,
     type: 3}
-  MoveSpeed: 4.65
+  MoveSpeed: 4.7
   Gravity: {x: 0, y: -1000, z: 0}
   DashStrength: 30
-  AttackRadius: 2
+  AttackRadius: 1.5
   AttackEffectiveDistance: 1
   AttackStep: 17
   LungeBaseDamage: 100

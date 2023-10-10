@@ -13,34 +13,43 @@ MonoBehaviour:
   m_Name: Wave 1
   m_EditorClassIdentifier: 
   WaveData:
-    WaveObjective: 1
+    WaveObjective: 0
     Batches:
     - EnemyPack:
-      - EnemyType: 300
-        Quantity: 1
-        SpawnAt: 1
-      - EnemyType: 300
-        Quantity: 1
-        SpawnAt: 2
       - EnemyType: 4
-        Quantity: 5
+        Quantity: 2
         SpawnAt: 0
-      - EnemyType: 3
-        Quantity: 1
+      WaitForBatchClearance: 1
+      NextBatchDelay: 3
+    - EnemyPack:
+      - EnemyType: 4
+        Quantity: 4
+        SpawnAt: 0
+      WaitForBatchClearance: 0
+      NextBatchDelay: 3
+    - EnemyPack:
+      - EnemyType: 4
+        Quantity: 6
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 5
     TimeConstraint: 4
     UpgradeRewards:
-    - UpgradeTitle: Base Damage {0}
-      UpgradeText: Base Damage {0}
-      UpgradeType: 0
-      StatType: 100
-      UpgradeValueType: 0
-      Value: 1000
-    - UpgradeTitle: Health +{0}
-      UpgradeText: Health +{0}
+    - UpgradeTitle: Increase Max Health by +{0}
+      UpgradeText: Increase Max Health by +{0}
       UpgradeType: 0
       StatType: 0
       UpgradeValueType: 0
-      Value: 50
+      Value: 10
+    - UpgradeTitle: Increase Attack Damage by +{0}
+      UpgradeText: Increase Attack Damage by +{0}
+      UpgradeType: 0
+      StatType: 100
+      UpgradeValueType: 0
+      Value: 15
+    - UpgradeTitle: Decrease Evade Cooldown by {0}
+      UpgradeText: Drecrease Evade Cooldown by {0}
+      UpgradeType: 0
+      StatType: 501
+      UpgradeValueType: 1
+      Value: -0.1
