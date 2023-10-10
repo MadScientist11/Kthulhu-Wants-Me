@@ -76,9 +76,9 @@ MonoBehaviour:
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
   StunWearOffTime: 3
   TentacleGrabDamage: 100
-  GrabAbilityChance: 0.1
+  GrabAbilityChance: 0.15
   AggroRange: 10
   ReconsiderationTime: 2
   AttackRadius: 1
-  AttackEffectiveDistance: 1
-  AttackCooldownTime: 1
+  AttackEffectiveDistance: 0.8
+  AttackCooldownTime: 3
