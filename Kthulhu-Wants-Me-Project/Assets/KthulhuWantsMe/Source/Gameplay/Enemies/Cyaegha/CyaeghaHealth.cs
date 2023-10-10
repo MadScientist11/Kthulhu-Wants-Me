@@ -55,6 +55,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private void HandleDeath()
         {
+            GetComponent<IStoppable>().StopEntityLogic();
             _collider.enabled = false;
             Destroy(gameObject, 2f);
         }

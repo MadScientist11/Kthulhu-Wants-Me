@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void HandleDeath()
         {
+            GetComponent<IStoppable>().StopEntityLogic();
             _collider.enabled = false;
             _hitFeedbacks.PlayFeedbacks();
             Destroy(gameObject, 2f);
