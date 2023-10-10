@@ -17,13 +17,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         
         public void OnPause(InputAction.CallbackContext context)
         {
-            Debug.Log("Pause?");
             if (context.performed)
             {
                 PauseGame?.Invoke();
             }
         }
-
 
         public void Enable() =>
             _gameActions.Enable();

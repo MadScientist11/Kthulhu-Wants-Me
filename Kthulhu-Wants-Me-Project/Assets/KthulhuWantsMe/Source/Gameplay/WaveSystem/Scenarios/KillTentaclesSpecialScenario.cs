@@ -8,6 +8,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.UI.Compass;
 using Sirenix.Utilities;
+using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
@@ -18,6 +19,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         private int _remainingTentacles;
         private readonly int _waitForEnemiesRetreatDelay = 3;
+
+        private readonly EnemyType[] _additionalEnemies = { EnemyType.Cyeagha, EnemyType.YithCombo1, EnemyType.YithCombo2, EnemyType.YithCombo3 };
         
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly IUIService _uiService;
@@ -34,7 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _compassUI.Show();
             
             StartWaveLossTimer().Forget();
-
+            
             _waveSystemDirector.WaveSpawner.BatchSpawned += OnBatchSpawned;
             _waveSystemDirector.WaveCompleted += OnWaveCompleted;
         }
@@ -77,6 +80,12 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         private void OnWaveLossTimerTick(int countdown)
         {
+            WaveData currentWaveData = _waveSystemDirector.CurrentWaveState.CurrentWaveData;
+            if (countdown % currentWaveData.SpawnRandomEnemyEverySeconds == 0)
+            {
+                SpawnAdditionalEnemy();
+            }
+            
             _uiService.MiscUI.UpdateWaveCountdownText(countdown);
         }
 
@@ -85,6 +94,12 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _timerToken.Cancel();
             _compassUI.Hide();
             RetreatAllEnemies();
+        }
+
+        private void SpawnAdditionalEnemy()
+        {
+            EnemyType randomAdditionalEnemy = _additionalEnemies[Random.Range(0, _additionalEnemies.Length)];
+            _waveSystemDirector.WaveSpawner.SpawnEnemyClosestToPlayer(randomAdditionalEnemy);
         }
 
         private void RetreatAllEnemies()
@@ -114,7 +129,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
                 if (_remainingTentacles == 0)
                 {
-                    
                     _waveSystemDirector.CompleteWaveAsVictory();
                 }
             };

@@ -13,8 +13,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public WaveObjective WaveObjective;
         public List<Batch> Batches;
         
-        [ShowIf("WaveObjective", WaveObjective.KillTentaclesSpecial)]
-        public int TimeConstraint;
+        [ShowIf(nameof(WaveSystem.WaveObjective), WaveObjective.KillTentaclesSpecial)]
+        public int TimeConstraint = 100;
+        [ShowIf(nameof(WaveSystem.WaveObjective), WaveObjective.KillTentaclesSpecial)]
+        public int SpawnRandomEnemyEverySeconds = 3;
         
         public List<UpgradeData> UpgradeRewards;
     }
