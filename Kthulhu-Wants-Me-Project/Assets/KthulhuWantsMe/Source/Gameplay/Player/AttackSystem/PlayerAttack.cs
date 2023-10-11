@@ -75,8 +75,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         {
             _isAttacking = true;
             _canProceedWithCombo = false;
-            _playerLocomotion.FaceMouse();
-            _playerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfiguration.AttackStep);
+            Vector3 desiredDirection = _playerLocomotion.FaceMouse();
+            _playerLocomotion.MovementController.AddVelocity(desiredDirection * _playerConfiguration.AttackStep);
         }
 
         protected override void OnContactPhase()

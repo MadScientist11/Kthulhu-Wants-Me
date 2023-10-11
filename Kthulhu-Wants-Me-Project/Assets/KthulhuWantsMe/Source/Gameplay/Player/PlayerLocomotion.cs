@@ -71,19 +71,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _coroutineRunner.ExecuteAfter(timeFor, () => _blockMovement = false);
         }
 
-        public void FaceMouse()
+        public Vector3 FaceMouse()
         {
             Ray ray = MousePointer.GetWorldRay(UnityEngine.Camera.main);
 
             _lastLookDirection = Vector3.zero;
             Plane plane = new Plane(Vector3.up, Vector3.zero);
+            
+            Vector3 desiredDirection = transform.forward;
+            
             if (plane.Raycast(ray, out float enter))
             {
                 Vector3 hitPoint = ray.GetPoint(enter);
 
                 Vector3 hitPointXZ = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
-                _lastLookDirection = (hitPointXZ - transform.position).normalized;
+                desiredDirection = (hitPointXZ - transform.position).normalized;
+                _lastLookDirection = desiredDirection;
             }
+
+            return desiredDirection;
         }
 
         private void ProcessInput()
