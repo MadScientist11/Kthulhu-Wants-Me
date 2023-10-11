@@ -12,6 +12,17 @@
         EnemySpawner7 = 7,
         EnemySpawner8 = 8,
         EnemySpawner9 = 9,
+        EnemySpawner10 = 10,
+        EnemySpawner11 = 11,
+        EnemySpawner12 = 12,
+        EnemySpawner13 = 13,
+        EnemySpawner14 = 14,
+        EnemySpawner15 = 15,
+        EnemySpawner16 = 16,
+        EnemySpawner17 = 17,
+        EnemySpawner18 = 18,
+        EnemySpawner19 = 19,
+        EnemySpawner20 = 20,
         
     }
 }

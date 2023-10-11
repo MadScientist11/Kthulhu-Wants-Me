@@ -1368,6 +1368,7 @@ MonoBehaviour:
   - {fileID: 1796208500}
   - {fileID: 956977923}
   - {fileID: 1178155927}
+  - {fileID: 1681263983}
   - {fileID: 1373904795}
 --- !u!4 &747148616
 Transform:
@@ -1391,6 +1392,7 @@ Transform:
   - {fileID: 1796208499}
   - {fileID: 956977922}
   - {fileID: 1178155926}
+  - {fileID: 1681263982}
   - {fileID: 1373904794}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1456,6 +1458,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SimpleAudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5291770407087042786, guid: c993680f0c660864db5a35e62cd0b631,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8821381029293141470, guid: c993680f0c660864db5a35e62cd0b631,
         type: 3}
@@ -2918,6 +2925,54 @@ MonoBehaviour:
   EnemySpawnerId: 1
   _gizmoColor: {r: 1, g: 0, b: 0, a: 0.7058824}
   _gizmoSize: 3
+--- !u!1 &1681263981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1681263982}
+  - component: {fileID: 1681263983}
+  m_Layer: 0
+  m_Name: SpawnZone (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1681263982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681263981}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.48, y: 0, z: 43.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 747148616}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1681263983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681263981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0bb817db62eaa4aa5d0ec72171093b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnPointType: 1
+  EnemySpawnerId: 10
+  _gizmoColor: {r: 1, g: 0, b: 0, a: 0.7058824}
+  _gizmoSize: 2
 --- !u!1 &1796208497
 GameObject:
   m_ObjectHideFlags: 0
