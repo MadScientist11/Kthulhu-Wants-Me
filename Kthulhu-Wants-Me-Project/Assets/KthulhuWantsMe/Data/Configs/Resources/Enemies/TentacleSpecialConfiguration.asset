@@ -81,4 +81,4 @@ MonoBehaviour:
   ReconsiderationTime: 2
   AttackRadius: 1
   AttackEffectiveDistance: 1
-  AttackCooldownTime: 1
+  AttackCooldownTime: 2

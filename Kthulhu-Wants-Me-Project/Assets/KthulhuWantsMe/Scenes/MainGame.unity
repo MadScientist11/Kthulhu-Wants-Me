@@ -1569,17 +1569,16 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 80270199}
-  - {fileID: 0}
-  - {fileID: 223333820}
   - {fileID: 357928279}
-  - {fileID: 448175609}
-  - {fileID: 691530376}
-  - {fileID: 1088763688}
-  - {fileID: 1095637673}
   - {fileID: 1228710185}
-  - {fileID: 1243160050}
+  - {fileID: 223333820}
+  - {fileID: 1088763688}
   - {fileID: 1292499777}
+  - {fileID: 80270199}
+  - {fileID: 448175609}
+  - {fileID: 1095637673}
+  - {fileID: 691530376}
+  - {fileID: 1243160050}
   - {fileID: 1392579653}
   - {fileID: 2025044148}
   _sceneDataProvider: {fileID: 1523681595}
@@ -2000,8 +1999,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189980370}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.056921504, y: -0.9378948, z: 0.28736562, w: 0.18583407}
-  m_LocalPosition: {x: -3.210289, y: 7.080723, z: 54.799873}
+  m_LocalRotation: {x: -0.099053584, y: 0.89239824, z: -0.3696417, w: -0.2391208}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2116,9 +2115,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 100
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
