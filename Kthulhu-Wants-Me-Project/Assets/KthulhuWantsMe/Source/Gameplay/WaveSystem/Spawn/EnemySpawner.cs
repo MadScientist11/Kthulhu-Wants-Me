@@ -4,6 +4,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,9 +18,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         private readonly IGameFactory _gameFactory;
         private readonly SpawnPoint _spawnPoint;
+        private readonly IDataProvider _dataProvider;
 
-        public EnemySpawner(IGameFactory gameFactory, SpawnPoint spawnPoint)
+        public EnemySpawner(IGameFactory gameFactory, IDataProvider dataProvider, SpawnPoint spawnPoint)
         {
+            _dataProvider = dataProvider;
             _spawnPoint = spawnPoint;
             _gameFactory = gameFactory;
         }
@@ -29,9 +32,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         {
             Vector3 randomPoint = Random.insideUnitCircle.XZtoXYZ() * Radius;
             Vector3 spawnPosition = _spawnPoint.Position.AddY(5) + randomPoint;
-
-            if (enemyType == EnemyType.Tentacle || enemyType == EnemyType.BleedTentacle ||
-                enemyType == EnemyType.TentacleSpecial || enemyType == EnemyType.PoisonousTentacle)
+            
+            EnemyConfiguration enemyConfig = _dataProvider.EnemyConfigsProvider.EnemyConfigs[enemyType];
+            if (enemyConfig.IsElite())
                 spawnPosition = Position.AddY(5);
 
             if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100, LayerMasks.GroundMask))

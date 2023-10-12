@@ -62,7 +62,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         private readonly IGameFactory _gameFactory;
         private readonly ISceneDataProvider _sceneDataProvider;
-        private readonly WavesConfiguration _wavesData;
+        private readonly IDataProvider _dataProvider;
         private readonly GameplayStateMachine.GameplayStateMachine _gameplayStateMachine;
         private readonly IUIService _uiService;
 
@@ -76,7 +76,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _gameplayStateMachine = gameplayStateMachine;
             _sceneDataProvider = sceneDataProvider;
             _gameFactory = gameFactory;
-            _wavesData = dataProvider.Waves;
+            _dataProvider = dataProvider;
         }
 
         public void Initialize()
@@ -89,13 +89,13 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
                 { WaveObjective.KillTentaclesSpecial, killTentaclesSpecial },
             };
 
-            _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider);
+            _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider, _dataProvider);
         }
 
 
         public void StartWave(int waveIndex)
         {
-            WaveData waveData = _wavesData[waveIndex];
+            WaveData waveData = _dataProvider.Waves[waveIndex];
 
             _currentWaveState = new WaveState(waveData);
             _currentWaveState.BatchCleared += OnBatchCleared;

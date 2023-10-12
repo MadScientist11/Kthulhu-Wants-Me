@@ -13,5 +13,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public GameObject Prefab;
         public Dictionary<StatType, float> BaseStats = new();
         public EnemyScalingSO EnemyScaling;
+
+        public bool IsElite()
+        {
+            return EnemyType == EnemyType.Tentacle || EnemyType == EnemyType.BleedTentacle ||
+                    EnemyType == EnemyType.PoisonousTentacle || EnemyType == EnemyType.TentacleSpecial;
+        }
     }
 }

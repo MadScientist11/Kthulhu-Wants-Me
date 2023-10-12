@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
@@ -25,10 +26,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public EnemySpawner ClosestSpawner
         {
-            get
-            {
-                return ClosestSpawners.First();
-            }
+            get { return ClosestSpawners.First(); }
         }
 
 
@@ -37,9 +35,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         private readonly IGameFactory _gameFactory;
         private readonly ISceneDataProvider _sceneDataProvider;
+        private readonly IDataProvider _dataProvider;
 
-        public WaveSpawner(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider)
+        public WaveSpawner(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, IDataProvider dataProvider)
         {
+            _dataProvider = dataProvider;
             _sceneDataProvider = sceneDataProvider;
             _gameFactory = gameFactory;
         }
@@ -51,7 +51,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
             EnemySpawner CreateSpawnerFrom(SpawnPoint sp)
             {
-                EnemySpawner spawner = new EnemySpawner(_gameFactory, sp);
+                EnemySpawner spawner = new EnemySpawner(_gameFactory, _dataProvider, sp);
                 return spawner;
             }
 
@@ -71,15 +71,15 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public void RespawnClosest(EnemySpawnerId currentSpawner, Health entity)
         {
-            if(_waveState.PendingEnemies.ContainsValue(entity))
+            if (_waveState.PendingEnemies.ContainsValue(entity))
                 return;
-            
+
             EnemySpawner desired = ClosestSpawner;
-            
+
             _waveState.DeregisterEnemy(currentSpawner, entity);
             _waveState.RegisterEnemyAsPending(desired.Id, entity);
-            
-            if(entity.TryGetComponent(out TentacleRetreat retreatBehaviour))
+
+            if (entity.TryGetComponent(out TentacleRetreat retreatBehaviour))
             {
                 retreatBehaviour.Retreat(false, () =>
                 {
@@ -119,9 +119,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         private EnemySpawner FindAppropriateSpawnerFor(EnemyPack batchEntry)
         {
-            if (batchEntry.SpawnAt == EnemySpawnerId.Default &&
-                (batchEntry.EnemyType == EnemyType.Tentacle || batchEntry.EnemyType == EnemyType.BleedTentacle ||
-                 batchEntry.EnemyType == EnemyType.PoisonousTentacle))
+            EnemyConfiguration enemyConfig = _dataProvider.EnemyConfigsProvider.EnemyConfigs[batchEntry.EnemyType];
+
+            if (batchEntry.SpawnAt == EnemySpawnerId.Default && enemyConfig.IsElite())
                 return FindUnoccupiedSpawner();
             else if (batchEntry.SpawnAt != EnemySpawnerId.Default)
                 return _enemySpawners[batchEntry.SpawnAt];
@@ -140,7 +140,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 }
 
                 if (enemies.All(enemy =>
-                        enemy.GetComponent<EnemyStatsContainer>().Config.EnemyType != EnemyType.Tentacle))
+                        enemy.GetComponent<EnemyStatsContainer>().Config.IsElite()))
                 {
                     return closestSpawner;
                 }
