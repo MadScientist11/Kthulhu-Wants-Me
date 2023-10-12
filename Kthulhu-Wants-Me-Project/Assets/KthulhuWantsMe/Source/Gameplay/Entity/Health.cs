@@ -61,7 +61,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
         public virtual void Heal(float amount) =>
             CurrentHealth += amount;
-
+        
         protected void RaiseTookDamageEvent() => TookDamage?.Invoke();
 
         protected void RaiseHealthChangedEvent(float newValue) => Changed?.Invoke(newValue);

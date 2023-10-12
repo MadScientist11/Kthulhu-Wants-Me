@@ -11,7 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 {
     public interface IRetreatBehaviour
     {
-        void Retreat();
+        void Retreat(bool destroyObject, Action onRetreated = null);
         void RetreatDefeated();
     }
 
@@ -24,6 +24,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         
         private Portal _boundPortal;
         private bool _spawnLootAfterRetreat;
+        private bool _destroyObject;
         
         private ILootService _lootService;
 
@@ -38,18 +39,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             _boundPortal = boundPortal;
         }
         
-        public void Retreat()
+        public void Retreat(bool destroyObject, Action onRetreated = null)
         {
-            StartCoroutine(RetreatToPortal(transform.position.AddY(-_height)));
+            _destroyObject = destroyObject;
+            StartCoroutine(RetreatToPortal(transform.position.AddY(-_height), onRetreated));
         }
 
         public void RetreatDefeated()
         {
             _spawnLootAfterRetreat = true;
-            Retreat();
+            Retreat(true);
         }
 
-        private IEnumerator RetreatToPortal(Vector3 to)
+        private IEnumerator RetreatToPortal(Vector3 to, Action onRetreated)
         {
             OnRetreat();
             
@@ -68,6 +70,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             }
 
             OnRetreated();
+            onRetreated?.Invoke();
         }
 
         private void OnRetreat()
@@ -86,8 +89,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             {
                 BuffItem buffItem = _lootService.SpawnRandomBuff(transform.position + Vector3.up * _height * 1.2f, Quaternion.identity);
             }
+
             
-            Destroy(gameObject);
+            if(_destroyObject)
+                Destroy(gameObject);
         }
     }
 }

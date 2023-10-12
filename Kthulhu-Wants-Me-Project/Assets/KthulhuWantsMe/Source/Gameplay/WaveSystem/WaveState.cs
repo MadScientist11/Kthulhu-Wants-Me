@@ -13,7 +13,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public WaveObjective WaveObjective
         {
-            get { return _waveData.WaveObjective; }
+            get
+            {
+                return _waveData.WaveObjective;
+            }
         }
 
         public Batch CurrentBatchData
@@ -73,7 +76,15 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _aliveEnemiesByPlace.GetOrCreate(enemySpawnPlace).Add(enemy);
             _aliveEnemies.Add(enemy);
 
-            enemy.Died += () => TrackEnemiesDeath(enemySpawnPlace, enemy);
+            enemy.Died += TrackEnemyTillDeath(enemySpawnPlace, enemy);
+        }
+
+        public void DeregisterEnemy(EnemySpawnerId enemySpawnPlace, Health enemy)
+        {
+            _aliveEnemiesByPlace[enemySpawnPlace].Remove(enemy);
+            _aliveEnemies.Remove(enemy);
+
+            enemy.Died -= TrackEnemyTillDeath(enemySpawnPlace, enemy);
         }
 
         public void ModifyBatchIndex(int index)
@@ -89,6 +100,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
             WaveCleared = null;
             BatchCleared = null;
+        }
+
+        private Action TrackEnemyTillDeath(EnemySpawnerId enemySpawnPlace, Health enemy)
+        {
+            return () => TrackEnemiesDeath(enemySpawnPlace, enemy);
         }
 
         private void TrackEnemiesDeath(EnemySpawnerId wasSpawnedAt, Health deathHealth)

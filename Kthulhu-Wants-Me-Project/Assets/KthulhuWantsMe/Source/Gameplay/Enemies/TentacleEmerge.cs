@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using UnityEngine;
 using VContainer;
 
@@ -8,26 +9,31 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 {
     public interface ISpawnBehaviour
     {
+        EnemySpawnerId SpawnedAt { get; set; }
         void OnSpawn();
     }
 
     public class TentacleEmerge : MonoBehaviour, ISpawnBehaviour
     {
+        public bool Spawned { get; set; }
+        public EnemySpawnerId SpawnedAt { get; set; }
+
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleFacade _tentacleFacade;
 
         [SerializeField] private float _emergeDuration;
         [SerializeField] private float _height;
-        
+
         private IPortalFactory _portalFactory;
+
 
         [Inject]
         public void Construct(IPortalFactory portalFactory)
         {
             _portalFactory = portalFactory;
         }
-        
-        
+
+
         public void OnSpawn()
         {
             GetComponent<Collider>().enabled = false;
@@ -58,6 +64,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             }
             
             OnEmerged();
+            Spawned = true;
             yield return new WaitForSeconds(1f);
             GetComponent<Collider>().enabled = true;
         }

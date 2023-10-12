@@ -38,8 +38,40 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 GameObject enemy =
                     _gameFactory.CreatePortalWithEnemy(hitInfo.point + Vector3.one * 0.05f, Quaternion.identity,
                         enemyType);
+                
+                if (enemy.TryGetComponent(out ISpawnBehaviour spawnBehaviour))
+                {
+                    spawnBehaviour.OnSpawn();
+                    spawnBehaviour.SpawnedAt = Id;
+                }
 
                 return enemy.GetComponent<Health>();
+            }
+
+            Debug.LogError("Couldn't spawn an enemy");
+            return null;
+        }
+        
+        public Health Spawn(Health enemyHealth, EnemyType enemyType)
+        {
+            Vector3 randomPoint = Random.insideUnitCircle.XZtoXYZ() * Radius;
+            Vector3 spawnPosition = _spawnPoint.Position.AddY(5) + randomPoint;
+
+            if (enemyType == EnemyType.Tentacle || enemyType == EnemyType.BleedTentacle ||
+                enemyType == EnemyType.TentacleSpecial || enemyType == EnemyType.PoisonousTentacle)
+                spawnPosition = Position.AddY(5);
+
+            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100, LayerMasks.GroundMask))
+            {
+                enemyHealth.transform.position = hitInfo.point + Vector3.one * 0.05f;
+                
+                if (enemyHealth.TryGetComponent(out ISpawnBehaviour spawnBehaviour))
+                {
+                    spawnBehaviour.OnSpawn();
+                    spawnBehaviour.SpawnedAt = Id;
+                }
+
+                return enemyHealth;
             }
 
             Debug.LogError("Couldn't spawn an enemy");

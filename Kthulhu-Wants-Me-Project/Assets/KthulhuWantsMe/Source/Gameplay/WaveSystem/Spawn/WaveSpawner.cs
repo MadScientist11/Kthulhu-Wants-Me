@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
@@ -10,9 +11,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 {
     public class WaveSpawner
     {
-        
         public event Action<IEnumerable<Health>> BatchSpawned;
-        
+
         public IOrderedEnumerable<EnemySpawner> ClosestSpawners
         {
             get
@@ -25,10 +25,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public EnemySpawner ClosestSpawner
         {
-            get
-            {
-                return ClosestSpawners.First();
-            }
+            get { return ClosestSpawners.First(); }
         }
 
 
@@ -63,10 +60,23 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             IEnumerable<Health> spawnedBatch = SpawnBatch(batch);
             BatchSpawned?.Invoke(spawnedBatch);
         }
-        
+
         public Health SpawnEnemyClosestToPlayer(EnemyType enemyType)
         {
             return SpawnEnemy(ClosestSpawner, enemyType);
+        }
+
+        public void RespawnClosest(EnemySpawnerId currentSpawner, Health entity)
+        {
+            _waveState.DeregisterEnemy(currentSpawner, entity);
+            if(entity.TryGetComponent(out IRetreatBehaviour retreatBehaviour))
+            {
+                retreatBehaviour.Retreat(false, () =>
+                {
+                    _waveState.RegisterEnemy(ClosestSpawner.Id, entity);
+                    ClosestSpawner.Spawn(entity, EnemyType.Tentacle);
+                });
+            }
         }
 
         public Health SpawnEnemy(EnemySpawner spawner, EnemyType enemyType)

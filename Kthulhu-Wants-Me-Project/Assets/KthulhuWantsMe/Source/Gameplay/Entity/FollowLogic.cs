@@ -75,6 +75,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void OnDrawGizmos()
         {
+            if(!Application.isPlaying)
+                return;
+            
             float timeToPlayer = Vector3.Distance(_followTarget.position, transform.position) /
                                  FollowSpeed;
 
