@@ -21,4 +21,5 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  WavesData: []
+  WavesData:
+  - {fileID: 11400000, guid: 21370e0958afb944087cb73a750abd3b, type: 2}

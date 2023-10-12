@@ -14,6 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WaveData:
     WaveObjective: 0
-    Batches: []
+    Batches:
+    - EnemyPack:
+      - EnemyType: 0
+        Quantity: 1
+        SpawnAt: 0
+      WaitForBatchClearance: 0
+      NextBatchDelay: 0
     TimeConstraint: 0
+    SpawnRandomEnemyEverySeconds: 3
+    SpawnedEnemiesCap: 25
     UpgradeRewards: []
