@@ -43,6 +43,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             }
         }
         
+        public Dictionary<EnemySpawnerId, Health> PendingEnemies
+        {
+            get
+            {
+                return _pendingEnemies;
+            }
+        }
+        
         public List<Health> AliveEnemies
         {
             get
@@ -61,6 +69,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
 
         private readonly Dictionary<EnemySpawnerId, List<Health>> _aliveEnemiesByPlace = new();
+        private readonly Dictionary<EnemySpawnerId, Health> _pendingEnemies = new();
         private readonly List<Health> _aliveEnemies = new();
 
         private readonly WaveData _waveData;
@@ -85,6 +94,16 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _aliveEnemies.Remove(enemy);
 
             enemy.Died -= TrackEnemyTillDeath(enemySpawnPlace, enemy);
+        }
+        
+        public void RegisterEnemyAsPending(EnemySpawnerId enemySpawnPlace, Health enemy)
+        {
+            _pendingEnemies[enemySpawnPlace] = enemy;
+        }
+        
+        public void DeregisterEnemyAsPending(EnemySpawnerId enemySpawnPlace, Health enemy)
+        {
+            _pendingEnemies.Remove(enemySpawnPlace);
         }
 
         public void ModifyBatchIndex(int index)
@@ -127,7 +146,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         private bool NoEnemiesLeft()
         {
-            return _aliveEnemies.Count == 0;
+            return _aliveEnemies.Count == 0 && _pendingEnemies.Count == 0;
         }
 
         public bool IsLastBatch()

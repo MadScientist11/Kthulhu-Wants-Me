@@ -114,7 +114,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             if(!_waveOngoing)
                 return;
-            
+
+            Debug.Log("Failure");
             _gameplayStateMachine.SwitchState<WaveFailState>();
             CompleteWave();
         }
@@ -124,6 +125,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             if(!_waveOngoing)
                 return;
             
+            Debug.Log("Victory");
+
             _gameplayStateMachine.SwitchState<WaveVictoryState>();
             CompleteWave();
         }

@@ -1,4 +1,5 @@
-﻿using Freya;
+﻿using System;
+using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
@@ -52,7 +53,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             return null;
         }
         
-        public Health Spawn(Health enemyHealth, EnemyType enemyType)
+        public Health Spawn(Health enemyHealth, EnemyType enemyType, Action onSpawned)
         {
             Vector3 randomPoint = Random.insideUnitCircle.XZtoXYZ() * Radius;
             Vector3 spawnPosition = _spawnPoint.Position.AddY(5) + randomPoint;
@@ -67,8 +68,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 
                 if (enemyHealth.TryGetComponent(out ISpawnBehaviour spawnBehaviour))
                 {
-                    spawnBehaviour.OnSpawn();
                     spawnBehaviour.SpawnedAt = Id;
+                    spawnBehaviour.OnSpawn(onSpawned);
                 }
 
                 return enemyHealth;

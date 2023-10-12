@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
@@ -10,7 +11,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
     public interface ISpawnBehaviour
     {
         EnemySpawnerId SpawnedAt { get; set; }
-        void OnSpawn();
+        void OnSpawn(Action onSpawned = null);
     }
 
     public class TentacleEmerge : MonoBehaviour, ISpawnBehaviour
@@ -25,6 +26,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         [SerializeField] private float _height;
 
         private IPortalFactory _portalFactory;
+        private Action _onSpawned;
 
 
         [Inject]
@@ -34,8 +36,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         }
 
 
-        public void OnSpawn()
+        public void OnSpawn(Action onSpawned)
         {
+            _onSpawned = onSpawned;
             GetComponent<Collider>().enabled = false;
             Portal portal = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity, EnemyType.Tentacle);
             GetComponent<TentacleRetreat>().Init(portal);
@@ -65,6 +68,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             
             OnEmerged();
             Spawned = true;
+            
             yield return new WaitForSeconds(1f);
             GetComponent<Collider>().enabled = true;
         }
@@ -80,6 +84,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         {
             _tentacleAnimator.SetEmerged();
             _tentacleFacade.ResumeAIProcessing();
+            _onSpawned?.Invoke();
         }
     }
 }

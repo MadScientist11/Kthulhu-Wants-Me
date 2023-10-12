@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
@@ -26,7 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             _portalFactory = portalFactory;
         }
 
-        public void OnSpawn()
+        public void OnSpawn(Action onSpawned)
         {
             GetComponent<Collider>().enabled = false;
             GetComponent<IStoppable>().StopEntityLogic();

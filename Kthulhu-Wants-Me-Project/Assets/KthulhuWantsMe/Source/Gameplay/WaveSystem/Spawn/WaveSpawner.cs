@@ -25,7 +25,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public EnemySpawner ClosestSpawner
         {
-            get { return ClosestSpawners.First(); }
+            get
+            {
+                return ClosestSpawners.First();
+            }
         }
 
 
@@ -68,13 +71,23 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public void RespawnClosest(EnemySpawnerId currentSpawner, Health entity)
         {
+            if(_waveState.PendingEnemies.ContainsValue(entity))
+                return;
+            
+            EnemySpawner desired = ClosestSpawner;
+            
             _waveState.DeregisterEnemy(currentSpawner, entity);
-            if(entity.TryGetComponent(out IRetreatBehaviour retreatBehaviour))
+            _waveState.RegisterEnemyAsPending(desired.Id, entity);
+            
+            if(entity.TryGetComponent(out TentacleRetreat retreatBehaviour))
             {
                 retreatBehaviour.Retreat(false, () =>
                 {
-                    _waveState.RegisterEnemy(ClosestSpawner.Id, entity);
-                    ClosestSpawner.Spawn(entity, EnemyType.Tentacle);
+                    desired.Spawn(entity, EnemyType.Tentacle, () =>
+                    {
+                        _waveState.DeregisterEnemyAsPending(desired.Id, entity);
+                        _waveState.RegisterEnemy(desired.Id, entity);
+                    });
                 });
             }
         }
