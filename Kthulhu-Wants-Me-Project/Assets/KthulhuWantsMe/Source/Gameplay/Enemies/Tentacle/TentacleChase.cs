@@ -29,17 +29,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         public void TryRespawn()
         {
-            if (_waveSpawner.ClosestSpawner.Id != _spawnBehaviour.SpawnedAt && ClosestSpawnerIsVacant())
+            if (_waveSpawner.ClosestSpawner.Id != _spawnBehaviour.SpawnedAt && _waveSpawner.IsSpawnerVacant(_waveSpawner.ClosestSpawner.Id))
             {
                 _waveSpawner.RespawnClosest(_spawnBehaviour.SpawnedAt, GetComponent<Health>());
             }
         }
 
-        private bool ClosestSpawnerIsVacant()
-        {
-            return !_waveState.AliveEnemiesByPlace.ContainsKey(_waveSpawner.ClosestSpawner.Id) ||
-                   _waveState.AliveEnemiesByPlace[_waveSpawner.ClosestSpawner.Id]
-                       .All(enemyHealth => enemyHealth.GetType() != typeof(TentacleHealth));
-        }
+     
     }
 }

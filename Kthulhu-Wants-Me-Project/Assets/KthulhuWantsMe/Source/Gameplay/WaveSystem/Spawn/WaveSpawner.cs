@@ -26,7 +26,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public EnemySpawner ClosestSpawner
         {
-            get { return ClosestSpawners.First(); }
+            get
+            {
+                return ClosestSpawners.First();
+            }
         }
 
 
@@ -69,12 +72,23 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             return SpawnEnemy(ClosestSpawner, enemyType);
         }
 
+        public bool IsSpawnerVacant(EnemySpawnerId spawnerId)
+        {
+            return !_waveState.AliveEnemiesByPlace.ContainsKey(spawnerId) ||
+                   (_waveState.AliveEnemiesByPlace[spawnerId]
+                       .All(enemyHealth => !enemyHealth.GetComponent<EnemyStatsContainer>().Config.IsElite() 
+                                           && !_waveState.PendingEnemies.ContainsKey(spawnerId)));
+        }
+
         public void RespawnClosest(EnemySpawnerId currentSpawner, Health entity)
         {
             if (_waveState.PendingEnemies.ContainsValue(entity))
                 return;
 
             EnemySpawner desired = ClosestSpawner;
+            
+            if(_waveState.PendingEnemies.ContainsKey(desired.Id))
+                return;
 
             _waveState.DeregisterEnemy(currentSpawner, entity);
             _waveState.RegisterEnemyAsPending(desired.Id, entity);
