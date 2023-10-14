@@ -73,7 +73,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void DecideStrategy()
         {
-            DecideRespawn();
+            if (ChasePlayer())
+            {
+                bool respawnSuccess = _tentacleChase.TryRespawn();
+                
+                if(respawnSuccess)
+                    return;
+            }
+            
             DecideAttackStrategy();
         }
 
@@ -152,7 +159,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private bool CanNotAttack() =>
             _tentacleGrabAbility.HoldsPlayer || _tentacleAttack.IsAttacking || _reconsiderationTime > 0 || Stunned;
 
+        private bool ChasePlayer() =>
+            _tentacleChase != null && _tentacleChase.CanChase();
 
-  
     }
 }
