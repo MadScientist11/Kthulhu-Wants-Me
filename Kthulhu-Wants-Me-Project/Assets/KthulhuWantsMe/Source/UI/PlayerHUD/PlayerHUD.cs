@@ -10,6 +10,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 {
     public class PlayerHUD : MonoBehaviour, IUIElement
     {
+        [SerializeField] private IndicatorsUI _indicatorsUI;
         [SerializeField] private HpBar _playerHpBar;
         
         private ThePlayer _player;
@@ -36,7 +37,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 
         public void Show()
         {
-            
+            _indicatorsUI.Enable();
         }
 
         public void Hide()

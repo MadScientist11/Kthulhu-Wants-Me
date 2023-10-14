@@ -68,7 +68,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             playerHUD.Initialize();
             return playerHUD;
         }
-
+        
         public MiscUI CreateMiscUI()
         {
             MiscUI miscUI = _instantiator.Instantiate(_miscUIPrefab);
