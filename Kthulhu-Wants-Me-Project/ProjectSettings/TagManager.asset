@@ -16,8 +16,8 @@ TagManager:
   - 
   - Player
   - Enemy
-  - 
-  - 
+  - PlayerRoll
+  - SolidObject
   - Ground
   - 
   - 

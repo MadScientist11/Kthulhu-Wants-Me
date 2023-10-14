@@ -7,6 +7,7 @@
         {
             public const string PortalSpawnObstacle = "PortalSpawnObstacle";
             public const string Player = "Player";
+            public const string PlayerRoll = "PlayerRoll";
             public const string Enemy = "Enemy";
             public const string Ground = "Ground";
             public const string FadeableObject = "FadeableObject";

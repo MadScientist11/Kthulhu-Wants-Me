@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -16,13 +17,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerFacade _player;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private TentacleGrabAbilityResponse _grabAbilityResponse;
-        
+
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
-        
+
         private float _nextDashTime;
-        
+
         private IInputService _inputService;
         private PlayerStats _playerStats;
+        private ThePlayer _thePlayer;
         private PlayerConfiguration _playerConfig;
 
         [Inject]
@@ -31,6 +33,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _inputService = inputService;
             _playerStats = player.PlayerStats;
             _playerConfig = dataProvider.PlayerConfig;
+            _thePlayer = player;
             _inputService.GameplayScenario.Dash += PerformDash;
         }
 
@@ -42,7 +45,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private void OnDashEnd()
         {
             PlayerLocomotion.AllowInput();
-            PlayerLocomotion.MovementController.EnableCollisionDetection();
+            _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
         }
 
         private void PerformDash()
@@ -56,8 +59,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void Dash()
         {
-            PlayerLocomotion.MovementController.DisableCollisionDetection();
             PlayerLocomotion.BlockInput();
+            _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
             
             _playerAnimator.PlayEvade();
             PlayerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfig.DashStrength);
