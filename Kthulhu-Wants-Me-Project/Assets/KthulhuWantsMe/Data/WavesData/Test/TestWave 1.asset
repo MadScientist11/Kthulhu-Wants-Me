@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: TestWave 1
   m_EditorClassIdentifier: 
   WaveData:
-    WaveObjective: 0
+    WaveObjective: 1
     Batches:
     - EnemyPack:
-      - EnemyType: 0
+      - EnemyType: 300
+        Quantity: 1
+        SpawnAt: 0
+      - EnemyType: 300
         Quantity: 1
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 0
-    TimeConstraint: 0
+    TimeConstraint: 299
     SpawnRandomEnemyEverySeconds: 3
-    SpawnedEnemiesCap: 25
+    SpawnedEnemiesCap: 5
     UpgradeRewards: []
