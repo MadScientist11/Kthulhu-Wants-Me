@@ -8,7 +8,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
         public bool DisablePanning { get; set; }
 
         [SerializeField] private Vector2 PanRange = new(2, 2);
-        [SerializeField] private AnimationCurve TestCurve;
         
         private CinemachineCameraOffset _cinemachineCameraOffset;
         
@@ -32,14 +31,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
 
             Vector2 panRange = Mathfs.Remap(-new Vector2(screenCenter.x, screenCenter.y), new Vector2(screenCenter.x, screenCenter.y),
                 -PanRange, PanRange, vectorToMouse);
-
-            Vector2 t = Mathfs.Remap(-PanRange, PanRange, -Vector2.one, Vector2.one, panRange);
-
-            float f = TestCurve.Evaluate(t.x);
-            float f1 = TestCurve.Evaluate(t.y);
-            Vector2 lerped = Mathfs.Lerp(-PanRange, PanRange, new Vector2(f,f1));
-
-            _targetOffset += lerped.XYtoXYZ();
+            
+            
+            _targetOffset = panRange.XYtoXYZ();
             _targetOffset = Mathfs.Clamp(_targetOffset, -PanRange.XYtoXYZ(),
                 PanRange.XYtoXYZ());
                 
