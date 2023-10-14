@@ -126,7 +126,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             for (int i = 0; i < enemyPack.Quantity; i++)
             {
                 EnemySpawner spawner = FindAppropriateSpawnerFor(enemyPack);
-                var enemyHealth = SpawnEnemy(spawner, enemyPack.EnemyType);
+                Health enemyHealth = SpawnEnemy(spawner, enemyPack.EnemyType);
                 yield return enemyHealth;
             }
         }
@@ -147,14 +147,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         {
             foreach (EnemySpawner closestSpawner in ClosestSpawners)
             {
-                if (!_waveState.AliveEnemiesByPlace.TryGetValue(closestSpawner.Id, out List<Health> enemies) ||
-                    enemies == null)
-                {
-                    return closestSpawner;
-                }
-
-                if (enemies.All(enemy =>
-                        enemy.GetComponent<EnemyStatsContainer>().Config.IsElite()))
+                if(IsSpawnerVacant(closestSpawner.Id))
                 {
                     return closestSpawner;
                 }

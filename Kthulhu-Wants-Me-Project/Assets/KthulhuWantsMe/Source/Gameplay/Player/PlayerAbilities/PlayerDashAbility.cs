@@ -19,17 +19,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
         
+        private float _nextDashTime;
+        
         private IInputService _inputService;
         private PlayerStats _playerStats;
-        private ICoroutineRunner _coroutineRunner;
-
-        private float _nextDashTime;
         private PlayerConfiguration _playerConfig;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player, ICoroutineRunner coroutineRunner)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player)
         {
-            _coroutineRunner = coroutineRunner;
             _inputService = inputService;
             _playerStats = player.PlayerStats;
             _playerConfig = dataProvider.PlayerConfig;
@@ -39,6 +37,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private void OnDestroy()
         {
             _inputService.GameplayScenario.Dash -= PerformDash;
+        }
+
+        private void OnDashEnd()
+        {
+            PlayerLocomotion.AllowInput();
+            PlayerLocomotion.MovementController.EnableCollisionDetection();
         }
 
         private void PerformDash()
@@ -53,9 +57,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private void Dash()
         {
             PlayerLocomotion.MovementController.DisableCollisionDetection();
+            PlayerLocomotion.BlockInput();
+            
             _playerAnimator.PlayEvade();
             PlayerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfig.DashStrength);
-            _coroutineRunner.ExecuteAfter(1f, PlayerLocomotion.MovementController.EnableCollisionDetection);
         }
 
         private bool CanDash()
