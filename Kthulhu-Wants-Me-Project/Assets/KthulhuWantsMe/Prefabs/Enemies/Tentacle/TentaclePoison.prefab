@@ -13,6 +13,11 @@ PrefabInstance:
       propertyPath: _damageModifier
       value: 
       objectReference: {fileID: 3970498150363333850}
+    - target: {fileID: 1785475893382128225, guid: b2a1390fa35be8c4c9e850651ae965b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: daa1f64d17d2c5f44949d9e1327a83c0, type: 2}
     - target: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
         type: 3}
       propertyPath: m_Name

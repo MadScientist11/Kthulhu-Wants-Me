@@ -34,6 +34,8 @@ MonoBehaviour:
       WaitForBatchClearance: 0
       NextBatchDelay: 5
     TimeConstraint: 4
+    SpawnRandomEnemyEverySeconds: 3
+    SpawnedEnemiesCap: 25
     UpgradeRewards:
     - UpgradeTitle: Increase Max Health by +{0}
       UpgradeText: Increase Max Health by +{0}
