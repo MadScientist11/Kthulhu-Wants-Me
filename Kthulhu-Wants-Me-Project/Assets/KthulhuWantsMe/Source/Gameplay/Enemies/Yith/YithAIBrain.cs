@@ -15,9 +15,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private YithAttack _yithAttack;
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
         [SerializeField] private FollowLogic _followLogic;
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
         private float _attackDelayTime;
         private float _rageComboRandom;
+
+        private YithConfiguration _yithConfiguration;
 
         private const float ComboAttackReavaluationTime = 5f;
 
@@ -34,6 +37,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private void Start()
         {
             _followLogic.Init(_player.transform, Mathf.Infinity, 1.5f);
+            _yithConfiguration = (YithConfiguration)_enemyStatsContainer.Config;
+            _followLogic.FollowSpeed = Random.Range((int)_yithConfiguration.MoveSpeed.x, (int)_yithConfiguration.MoveSpeed.y);
         }
 
         private void Update() => 
