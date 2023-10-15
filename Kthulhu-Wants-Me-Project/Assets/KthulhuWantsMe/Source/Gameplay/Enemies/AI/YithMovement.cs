@@ -1,4 +1,5 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using Sirenix.OdinInspector;
@@ -12,14 +13,30 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
     public class YithMovement : MonoBehaviour
     {
         [SerializeField] private MovementMotor _movementMotor;
-        
+
         private NavMeshPath _navMeshPath;
         private Vector3 _lastNearPoint;
 
-        private const float PlayerTargetOffset = 8f;
-        private const float OffsetMovementThreshold = 5f;
+        [MinMaxSlider(3, 12)]
+        [SerializeField] private Vector2 _minMaxTargetOffset = new(4, 8);
+        
+        [Tooltip("Apply offset to target, if distance to target is greater than the threshold")]
+        [Range(3, 8)]
+        [SerializeField] private float _offsetMovementThreshold = 5f;
 
         private Vector3 _playerTarget;
+
+        private float _resetOffsetTimer;
+        private const float ResetOffsetTime = 2f;
+
+        private IInterceptionCompliant _interceptTarget;
+
+        [Range(-1f, 1f)] 
+        [SerializeField] private float _movementPredictionThreshold = 0;
+        [Range(0.25f, 2f)] 
+        [SerializeField] private float _movementPredictionTime = 1;
+
+        private int _pathfindingMethod;
 
         private PlayerFacade _player;
 
@@ -33,23 +50,74 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         {
             _navMeshPath = new();
             _movementMotor.Agent.speed = Random.Range(3f, 4f);
+            _pathfindingMethod = Random.Range(0, 2);
+        }
+
+        private void Start()
+        {
+            if (_player.TryGetComponent(out IInterceptionCompliant interceptionCompliant))
+            {
+                _interceptTarget = interceptionCompliant;
+            }
         }
 
         public void MoveToPlayer()
         {
             _playerTarget = _player.transform.position;
 
-            if (Vector3.Distance(_player.transform.position, transform.position) > OffsetMovementThreshold)
-            {
-                if (Vector3.Distance(_player.transform.position, _lastNearPoint) > PlayerTargetOffset)
-                {
-                    _lastNearPoint = NearPlayerRandomPoint();
-                }
+            if (_pathfindingMethod == 0)
+                RandomOffsetPathfinding();
+            else
+                InterceptionAverageVelocityBasedPathfinding();
 
-                _playerTarget = _lastNearPoint;
-            }
 
             _movementMotor.MoveTo(_playerTarget);
+        }
+
+        private void RandomOffsetPathfinding()
+        {
+            if (Vector3.Distance(_player.transform.position, transform.position) > _offsetMovementThreshold)
+            {
+                if (Vector3.Distance(_player.transform.position, _lastNearPoint) > _minMaxTargetOffset.y)
+                {
+                    _lastNearPoint = NearPlayerRandomPoint();
+                    _resetOffsetTimer = ResetOffsetTime;
+                }
+
+                _resetOffsetTimer -= Time.deltaTime;
+
+                if (_resetOffsetTimer > 0)
+                    _playerTarget = _lastNearPoint;
+            }
+        }
+
+        private void InterceptionAverageVelocityBasedPathfinding()
+        {
+            if (_interceptTarget == null)
+            {
+                RandomOffsetPathfinding();
+                Debug.LogWarning("Interception target is null.");
+                return;
+            }
+
+            float timeToPlayer = Vector3.Distance(_player.transform.position, transform.position) / _movementMotor.Agent.speed;
+
+            if (timeToPlayer > _movementPredictionTime)
+            {
+                timeToPlayer = _movementPredictionTime;
+            }
+
+            _playerTarget = _player.transform.position + _interceptTarget.AverageVelocity * timeToPlayer;
+
+            Vector3 directionToTarget = (_playerTarget - transform.position).normalized;
+            Vector3 directionToPlayer = (_player.transform.position - transform.position).normalized;
+
+            float dot = Vector3.Dot(directionToPlayer, directionToTarget);
+
+            if (dot < _movementPredictionThreshold)
+            {
+                _playerTarget = _player.transform.position;
+            }
         }
 
         private void OnDrawGizmos()
@@ -65,17 +133,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
             while (!pointFound)
             {
-                Vector3 randomPoint = _player.transform.position + Random.insideUnitSphere * PlayerTargetOffset;
-                bool sampleSuccess = NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, PlayerTargetOffset, NavMesh.AllAreas);
+                float targetOffset = Random.Range(_minMaxTargetOffset.x, _minMaxTargetOffset.y);
+                Vector3 randomPoint = _player.transform.position + Random.insideUnitSphere * targetOffset;
+                bool sampleSuccess =
+                    NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, targetOffset, NavMesh.AllAreas);
 
                 if (sampleSuccess)
                 {
                     _movementMotor.Agent.CalculatePath(hit.position, _navMeshPath);
 
                     if (_navMeshPath.status == NavMeshPathStatus.PathComplete &&
-                        !NavMesh.Raycast(_player.transform.position, randomPoint, out NavMeshHit _, NavMesh.AllAreas))
+                        !NavMesh.Raycast(_player.transform.position, hit.position, out NavMeshHit _, NavMesh.AllAreas))
                     {
-                        result = randomPoint;
+                        result = hit.position;
                         pointFound = true;
                     }
                 }

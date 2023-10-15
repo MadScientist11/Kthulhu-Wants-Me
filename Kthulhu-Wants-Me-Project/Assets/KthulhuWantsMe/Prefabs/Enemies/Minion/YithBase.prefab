@@ -400,6 +400,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementMotor: {fileID: 855018551297982499}
+  _movementPredictionThreshold: 0.3
+  _movementPredictionTime: 1
 --- !u!114 &855018551297982499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +415,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 5174677676976298968}
-  _rigidbody: {fileID: 5731019940550290006}
 --- !u!114 &6624409593950422001
 MonoBehaviour:
   m_ObjectHideFlags: 0
