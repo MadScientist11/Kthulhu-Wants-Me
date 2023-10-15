@@ -36,7 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void Start()
         {
-            _followLogic.Init(_player.transform, Mathf.Infinity, 1.5f);
+            _followLogic.Init(_player.transform, Mathf.Infinity, 2.5f);
             _yithConfiguration = (YithConfiguration)_enemyStatsContainer.Config;
             _followLogic.FollowSpeed = Random.Range((int)_yithConfiguration.MoveSpeed.x, (int)_yithConfiguration.MoveSpeed.y);
         }

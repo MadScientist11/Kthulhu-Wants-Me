@@ -12,5 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         [MinMaxSlider(0, 20, true)]
         public Vector2 MoveSpeed;
+
+        public float AttackRadius = 0.75f;
     }
 }
