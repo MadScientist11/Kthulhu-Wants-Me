@@ -33,7 +33,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             GetComponent<IStoppable>().StopEntityLogic();
             _desiredPosition = transform.position;
             transform.position = transform.position.AddY(-_height);
-            StartCoroutine(DoSpawnEnemy());
+            //StartCoroutine(DoSpawnEnemy());
         }
 
         private IEnumerator DoSpawnEnemy()

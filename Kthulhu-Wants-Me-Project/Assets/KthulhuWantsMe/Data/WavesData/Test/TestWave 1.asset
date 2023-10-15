@@ -26,5 +26,5 @@ MonoBehaviour:
       NextBatchDelay: 0
     TimeConstraint: 299
     SpawnRandomEnemyEverySeconds: 3
-    SpawnedEnemiesCap: 5
+    SpawnedEnemiesCap: 2
     UpgradeRewards: []

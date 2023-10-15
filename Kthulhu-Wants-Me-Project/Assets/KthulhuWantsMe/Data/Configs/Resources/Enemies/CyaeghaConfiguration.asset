@@ -74,5 +74,5 @@ MonoBehaviour:
   EnemyType: 4
   Prefab: {fileID: 3900409656979045455, guid: e9ac9c8f83e7b194a95c06458d2a7fb1, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  MoveSpeed: {x: 8, y: 20}
+  MoveSpeed: {x: 4, y: 10}
   AttackCooldown: 1

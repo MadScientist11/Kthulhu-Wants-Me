@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Player;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
         [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
+
+        [SerializeField] private YithMovement _yithMovement;
 
         private float _attackDelayTime;
         private float _rageComboRandom;
@@ -36,9 +39,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void Start()
         {
-            _followLogic.Init(_player.transform, Mathf.Infinity, 2.5f);
+           // _followLogic.Init(_player.transform, Mathf.Infinity, 2.5f);
             _yithConfiguration = (YithConfiguration)_enemyStatsContainer.Config;
-            _followLogic.FollowSpeed = Random.Range((int)_yithConfiguration.MoveSpeed.x, (int)_yithConfiguration.MoveSpeed.y);
+            //_followLogic.FollowSpeed = Random.Range((int)_yithConfiguration.MoveSpeed.x, (int)_yithConfiguration.MoveSpeed.y);
         }
 
         private void Update() => 
@@ -50,19 +53,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void DecideStrategy()
         {
-            if(_yithHealth.IsDead || BlockProcessing)
-                return;
+            //if(_yithHealth.IsDead || BlockProcessing)
+            //    return;
             
             DecideMoveStrategy();
-            DecideAttackStrategy();
+            //DecideAttackStrategy();
         }
 
         private void DecideMoveStrategy()
         {
-            if (ShouldFollow() || _yithRageComboAbility.InProcess)
-                _followLogic.Follow();
-            else
-                _followLogic.StopFollowing();
+            _yithMovement.MoveToPlayer();
         }
         
         private void DecideAttackStrategy()

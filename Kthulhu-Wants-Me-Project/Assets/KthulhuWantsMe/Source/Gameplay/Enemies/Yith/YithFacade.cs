@@ -15,14 +15,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         public void StopEntityLogic()
         {
-            _followLogic.DisableMotor();
-            BlockAIProcessing();
+            //_followLogic.DisableMotor();
+            // BlockAIProcessing();
         }
 
         public void ResumeEntityLogic()
         {
-            _followLogic.EnableMotor();
-            ResumeAIProcessing();
+//            _followLogic.EnableMotor();
+            //ResumeAIProcessing();
         }
 
         //public void ResetBrain() =>
