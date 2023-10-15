@@ -17,10 +17,12 @@ using VContainer.Unity;
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     public interface IWaveSystemDirector
-    {
+    {        
+        event Action WaveStarted;
         event Action WaveCompleted;
         WaveState CurrentWaveState { get; }
         WaveSpawner WaveSpawner { get; }
+        IWaveScenario CurrentWaveScenario { get; }
         void StartWave(int waveIndex);
         void CompleteWave();
         void CompleteWaveAsVictory();
@@ -30,7 +32,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
     public class WaveSystemDirector : IWaveSystemDirector, IInitializable
     {
-
+        public event Action WaveStarted;
         public event Action WaveCompleted;
         public event Action<IEnumerable<Health>> BatchSpawned;
 
@@ -47,6 +49,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             get
             {
                 return _waveSpawner;
+            }
+        }
+        
+        public IWaveScenario CurrentWaveScenario
+        {
+            get
+            {
+                return _currentWaveScenario;
             }
         }
 
@@ -108,6 +118,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             
             SpawnBatchLoop().Forget();
             _waveOngoing = true;
+            
+            WaveStarted?.Invoke();
         }
 
         public void CompleteWaveAsFailure()
@@ -133,6 +145,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public void CompleteWave()
         {
+            _uiService.PlayerHUD.HideObjective();
+            
             _waveOngoing = false;
             WaveCompleted?.Invoke();
             _currentWaveState.CleanUp();

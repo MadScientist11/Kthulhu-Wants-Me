@@ -13,6 +13,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     public class KillTentaclesSpecialScenario : IWaveScenario
     {
+        public event Action<int> WaveLossTimerTick;
         private CancellationTokenSource _timerToken;
 
         private int _remainingTentacles;
@@ -82,8 +83,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             {
                 SpawnAdditionalEnemy();
             }
+            WaveLossTimerTick?.Invoke(countdown);
             
-            _uiService.MiscUI.UpdateWaveCountdownText(countdown);
+            
         }
 
         private void OnWaveCompleted()
