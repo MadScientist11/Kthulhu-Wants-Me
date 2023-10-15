@@ -56,8 +56,12 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
             _damageable.TakeDamage(ProvideDamage(), this);
         }
 
-        public float ProvideDamage() =>
-            _damagePerSecond * Time.deltaTime;
+        public Transform DamageDealer { get; }
+
+        public float ProvideDamage()
+        {
+            return _damagePerSecond * Time.deltaTime;
+        }
 
         public void CancelEffect(IEffectReceiver effectReceiver)
         {

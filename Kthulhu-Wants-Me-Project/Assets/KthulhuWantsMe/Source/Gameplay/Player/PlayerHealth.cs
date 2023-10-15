@@ -22,7 +22,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _damage = damage;
         }
-        
+
+        public Transform DamageDealer { get; }
+
         public float ProvideDamage() => 
             _damage;
     }
@@ -84,7 +86,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             
             if (damageProvider is IBuffDebuff)
                 return;
-            ReceiveDamageVisual();
+            ReceiveDamageVisual(damageProvider);
         }
 
         private void OnHealthChanged(HealthChange healthChange)
@@ -102,17 +104,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             Die();
         }
         
-        private void ReceiveDamageVisual()
+        private void ReceiveDamageVisual(IDamageProvider damageProvider)
         {
             _playerAnimator.PlayImpact();
             _playerAttack.ResetAttackState();
             _playerLocomotion.BlockMovement(.5f);
-            AddKnockback();
+            AddKnockback(damageProvider.DamageDealer);
             _movementController.KillVelocity();
         }
 
-        private void AddKnockback() =>
-            _movementController.AddVelocity(-transform.forward * 30f);
+        private void AddKnockback(Transform damageDealer)
+        {
+            if(damageDealer != null)
+                _movementController.AddVelocity(damageDealer.forward * 30f);
+        }
 
         private void Die()
         {

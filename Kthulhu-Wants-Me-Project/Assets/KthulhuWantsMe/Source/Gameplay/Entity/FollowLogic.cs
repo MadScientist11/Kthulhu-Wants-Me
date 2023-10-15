@@ -15,6 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public bool TargetReached => DistanceToTarget <= _reachDistance;
 
         public float DistanceToTarget => Vector3.Distance(transform.position, _followTarget.position);
+        public bool TryPredictTarget { get; set; }
 
         public float FollowSpeed
         {
@@ -42,7 +43,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if(!_movementMotor.Enabled)
                 return;
             
-            if (_interceptTarget != null)
+            if (_interceptTarget != null && TryPredictTarget)
             {
 
                 float timeToPlayer = Vector3.Distance(_followTarget.position, transform.position) /
@@ -65,6 +66,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                     targetPosition = _followTarget.position;
                 }
                 _movementMotor.MoveTo(targetPosition);
+            }
+            else
+            {
+                    _movementMotor.MoveTo(_followTarget.position);
+
             }
         }
 
