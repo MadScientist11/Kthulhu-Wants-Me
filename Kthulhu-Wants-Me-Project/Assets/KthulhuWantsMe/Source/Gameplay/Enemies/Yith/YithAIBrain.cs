@@ -94,7 +94,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _attackDelayTime -= Time.deltaTime;
 
         private void ResetAttackDelayCountdown() => 
-            _attackDelayTime = 1f;
+            _attackDelayTime = .25f;
 
         private bool AttackDelayCountdownIsUp() 
             => _attackDelayTime <= 0;

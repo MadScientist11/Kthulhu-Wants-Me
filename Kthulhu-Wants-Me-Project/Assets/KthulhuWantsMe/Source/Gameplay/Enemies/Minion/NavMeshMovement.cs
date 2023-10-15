@@ -8,7 +8,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
     public class NavMeshMovement : MonoBehaviour
     {
         public bool Enabled => _navMeshAgent.enabled;
-        
+        public Vector3 Velocity
+        {
+            get
+            {
+                return _navMeshAgent.velocity;
+            }
+            set
+            {
+                _navMeshAgent.velocity = value;
+            }
+        }
+
         public float MoveSpeed
         {
             get => _navMeshAgent.speed;
@@ -25,7 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 
         public void MoveTo(Vector3 destination)
         {
-            if(_navMeshAgent.enabled)
+            if(_navMeshAgent.enabled && _navMeshAgent.velocity == Vector3.zero)
                 _navMeshAgent.destination = destination;
         }
 
