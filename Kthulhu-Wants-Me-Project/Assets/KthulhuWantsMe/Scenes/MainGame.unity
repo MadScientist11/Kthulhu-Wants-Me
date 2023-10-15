@@ -558,6 +558,79 @@ MonoBehaviour:
   EnemySpawnerId: 4
   _gizmoColor: {r: 1, g: 0, b: 0, a: 0.7058824}
   _gizmoSize: 5
+--- !u!1001 &350714510
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -28.908915
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.1889277
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 32.184998
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580329, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580332, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_Name
+      value: CFXR4 Sword Trail PLAIN (360 Spiral)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580335, guid: 64548925ad00f4643acc1ebb2cd82f00,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 64548925ad00f4643acc1ebb2cd82f00, type: 3}
 --- !u!1 &357928279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3846,6 +3919,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2027087563}
   - component: {fileID: 2027087564}
+  - component: {fileID: 2027087565}
   m_Layer: 0
   m_Name: NavMeshSurface
   m_TagString: Untagged
@@ -3892,13 +3966,25 @@ MonoBehaviour:
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_OverrideTileSize: 1
+  m_TileSize: 1024
+  m_OverrideVoxelSize: 1
+  m_VoxelSize: 0.0625
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 9f02f4c290af31e42b3d5c7ec48cec8d, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &2027087565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027087562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edac320d2526feb42be45c640f7e7802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2131610507
 GameObject:
   m_ObjectHideFlags: 0
@@ -3977,3 +4063,4 @@ SceneRoots:
   - {fileID: 473333077}
   - {fileID: 780661663}
   - {fileID: 597470308}
+  - {fileID: 350714510}

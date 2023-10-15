@@ -8,14 +8,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
     [RequireComponent(typeof(NavMeshAgent))]
     public class MovementMotor : MonoBehaviour
     {
-        public float MoveSpeed
-        {
-            get => _navMeshAgent.speed;
-            set => _navMeshAgent.speed = value;
-        }
+        public NavMeshAgent Agent => _navMeshAgent;
 
         [SerializeField] private NavMeshAgent _navMeshAgent;
-        [SerializeField] private Rigidbody _rigidbody;
 
         private float _defaultAngularSpeed;
 
