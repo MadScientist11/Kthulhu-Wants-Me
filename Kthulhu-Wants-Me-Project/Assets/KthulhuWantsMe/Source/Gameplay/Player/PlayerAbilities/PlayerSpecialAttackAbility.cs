@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
 
@@ -14,6 +15,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
     public class PlayerSpecialAttackAbility : MonoBehaviour, IAbility
     {
         [SerializeField] private PlayerAnimator _playerAnimator;
+        
+        [SerializeField] private MMFeedbacks _specialAttackFeedback;
         
         private WeaponItem _currentWeapon;
 
@@ -45,6 +48,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             {
                 _currentWeapon = weapon;
                 _playerAnimator.PlaySpecialAttack();
+                _specialAttackFeedback?.PlayFeedbacks();
             }
         }
     }

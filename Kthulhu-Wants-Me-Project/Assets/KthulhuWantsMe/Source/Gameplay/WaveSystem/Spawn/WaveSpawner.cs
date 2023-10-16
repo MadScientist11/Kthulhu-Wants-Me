@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 {
     public class WaveSpawner
     {
-        
         public event Action<IEnumerable<Health>> BatchSpawned;
-        
+
         public IOrderedEnumerable<EnemySpawner> ClosestSpawners
         {
             get
@@ -37,9 +38,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         private readonly IGameFactory _gameFactory;
         private readonly ISceneDataProvider _sceneDataProvider;
+        private readonly IDataProvider _dataProvider;
 
-        public WaveSpawner(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider)
+        public WaveSpawner(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, IDataProvider dataProvider)
         {
+            _dataProvider = dataProvider;
             _sceneDataProvider = sceneDataProvider;
             _gameFactory = gameFactory;
         }
@@ -51,7 +54,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
             EnemySpawner CreateSpawnerFrom(SpawnPoint sp)
             {
-                EnemySpawner spawner = new EnemySpawner(_gameFactory, sp);
+                EnemySpawner spawner = new EnemySpawner(_gameFactory, _dataProvider, sp);
                 return spawner;
             }
 
@@ -63,10 +66,44 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             IEnumerable<Health> spawnedBatch = SpawnBatch(batch);
             BatchSpawned?.Invoke(spawnedBatch);
         }
-        
+
         public Health SpawnEnemyClosestToPlayer(EnemyType enemyType)
         {
             return SpawnEnemy(ClosestSpawner, enemyType);
+        }
+
+        public bool IsSpawnerVacant(EnemySpawnerId spawnerId)
+        {
+            return !_waveState.AliveEnemiesByPlace.ContainsKey(spawnerId) ||
+                   (_waveState.AliveEnemiesByPlace[spawnerId]
+                       .All(enemyHealth => !enemyHealth.GetComponent<EnemyStatsContainer>().Config.IsElite() 
+                                           && !_waveState.PendingEnemies.ContainsKey(spawnerId)));
+        }
+
+        public void RespawnClosest(EnemySpawnerId currentSpawner, Health entity)
+        {
+            if (_waveState.PendingEnemies.ContainsValue(entity))
+                return;
+
+            EnemySpawner desired = ClosestSpawner;
+            
+            if(_waveState.PendingEnemies.ContainsKey(desired.Id))
+                return;
+
+            _waveState.DeregisterEnemy(currentSpawner, entity);
+            _waveState.RegisterEnemyAsPending(desired.Id, entity);
+
+            if (entity.TryGetComponent(out TentacleRetreat retreatBehaviour))
+            {
+                retreatBehaviour.Retreat(false, () =>
+                {
+                    desired.Spawn(entity, EnemyType.Tentacle, () =>
+                    {
+                        _waveState.DeregisterEnemyAsPending(desired.Id, entity);
+                        _waveState.RegisterEnemy(desired.Id, entity);
+                    });
+                });
+            }
         }
 
         public Health SpawnEnemy(EnemySpawner spawner, EnemyType enemyType)
@@ -89,16 +126,16 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             for (int i = 0; i < enemyPack.Quantity; i++)
             {
                 EnemySpawner spawner = FindAppropriateSpawnerFor(enemyPack);
-                var enemyHealth = SpawnEnemy(spawner, enemyPack.EnemyType);
+                Health enemyHealth = SpawnEnemy(spawner, enemyPack.EnemyType);
                 yield return enemyHealth;
             }
         }
 
         private EnemySpawner FindAppropriateSpawnerFor(EnemyPack batchEntry)
         {
-            if (batchEntry.SpawnAt == EnemySpawnerId.Default &&
-                (batchEntry.EnemyType == EnemyType.Tentacle || batchEntry.EnemyType == EnemyType.BleedTentacle ||
-                 batchEntry.EnemyType == EnemyType.PoisonousTentacle))
+            EnemyConfiguration enemyConfig = _dataProvider.EnemyConfigsProvider.EnemyConfigs[batchEntry.EnemyType];
+
+            if (batchEntry.SpawnAt == EnemySpawnerId.Default && enemyConfig.IsElite())
                 return FindUnoccupiedSpawner();
             else if (batchEntry.SpawnAt != EnemySpawnerId.Default)
                 return _enemySpawners[batchEntry.SpawnAt];
@@ -110,14 +147,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         {
             foreach (EnemySpawner closestSpawner in ClosestSpawners)
             {
-                if (!_waveState.AliveEnemiesByPlace.TryGetValue(closestSpawner.Id, out List<Health> enemies) ||
-                    enemies == null)
-                {
-                    return closestSpawner;
-                }
-
-                if (enemies.All(enemy =>
-                        enemy.GetComponent<EnemyStatsContainer>().Config.EnemyType != EnemyType.Tentacle))
+                if(IsSpawnerVacant(closestSpawner.Id))
                 {
                     return closestSpawner;
                 }

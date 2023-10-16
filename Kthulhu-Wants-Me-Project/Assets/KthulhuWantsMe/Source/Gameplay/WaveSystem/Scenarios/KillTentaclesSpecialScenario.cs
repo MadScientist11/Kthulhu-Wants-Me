@@ -6,7 +6,6 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
-using KthulhuWantsMe.Source.UI.Compass;
 using Sirenix.Utilities;
 using Random = UnityEngine.Random;
 
@@ -14,7 +13,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     public class KillTentaclesSpecialScenario : IWaveScenario
     {
-        private CompassUI _compassUI;
+        public event Action<int> WaveLossTimerTick;
         private CancellationTokenSource _timerToken;
 
         private int _remainingTentacles;
@@ -34,9 +33,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public void Initialize()
         {
-            _compassUI = _uiService.MiscUI.GetCompassUI();
-            _compassUI.Show();
-            
             StartWaveLossTimer().Forget();
             
             _waveSystemDirector.WaveSpawner.BatchSpawned += OnBatchSpawned;
@@ -87,14 +83,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             {
                 SpawnAdditionalEnemy();
             }
+            WaveLossTimerTick?.Invoke(countdown);
             
-            _uiService.MiscUI.UpdateWaveCountdownText(countdown);
+            
         }
 
         private void OnWaveCompleted()
         {
             _timerToken.Cancel();
-            _compassUI.Hide();
             RetreatAllEnemies();
         }
 
@@ -112,22 +108,15 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
                 Health aliveEnemy = _waveSystemDirector.CurrentWaveState.AliveEnemies[index];
                 if (aliveEnemy.TryGetComponent(out IRetreatBehaviour retreatBehaviour))
                 {
-                    retreatBehaviour.Retreat();
+                    retreatBehaviour.Retreat(true);
                 }
             }
         }
 
         private void TrackTentacleDeath(Health tentacleHealth)
         {
-            Marker marker = new Marker()
-            {
-                TrackedObject = tentacleHealth.transform
-            };
-            _compassUI.AddMarker(marker);
-            
             tentacleHealth.Died += () =>
             {
-                _compassUI.RemoveMarker(marker);
                 _remainingTentacles--;
 
                 if (_remainingTentacles == 0)

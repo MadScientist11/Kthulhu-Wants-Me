@@ -17,5 +17,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public CinemachineCameraPanning GetCameraPanningLogic() => 
             PlayerVirtualCamera.GetComponent<CinemachineCameraPanning>();
+
+
+        public void ChangePlayerLayer(int layer)
+        {
+            gameObject.layer = layer;
+            PlayerLocomotion.MovementController.RebuildMovementCollisionsLayerMask();
+        }
     }
 }

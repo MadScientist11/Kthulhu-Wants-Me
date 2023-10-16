@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+﻿using System;
+using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using MoreMountains.Feedbacks;
@@ -18,6 +19,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private float _attackCooldown;
         private bool _isAttacking;
+        
+        private YithConfiguration _yithConfiguration;
+
+        private void Start()
+        {
+            _yithConfiguration = (YithConfiguration)enemyStatsContainer.Config;
+        }
 
 
         private void Update()
@@ -29,7 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             if (!PhysicsUtility.HitFirst(transform, 
                     AttackStartPoint(), 
-                    .75f, 
+                    _yithConfiguration.AttackRadius, 
                     LayerMasks.PlayerMask, 
                     out IDamageable damageable))
                 return;

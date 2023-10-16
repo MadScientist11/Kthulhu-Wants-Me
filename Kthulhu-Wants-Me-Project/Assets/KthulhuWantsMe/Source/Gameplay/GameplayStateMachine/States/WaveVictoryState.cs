@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -14,7 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly IInputService _inputService;
         private readonly IUIService _uiService;
         private readonly GameplayStateMachine _gameplayStateMachine;
-        private IWaveSystemDirector _waveSystemDirector;
+        private readonly IWaveSystemDirector _waveSystemDirector;
 
         public WaveVictoryState(GameplayStateMachine gameplayStateMachine, IProgressService progressService, 
             IInputService inputService, IUIService uiService, IWaveSystemDirector waveSystemDirector)
@@ -29,12 +31,23 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         public async void Enter()
         {
             _progressService.ProgressData.CompletedWaveIndex++;
-            _inputService.SwitchInputScenario(InputScenario.UI);
 
-            await UniTask.Delay(1500);
+            List<UpgradeData> upgradeRewards = _waveSystemDirector.CurrentWaveState.CurrentWaveData.UpgradeRewards;
             
-            UpgradeWindow window = (UpgradeWindow) _uiService.OpenWindow(WindowId.UpgradeWindow);
-            window.Init(_waveSystemDirector.CurrentWaveState.CurrentWaveData.UpgradeRewards, OnUpgradePicked);
+            if (upgradeRewards != null && upgradeRewards.Count > 0)
+            {
+                _inputService.SwitchInputScenario(InputScenario.UI);
+
+                await UniTask.Delay(1000);
+            
+                UpgradeWindow window = (UpgradeWindow) _uiService.OpenWindow(WindowId.UpgradeWindow);
+                window.Init(upgradeRewards, OnUpgradePicked);
+            }
+            else
+            {
+                await StartNextWaveCounter(new CancellationTokenSource());
+            }
+
         }
 
         public void Exit()

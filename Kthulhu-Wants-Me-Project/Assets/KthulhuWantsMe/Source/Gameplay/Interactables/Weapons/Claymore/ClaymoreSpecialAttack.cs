@@ -37,6 +37,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore
             to.TakeDamage(ProvideDamage());
         }
 
+        public Transform DamageDealer { get; }
+
         public float ProvideDamage()
         {
             return 20;

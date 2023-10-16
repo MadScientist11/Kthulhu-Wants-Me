@@ -8,6 +8,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Entity
     {
         protected abstract float BaseDamage { get; }
 
+        public Transform DamageDealer => transform;
+
         public virtual float ProvideDamage() =>
             BaseDamage;
         
@@ -34,7 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Entity
 
         protected void ApplyDamage(IDamageable to)
         {
-            to.TakeDamage(ProvideDamage());
+            to.TakeDamage(ProvideDamage(), this);
         }
     }
 }

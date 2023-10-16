@@ -7,8 +7,11 @@ namespace KthulhuWantsMe.Source.Gameplay.DamageSystem
     
     public class WeaponBase : MonoBehaviour, IDamageProvider
     {
+        public Transform DamageDealer => transform;
+        
         protected List<IDamageProvider> _damageProviders;
         private WeaponItem _weaponItem;
+
 
         private void Awake()
         {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
@@ -8,5 +9,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public float ComboAttackCooldown;
         public float DelayBetweenComboAttacks;
         public float ComboFollowSpeedIncrement;
+        
+        [MinMaxSlider(0, 20, true)]
+        public Vector2 MoveSpeed;
+
+        public float AttackRadius = 0.75f;
     }
 }

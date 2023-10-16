@@ -1,8 +1,12 @@
 using System;
+using KthulhuWantsMe.Source.Gameplay;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 using VContainer.Unity;
 
@@ -10,13 +14,21 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 {
     public class PlayerHUD : MonoBehaviour, IUIElement
     {
+        [FormerlySerializedAs("SpecialObjectWaveLossTimerUI")] public SpecialObjectiveWaveLossTimerUI specialObjectiveWaveLossTimerUI;
+        
+        [SerializeField] private IndicatorsUI _indicatorsUI;
         [SerializeField] private HpBar _playerHpBar;
+
+        [SerializeField] private GameObject _objective;
+        [SerializeField] private GameObject _waveLossTimer;
         
         private ThePlayer _player;
+        private IWaveSystemDirector _waveSystemDirector;
 
         [Inject]
-        public void Construct(ThePlayer player)
+        public void Construct(ThePlayer player, IWaveSystemDirector waveSystemDirector)
         {
+            _waveSystemDirector = waveSystemDirector;
             _player = player;
         }
         
@@ -26,6 +38,9 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
             
             _player.HealthChanged += UpdateHealthBar;
             _player.PlayerStats.StatChanged += GrowHealthBar;
+
+            _waveSystemDirector.WaveStarted += OnWaveStarted;
+            _waveSystemDirector.WaveCompleted += OnWaveCompleted;
         }
 
         private void OnDestroy()
@@ -36,12 +51,27 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 
         public void Show()
         {
-            
+            _indicatorsUI.Enable();
         }
 
         public void Hide()
         {
+        }
+
+        private void OnWaveStarted()
+        {
+            _objective.SwitchOn();
             
+            if(_waveSystemDirector.CurrentWaveState.WaveObjective == WaveObjective.KillTentaclesSpecial)
+                _waveLossTimer.SwitchOn();
+        }
+
+        private void OnWaveCompleted()
+        {
+            _objective.SwitchOff();
+            
+            if(_waveSystemDirector.CurrentWaveState.WaveObjective == WaveObjective.KillTentaclesSpecial)
+                _waveLossTimer.SwitchOff();
         }
 
         private void UpdateHealthBar(HealthChange healthChange)
@@ -57,6 +87,10 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
                 _playerHpBar.SetValue(_player.PlayerStats.CurrentHp, _player.PlayerStats.MainStats[StatType.MaxHealth]);
             }
         }
-        
+
+        public void HideObjective()
+        {
+            _objective.SetActive(false);
+        }
     }
 }

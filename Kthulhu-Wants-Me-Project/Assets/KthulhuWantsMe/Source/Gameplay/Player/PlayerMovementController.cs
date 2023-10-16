@@ -50,15 +50,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _motor.enabled = value;
         }
 
+        public void RebuildMovementCollisionsLayerMask()
+        {
+            _motor.BuildCollidableLayersMask();
+        }
+
         public void EnableCollisionDetection()
         {
-            _motor.SetCapsuleCollisionsActivation(true);
-            _motor.SetMovementCollisionsSolvingActivation(true);
+            //_motor.SetCapsuleCollisionsActivation(true);
+            //_motor.SetMovementCollisionsSolvingActivation(true);
         }
         
         public void DisableCollisionDetection()
         {
-            _motor.SetCapsuleCollisionsActivation(false);
+            //_motor.SetCapsuleCollisionsActivation(false);
             _motor.SetMovementCollisionsSolvingActivation(false);
         }
 

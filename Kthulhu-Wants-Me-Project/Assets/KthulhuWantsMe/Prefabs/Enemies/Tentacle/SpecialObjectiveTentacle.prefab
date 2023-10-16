@@ -68,8 +68,95 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8607472665572656946, guid: b2a1390fa35be8c4c9e850651ae965b2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
+        type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 2822413647615700455}
   m_SourcePrefab: {fileID: 100100000, guid: b2a1390fa35be8c4c9e850651ae965b2, type: 3}
+--- !u!1 &1546379097491449038 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 3906952766499033705}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2822413647615700455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546379097491449038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67a5fc50cb592fe4f95457eb6d66e520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 0}
+  Prefabs:
+    RadarPrefab: {fileID: 0}
+    CompassBarPrefab: {fileID: 0}
+    IndicatorPrefab: {fileID: 114724236924444632, guid: b97d8841013a7a643bb2c5c9fe8da06e,
+      type: 3}
+    MinimapPrefab: {fileID: 0}
+  hideInRadar: 0
+  ignoreRadarRadius: 0
+  ignoreRadarScaling: 0
+  ignoreRadarFading: 0
+  rotateWithGameObject: 1
+  useRadarHeightSystem: 1
+  hideInCompassBar: 0
+  ignoreCompassBarRadius: 0
+  useCompassBarDistanceText: 1
+  compassBarDistanceTextFormat: '{0}m'
+  showIndicator: 1
+  showOffscreenIndicator: 1
+  ignoreIndicatorRadius: 1
+  ignoreIndicatorHideDistance: 0
+  ignoreIndicatorScaling: 0
+  ignoreIndicatorFading: 0
+  useIndicatorDistanceText: 1
+  showOffscreenIndicatorDistance: 0
+  indicatorOnscreenDistanceTextFormat: '{0}m'
+  indicatorOffscreenDistanceTextFormat: '{0}'
+  hideInMinimap: 0
+  ignoreMinimapRadius: 0
+  ignoreMinimapScaling: 0
+  ignoreMinimapFading: 0
+  rotateWithGameObjectMM: 1
+  useMinimapHeightSystem: 1
+  OnElementReady:
+    m_PersistentCalls:
+      m_Calls: []
+  OnElementUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAppear:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDisappear:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnterRadius:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLeaveRadius:
+    m_PersistentCalls:
+      m_Calls: []
+  IsActive: 1
+  Radar: {fileID: 0}
+  CompassBar: {fileID: 0}
+  Indicator: {fileID: 0}
+  Minimap: {fileID: 0}
+  IsInRadarRadius: 0
+  IsInCompassBarRadius: 0
+  IsInIndicatorRadius: 0
+  IsInMinimapRadius: 0

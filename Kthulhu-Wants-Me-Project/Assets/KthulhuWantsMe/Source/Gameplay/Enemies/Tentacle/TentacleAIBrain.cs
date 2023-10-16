@@ -37,6 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private TentacleGrabAbility _tentacleGrabAbility;
         [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
         [SerializeField] private TentacleAggro _tentacleAggro;
+        [SerializeField] private TentacleChase _tentacleChase;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
         [SerializeField] private bool _specialTentacle;
@@ -70,8 +71,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             BlockProcessing = false;
         }
 
-        private void DecideStrategy() => 
+        private void DecideStrategy()
+        {
+            if (ChasePlayer())
+            {
+                bool respawnSuccess = _tentacleChase.TryRespawn();
+                
+                if(respawnSuccess)
+                    return;
+            }
+            
             DecideAttackStrategy();
+        }
 
         private void DecideAttackStrategy()
         {
@@ -104,6 +115,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void DecideRespawn()
+        {
+            _tentacleChase.TryRespawn();
         }
 
         private AttackDecision MakeAttackDecision()
@@ -143,7 +159,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private bool CanNotAttack() =>
             _tentacleGrabAbility.HoldsPlayer || _tentacleAttack.IsAttacking || _reconsiderationTime > 0 || Stunned;
 
+        private bool ChasePlayer() =>
+            _tentacleChase != null && _tentacleChase.CanChase();
 
-  
     }
 }

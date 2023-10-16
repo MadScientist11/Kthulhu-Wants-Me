@@ -40,19 +40,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         private IEnumerator ComboAttack()
         {
+            _followLogic.TryPredictTarget = false;
             _followLogic.FollowSpeed += _yithConfiguration.ComboFollowSpeedIncrement;
             _isAttacking = true;
 
-
+            Debug.Log("COmbo Attack");
             for (int i = 0; i < _comboCount; i++)
             {
                 PerformAttack();
                 _comboFeedback.PlayFeedbacks();
                 yield return new WaitForSeconds(_yithConfiguration.DelayBetweenComboAttacks);
             }
-     
+            
             
             _isAttacking = false;
+            _followLogic.TryPredictTarget = true;
             _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
             _followLogic.FollowSpeed -= _yithConfiguration.ComboFollowSpeedIncrement;
         }

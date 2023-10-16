@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             _portalFactory = portalFactory;
         }
         
-        public void Retreat()
+        public void Retreat(bool destroyObject, Action onRetreated = null)
         {
             StartCoroutine(DoRetreat());
         }

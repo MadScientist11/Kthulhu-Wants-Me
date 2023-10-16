@@ -28,6 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private PlayerAttack _playerAttack;
 
         private bool _blockMovement;
+        private bool _blockInputs;
         private Vector3 _lastLookDirection;
 
         private PlayerMovementController _movementController;
@@ -50,9 +51,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             if (CanMove())
             {
                 if (MovementInputDetected())
-                {
                     _playerAnimator.Move();
-                }
                 else
                     _playerAnimator.StopMoving();
 
@@ -69,6 +68,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _blockMovement = true;
             _movementController.ResetInputs();
             _coroutineRunner.ExecuteAfter(timeFor, () => _blockMovement = false);
+        }
+        
+        public void BlockInput()
+        {
+            _blockInputs = true;
+        }
+        
+        public void AllowInput()
+        {
+            _blockInputs = false;
         }
 
         public Vector3 FaceMouse()
@@ -94,6 +103,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void ProcessInput()
         {
+            if(_blockInputs)
+                return;
             //Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ();
             //movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
 
@@ -134,6 +145,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private bool MovementInputDetected()
         {
+            if (_blockInputs)
+                return false;
+            
             return _inputService.GameplayScenario.MovementInput.sqrMagnitude > 0.1f;
         }
 

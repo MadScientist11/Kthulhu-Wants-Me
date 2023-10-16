@@ -13,6 +13,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
     {
         BaseWindow OpenWindow(WindowId windowId);
         MiscUI MiscUI { get; }
+        PlayerHUD PlayerHUD { get; }
         void HideHUD();
         void ShowHUD();
     }
@@ -34,6 +35,19 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
                 return _miscUI;
             }
         }
+        public PlayerHUD PlayerHUD
+        {
+            get
+            {
+                if (_playerHUD == null)
+                {
+                    _playerHUD = _uiFactory.CreatePlayerHUD();
+                }
+
+                return _playerHUD;
+            }
+        }
+        
 
 
         private PlayerHUD _playerHUD;

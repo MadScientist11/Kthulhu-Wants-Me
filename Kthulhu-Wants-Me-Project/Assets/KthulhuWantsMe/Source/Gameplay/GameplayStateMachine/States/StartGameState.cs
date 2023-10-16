@@ -1,7 +1,10 @@
 ﻿using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -22,10 +25,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly ISceneDataProvider _sceneDataProvider;
         private readonly IUIService _uiService;
         private readonly ISceneLoader _sceneLoader;
+        private ThePlayer _player;
 
         public StartGameState(GameplayStateMachine gameplayStateMachine, IGameFactory gameFactory, IInputService inputService,
-            ISceneDataProvider sceneDataProvider, IUIService uiService, ISceneLoader sceneLoader)
+            ISceneDataProvider sceneDataProvider, IUIService uiService, ISceneLoader sceneLoader, ThePlayer player)
         {
+            _player = player;
             _sceneLoader = sceneLoader;
             _uiService = uiService;
             _sceneDataProvider = sceneDataProvider;
@@ -48,16 +53,21 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
 
             _uiService.ShowHUD();
-
             
-            
-            _gameplayStateMachine.SwitchState<WaveStartState>();
+            _player.Inventory.OnItemAdded += StartWaveOnWeaponEquip;
         }
 
         public void Exit()
         {
+            _player.Inventory.OnItemAdded -= StartWaveOnWeaponEquip;
         }
 
-      
+        private void StartWaveOnWeaponEquip(IPickable item)
+        {
+            if (item is WeaponItem weaponItem)
+            {
+                _gameplayStateMachine.SwitchState<WaveStartState>();
+            }
+        }
     }
 }

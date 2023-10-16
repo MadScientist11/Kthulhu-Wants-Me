@@ -19,5 +19,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public float AttackRadius;
         public float AttackEffectiveDistance;
         public float AttackCooldownTime;
+        
+        public float ChaseCooldown = 10;
+        public float ChaseAfterSeconds = 10;
     }
 }

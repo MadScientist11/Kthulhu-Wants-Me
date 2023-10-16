@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using UnityEngine;
 using VContainer;
 
@@ -9,19 +11,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 {
     public class MinionSpawn : MonoBehaviour, ISpawnBehaviour
     {
+        public bool Spawned { get; set; } = true;
+        public EnemySpawnerId SpawnedAt { get; set; }
+        
         [SerializeField] private float _height;
 
         private Vector3 _desiredPosition;
-        
+
         private IPortalFactory _portalFactory;
+
 
         [Inject]
         public void Construct(IPortalFactory portalFactory)
         {
             _portalFactory = portalFactory;
         }
-        
-        public void OnSpawn()
+
+        public void OnSpawn(Action onSpawned)
         {
             GetComponent<Collider>().enabled = false;
             GetComponent<IStoppable>().StopEntityLogic();

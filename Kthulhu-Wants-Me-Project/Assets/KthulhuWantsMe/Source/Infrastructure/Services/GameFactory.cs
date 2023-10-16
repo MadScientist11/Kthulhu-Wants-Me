@@ -65,10 +65,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         {
             GameObject enemy = CreateEnemy(position, rotation, enemyType);
 
-            if (enemy.TryGetComponent(out ISpawnBehaviour spawnBehaviour))
-            {
-                spawnBehaviour.OnSpawn();
-            }
+        
 
             return enemy;
         }

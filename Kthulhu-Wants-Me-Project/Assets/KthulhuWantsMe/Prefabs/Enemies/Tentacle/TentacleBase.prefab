@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 423395108823978285}
   - component: {fileID: 7442634767459381635}
   - component: {fileID: 2735146877405214494}
+  - component: {fileID: 8607472665572656946}
   - component: {fileID: -8978431778437181689}
   m_Layer: 10
   m_Name: TentacleBase
@@ -322,6 +323,7 @@ MonoBehaviour:
   _tentacleGrabAbility: {fileID: 3629999761114246035}
   _tentacleSpellCastingAbility: {fileID: 7743905234635742817}
   _tentacleAggro: {fileID: 423395108823978285}
+  _tentacleChase: {fileID: 8607472665572656946}
   _enemyStatsContainer: {fileID: 8187939092874492644}
   _specialTentacle: 0
 --- !u!114 &7893959025167172210
@@ -435,6 +437,18 @@ MonoBehaviour:
   _tentacleFacade: {fileID: 8662503218968821094}
   _retreatDuration: 2
   _height: 5
+--- !u!114 &8607472665572656946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2543864529464768167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d660254b74a4348a8c53499462fa0f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-8978431778437181689
 MonoBehaviour:
   m_ObjectHideFlags: 0

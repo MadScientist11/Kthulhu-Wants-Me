@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -16,29 +17,35 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerFacade _player;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private TentacleGrabAbilityResponse _grabAbilityResponse;
-        
+
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
-        
-        private IInputService _inputService;
-        private PlayerStats _playerStats;
-        private ICoroutineRunner _coroutineRunner;
 
         private float _nextDashTime;
+
+        private IInputService _inputService;
+        private PlayerStats _playerStats;
+        private ThePlayer _thePlayer;
         private PlayerConfiguration _playerConfig;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player, ICoroutineRunner coroutineRunner)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player)
         {
-            _coroutineRunner = coroutineRunner;
             _inputService = inputService;
             _playerStats = player.PlayerStats;
             _playerConfig = dataProvider.PlayerConfig;
+            _thePlayer = player;
             _inputService.GameplayScenario.Dash += PerformDash;
         }
 
         private void OnDestroy()
         {
             _inputService.GameplayScenario.Dash -= PerformDash;
+        }
+
+        private void OnDashEnd()
+        {
+            PlayerLocomotion.AllowInput();
+            _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
         }
 
         private void PerformDash()
@@ -52,10 +59,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void Dash()
         {
-            PlayerLocomotion.MovementController.DisableCollisionDetection();
+            PlayerLocomotion.BlockInput();
+            _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
+            
             _playerAnimator.PlayEvade();
             PlayerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfig.DashStrength);
-            _coroutineRunner.ExecuteAfter(1f, PlayerLocomotion.MovementController.EnableCollisionDetection);
         }
 
         private bool CanDash()
