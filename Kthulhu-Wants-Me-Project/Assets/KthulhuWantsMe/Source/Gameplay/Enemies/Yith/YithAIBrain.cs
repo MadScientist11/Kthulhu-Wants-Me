@@ -18,7 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
-        [SerializeField] private YithMovement _yithMovement;
+        [SerializeField] private FollowPlayer _followPlayerBehaviour;
 
         private float _attackDelayTime;
         private float _rageComboRandom;
@@ -62,7 +62,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void DecideMoveStrategy()
         {
-            _yithMovement.MoveToPlayer();
+            _followPlayerBehaviour.MoveToPlayer();
         }
         
         private void DecideAttackStrategy()

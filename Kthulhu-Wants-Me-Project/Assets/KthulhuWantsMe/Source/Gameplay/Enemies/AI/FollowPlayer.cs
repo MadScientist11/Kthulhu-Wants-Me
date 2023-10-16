@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -10,31 +11,31 @@ using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 {
-    public class YithMovement : MonoBehaviour
+    public class FollowPlayer : MonoBehaviour
     {
         [SerializeField] private MovementMotor _movementMotor;
 
         private NavMeshPath _navMeshPath;
         private Vector3 _lastNearPoint;
 
-        [MinMaxSlider(3, 12)]
-        [SerializeField] private Vector2 _minMaxTargetOffset = new(4, 8);
-        
+        [MinMaxSlider(3, 12)] [SerializeField] private Vector2 _minMaxTargetOffset = new(4, 8);
+
         [Tooltip("Apply offset to target, if distance to target is greater than the threshold")]
         [Range(3, 8)]
-        [SerializeField] private float _offsetMovementThreshold = 5f;
+        [SerializeField]
+        private float _offsetMovementThreshold = 5f;
 
         private Vector3 _playerTarget;
 
         private float _resetOffsetTimer;
         private const float ResetOffsetTime = 2f;
+        private const int TryFindNearPlayerPointMaxIterations = 500;
+        private int _maxIterations;
 
         private IInterceptionCompliant _interceptTarget;
 
-        [Range(-1f, 1f)] 
-        [SerializeField] private float _movementPredictionThreshold = 0;
-        [Range(0.25f, 2f)] 
-        [SerializeField] private float _movementPredictionTime = 1;
+        [Range(-1f, 1f)] [SerializeField] private float _movementPredictionThreshold = 0;
+        [Range(0.25f, 2f)] [SerializeField] private float _movementPredictionTime = 1;
 
         private int _pathfindingMethod;
 
@@ -104,7 +105,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                 return;
             }
 
-            float timeToPlayer = Vector3.Distance(_player.transform.position, transform.position) / _movementMotor.Agent.speed;
+            float timeToPlayer = Vector3.Distance(_player.transform.position, transform.position) /
+                                 _movementMotor.Agent.speed;
 
             if (timeToPlayer > _movementPredictionTime)
             {
@@ -126,6 +128,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         private Vector3 NearPlayerRandomPoint()
         {
+            if (_maxIterations > 500)
+                return Vector3.zero;
+
             bool pointFound = false;
 
             Vector3 result = Vector3.zero;
@@ -137,6 +142,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                 bool sampleSuccess =
                     NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, targetOffset, NavMesh.AllAreas);
 
+                _maxIterations++;
                 if (sampleSuccess)
                 {
                     _movementMotor.Agent.CalculatePath(hit.position, _navMeshPath);
@@ -146,8 +152,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                     {
                         result = hit.position;
                         pointFound = true;
+                        _maxIterations = 0;
+                        Debug.Log($"Switch pathfinding {_maxIterations}");
                     }
                 }
+
+                if (_maxIterations > 500)
+                    return Vector3.zero;
             }
 
             return result;
