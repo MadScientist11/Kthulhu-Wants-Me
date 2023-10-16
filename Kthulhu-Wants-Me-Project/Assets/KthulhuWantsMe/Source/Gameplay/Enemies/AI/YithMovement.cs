@@ -61,6 +61,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             }
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawSphere(_playerTarget, .5f);
+        }
+
         public void MoveToPlayer()
         {
             _playerTarget = _player.transform.position;
@@ -69,7 +74,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                 RandomOffsetPathfinding();
             else
                 InterceptionAverageVelocityBasedPathfinding();
-
 
             _movementMotor.MoveTo(_playerTarget);
         }
@@ -118,11 +122,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             {
                 _playerTarget = _player.transform.position;
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawSphere(_playerTarget, .5f);
         }
 
         private Vector3 NearPlayerRandomPoint()
