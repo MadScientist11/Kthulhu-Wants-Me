@@ -342,7 +342,7 @@ MonoBehaviour:
   _yithRageComboAbility: {fileID: 2838533250784125204}
   _followLogic: {fileID: 0}
   _enemyStatsContainer: {fileID: 8151728752701681097}
-  _yithMovement: {fileID: 4690465305620889120}
+  _followPlayerBehaviour: {fileID: 4690465305620889120}
 --- !u!114 &877950398925464152
 MonoBehaviour:
   m_ObjectHideFlags: 0

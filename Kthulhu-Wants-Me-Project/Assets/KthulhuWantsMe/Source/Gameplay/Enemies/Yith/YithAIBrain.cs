@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -8,10 +9,10 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
-    public class YithAIBrain : MonoBehaviour
+    public class YithAIBrain : MonoBehaviour, IEnemyAIBrain
     {
         public bool BlockProcessing { get; set; }
-        
+      
         [SerializeField] private YithHealth _yithHealth;
         [SerializeField] private YithAttack _yithAttack;
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
@@ -27,11 +28,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private const float ComboAttackReavaluationTime = 5f;
 
+        private AITask _currentAITask;
+        
         private PlayerFacade _player;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IRandomService randomService)
+        public void Construct(IGameFactory gameFactory, IAIService aiService, IRandomService randomService)
         {
+            _aiService = aiService;
             _player = gameFactory.Player;
             
             randomService.ProvideRandomValue(value => _rageComboRandom = value, ComboAttackReavaluationTime);
@@ -47,16 +51,43 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private void Update() => 
             DecideStrategy();
 
+        
+        public void AssignTask(AITask aiTask)
+        {
+            _currentAITask = aiTask;
+        }
+
         public void ResetState()
         {
         }
+
+        private float _behaviourReavaluationTime = 5f;
+        private float _behaviourReavaluationCooldown;
+        private IAIService _aiService;
 
         private void DecideStrategy()
         {
             //if(_yithHealth.IsDead || BlockProcessing)
             //    return;
+
+            _behaviourReavaluationCooldown -= Time.deltaTime;
+
+            if (_behaviourReavaluationCooldown <= 0)
+            {
+                _aiService.PickAIBehaviour(gameObject);
+                _behaviourReavaluationCooldown = .1f;
+            }
             
-            DecideMoveStrategy();
+            if (_currentAITask == AITask.FollowPlayer)
+            {
+                _followPlayerBehaviour.MoveToPlayer();
+            }
+            else
+            {
+                
+            }
+            
+            //DecideMoveStrategy();
             //DecideAttackStrategy();
         }
 
