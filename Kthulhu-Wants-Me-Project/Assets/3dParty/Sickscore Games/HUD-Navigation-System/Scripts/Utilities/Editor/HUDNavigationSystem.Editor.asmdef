@@ -1,8 +1,12 @@
 {
-    "name": "HUDNavigationSystem",
+    "name": "HUDNavigationSystem.Editor",
     "rootNamespace": "",
-    "references": [],
-    "includePlatforms": [],
+    "references": [
+        "GUID:8058ef950a17cee4588013289a70a273"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

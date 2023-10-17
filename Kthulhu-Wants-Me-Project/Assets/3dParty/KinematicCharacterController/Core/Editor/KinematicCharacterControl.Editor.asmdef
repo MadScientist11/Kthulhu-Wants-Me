@@ -1,8 +1,12 @@
 {
-    "name": "HUDNavigationSystem",
+    "name": "KinematicCharacterControl.Editor",
     "rootNamespace": "",
-    "references": [],
-    "includePlatforms": [],
+    "references": [
+        "GUID:5fc52a94575e82e45a040ce63eaa10ae"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

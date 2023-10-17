@@ -10,7 +10,6 @@ using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using UnityEditor.Compilation;
 using VContainer;
 using VContainer.Unity;
 

@@ -72,7 +72,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
         {
             gameObject.SetActive(false);
         }
-
+#if UNITY_EDITOR
         [Button]
         private void CollectPositionAndRotation()
         {
@@ -80,5 +80,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
             ItemData.ItemInHandRotation = transform.localRotation;
             EditorUtility.SetDirty(ItemData);
         }
+#endif
     }
 }

@@ -25,7 +25,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
         public List<PortalZone> PortalSpawnZones;
         public List<EnemySpawnZoneData> EnemySpawnZones;
 
-
+#if UNITY_EDITOR
         [Button]
         public void CollectInfoFromCurrentScene()
         {
@@ -42,8 +42,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Locations
                 Position = enemySp.Position,
                 Radius = enemySp.Radius,
             }).ToList();
-            
+
             EditorUtility.SetDirty(this);
         }
+#endif
     }
 }
