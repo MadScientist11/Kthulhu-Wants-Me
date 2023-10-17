@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
@@ -44,7 +45,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _followLogic.FollowSpeed += _yithConfiguration.ComboFollowSpeedIncrement;
             _isAttacking = true;
 
-            Debug.Log("COmbo Attack");
             for (int i = 0; i < _comboCount; i++)
             {
                 PerformAttack();
@@ -66,6 +66,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                     .75f, 
                     LayerMasks.PlayerMask, 
                     out IDamageable damageable))
+                return;
+            
+            if(!damageable.Transform.TryGetComponent(out PlayerFacade _))
                 return;
             
 

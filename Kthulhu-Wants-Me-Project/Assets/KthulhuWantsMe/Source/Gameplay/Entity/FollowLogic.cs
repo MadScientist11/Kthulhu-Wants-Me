@@ -15,7 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public bool TargetReached => DistanceToTarget <= _reachDistance;
 
         public float DistanceToTarget => Vector3.Distance(transform.position, _followTarget.position);
-        public bool TryPredictTarget { get; set; }
+        public bool TryPredictTarget { get; set; } = true;
 
         public float FollowSpeed
         {

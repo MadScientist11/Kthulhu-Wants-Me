@@ -94,7 +94,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _attackDelayTime -= Time.deltaTime;
 
         private void ResetAttackDelayCountdown() => 
-            _attackDelayTime = .25f;
+            _attackDelayTime = .75f;
 
         private bool AttackDelayCountdownIsUp() 
             => _attackDelayTime <= 0;
@@ -114,7 +114,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         private bool CanDoComboAttack()
         {
-            return _followLogic.DistanceToTarget is < 6f and > 4f && _yithRageComboAbility.CanComboAttack();
+            return _followLogic.DistanceToTarget is < 6f and > 4f && _yithRageComboAbility.CanComboAttack() &&
+                   NoObstaclesToPlayer();
+        }
+
+        private bool NoObstaclesToPlayer()
+        {
+            Vector3 directionToPlayer = (_player.transform.position - transform.position).normalized;
+            bool anyEnemiesInThePath = Physics.Raycast(transform.position, directionToPlayer, 100, LayerMasks.EnemyMask);
+            return !anyEnemiesInThePath;
         }
     }
 }
