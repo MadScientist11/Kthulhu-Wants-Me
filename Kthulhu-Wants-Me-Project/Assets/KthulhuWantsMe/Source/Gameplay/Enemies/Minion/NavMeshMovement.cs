@@ -36,19 +36,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Minion
 
         public void MoveTo(Vector3 destination)
         {
-            if(_navMeshAgent.enabled && _navMeshAgent.velocity == Vector3.zero)
+            if(_navMeshAgent.enabled)
                 _navMeshAgent.destination = destination;
         }
 
         public void HaltMovement()
         {
-            if(_navMeshAgent.enabled)
+            if(_navMeshAgent.enabled && !_navMeshAgent.isStopped)
                 _navMeshAgent.isStopped = true;
         }
 
         public void ResumeMovement()
         {
-            if(_navMeshAgent.enabled)
+            if(_navMeshAgent.enabled && _navMeshAgent.isStopped)
                 _navMeshAgent.isStopped = false;
         }
 

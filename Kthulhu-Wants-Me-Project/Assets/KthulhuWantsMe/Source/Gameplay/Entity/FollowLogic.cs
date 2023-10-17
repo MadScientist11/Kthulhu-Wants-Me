@@ -9,6 +9,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
     {
         Vector3 AverageVelocity { get; }
     }
+
     [RequireComponent(typeof(NavMeshMovement))]
     public class FollowLogic : MonoBehaviour
     {
@@ -22,30 +23,29 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             get => _movementMotor.MoveSpeed;
             set => _movementMotor.MoveSpeed = value;
         }
-        
+
         [SerializeField] private NavMeshMovement _movementMotor;
-        
+
         private Transform _followTarget;
         private IInterceptionCompliant _interceptTarget;
         private float _maxFollowDistance;
         private float _reachDistance;
-        
-        [Range(-1f, 1f)]
-        public float MovementPredictionThreshold = 0;
-        [Range(0.25f, 2f)]
-        public float MovementPredictionTime = 1;
 
-        private void OnValidate() => 
+        [Range(-1f, 1f)] public float MovementPredictionThreshold = 0;
+        [Range(0.25f, 2f)] public float MovementPredictionTime = 1;
+
+        private void OnValidate() =>
             _movementMotor = GetComponent<NavMeshMovement>();
 
         private void Update()
         {
-            if(!_movementMotor.Enabled)
+            if (!_movementMotor.Enabled)
                 return;
             
+
+
             if (_interceptTarget != null && TryPredictTarget)
             {
-
                 float timeToPlayer = Vector3.Distance(_followTarget.position, transform.position) /
                                      FollowSpeed;
 
@@ -65,20 +65,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 {
                     targetPosition = _followTarget.position;
                 }
+
                 _movementMotor.MoveTo(targetPosition);
             }
             else
             {
-                    _movementMotor.MoveTo(_followTarget.position);
-
+                _movementMotor.MoveTo(_followTarget.position);
             }
         }
 
         private void OnDrawGizmos()
         {
-            if(!Application.isPlaying)
+            if (!Application.isPlaying)
                 return;
-            
+
             float timeToPlayer = Vector3.Distance(_followTarget.position, transform.position) /
                                  FollowSpeed;
 
@@ -98,6 +98,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             {
                 targetPosition = _followTarget.position;
             }
+
             Gizmos.color = Color.green;
             Gizmos.DrawSphere(targetPosition, .3f);
         }
@@ -109,8 +110,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _maxFollowDistance = maxFollowDistance;
             SetFollowTarget(target);
             // SetStoppingDistance
-            
-            if(followOnStart)
+
+            if (followOnStart)
                 Follow();
             else
                 StopFollowing();
@@ -119,25 +120,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public void SetFollowTarget(Transform target)
         {
             _followTarget = target;
-            if(_followTarget.TryGetComponent(out IInterceptionCompliant interceptionCompliant))
+            if (_followTarget.TryGetComponent(out IInterceptionCompliant interceptionCompliant))
             {
                 _interceptTarget = interceptionCompliant;
             }
         }
 
-        public void Follow() => 
+        public void Follow() =>
             _movementMotor.ResumeMovement();
-        
-        public void StopFollowing() => 
+
+        public void StopFollowing() =>
             _movementMotor.HaltMovement();
 
         public void DisableMotor() =>
             _movementMotor.Disable();
-        
+
         public void EnableMotor() =>
             _movementMotor.Enable();
 
-            
+
         public bool CanFollow() => Vector3.Distance(transform.position, _followTarget.position) <= _maxFollowDistance;
     }
 }

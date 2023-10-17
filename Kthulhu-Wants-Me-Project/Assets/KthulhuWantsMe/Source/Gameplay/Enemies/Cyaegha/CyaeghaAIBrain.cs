@@ -58,9 +58,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private void DecideMoveStrategy()
         {
             if (ShouldFollow())
+            {
                 _followLogic.Follow();
+            }
             else
+            {
+                
                 _followLogic.StopFollowing();
+            }
         }
 
         private void DecideAttackStrategy()
