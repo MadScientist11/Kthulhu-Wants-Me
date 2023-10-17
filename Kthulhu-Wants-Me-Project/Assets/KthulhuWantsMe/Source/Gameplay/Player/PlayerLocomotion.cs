@@ -1,8 +1,6 @@
-using System;
 using Freya;
 using KinematicCharacterController;
-using KthulhuWantsMe.Source.Gameplay.Camera;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
+using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -35,7 +33,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private IInputService _inputService;
         private PlayerConfiguration _playerConfig;
         private ICoroutineRunner _coroutineRunner;
-        private CinemachineCameraPanning _cameraPanningLogic;
 
         [Inject]
         public void Construct(IInputService inputService, IDataProvider dataProvider, ICoroutineRunner coroutineRunner)
