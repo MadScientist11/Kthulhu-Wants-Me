@@ -15,10 +15,11 @@ GameObject:
   - component: {fileID: -6736657406163995852}
   - component: {fileID: -5520324125612971702}
   - component: {fileID: 1528546947026360114}
+  - component: {fileID: 2031074355959050545}
+  - component: {fileID: 6835703763880801073}
   - component: {fileID: 1805378254231291091}
   - component: {fileID: 6832438006561834181}
-  - component: {fileID: 4389780604326016033}
-  - component: {fileID: 5283784153911277938}
+  - component: {fileID: 4185908553111193425}
   - component: {fileID: -783408374575774920}
   - component: {fileID: -4650963413232870384}
   m_Layer: 10
@@ -107,7 +108,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1.5
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cyaeghaAIBrain: {fileID: 1528546947026360114}
-  _followLogic: {fileID: 4389780604326016033}
+  _movementMotor: {fileID: 4185908553111193425}
 --- !u!114 &1528546947026360114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,10 +154,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77509648eedfce74fa50c95477a3f977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyStatsContainer: {fileID: -6736657406163995852}
   _cyaeghaHealth: {fileID: 1805378254231291091}
   _cyaeghaAttack: {fileID: 6832438006561834181}
-  _followLogic: {fileID: 4389780604326016033}
-  _enemyStatsContainer: {fileID: -6736657406163995852}
+  _patrolBehaviour: {fileID: 6835703763880801073}
+  _followPlayerBehaviour: {fileID: 2031074355959050545}
+--- !u!114 &2031074355959050545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900409656979045455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2abef5108240bb9b30a781d7e27066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementMotor: {fileID: 4185908553111193425}
+  _minMaxTargetOffset: {x: 4, y: 8}
+  _offsetMovementThreshold: 5
+  _movementPredictionThreshold: 0
+  _movementPredictionTime: 1
+  _reachDistance: 3
+--- !u!114 &6835703763880801073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900409656979045455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d32bfd7be0c9147994fe702ec04048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementMotor: {fileID: 4185908553111193425}
 --- !u!114 &1805378254231291091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +205,7 @@ MonoBehaviour:
   enemyStatsContainer: {fileID: -6736657406163995852}
   _collider: {fileID: 4302006736190205134}
   _hitFeedbacks: {fileID: 5877846525254510561}
-  _movementMotor: {fileID: 5283784153911277938}
+  _movementMotor: {fileID: 4185908553111193425}
   _knockbackCurve:
     serializedVersion: 2
     m_Curve:
@@ -667,7 +700,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _enemyStatsContainer: {fileID: -6736657406163995852}
   _cyaeghaNavMesh: {fileID: 2074288089250755570}
---- !u!114 &4389780604326016033
+--- !u!114 &4185908553111193425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -676,22 +709,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3900409656979045455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 198e93f86ecb4c96b1fc67a6109d8846, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movementMotor: {fileID: 5283784153911277938}
-  MovementPredictionThreshold: 0.33
-  MovementPredictionTime: 1.653
---- !u!114 &5283784153911277938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3900409656979045455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 006f8d89dd2d43489e31dbe3174700df, type: 3}
+  m_Script: {fileID: 11500000, guid: 46a08d91186d4e90a067fcebeaad1537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 2074288089250755570}

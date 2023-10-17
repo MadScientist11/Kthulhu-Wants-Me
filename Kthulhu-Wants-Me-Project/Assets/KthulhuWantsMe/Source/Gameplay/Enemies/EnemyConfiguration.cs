@@ -13,6 +13,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public GameObject Prefab;
         public Dictionary<StatType, float> BaseStats = new();
         public EnemyScalingSO EnemyScaling;
+        
+        public float Knockback = 10;
+        public float KnockbackTime = .25f;
+
 
         public bool IsElite()
         {

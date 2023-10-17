@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
     public class CyaeghaFacade : MonoBehaviour, IStateResetter, IStoppable
     {
         [SerializeField] private CyaeghaAIBrain _cyaeghaAIBrain;
-        [SerializeField] private FollowLogic _followLogic;
+        [SerializeField] private MovementMotor _movementMotor;
         
         public void ResetState()
         {
@@ -27,13 +28,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         public void StopEntityLogic()
         {
-            _followLogic.DisableMotor();
+            _movementMotor.Disable();
             BlockAIProcessing();
         }
 
         public void ResumeEntityLogic()
         {
-            _followLogic.EnableMotor();
+            _movementMotor.Enable();
             ResumeAIProcessing();
         }
 

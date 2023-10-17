@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -15,14 +16,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private Collider _collider;
-        [SerializeField] private NavMeshMovement _movementMotor;
+        [SerializeField] private MovementMotor _movementMotor;
         [SerializeField] private MMFeedbacks _hitFeedbacks;
+
+        private YithConfiguration _yithConfiguration;
         
         private void Start()
         {
             Revive();
             TookDamage += OnTookDamage;
             Died += HandleDeath;
+            _yithConfiguration = (YithConfiguration)enemyStatsContainer.Config;
         }
 
         private void OnDestroy()
@@ -36,7 +40,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if (CurrentHealth <= 0)
                 return;
             
-            StartCoroutine(DoKnockback());
+            _movementMotor.AddVelocity(-transform.forward * _yithConfiguration.Knockback, _yithConfiguration.KnockbackTime);
             _hitFeedbacks?.PlayFeedbacks();
         }
 
@@ -45,24 +49,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             StartCoroutine(Death());
         }
 
-        private IEnumerator DoKnockback()
-        {
-            _movementMotor.Velocity = -transform.forward * 5f;
-            yield return new WaitForSeconds(.5f);
-            //Vector3 jumpStartPos = transform.position;
-            //Vector3 dest = transform.position - transform.forward * 1.5f;
-
-            //for (float t = 0; t < 1; t += Time.deltaTime * 2f)
-            //{
-            //    transform.position = Vector3.Lerp(jumpStartPos, dest, _knockbackCurve.Evaluate(t));
-            //    yield return null;
-            //}
-            //_movementMotor.enabled = true;
-        }
-
         private IEnumerator Death()
         {
-            _movementMotor.Velocity = -transform.forward * 15f;
+            //_movementMotor.Velocity = -transform.forward * 15f;
             _collider.enabled = false;
             yield return new WaitForSeconds(.2f);
             GetComponent<IStoppable>().StopEntityLogic();

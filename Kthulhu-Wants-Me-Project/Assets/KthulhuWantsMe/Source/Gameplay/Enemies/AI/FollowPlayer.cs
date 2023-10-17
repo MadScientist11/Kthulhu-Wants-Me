@@ -13,6 +13,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 {
     public class FollowPlayer : MonoBehaviour
     {
+        public bool PlayerReached => DistanceToPlayer <= _reachDistance;
+
+        public float DistanceToPlayer => Vector3.Distance(transform.position, _player.transform.position);
+        
         [SerializeField] private MovementMotor _movementMotor;
 
         private NavMeshPath _navMeshPath;
@@ -36,6 +40,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         [Range(-1f, 1f)] [SerializeField] private float _movementPredictionThreshold = 0;
         [Range(0.25f, 2f)] [SerializeField] private float _movementPredictionTime = 1;
+        [Range(0f, 5f)] [SerializeField] private float _reachDistance = 3f;
 
         private int _pathfindingMethod;
 
@@ -51,6 +56,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         {
             _navMeshPath = new();
             _movementMotor.Agent.speed = Random.Range(3f, 4f);
+            _movementMotor.Agent.stoppingDistance = _reachDistance;
             _pathfindingMethod = Random.Range(0, 2);
         }
 
@@ -69,6 +75,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         public void MoveToPlayer()
         {
+            if(PlayerReached)
+                return;
+            
             _playerTarget = _player.transform.position;
 
             if (_pathfindingMethod == 0)

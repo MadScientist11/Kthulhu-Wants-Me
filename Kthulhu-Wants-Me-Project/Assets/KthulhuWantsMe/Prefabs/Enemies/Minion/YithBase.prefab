@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 3944748895859747068}
   - component: {fileID: 877950398925464152}
   - component: {fileID: 4690465305620889120}
+  - component: {fileID: 812336141162488048}
   - component: {fileID: 855018551297982499}
   - component: {fileID: 6624409593950422001}
   - component: {fileID: 2838533250784125204}
@@ -324,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _yithAIBrain: {fileID: 3944748895859747068}
-  _followLogic: {fileID: 0}
+  _movementMotor: {fileID: 855018551297982499}
 --- !u!114 &3944748895859747068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,9 +341,9 @@ MonoBehaviour:
   _yithHealth: {fileID: 877950398925464152}
   _yithAttack: {fileID: 6624409593950422001}
   _yithRageComboAbility: {fileID: 2838533250784125204}
-  _followLogic: {fileID: 0}
   _enemyStatsContainer: {fileID: 8151728752701681097}
   _followPlayerBehaviour: {fileID: 4690465305620889120}
+  _patrolBehaviour: {fileID: 812336141162488048}
 --- !u!114 &877950398925464152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStatsContainer: {fileID: 8151728752701681097}
   _collider: {fileID: 9033666309106188953}
-  _movementMotor: {fileID: 0}
+  _movementMotor: {fileID: 855018551297982499}
   _hitFeedbacks: {fileID: 7172276037332111135}
 --- !u!114 &4690465305620889120
 MonoBehaviour:
@@ -376,6 +377,20 @@ MonoBehaviour:
   _offsetMovementThreshold: 5
   _movementPredictionThreshold: 0.3
   _movementPredictionTime: 1
+  _reachDistance: 3
+--- !u!114 &812336141162488048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590797425616401305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2d32bfd7be0c9147994fe702ec04048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementMotor: {fileID: 855018551297982499}
 --- !u!114 &855018551297982499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,7 +411,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1590797425616401305}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80abf785af314970a47977844f87aba4, type: 3}
   m_Name: 

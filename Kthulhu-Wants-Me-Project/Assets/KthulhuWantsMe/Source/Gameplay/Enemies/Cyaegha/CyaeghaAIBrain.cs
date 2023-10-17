@@ -1,3 +1,4 @@
+using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -7,54 +8,47 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
-    public enum AITask
-    {
-        None = 0,
-        FollowPlayer = 1,
-    }
     public interface IEnemyAIBrain
     {
         bool BlockProcessing { get; }
-        void AssignTask(AITask aiTask);
     }
 
     public class CyaeghaAIBrain : MonoBehaviour, IEnemyAIBrain
     {
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
         [SerializeField] private CyaeghaHealth _cyaeghaHealth;
         [SerializeField] private CyaeghaAttack _cyaeghaAttack;
-        [SerializeField] private FollowLogic _followLogic;
-        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
+
+        [SerializeField] private Patrol _patrolBehaviour;
+        [SerializeField] private FollowPlayer _followPlayerBehaviour;
+        
 
         public bool BlockProcessing { get; set; }
         
 
         private float _attackDelayTime;
 
-        private PlayerFacade _player;
         private CyaeghaConfiguration _cyaeghaConfiguration;
+        
+        private PlayerFacade _player;
+        private IAIService _aiService;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IGameFactory gameFactory, IAIService aiService)
         {
+            _aiService = aiService;
             _player = gameFactory.Player;
         }
 
         private void Start()
         {
-            _followLogic.Init(_player.transform, Mathf.Infinity, 3f);
             _cyaeghaConfiguration = (CyaeghaConfiguration)_enemyStatsContainer.Config;
-            _followLogic.FollowSpeed = Random.Range((int)_cyaeghaConfiguration.MoveSpeed.x, (int)_cyaeghaConfiguration.MoveSpeed.y);
             _cyaeghaHealth.Revive();
         }
 
         private void Update() =>
             DecideStrategy();
 
-        
-        public void AssignTask(AITask aiTask)
-        {
-            
-        }
         
         public void ResetAI()
         {
@@ -71,17 +65,28 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private void DecideMoveStrategy()
         {
-            if (ShouldFollow())
-                _followLogic.Follow();
+            if (Vector3.Distance(transform.position, _player.transform.position) < 4)
+            {
+                _aiService.AddToChase(gameObject);
+            }
+
+            if (_aiService.AllowedChasingPlayer(gameObject))
+            {
+                _patrolBehaviour.CancelPatrol();
+                _followPlayerBehaviour.MoveToPlayer();
+            }
             else
-                _followLogic.StopFollowing();
+            {
+                _patrolBehaviour.PatrolArea();
+            }
+
         }
 
         private void DecideAttackStrategy()
         {
-            if (_followLogic.TargetReached)
+           //if (_followLogic.TargetReached)
                 UpdateAttackDelayCountdown();
-            else
+           // else
                 ResetAttackDelayCountdown();
 
 
@@ -101,13 +106,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private bool AttackDelayCountdownIsUp()
             => _attackDelayTime <= 0;
 
-        private bool ShouldFollow() =>
-            _followLogic.CanFollow() && !_followLogic.TargetReached;
+
 
         private bool CanDoBasicAttack()
         {
-            return _followLogic.TargetReached
-                   && _cyaeghaAttack.CanAttack()
+            return //_followLogic.TargetReached
+                    _cyaeghaAttack.CanAttack()
                    && AttackDelayCountdownIsUp();
         }
     }

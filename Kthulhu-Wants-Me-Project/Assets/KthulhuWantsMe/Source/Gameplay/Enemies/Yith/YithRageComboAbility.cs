@@ -35,6 +35,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         public void PerformCombo()
         {
+            return;
             StartCoroutine(ComboAttack());
         }
         
@@ -44,7 +45,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _followLogic.FollowSpeed += _yithConfiguration.ComboFollowSpeedIncrement;
             _isAttacking = true;
 
-            Debug.Log("COmbo Attack");
             for (int i = 0; i < _comboCount; i++)
             {
                 PerformAttack();
