@@ -69,10 +69,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _movementController.ResetInputs();
             _coroutineRunner.ExecuteAfter(timeFor, () => _blockMovement = false);
         }
+
+        public void BlockInput(float timeFor)
+        {
+            BlockInput();
+            _coroutineRunner.ExecuteAfter(timeFor, () => _blockInputs = false);
+        }
         
         public void BlockInput()
         {
             _blockInputs = true;
+            _movementController.ResetInputs();
         }
         
         public void AllowInput()
