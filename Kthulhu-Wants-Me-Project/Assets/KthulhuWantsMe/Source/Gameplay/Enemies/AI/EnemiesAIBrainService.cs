@@ -54,9 +54,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             }
         }
         
-        // Construct closest enemies array, if one of theem is enemyai than make them follow player, if not make them scatter or roam around
-
-
         public bool AllowedChasingPlayer(GameObject enemy)
         {
             return _chasingPlayerEnemies.Contains(enemy);
@@ -67,7 +64,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             if(_chasingPlayerEnemies.Contains(enemy))
                 return;
             _chasingPlayerEnemies.RemoveAll(item => item == null);
-
             
 
             GameObject furthestEnemy = _chasingPlayerEnemies.OrderBy(enemyHealth =>

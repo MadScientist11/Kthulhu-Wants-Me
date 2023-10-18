@@ -73,20 +73,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             if (_aiService.AllowedChasingPlayer(gameObject))
             {
                 _patrolBehaviour.CancelPatrol();
-                _followPlayerBehaviour.MoveToPlayer();
+                _followPlayerBehaviour.MoveToPlayer(_aiService.EnemiesCount < 10 ? 1 : -1);
             }
             else
             {
                 _patrolBehaviour.PatrolArea();
             }
-
         }
 
         private void DecideAttackStrategy()
         {
-           //if (_followLogic.TargetReached)
+           if (_followPlayerBehaviour.PlayerReached)
                 UpdateAttackDelayCountdown();
-           // else
+           else
                 ResetAttackDelayCountdown();
 
 

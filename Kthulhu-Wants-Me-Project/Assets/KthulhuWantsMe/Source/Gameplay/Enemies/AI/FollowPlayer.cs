@@ -80,6 +80,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             if (PlayerReached)
             {
                 FaceTarget(_playerTarget);
+                _movementMotor.MoveTo(_playerTarget);
                 return;
             }
 
@@ -87,7 +88,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             {
                 UpdateTarget(pathfindingMethod);
             }
-            
 
             _movementMotor.MoveTo(_playerTarget);
         }
