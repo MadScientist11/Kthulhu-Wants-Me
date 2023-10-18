@@ -108,7 +108,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _playerAnimator.PlayImpact();
             _playerAttack.ResetAttackState();
-            _playerLocomotion.BlockInput(.5f);
+            _playerLocomotion.BlockInputAndResetPrevious(.5f);
             AddKnockback(damageProvider.DamageDealer);
             _movementController.KillVelocity();
         }
