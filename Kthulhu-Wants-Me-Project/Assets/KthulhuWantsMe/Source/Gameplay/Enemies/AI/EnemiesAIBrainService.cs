@@ -12,12 +12,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
     
     public interface IAIService
     {
+        int EnemiesCount { get; }
         bool AllowedChasingPlayer(GameObject enemy);
         void AddToChase(GameObject enemy);
     }
 
     public class EnemiesAIBrainService : IAIService, ITickable
     {
+        public int EnemiesCount
+        {
+            get
+            {
+                return _waveSystemDirector.CurrentWaveState.AliveEnemies.Count;
+            }
+        }
+
         private List<GameObject> _chasingPlayerEnemies = new List<GameObject>(15);
         
         private IGameFactory _gameFactory;
@@ -46,6 +55,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         }
         
         // Construct closest enemies array, if one of theem is enemyai than make them follow player, if not make them scatter or roam around
+
 
         public bool AllowedChasingPlayer(GameObject enemy)
         {

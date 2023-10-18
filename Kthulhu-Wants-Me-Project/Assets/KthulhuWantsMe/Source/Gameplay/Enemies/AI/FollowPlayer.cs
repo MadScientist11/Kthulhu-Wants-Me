@@ -73,7 +73,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             Gizmos.DrawSphere(_playerTarget, .5f);
         }
 
-        public void MoveToPlayer()
+        public void MoveToPlayer(int pathfindingMethod = -1)
         {
             _playerTarget = _player.transform.position;
 
@@ -83,11 +83,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                 return;
             }
 
-
-            if (_pathfindingMethod == 0)
-                RandomOffsetPathfinding();
-            else
-                InterceptionAverageVelocityBasedPathfinding();
+            if (DistanceToPlayer >= _reachDistance)
+            {
+                UpdateTarget(pathfindingMethod);
+            }
+            
 
             _movementMotor.MoveTo(_playerTarget);
         }
@@ -98,6 +98,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 3);
+        }
+
+        private void UpdateTarget(int selectedPathfinding)
+        {
+            if (selectedPathfinding != -1)
+            {
+                SelectPathfinding(selectedPathfinding);
+                return;
+            }
+            SelectPathfinding(_pathfindingMethod);
+        }
+
+        private void SelectPathfinding(int method)
+        {
+            if (method == 0)
+                RandomOffsetPathfinding();
+            else
+                InterceptionAverageVelocityBasedPathfinding();
         }
 
         private void RandomOffsetPathfinding()

@@ -65,6 +65,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void DecideMoveStrategy()
         {
+            if (_yithRageComboAbility.InProcess)
+            {
+                _followPlayerBehaviour.MoveToPlayer();
+                return;
+            }
+            
             if (Vector3.Distance(transform.position, _player.transform.position) < 4) // detect player distance
             {
                 _aiService.AddToChase(gameObject);
@@ -73,7 +79,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if (_aiService.AllowedChasingPlayer(gameObject))
             {
                 _patrolBehaviour.CancelPatrol();
-                _followPlayerBehaviour.MoveToPlayer();
+                _followPlayerBehaviour.MoveToPlayer(_aiService.EnemiesCount < 10 ? 1 : -1);
             }
             else
             {
@@ -92,10 +98,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 ResetAttackDelayCountdown();
 
 
-            //if (ComboAttackConditionsFulfilled())
-            //{
-            //    _yithRageComboAbility.PerformCombo();
-            //}
+            if (ComboAttackConditionsFulfilled())
+            {
+                _yithRageComboAbility.PerformCombo();
+                return;
+            }
 
             if (CanDoBasicAttack())
             {

@@ -13,7 +13,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public bool InProcess => _isAttacking;
         
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
-        [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private MMFeedbacks _comboFeedback;
 
         [SerializeField] private int _comboCount;
@@ -35,28 +34,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         public void PerformCombo()
         {
-            return;
             StartCoroutine(ComboAttack());
         }
         
         private IEnumerator ComboAttack()
         {
-            _followLogic.TryPredictTarget = false;
-            _followLogic.FollowSpeed += _yithConfiguration.ComboFollowSpeedIncrement;
+            
             _isAttacking = true;
 
             for (int i = 0; i < _comboCount; i++)
             {
                 PerformAttack();
-                _comboFeedback.PlayFeedbacks();
                 yield return new WaitForSeconds(_yithConfiguration.DelayBetweenComboAttacks);
             }
             
             
             _isAttacking = false;
-            _followLogic.TryPredictTarget = true;
             _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
-            _followLogic.FollowSpeed -= _yithConfiguration.ComboFollowSpeedIncrement;
         }
 
         private void PerformAttack()
@@ -70,13 +64,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             
 
             damageable.TakeDamage(10);
+            _comboFeedback.PlayFeedbacks();
         }
         
         public bool CanComboAttack()
         {
             return !_isAttacking && _comboAttackCooldown <= 0f;
         }
-
 
         private Vector3 AttackStartPoint()
         {
