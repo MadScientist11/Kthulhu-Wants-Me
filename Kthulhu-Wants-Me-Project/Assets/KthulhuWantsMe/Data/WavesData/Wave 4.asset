@@ -25,12 +25,6 @@ MonoBehaviour:
       - EnemyType: 300
         Quantity: 1
         SpawnAt: 2
-      - EnemyType: 4
-        Quantity: 4
-        SpawnAt: 0
-      - EnemyType: 3
-        Quantity: 2
-        SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 5
     - EnemyPack:
@@ -41,7 +35,7 @@ MonoBehaviour:
         Quantity: 2
         SpawnAt: 0
       WaitForBatchClearance: 0
-      NextBatchDelay: 5
+      NextBatchDelay: 10
     - EnemyPack:
       - EnemyType: 4
         Quantity: 4
@@ -50,7 +44,7 @@ MonoBehaviour:
         Quantity: 2
         SpawnAt: 0
       WaitForBatchClearance: 0
-      NextBatchDelay: 5
+      NextBatchDelay: 15
     - EnemyPack:
       - EnemyType: 4
         Quantity: 4
@@ -59,7 +53,7 @@ MonoBehaviour:
         Quantity: 2
         SpawnAt: 0
       WaitForBatchClearance: 0
-      NextBatchDelay: 5
+      NextBatchDelay: 20
     - EnemyPack:
       - EnemyType: 4
         Quantity: 4
@@ -70,6 +64,8 @@ MonoBehaviour:
       WaitForBatchClearance: 0
       NextBatchDelay: 5
     TimeConstraint: 60
+    SpawnRandomEnemyEverySeconds: 3
+    SpawnedEnemiesCap: 25
     UpgradeRewards:
     - UpgradeTitle: Increase Max Health by +{0}
       UpgradeText: Increase Max Health by +{0}
