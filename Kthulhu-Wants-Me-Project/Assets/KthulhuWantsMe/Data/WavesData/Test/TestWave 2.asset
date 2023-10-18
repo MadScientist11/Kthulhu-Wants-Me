@@ -16,12 +16,18 @@ MonoBehaviour:
     WaveObjective: 0
     Batches:
     - EnemyPack:
-      - EnemyType: 4
-        Quantity: 5
+      - EnemyType: 3
+        Quantity: 30
         SpawnAt: 0
       WaitForBatchClearance: 0
-      NextBatchDelay: 0
+      NextBatchDelay: 3
     TimeConstraint: 299
     SpawnRandomEnemyEverySeconds: 3
     SpawnedEnemiesCap: 5
-    UpgradeRewards: []
+    UpgradeRewards:
+    - UpgradeTitle: 111
+      UpgradeText: 11111
+      UpgradeType: 0
+      StatType: 0
+      UpgradeValueType: 0
+      Value: 11

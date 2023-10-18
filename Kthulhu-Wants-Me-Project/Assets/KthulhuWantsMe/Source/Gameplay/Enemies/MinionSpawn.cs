@@ -29,7 +29,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
         public void OnSpawn(Action onSpawned)
         {
-            GetComponent<Collider>().enabled = false;
             GetComponent<IStoppable>().StopEntityLogic();
             _desiredPosition = transform.position;
             transform.position = transform.position.AddY(-_height);
@@ -38,6 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
         private IEnumerator DoSpawnEnemy()
         {
+            GetComponent<Collider>().enabled = false;
             Portal portal = _portalFactory.GetOrCreatePortal(_desiredPosition, Quaternion.identity, EnemyType.Cyeagha);
             yield return new WaitForSeconds(2f);
             transform.position = _desiredPosition;

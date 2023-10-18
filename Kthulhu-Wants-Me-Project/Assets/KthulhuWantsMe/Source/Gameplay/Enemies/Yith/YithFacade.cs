@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
@@ -6,7 +7,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
     public class YithFacade : MonoBehaviour, IStoppable, IStateResetter
     {
         [SerializeField] private YithAIBrain _yithAIBrain;
-        [SerializeField] private FollowLogic _followLogic;
+        [SerializeField] private MovementMotor _movementMotor;
         
         public void ResetState()
         {
@@ -15,13 +16,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         public void StopEntityLogic()
         {
-            _followLogic.DisableMotor();
+            _movementMotor.Disable();
             BlockAIProcessing();
         }
 
         public void ResumeEntityLogic()
         {
-            _followLogic.EnableMotor();
+            _movementMotor.Enable();
             ResumeAIProcessing();
         }
 

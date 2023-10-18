@@ -15,7 +15,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private MMFeedbacks _attackFeedback;
-        [SerializeField] private FollowLogic _followLogic;
 
         private float _attackCooldown;
         private bool _isAttacking;
@@ -45,6 +44,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _isAttacking = true;
 
             ApplyDamage(to: damageable);
+            _attackFeedback?.PlayFeedbacks();
             
             _isAttacking = false;
             _attackCooldown = 1f;

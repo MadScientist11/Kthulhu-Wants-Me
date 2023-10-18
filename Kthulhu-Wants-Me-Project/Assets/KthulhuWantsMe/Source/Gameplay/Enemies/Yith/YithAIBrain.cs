@@ -1,21 +1,23 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Player;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
-    public class YithAIBrain : MonoBehaviour
+    public class YithAIBrain : MonoBehaviour, IEnemyAIBrain
     {
         public bool BlockProcessing { get; set; }
-        
+      
         [SerializeField] private YithHealth _yithHealth;
         [SerializeField] private YithAttack _yithAttack;
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
-        [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
+
+        [SerializeField] private FollowPlayer _followPlayerBehaviour;
+        [SerializeField] private Patrol _patrolBehaviour;
 
         private float _attackDelayTime;
         private float _rageComboRandom;
@@ -25,10 +27,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private const float ComboAttackReavaluationTime = 5f;
 
         private PlayerFacade _player;
+        private IAIService _aiService;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IRandomService randomService)
+        public void Construct(IGameFactory gameFactory, IAIService aiService, IRandomService randomService)
         {
+            _aiService = aiService;
             _player = gameFactory.Player;
             
             randomService.ProvideRandomValue(value => _rageComboRandom = value, ComboAttackReavaluationTime);
@@ -36,9 +40,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private void Start()
         {
-            _followLogic.Init(_player.transform, Mathf.Infinity, 2.5f);
             _yithConfiguration = (YithConfiguration)_enemyStatsContainer.Config;
-            _followLogic.FollowSpeed = Random.Range((int)_yithConfiguration.MoveSpeed.x, (int)_yithConfiguration.MoveSpeed.y);
+            
         }
 
         private void Update() => 
@@ -52,17 +55,33 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             if(_yithHealth.IsDead || BlockProcessing)
                 return;
-            
+
             DecideMoveStrategy();
             DecideAttackStrategy();
         }
 
         private void DecideMoveStrategy()
         {
-            if (ShouldFollow() || _yithRageComboAbility.InProcess)
-                _followLogic.Follow();
+            if (_yithRageComboAbility.InProcess)
+            {
+                _followPlayerBehaviour.MoveToPlayer();
+                return;
+            }
+            
+            if (Vector3.Distance(transform.position, _player.transform.position) < 4) // detect player distance
+            {
+                _aiService.AddToChase(gameObject);
+            }
+
+            if (_aiService.AllowedChasingPlayer(gameObject))
+            {
+                _patrolBehaviour.CancelPatrol();
+                _followPlayerBehaviour.MoveToPlayer(_aiService.EnemiesCount < 10 ? 1 : -1);
+            }
             else
-                _followLogic.StopFollowing();
+            {
+                _patrolBehaviour.PatrolArea();
+            }
         }
         
         private void DecideAttackStrategy()
@@ -70,7 +89,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if(_yithRageComboAbility.InProcess)
                 return;
             
-            if(_followLogic.TargetReached)
+            if(_followPlayerBehaviour.PlayerReached)
                 UpdateAttackDelayCountdown();
             else
                 ResetAttackDelayCountdown();
@@ -79,6 +98,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if (ComboAttackConditionsFulfilled())
             {
                 _yithRageComboAbility.PerformCombo();
+                return;
             }
 
             if (CanDoBasicAttack())
@@ -88,23 +108,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             }
         }
 
-   
-
         private void UpdateAttackDelayCountdown() => 
             _attackDelayTime -= Time.deltaTime;
 
         private void ResetAttackDelayCountdown() => 
-            _attackDelayTime = .75f;
+            _attackDelayTime = 1f;
 
         private bool AttackDelayCountdownIsUp() 
             => _attackDelayTime <= 0;
 
-        private bool ShouldFollow() => 
-            _followLogic.CanFollow() && !_followLogic.TargetReached;
-
         private bool CanDoBasicAttack()
         {
-            return _followLogic.TargetReached
+            return _followPlayerBehaviour.PlayerReached
                    && _yithAttack.CanAttack() 
                    && AttackDelayCountdownIsUp();
         }
@@ -114,15 +129,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         private bool CanDoComboAttack()
         {
-            return _followLogic.DistanceToTarget is < 6f and > 4f && _yithRageComboAbility.CanComboAttack() &&
-                   NoObstaclesToPlayer();
-        }
-
-        private bool NoObstaclesToPlayer()
-        {
-            Vector3 directionToPlayer = (_player.transform.position - transform.position).normalized;
-            bool anyEnemiesInThePath = Physics.Raycast(transform.position, directionToPlayer, 100, LayerMasks.EnemyMask);
-            return !anyEnemiesInThePath;
+            return _followPlayerBehaviour.DistanceToPlayer is < 6f and > 4f && _yithRageComboAbility.CanComboAttack();
         }
     }
 }

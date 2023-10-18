@@ -77,5 +77,5 @@ MonoBehaviour:
   ComboAttackCooldown: 10
   DelayBetweenComboAttacks: 0.75
   ComboFollowSpeedIncrement: 6
-  MoveSpeed: {x: 5, y: 6}
-  AttackRadius: 0.75
+  MoveSpeed: {x: 6, y: 10}
+  AttackRadius: 1.25
