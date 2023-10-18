@@ -16,7 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         public bool PlayerReached => DistanceToPlayer <= _reachDistance;
 
         public float DistanceToPlayer => Vector3.Distance(transform.position, _player.transform.position);
-        
+
         [SerializeField] private MovementMotor _movementMotor;
 
         private NavMeshPath _navMeshPath;
@@ -75,10 +75,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         public void MoveToPlayer()
         {
-            if(PlayerReached)
-                return;
-            
             _playerTarget = _player.transform.position;
+
+            if (PlayerReached)
+            {
+                FaceTarget(_playerTarget);
+                return;
+            }
+
 
             if (_pathfindingMethod == 0)
                 RandomOffsetPathfinding();
@@ -86,6 +90,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                 InterceptionAverageVelocityBasedPathfinding();
 
             _movementMotor.MoveTo(_playerTarget);
+        }
+
+        private void FaceTarget(Vector3 destination)
+        {
+            Vector3 lookPos = destination - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 3);
         }
 
         private void RandomOffsetPathfinding()
