@@ -521,6 +521,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: YithBase
       objectReference: {fileID: 0}
+    - target: {fileID: 1590797425616401305, guid: 5b14604e5d0c952468ee301feeffa770,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5757831141683792899, guid: 5b14604e5d0c952468ee301feeffa770,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1683,6 +1688,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7935056406712245860, guid: 31e400d6a849a5a4baaa2f5ca4f48386,
+        type: 3}
+      propertyPath: managedReferences[1778437393816223746].FlickerDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935056406712245860, guid: 31e400d6a849a5a4baaa2f5ca4f48386,
+        type: 3}
+      propertyPath: managedReferences[1778437393816223747].FlickerDuration
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1729,7 +1744,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &4302006735105997954
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -64,7 +64,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             if (ModifyCurrentHp(-damageProvider.ProvideDamage()))
             {
                 TookDamage?.Invoke(damageProvider);
-                SetPlayerImmortalAfterDamageFor(.7f).Forget();
+                SetPlayerInvincibleAfterDamageFor(_playerConfiguration.InvinciblityAfterAttackTime).Forget();
             }
         }
 
@@ -97,7 +97,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             Died?.Invoke();
         }
 
-        private async UniTaskVoid SetPlayerImmortalAfterDamageFor(float seconds)
+        private async UniTaskVoid SetPlayerInvincibleAfterDamageFor(float seconds)
         {
             _playerStats.Immortal = true;
             await UniTask.Delay((int)(seconds * 1000));

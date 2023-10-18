@@ -39,6 +39,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private PlayerAttack _playerAttack;
         [SerializeField] private EntityBuffDebuffContainer _entityBuffDebuffContainer;
         [SerializeField] private MMFeedbacks _healFeedback;
+        [SerializeField] private MMFeedbacks _invincibilityFeedback;
 
         private PlayerMovementController _movementController;
 
@@ -109,6 +110,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _playerAnimator.PlayImpact();
             _playerAttack.ResetAttackState();
             _playerLocomotion.BlockInputAndResetPrevious(.5f);
+            _invincibilityFeedback?.PlayFeedbacks();
             AddKnockback(damageProvider.DamageDealer);
             _movementController.KillVelocity();
         }
