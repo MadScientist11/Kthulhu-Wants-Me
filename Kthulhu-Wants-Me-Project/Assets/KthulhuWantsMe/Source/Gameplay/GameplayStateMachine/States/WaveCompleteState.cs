@@ -20,10 +20,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private GameplayStateMachine _gameplayStateMachine;
         private IProgressService _progressService;
         private IInputService _inputService;
+        private ISceneDataProvider _sceneDataProvider;
 
         public WaveCompleteState(GameplayStateMachine gameplayStateMachine, IProgressService progressService, 
-            IUIService uiService, IInputService inputService,  ThePlayer player)
+            IUIService uiService, IInputService inputService,  ThePlayer player, ISceneDataProvider sceneDataProvider)
         {
+            _sceneDataProvider = sceneDataProvider;
             _inputService = inputService;
             _progressService = progressService;
             _gameplayStateMachine = gameplayStateMachine;
@@ -38,6 +40,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             UpgradeWindow window = (UpgradeWindow) _uiService.OpenWindow(WindowId.UpgradeWindow);
            
             //window.Init(OnUpgradePicked);
+            _sceneDataProvider.MapNavMesh.BuildNavMesh();
+            Debug.Log("Rebuild navmesh");
          
         }
 

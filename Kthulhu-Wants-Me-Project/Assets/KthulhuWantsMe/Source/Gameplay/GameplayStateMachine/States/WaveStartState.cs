@@ -9,9 +9,11 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private GameplayStateMachine _gameplayStateMachine;
         private readonly IWaveSystemDirector _waveSystem;
         private IProgressService _progressService;
+        private ISceneDataProvider _sceneDataProvider;
 
-        public WaveStartState(GameplayStateMachine gameplayStateMachine, IWaveSystemDirector waveSystem, IProgressService progressService)
+        public WaveStartState(GameplayStateMachine gameplayStateMachine, IWaveSystemDirector waveSystem, IProgressService progressService, ISceneDataProvider sceneDataProvider)
         {
+            _sceneDataProvider = sceneDataProvider;
             _progressService = progressService;
             _waveSystem = waveSystem;
             _gameplayStateMachine = gameplayStateMachine;
@@ -21,6 +23,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             int newWaveIndex = _progressService.ProgressData.CompletedWaveIndex + 1;
             _waveSystem.StartWave(newWaveIndex);
+            //_sceneDataProvider.MapNavMesh.BuildNavMesh();
+
         }
 
         public void Exit()
