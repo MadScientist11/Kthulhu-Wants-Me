@@ -8,6 +8,7 @@ using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
@@ -42,13 +43,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private MMFeedbacks _invincibilityFeedback;
 
         private PlayerMovementController _movementController;
-
         private ThePlayer _player;
+        
+        private IInputService _inputService;
+
 
         [Inject]
-        public void Construct(ThePlayer player)
+        public void Construct(IInputService inputService, ThePlayer player)
         {
             _player = player;
+            _inputService = inputService;
+            
             _player.TookDamage += OnTookDamage;
             _player.HealthChanged += OnHealthChanged;
             _player.Died += OnDied;
@@ -81,6 +86,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _player.Heal(amount);
         }
 
+        private void OnImpact()
+        {
+            _inputService.GameplayScenario.Disable();
+        }
+
+        private void OnImpactEnd()
+        {
+            _inputService.GameplayScenario.Enable();
+        }
+        
         private void OnTookDamage(IDamageProvider damageProvider)
         {
             RaiseTookDamageEvent();
@@ -109,7 +124,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _playerAnimator.PlayImpact();
             _playerAttack.ResetAttackState();
-            _playerLocomotion.BlockInputAndResetPrevious(.5f);
             _invincibilityFeedback?.PlayFeedbacks();
             AddKnockback(damageProvider.DamageDealer);
             _movementController.KillVelocity();

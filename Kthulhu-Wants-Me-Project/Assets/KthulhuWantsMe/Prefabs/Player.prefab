@@ -363,7 +363,7 @@ MonoBehaviour:
         BoundRenderer: {fileID: 7706978627374250829}
         Mode: 1
         PropertyName: _1st_ShadeColor
-        FlickerDuration: 0.5
+        FlickerDuration: 1
         FlickerOctave: 0.1
         FlickerColor: {r: 2.1185474, g: 2.1185474, b: 2.1185474, a: 1}
         MaterialIndexes: 00000000
@@ -440,7 +440,7 @@ MonoBehaviour:
         BoundRenderer: {fileID: 7706978627374250829}
         Mode: 1
         PropertyName: _BaseColor
-        FlickerDuration: 0.5
+        FlickerDuration: 1
         FlickerOctave: 0.1
         FlickerColor: {r: 2.828427, g: 2.828427, b: 2.828427, a: 1}
         MaterialIndexes: 00000000
