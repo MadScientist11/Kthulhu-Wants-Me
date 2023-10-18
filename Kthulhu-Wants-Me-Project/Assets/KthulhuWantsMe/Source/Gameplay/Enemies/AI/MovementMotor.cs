@@ -32,12 +32,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             }
         }
 
-        public void AddVelocity(Vector3 velocity, float resetAfter)
+        public void AddVelocity(Vector3 velocity, float resetAfter, Action after = null)
         {
-            StartCoroutine(DoVelocityChange(velocity, resetAfter));
+            StartCoroutine(DoVelocityChange(velocity, resetAfter, after));
         }
 
-        private IEnumerator DoVelocityChange(Vector3 velocity, float resetAfter)
+        private IEnumerator DoVelocityChange(Vector3 velocity, float resetAfter, Action action)
         {
             _navMeshAgent.velocity = velocity;
             _navMeshAgent.angularSpeed = 0;
@@ -46,6 +46,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             
             _navMeshAgent.angularSpeed = _defaultAngularSpeed;
             _navMeshAgent.velocity = Vector3.zero;
+            
+            action?.Invoke();
         }
 
         public void HaltMovement()

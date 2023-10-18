@@ -27,6 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private const float ComboAttackReavaluationTime = 5f;
 
         private PlayerFacade _player;
+        private IAIService _aiService;
 
         [Inject]
         public void Construct(IGameFactory gameFactory, IAIService aiService, IRandomService randomService)
@@ -49,10 +50,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public void ResetState()
         {
         }
-
-        private float _behaviourReavaluationTime = 5f;
-        private float _behaviourReavaluationCooldown;
-        private IAIService _aiService;
 
         private void DecideStrategy()
         {
