@@ -2356,6 +2356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f3e6664078406c9e62ea61f7ae1b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: -5172653069112829316}
   _playerAnimator: {fileID: -4856184112398116678}
   _playerLocomotion: {fileID: 5663912579931136821}
   _playerAttack: {fileID: -8648004300217098860}
