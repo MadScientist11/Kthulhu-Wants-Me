@@ -18,6 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         public float DistanceToPlayer => Vector3.Distance(transform.position, _player.transform.position);
 
         [SerializeField] private MovementMotor _movementMotor;
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
         private NavMeshPath _navMeshPath;
         private Vector3 _lastNearPoint;
@@ -55,13 +56,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         private void Awake()
         {
             _navMeshPath = new();
-            _movementMotor.Agent.speed = Random.Range(3f, 4f);
-            _movementMotor.Agent.stoppingDistance = _reachDistance;
             _pathfindingMethod = Random.Range(0, 2);
         }
 
         private void Start()
         {
+            _movementMotor.Agent.speed = Random.Range(_enemyStatsContainer.Config.MoveSpeed.x, _enemyStatsContainer.Config.MoveSpeed.y);
+            _movementMotor.Agent.stoppingDistance = _reachDistance;
             if (_player.TryGetComponent(out IInterceptionCompliant interceptionCompliant))
             {
                 _interceptTarget = interceptionCompliant;

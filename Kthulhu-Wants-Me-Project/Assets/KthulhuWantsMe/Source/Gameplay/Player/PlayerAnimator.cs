@@ -26,14 +26,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         
         private static readonly int _impactStateHash = Animator.StringToHash("Impact");
+        private static readonly int Evade = Animator.StringToHash("Evade");
 
         private RuntimeAnimatorController _defaultAnimatorController;
+
+        private bool _enableRootMotion;
 
 
         private void Start() =>
             _defaultAnimatorController = _animator.runtimeAnimatorController;
 
-
+    
         public void Move()
         {
             _animator.SetBool(IsRunning, true);
@@ -51,7 +54,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         public void PlayEvade()
         {
-            _animator.SetTrigger("Evade");
+            _enableRootMotion = true;
+            _animator.SetTrigger(Evade);
         }
 
         public void StopLungeCharge()

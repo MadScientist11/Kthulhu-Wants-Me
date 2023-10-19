@@ -63,10 +63,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             _inputService.GameplayScenario.Disable();
             PlayerLocomotion.BlockInput();
+            
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
             
             _playerAnimator.PlayEvade();
-            PlayerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfig.DashStrength);
+            //PlayerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfig.DashStrength);
         }
 
         private bool CanDash()

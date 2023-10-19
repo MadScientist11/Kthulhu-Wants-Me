@@ -373,6 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementMotor: {fileID: 855018551297982499}
+  _enemyStatsContainer: {fileID: 8151728752701681097}
   _minMaxTargetOffset: {x: 4, y: 8}
   _offsetMovementThreshold: 5
   _movementPredictionThreshold: 0.3

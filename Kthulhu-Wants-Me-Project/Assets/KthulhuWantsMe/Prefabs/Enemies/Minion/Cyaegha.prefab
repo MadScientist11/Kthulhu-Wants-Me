@@ -177,6 +177,7 @@ MonoBehaviour:
   _movementPredictionThreshold: 0
   _movementPredictionTime: 1
   _reachDistance: 3
+  _enemyStatsContainer: {fileID: -6736657406163995852}
 --- !u!114 &6835703763880801073
 MonoBehaviour:
   m_ObjectHideFlags: 0
