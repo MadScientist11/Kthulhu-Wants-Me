@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PolygonPrototype_Global_Grid_01
+  m_Name: PolygonPrototype_Global_Grid_Decal
   m_Shader: {fileID: -6465566751694194690, guid: bf00925b2fbda49499ccc0de47e0d8ca,
     type: 3}
   m_Parent: {fileID: 0}
