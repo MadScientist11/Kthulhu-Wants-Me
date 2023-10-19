@@ -1,4 +1,5 @@
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
+using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
@@ -29,6 +30,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<GameFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
+            
+            builder
+                .Register<EnemiesAIBrainService>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
 
             builder
                 .RegisterComponent(_sceneDataProvider)

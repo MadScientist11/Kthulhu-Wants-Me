@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
-using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
@@ -14,8 +14,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public bool InProcess => _isAttacking;
         
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
-        [SerializeField] private FollowLogic _followLogic;
         [SerializeField] private MMFeedbacks _comboFeedback;
+        [SerializeField] private MMFeedbacks _comboChargeFeedback;
+        [SerializeField] private MovementMotor _movementMotor;
 
         [SerializeField] private int _comboCount;
         
@@ -41,45 +42,46 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         private IEnumerator ComboAttack()
         {
-            _followLogic.TryPredictTarget = false;
-            _followLogic.FollowSpeed += _yithConfiguration.ComboFollowSpeedIncrement;
             _isAttacking = true;
-
+            
+            _comboChargeFeedback?.PlayFeedbacks();
+            yield return new WaitForSeconds(.5f);
+            
             for (int i = 0; i < _comboCount; i++)
             {
                 PerformAttack();
-                _comboFeedback.PlayFeedbacks();
                 yield return new WaitForSeconds(_yithConfiguration.DelayBetweenComboAttacks);
             }
             
             
             _isAttacking = false;
-            _followLogic.TryPredictTarget = true;
             _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
-            _followLogic.FollowSpeed -= _yithConfiguration.ComboFollowSpeedIncrement;
         }
 
         private void PerformAttack()
         {
-            if (!PhysicsUtility.HitFirst(transform, 
-                    AttackStartPoint(), 
-                    .75f, 
-                    LayerMasks.PlayerMask, 
-                    out IDamageable damageable))
-                return;
+            _movementMotor.AddVelocity(transform.forward * 15, .5f, OnDashed);
+
+            void OnDashed()
+            {
+                _comboFeedback.PlayFeedbacks();
             
-            if(!damageable.Transform.TryGetComponent(out PlayerFacade _))
-                return;
+                if (!PhysicsUtility.HitFirst(transform, 
+                        AttackStartPoint(), 
+                        .75f, 
+                        LayerMasks.PlayerMask, 
+                        out IDamageable damageable))
+                    return;
             
 
-            damageable.TakeDamage(10);
+                damageable.TakeDamage(10);
+            }
         }
         
         public bool CanComboAttack()
         {
             return !_isAttacking && _comboAttackCooldown <= 0f;
         }
-
 
         private Vector3 AttackStartPoint()
         {

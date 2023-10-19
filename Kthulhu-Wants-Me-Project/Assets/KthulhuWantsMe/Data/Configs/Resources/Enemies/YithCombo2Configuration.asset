@@ -74,8 +74,8 @@ MonoBehaviour:
   EnemyType: 100
   Prefab: {fileID: 7098061404560363266, guid: 0e0430ac71304254cab291abf3909ba5, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  ComboAttackCooldown: 5
+  ComboAttackCooldown: 10
   DelayBetweenComboAttacks: 0.75
   ComboFollowSpeedIncrement: 6
-  MoveSpeed: {x: 5, y: 6}
-  AttackRadius: 0.75
+  MoveSpeed: {x: 6, y: 10}
+  AttackRadius: 1.25

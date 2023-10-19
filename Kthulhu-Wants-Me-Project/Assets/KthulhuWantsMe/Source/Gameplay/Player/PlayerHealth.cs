@@ -8,6 +8,7 @@ using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
@@ -30,34 +31,42 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
     }
     public class PlayerHealth : Health
     {
-        public override float MaxHealth => _player.MaxHealth;
+        public override float MaxHealth => _thePlayer.MaxHealth;
 
-        public override float CurrentHealth => _player.CurrentHp;
+        public override float CurrentHealth => _thePlayer.CurrentHp;
 
+        [SerializeField] private PlayerFacade _player;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private PlayerAttack _playerAttack;
         [SerializeField] private EntityBuffDebuffContainer _entityBuffDebuffContainer;
         [SerializeField] private MMFeedbacks _healFeedback;
+        [SerializeField] private MMFeedbacks _invincibilityFeedback;
 
         private PlayerMovementController _movementController;
+        
+        private IInputService _inputService;
+        private ThePlayer _thePlayer;
+        private ICoroutineRunner _coroutineRunner;
 
-        private ThePlayer _player;
 
         [Inject]
-        public void Construct(ThePlayer player)
+        public void Construct(IInputService inputService, ThePlayer thePlayer, ICoroutineRunner coroutineRunner)
         {
-            _player = player;
-            _player.TookDamage += OnTookDamage;
-            _player.HealthChanged += OnHealthChanged;
-            _player.Died += OnDied;
+            _coroutineRunner = coroutineRunner;
+            _thePlayer = thePlayer;
+            _inputService = inputService;
+            
+            _thePlayer.TookDamage += OnTookDamage;
+            _thePlayer.HealthChanged += OnHealthChanged;
+            _thePlayer.Died += OnDied;
         }
 
         private void OnDestroy()
         {
-            _player.TookDamage -= OnTookDamage;
-            _player.HealthChanged -= OnHealthChanged;
-            _player.Died -= OnDied;
+            _thePlayer.TookDamage -= OnTookDamage;
+            _thePlayer.HealthChanged -= OnHealthChanged;
+            _thePlayer.Died -= OnDied;
         }
 
         private void Start()
@@ -67,19 +76,32 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         public override void TakeDamage(float damage, IDamageProvider damageProvider)
         {
-            _player.TakeDamage(damageProvider);
+            _thePlayer.TakeDamage(damageProvider);
         }
 
         public override void TakeDamage(float damage)
         {
-            _player.TakeDamage(new Damage(damage));
+            _thePlayer.TakeDamage(new Damage(damage));
         }
 
         public override void Heal(float amount)
         {
-            _player.Heal(amount);
+            _thePlayer.Heal(amount);
         }
 
+        private void OnImpact()
+        {
+            _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
+            _inputService.GameplayScenario.Disable();
+        }
+
+        private void OnImpactEnd()
+        {
+            _coroutineRunner.ExecuteAfter(1f,() =>
+                _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player)));
+            _inputService.GameplayScenario.Enable();
+        }
+        
         private void OnTookDamage(IDamageProvider damageProvider)
         {
             RaiseTookDamageEvent();
@@ -108,7 +130,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _playerAnimator.PlayImpact();
             _playerAttack.ResetAttackState();
-            _playerLocomotion.BlockMovement(.5f);
+            _invincibilityFeedback?.PlayFeedbacks();
             AddKnockback(damageProvider.DamageDealer);
             _movementController.KillVelocity();
         }

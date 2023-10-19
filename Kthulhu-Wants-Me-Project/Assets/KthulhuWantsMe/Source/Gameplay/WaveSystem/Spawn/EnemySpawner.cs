@@ -52,7 +52,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 return enemy.GetComponent<Health>();
             }
 
-            Debug.LogError("Couldn't spawn an enemy");
+            Debug.LogError("Couldn't spawn an enemy, make sure floor has Ground layer");
             return null;
         }
         

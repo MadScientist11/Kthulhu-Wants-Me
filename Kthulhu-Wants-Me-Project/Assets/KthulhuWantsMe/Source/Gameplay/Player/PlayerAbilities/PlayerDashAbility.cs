@@ -44,12 +44,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void OnDashEnd()
         {
+            _inputService.GameplayScenario.Enable();
             PlayerLocomotion.AllowInput();
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
         }
 
         private void PerformDash()
         {
+
             if (CanDash())
             {
                 Dash();
@@ -59,6 +61,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void Dash()
         {
+            _inputService.GameplayScenario.Disable();
             PlayerLocomotion.BlockInput();
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
             
