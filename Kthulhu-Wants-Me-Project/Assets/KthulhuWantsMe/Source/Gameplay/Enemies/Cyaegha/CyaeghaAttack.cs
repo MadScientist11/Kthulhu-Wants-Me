@@ -22,6 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         public AnimationCurve HeightCurve;
 
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
+        [FormerlySerializedAs("_attackFeedback")] [SerializeField] private MMFeedbacks _attackPrepareFeedback;
         [SerializeField] private NavMeshAgent _cyaeghaNavMesh;
         
         private float _attackCooldown;
@@ -46,6 +47,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private IEnumerator DoAttack(Vector3 lastPlayerPosition)
         {
+            _attackPrepareFeedback?.PlayFeedbacks();
+            yield return new WaitForSeconds(0.5f);
+
             Vector3 jumpStartPos = transform.position;
             Vector3 dest = lastPlayerPosition;
             _isAttacking = true;

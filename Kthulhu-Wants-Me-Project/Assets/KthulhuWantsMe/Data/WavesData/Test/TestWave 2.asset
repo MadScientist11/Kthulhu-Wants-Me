@@ -17,7 +17,7 @@ MonoBehaviour:
     Batches:
     - EnemyPack:
       - EnemyType: 3
-        Quantity: 30
+        Quantity: 1
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 3
