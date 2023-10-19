@@ -4,30 +4,45 @@ using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.AI;
+using VContainer;
+using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
     public class YithRageComboAbility : MonoBehaviour, IAbility
     {
         public bool InProcess => _isAttacking;
-        
+
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
         [SerializeField] private MMFeedbacks _comboFeedback;
         [SerializeField] private MMFeedbacks _comboChargeFeedback;
         [SerializeField] private MovementMotor _movementMotor;
 
         [SerializeField] private int _comboCount;
-        
+
         private bool _isAttacking;
         private float _comboAttackCooldown;
 
         private YithConfiguration _yithConfiguration;
+        private NavMeshPath _navMeshPath;
+        private Vector3 _target;
+
+        private IGameFactory _gameFactory;
+
+        [Inject]
+        public void Construct(IGameFactory gameFactory)
+        {
+            _gameFactory = gameFactory;
+        }
 
         private void Start()
         {
             _yithConfiguration = (YithConfiguration)_enemyStatsContainer.Config;
+            _navMeshPath = new();
         }
 
         private void Update()
@@ -39,48 +54,69 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             StartCoroutine(ComboAttack());
         }
-        
+
         private IEnumerator ComboAttack()
         {
             _isAttacking = true;
-            
+
             _comboChargeFeedback?.PlayFeedbacks();
-            yield return new WaitForSeconds(.5f);
-            
+            yield return new WaitForSeconds(_yithConfiguration.ComboAttackDelay);
+
             for (int i = 0; i < _comboCount; i++)
             {
                 PerformAttack();
                 yield return new WaitForSeconds(_yithConfiguration.DelayBetweenComboAttacks);
             }
-            
-            
+
             _isAttacking = false;
             _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
         }
 
         private void PerformAttack()
         {
-            _movementMotor.AddVelocity(transform.forward * 15, .5f, OnDashed);
+            Vector3 directionToTarget = (_target - transform.position).normalized;
+            _movementMotor.AddVelocity(directionToTarget * _yithConfiguration.DashDistance, _yithConfiguration.ComboAttackDashSpeed, OnDashed);
 
             void OnDashed()
             {
                 _comboFeedback.PlayFeedbacks();
-            
-                if (!PhysicsUtility.HitFirst(transform, 
-                        AttackStartPoint(), 
-                        .75f, 
-                        LayerMasks.PlayerMask, 
+
+                if (!PhysicsUtility.HitFirst(transform,
+                        AttackStartPoint(),
+                        .75f,
+                        LayerMasks.PlayerMask,
                         out IDamageable damageable))
                     return;
-            
+
 
                 damageable.TakeDamage(10);
             }
         }
-        
+
         public bool CanComboAttack()
         {
-            return !_isAttacking && _comboAttackCooldown <= 0f;
+            if (_isAttacking || _comboAttackCooldown > 0f)
+            {
+                return false;
+            }
+
+            //Vector3 randomPoint = _gameFactory.Player.transform.position + Random.insideUnitSphere * .5f;
+            bool sampleSuccess = NavMesh.SamplePosition(_gameFactory.Player.transform.position, out NavMeshHit hit, 0.25f, NavMesh.AllAreas);
+            if (!sampleSuccess)
+            {
+                Debug.Log("Sample failed");
+                return false;
+            }
+
+            _movementMotor.Agent.CalculatePath(hit.position, _navMeshPath);
+            if (_navMeshPath.status == NavMeshPathStatus.PathComplete &&
+                !NavMesh.Raycast(transform.position, hit.position, out NavMeshHit _,
+                    NavMesh.AllAreas))
+            {
+                _target = hit.position;
+            }
+
+            return true;
         }
 
         private Vector3 AttackStartPoint()

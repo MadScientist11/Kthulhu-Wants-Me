@@ -21,6 +21,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         private float _attackDelayTime;
         private float _rageComboRandom;
+        private float _reconsiderationTime;
 
         private YithConfiguration _yithConfiguration;
 
@@ -64,7 +65,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             if (_yithRageComboAbility.InProcess)
             {
-                _followPlayerBehaviour.MoveToPlayer();
                 return;
             }
             
@@ -86,7 +86,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         private void DecideAttackStrategy()
         {
-            if(_yithRageComboAbility.InProcess)
+            _reconsiderationTime -= Time.deltaTime;
+            
+            if(CanNotAttack())
                 return;
             
             if(_followPlayerBehaviour.PlayerReached)
@@ -94,10 +96,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             else
                 ResetAttackDelayCountdown();
 
-
+            
             if (ComboAttackConditionsFulfilled())
             {
                 _yithRageComboAbility.PerformCombo();
+                _reconsiderationTime = _yithConfiguration.ReconsiderationTime;
                 return;
             }
 
@@ -105,6 +108,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             {
                 _yithAttack.PerformAttack();
                 ResetAttackDelayCountdown();
+                _reconsiderationTime = _yithConfiguration.ReconsiderationTime;
             }
         }
 
@@ -130,6 +134,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private bool CanDoComboAttack()
         {
             return _followPlayerBehaviour.DistanceToPlayer is < 6f and > 4f && _yithRageComboAbility.CanComboAttack();
+        }
+
+        private bool CanNotAttack()
+        {
+            return _yithRageComboAbility.InProcess || _reconsiderationTime > 0;
         }
     }
 }
