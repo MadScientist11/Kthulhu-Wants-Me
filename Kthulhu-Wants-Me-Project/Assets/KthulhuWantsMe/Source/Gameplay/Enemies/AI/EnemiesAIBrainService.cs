@@ -9,7 +9,6 @@ using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 {
-    
     public interface IAIService
     {
         int EnemiesCount { get; }
@@ -17,43 +16,51 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         void AddToChase(GameObject enemy);
     }
 
-    public class EnemiesAIBrainService : IAIService, ITickable
+    public class EnemiesAIBrainService : IAIService, IInitializable, ITickable
     {
         public int EnemiesCount
         {
-            get
-            {
-                return _waveSystemDirector.CurrentWaveState.AliveEnemies.Count;
-            }
+            get { return _waveSystemDirector.CurrentWaveState.AliveEnemies.Count; }
         }
 
-        private List<GameObject> _chasingPlayerEnemies = new List<GameObject>(15);
-        
-        private IGameFactory _gameFactory;
-        private IWaveSystemDirector _waveSystemDirector;
+        private List<GameObject> _chasingPlayerEnemies;
+        private float _behaviourRevaluationCooldown;
 
-        public EnemiesAIBrainService(IGameFactory gameFactory, IWaveSystemDirector waveSystemDirector)
+        private readonly IGameFactory _gameFactory;
+        private readonly IWaveSystemDirector _waveSystemDirector;
+        private readonly IResourceManager _resourceManager;
+        private GlobalAIConfiguration _globalAIConfiguration;
+
+        public EnemiesAIBrainService(IGameFactory gameFactory, IResourceManager resourceManager,
+            IWaveSystemDirector waveSystemDirector)
         {
+            _resourceManager = resourceManager;
             _waveSystemDirector = waveSystemDirector;
             _gameFactory = gameFactory;
         }
-        private float _behaviourReavaluationTime = 2f;
-        private float _behaviourReavaluationCooldown;
-        
+
+        public async void Initialize()
+        {
+            _globalAIConfiguration =
+                (GlobalAIConfiguration)await _resourceManager.ProvideAssetAsync<GlobalAIConfiguration>(
+                    "AI/GlobalAIConfig");
+            _chasingPlayerEnemies = new List<GameObject>(_globalAIConfiguration.MaxChasingEnemies);
+        }
+
         public void Tick()
         {
-            if(_waveSystemDirector.CurrentWaveState == null)
+            if (_waveSystemDirector.CurrentWaveState == null)
                 return;
-            
-            _behaviourReavaluationCooldown -= Time.deltaTime;
-            
-            if (_behaviourReavaluationCooldown <= 0)
+
+            _behaviourRevaluationCooldown -= Time.deltaTime;
+
+            if (_behaviourRevaluationCooldown <= 0)
             {
                 ReevaluateEnemiesBehaviour();
-                _behaviourReavaluationCooldown = _behaviourReavaluationTime;
+                _behaviourRevaluationCooldown = _globalAIConfiguration.AIBehaviourUpdateRate;
             }
         }
-        
+
         public bool AllowedChasingPlayer(GameObject enemy)
         {
             return _chasingPlayerEnemies.Contains(enemy);
@@ -61,10 +68,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         public void AddToChase(GameObject enemy)
         {
-            if(_chasingPlayerEnemies.Contains(enemy))
+            if (_chasingPlayerEnemies.Contains(enemy))
                 return;
+
             _chasingPlayerEnemies.RemoveAll(item => item == null);
-            
 
             GameObject furthestEnemy = _chasingPlayerEnemies.OrderBy(enemyHealth =>
                     Vector3.Distance(enemyHealth.transform.position, _gameFactory.Player.transform.position))
@@ -76,36 +83,31 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                 _chasingPlayerEnemies.Add(enemy);
             }
         }
-        
-        public void ReevaluateEnemiesBehaviour()
+
+        private void ReevaluateEnemiesBehaviour()
         {
             _chasingPlayerEnemies.RemoveAll(item => item == null);
             RemoveEnemiesThatFallBehind();
-            IEnumerable<GameObject> closestEnemies = _waveSystemDirector.CurrentWaveState.AliveEnemies.Where(enemyHealth => !_chasingPlayerEnemies.Contains(enemyHealth.gameObject))
+            IEnumerable<GameObject> closestEnemies = _waveSystemDirector.CurrentWaveState.AliveEnemies
+                .Where(enemyHealth => !_chasingPlayerEnemies.Contains(enemyHealth.gameObject))
                 .OrderBy(enemyHealth =>
-                    Vector3.Distance(enemyHealth.transform.position, _gameFactory.Player.transform.position)).Take(15 - _chasingPlayerEnemies.Count).Select(enemy => enemy.gameObject);
-          
+                    Vector3.Distance(enemyHealth.transform.position, _gameFactory.Player.transform.position))
+                .Take(_globalAIConfiguration.MaxChasingEnemies - _chasingPlayerEnemies.Count)
+                .Select(enemy => enemy.gameObject);
+
             _chasingPlayerEnemies.AddRange(closestEnemies);
-            
-            
         }
-        
-        
 
         private void RemoveEnemiesThatFallBehind()
         {
             for (var i = 0; i < _chasingPlayerEnemies.Count; i++)
             {
                 if (Vector3.Distance(_chasingPlayerEnemies[i].transform.position,
-                        _gameFactory.Player.transform.position) > 10)
+                        _gameFactory.Player.transform.position) > _globalAIConfiguration.EnemiesFallBehindDistance)
                 {
                     _chasingPlayerEnemies.RemoveAt(i);
                 }
             }
         }
-
-        
-
-       
     }
 }

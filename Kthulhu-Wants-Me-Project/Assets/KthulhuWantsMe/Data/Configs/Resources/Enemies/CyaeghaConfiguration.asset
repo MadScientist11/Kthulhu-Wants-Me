@@ -76,5 +76,5 @@ MonoBehaviour:
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
   Knockback: 10
   KnockbackTime: 0.15
-  MoveSpeed: {x: 10, y: 15}
+  MoveSpeed: {x: 4, y: 6}
   AttackCooldown: 1.5
