@@ -8501,16 +8501,19 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 357928279}
-  - {fileID: 1228710185}
-  - {fileID: 223333820}
-  - {fileID: 1088763688}
-  - {fileID: 1292499777}
   - {fileID: 80270199}
+  - {fileID: 223333820}
+  - {fileID: 247465249}
+  - {fileID: 357928279}
   - {fileID: 448175609}
-  - {fileID: 1095637673}
   - {fileID: 691530376}
+  - {fileID: 904883528}
+  - {fileID: 1088763688}
+  - {fileID: 1095637673}
+  - {fileID: 1228710185}
   - {fileID: 1243160050}
+  - {fileID: 1268990506}
+  - {fileID: 1292499777}
   - {fileID: 1392579653}
   - {fileID: 2025044148}
   _sceneDataProvider: {fileID: 1523681595}
