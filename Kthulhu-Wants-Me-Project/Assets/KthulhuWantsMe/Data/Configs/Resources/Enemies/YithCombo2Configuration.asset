@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 5
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -76,7 +76,7 @@ MonoBehaviour:
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
   Knockback: 10
   KnockbackTime: 0.25
-  MoveSpeed: {x: 3, y: 5}
+  MoveSpeed: {x: 1, y: 3}
   ComboAttackCooldown: 10
   DelayBetweenComboAttacks: 0.75
   ComboFollowSpeedIncrement: 6

@@ -77,4 +77,4 @@ MonoBehaviour:
   Knockback: 10
   KnockbackTime: 0.15
   MoveSpeed: {x: 4, y: 6}
-  AttackCooldown: 1.5
+  AttackCooldown: 1.4
