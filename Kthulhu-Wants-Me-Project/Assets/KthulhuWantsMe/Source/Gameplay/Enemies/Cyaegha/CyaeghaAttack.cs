@@ -63,6 +63,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private IEnumerator DoAttack(Vector3 lastPlayerPosition)
         {
             _aiService.SomeonesAttacking = true;
+            _cyaeghaNavMesh.enabled = false;
             _attackPrepareFeedback?.PlayFeedbacks();
             yield return new WaitForSeconds(0.5f);
 
@@ -92,7 +93,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
             if (damaged)
             {
-                Vector3 desiredXZ = damagePosition - transform.forward * 1f;
+                yield return new WaitForSeconds(0.05f);
+
+                Vector3 desiredXZ = damagePosition - transform.forward * .75f;
                 bool sampleSuccess =
                     NavMesh.SamplePosition(desiredXZ, out NavMeshHit hit, 2f, NavMesh.AllAreas);
 
@@ -106,15 +109,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
                 }
             }
 
-
-            //if (TryDamage(.6f, out IDamageable damageable) && !damaged)
-            //{
-            //    ApplyDamage(to: damageable);
-            //}
-
-
             _isAttacking = false;
             _aiService.SomeonesAttacking = false;
+            _cyaeghaNavMesh.enabled = true;
 
             _attackCooldown = _cyaeghaConfiguration.AttackCooldown;
         }
