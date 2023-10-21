@@ -118,7 +118,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             {
                 batchEnemies.AddRange(SpawnEnemyPack(enemyPack));
             }
-
+            _spawnedCountAt.Clear();
             return batchEnemies;
         }
 
@@ -134,10 +134,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 Health enemyHealth = SpawnEnemy(spawner, enemyPack.EnemyType);
                 yield return enemyHealth;
             }
-
-            _spawnedCountAt.Clear();
         }
-
+    
         private EnemySpawner FindAppropriateSpawnerFor(EnemyPack batchEntry)
         {
             EnemyConfiguration enemyConfig = _dataProvider.EnemyConfigsProvider.EnemyConfigs[batchEntry.EnemyType];
@@ -150,7 +148,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             {
                 foreach (EnemySpawner closestSpawner in ClosestSpawners)
                 {
-                    if (!_spawnedCountAt.TryGetValue(closestSpawner, out int spawnedCount) || spawnedCount > _dataProvider.Waves.MaxEnemiesSpawnAtOnce)
+                    if (!_spawnedCountAt.TryGetValue(closestSpawner, out int spawnedCount) || spawnedCount < _dataProvider.Waves.MaxEnemiesSpawnAtOnce)
                     {
                         return closestSpawner;
                     }

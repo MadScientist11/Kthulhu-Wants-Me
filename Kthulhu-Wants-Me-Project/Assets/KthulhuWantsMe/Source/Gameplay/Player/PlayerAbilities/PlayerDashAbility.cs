@@ -83,7 +83,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _stopDashMovement = false;
             _inputService.GameplayScenario.Disable();
             PlayerLocomotion.MovementController.ResetInputs();
-            PlayerLocomotion.MovementController.OverrideMoveSpeed(10);
+            PlayerLocomotion.MovementController.OverrideMoveSpeed(7);
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
             
             _playerAnimator.PlayEvade();

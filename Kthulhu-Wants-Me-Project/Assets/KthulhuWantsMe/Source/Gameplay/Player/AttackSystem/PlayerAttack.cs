@@ -97,8 +97,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
                     _playerDamageModifier?.ApplyTo(effectReceiver);
                 }
             }
-
-          
         }
 
         protected override void OnRecoveryPhase()
