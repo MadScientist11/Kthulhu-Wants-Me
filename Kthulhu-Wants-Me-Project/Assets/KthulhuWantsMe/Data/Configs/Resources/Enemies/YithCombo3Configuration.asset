@@ -74,7 +74,7 @@ MonoBehaviour:
   EnemyType: 200
   Prefab: {fileID: 7098061404560363266, guid: 8e3d3aaa113f4cc4b9dfc0fca92e5d74, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  Knockback: 10
+  Knockback: 5
   KnockbackTime: 0.25
   MoveSpeed: {x: 1, y: 3}
   ComboAttackCooldown: 10

@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyStatsContainer: {fileID: 8151728752701681097}
+  _yithAIBrain: {fileID: 3944748895859747068}
   _collider: {fileID: 9033666309106188953}
   _movementMotor: {fileID: 855018551297982499}
   _hitFeedbacks: {fileID: 7172276037332111135}

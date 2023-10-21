@@ -26,7 +26,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _yithConfiguration = (YithConfiguration)enemyStatsContainer.Config;
         }
 
-
         private void Update()
         {
             _attackCooldown -= Time.deltaTime;
