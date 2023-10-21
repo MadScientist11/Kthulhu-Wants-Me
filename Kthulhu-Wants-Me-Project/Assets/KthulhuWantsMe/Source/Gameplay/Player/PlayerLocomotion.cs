@@ -18,7 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public Vector3 AverageVelocity => MovementController.AverageVelocity;
 
-
+        public Vector3 LastLookDirection => _lastLookDirection;
         public PlayerMovementController MovementController => _movementController;
 
         [SerializeField] private KinematicCharacterMotor _motor;
@@ -58,6 +58,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             _movementController.SetInputs(Vector2.zero, _lastLookDirection);
             _playerAnimator.StopMoving();
+        }
+
+        public void DashMove(float moveSpeed, float timeFor)
+        {
+            
         }
 
         public void BlockMovement(float timeFor)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Freya;
 using KthulhuWantsMe.Source.Gameplay.AnimatorHelpers;
 using KthulhuWantsMe.Source.Gameplay.Weapons;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
     public class PlayerAnimator : MonoBehaviour, IAnimationStateReader
     {
         public AnimatorState CurrentState { get; private set; }
+        public Animator Animator => _animator;
 
         public Action<AnimatorState> OnStateEntered;
         public Action<AnimatorState> OnStateExited;
@@ -26,7 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         
         private static readonly int _impactStateHash = Animator.StringToHash("Impact");
-        private static readonly int Evade = Animator.StringToHash("Evade");
+        public static readonly int Evade = Animator.StringToHash("Evade");
 
         private RuntimeAnimatorController _defaultAnimatorController;
 
@@ -36,7 +38,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private void Start() =>
             _defaultAnimatorController = _animator.runtimeAnimatorController;
 
-    
+      
+
         public void Move()
         {
             _animator.SetBool(IsRunning, true);

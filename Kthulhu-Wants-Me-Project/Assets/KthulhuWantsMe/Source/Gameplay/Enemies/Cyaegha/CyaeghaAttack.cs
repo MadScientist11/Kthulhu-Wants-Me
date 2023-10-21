@@ -26,8 +26,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
-        [FormerlySerializedAs("_attackFeedback")] [SerializeField]
-        private MMFeedbacks _attackPrepareFeedback;
+        [FormerlySerializedAs("_attackFeedback")] [SerializeField] private MMFeedbacks _attackPrepareFeedback;
 
         [SerializeField] private NavMeshAgent _cyaeghaNavMesh;
 

@@ -26,6 +26,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             MaxQueueSize = Mathf.CeilToInt(1f / _historicalPositionInterval * _historicalPositionDuration);
             _historicalVelocities = new Queue<Vector3>(MaxQueueSize);
+            _moveSpeed = playerConfiguration.MoveSpeed;
         }
 
         public void SetInputs(Vector2 moveInput, Vector3 lookDirection)
@@ -71,6 +72,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
         }
 
+        private float _moveSpeed;
+        public void OverrideMoveSpeed(float speed)
+        {
+            _moveSpeed = speed;
+        }
+
         public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
         {
             if (_lookInputVector != Vector3.zero && _playerConfiguration.OrientationSharpness > 0f)
@@ -104,7 +111,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 Vector3 inputRight = Vector3.Cross(_moveInputVector, _motor.CharacterUp);
                 Vector3 reorientedInput = Vector3.Cross(_motor.GroundingStatus.GroundNormal, inputRight).normalized *
                                           _moveInputVector.magnitude;
-                targetMovementVelocity = reorientedInput * _playerConfiguration.MoveSpeed;
+                targetMovementVelocity = reorientedInput * _moveSpeed;
 
                 // Smooth movement Velocity
                 currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity,

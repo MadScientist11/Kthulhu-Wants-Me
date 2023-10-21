@@ -22,8 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         protected override float BaseDamage => _player.BaseDamage;
 
         public bool IsAttacking => _isAttacking;
-
-
+        
         public MMFeedbacks TargetFeedbacks;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerHealth _playerHealth;
