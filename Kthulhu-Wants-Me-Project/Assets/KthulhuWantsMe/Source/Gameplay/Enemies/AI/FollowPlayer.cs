@@ -76,11 +76,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         private void OnDrawGizmos()
         {
-            foreach (PlayerPoint point in _followPlayerService.PointsAroundPlayer)
-            {
-                Gizmos.color = point.IsVacant ? Color.green : Color.red;
-                Gizmos.DrawSphere(point.Point, 0.5f);
-            }
+            //foreach (PlayerPoint point in _followPlayerService.PointsAroundPlayer)
+            //{
+            //    Gizmos.color = point.IsVacant ? Color.green : Color.red;
+            //    Gizmos.DrawSphere(point.Point, 0.5f);
+            //}
 
             Gizmos.DrawSphere(_playerTarget, .5f);
         }
@@ -88,6 +88,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         public void MoveToPlayer(int pathfindingMethod = -1)
         {
             _playerTarget = _player.transform.position;
+
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 2f, LayerMasks.EnemyMask))
+            {
+                _movementMotor.Agent.stoppingDistance = 0;
+                Vector3 forward = Quaternion.Euler(0, -45, 0) * transform.forward;
+                _movementMotor.MoveTo(transform.position+ forward * 5f);
+                Debug.Log("Get aorund");
+            }
+            else
+            {
+                _movementMotor.Agent.stoppingDistance = _reachDistance;   
+            }
 
             if (PlayerReached)
             {

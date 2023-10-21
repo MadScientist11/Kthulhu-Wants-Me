@@ -19,17 +19,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
     public class CyaeghaAttack : Attack
     {
         protected override float BaseDamage => _enemyStatsContainer.EnemyStats.Stats[StatType.BaseDamage];
-
+        public bool IsAttacking => _isAttacking;
 
         public AnimationCurve HeightCurve;
+        public AnimationCurve LandingCurve;
 
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
-        [FormerlySerializedAs("_attackFeedback")] [SerializeField] private MMFeedbacks _attackPrepareFeedback;
+
+        [FormerlySerializedAs("_attackFeedback")] [SerializeField]
+        private MMFeedbacks _attackPrepareFeedback;
+
         [SerializeField] private NavMeshAgent _cyaeghaNavMesh;
-        
+
         private float _attackCooldown;
         private bool _isAttacking;
-        
+
         private CyaeghaConfiguration _cyaeghaConfiguration;
         private IGameFactory _gameFactory;
         private IAIService _aiService;
@@ -65,29 +69,49 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             Vector3 jumpStartPos = transform.position;
             Vector3 dest = lastPlayerPosition;
             _isAttacking = true;
-            
-            FaceTarget(lastPlayerPosition);
+
             bool damaged = false;
+
+            Vector3 damagePosition = Vector3.zero;
 
             for (float t = 0; t < 1; t += Time.deltaTime * 2f)
             {
                 transform.position = Vector3.Lerp(jumpStartPos, dest, t)
-                                     + Vector3.up * HeightCurve.Evaluate(t);
+                                     + Vector3.up * (HeightCurve.Evaluate(t) * 2f);
 
                 if (TryDamage(.4f, out IDamageable player) && !damaged)
                 {
                     ApplyDamage(to: player);
+                    damagePosition = transform.position;
                     damaged = true;
+                    break;
                 }
+
                 yield return null;
             }
-            
-            if (TryDamage(.6f, out IDamageable damageable) && !damaged)
+
+            if (damaged)
             {
-                ApplyDamage(to: damageable);
+                Vector3 desiredXZ = damagePosition - transform.forward * 1f;
+                bool sampleSuccess =
+                    NavMesh.SamplePosition(desiredXZ, out NavMeshHit hit, 2f, NavMesh.AllAreas);
+
+                if (sampleSuccess)
+                {
+                    for (float t = 0; t < 1; t += Time.deltaTime * 5f)
+                    {
+                        transform.position = Vector3.Lerp(damagePosition, hit.position, LandingCurve.Evaluate(t));
+                        yield return null;
+                    }
+                }
             }
 
-          
+
+            //if (TryDamage(.6f, out IDamageable damageable) && !damaged)
+            //{
+            //    ApplyDamage(to: damageable);
+            //}
+
 
             _isAttacking = false;
             _aiService.SomeonesAttacking = false;
@@ -109,7 +133,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
             damageable = null;
             return false;
-            
         }
 
         private void FaceTarget(Vector3 destination)
@@ -117,9 +140,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             Vector3 lookPos = destination - transform.position;
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 3);  
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 3);
         }
-        
+
 
         private void OnDrawGizmos()
         {
@@ -130,13 +153,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         public bool CanAttack()
         {
-            Vector3 directionToPlayer = (_gameFactory.Player.transform.position - transform.position).normalized;
-            Ray ray = new Ray(transform.position, directionToPlayer);
-            if (DrawPhysics.SphereCast(ray, 0.25f,  out RaycastHit hit,10f, LayerMasks.EnemyMask))
-            {
-                Debug.Log($"Raycast success {hit.transform.name}");
-                return false;
-            }
             return !_isAttacking && _attackCooldown <= 0f;
         }
 
