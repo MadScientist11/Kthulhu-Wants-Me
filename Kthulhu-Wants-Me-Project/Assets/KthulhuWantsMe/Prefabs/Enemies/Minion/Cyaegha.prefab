@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cyaeghaAIBrain: {fileID: 1528546947026360114}
   _movementMotor: {fileID: 4185908553111193425}
+  _cyaeghaAttack: {fileID: 6832438006561834181}
 --- !u!114 &1528546947026360114
 MonoBehaviour:
   m_ObjectHideFlags: 0

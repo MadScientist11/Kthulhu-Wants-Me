@@ -33,6 +33,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private float _attackCooldown;
         private bool _isAttacking;
+        private Coroutine _attackCoroutine;
 
         private CyaeghaConfiguration _cyaeghaConfiguration;
         private IGameFactory _gameFactory;
@@ -57,7 +58,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         public void PerformAttack(Vector3 lastPlayerPosition)
         {
-            StartCoroutine(DoAttack(lastPlayerPosition));
+            _attackCoroutine = StartCoroutine(DoAttack(lastPlayerPosition));
+        }
+
+        public void StopAttack()
+        {
+            if (_isAttacking)
+            {
+                _aiService.SomeonesAttacking = false;
+                _cyaeghaNavMesh.enabled = true;
+                StopCoroutine(_attackCoroutine);
+                _attackCooldown = _cyaeghaConfiguration.AttackCooldown;
+            }
         }
 
         private IEnumerator DoAttack(Vector3 lastPlayerPosition)
@@ -79,8 +91,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             {
                 transform.position = Vector3.Lerp(jumpStartPos, dest, t)
                                      + Vector3.up * (HeightCurve.Evaluate(t) * 2f);
-
-                if (TryDamage(.4f, out IDamageable player) && !damaged)
+                
+                if ( t > 0.25f && TryDamage(.4f, out IDamageable player))
                 {
                     ApplyDamage(to: player);
                     damagePosition = transform.position;
