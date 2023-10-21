@@ -89,11 +89,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
                 ResetAttackDelayCountdown();
 
 
-            if (CanDoBasicAttack())
-            {
-                _cyaeghaAttack.PerformAttack(_player.transform.position);
-                ResetAttackDelayCountdown();
-            }
+           if (CanDoBasicAttack())
+           {
+               _cyaeghaAttack.PerformAttack(_player.transform.position);
+               ResetAttackDelayCountdown();
+           }
         }
 
         private void UpdateAttackDelayCountdown() =>
@@ -109,7 +109,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private bool CanDoBasicAttack()
         {
-            return //_followLogic.TargetReached
+            return _aiService.CanAttack() &&
                     _cyaeghaAttack.CanAttack()
                    && AttackDelayCountdownIsUp();
         }

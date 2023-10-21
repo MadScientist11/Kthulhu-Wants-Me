@@ -11,13 +11,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 {
     public interface IAIService
     {
+        bool SomeonesAttacking { get; set; }
         int EnemiesCount { get; }
         bool AllowedChasingPlayer(GameObject enemy);
         void AddToChase(GameObject enemy);
+        bool CanAttack();
     }
 
     public class EnemiesAIBrainService : IAIService, IInitializable, ITickable
     {
+        public bool SomeonesAttacking { get; set; }
+
         public int EnemiesCount
         {
             get { return _waveSystemDirector.CurrentWaveState.AliveEnemies.Count; }
@@ -66,6 +70,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             return _chasingPlayerEnemies.Contains(enemy);
         }
 
+        public bool CanAttack()
+        {
+            return !SomeonesAttacking;
+        }
+        
         public void AddToChase(GameObject enemy)
         {
             if (_chasingPlayerEnemies.Contains(enemy))

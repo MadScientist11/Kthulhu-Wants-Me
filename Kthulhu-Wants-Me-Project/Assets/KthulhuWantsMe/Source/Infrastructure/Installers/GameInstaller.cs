@@ -72,8 +72,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
             
             builder
+                .Register<FollowPlayerService>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
+            
+            builder
                 .Register<EnemyStatsScalingService>(Lifetime.Scoped)
                 .AsSelf();
+            
+           
             
             builder
                 .Register<EnemyStatsProvider>(Lifetime.Scoped)

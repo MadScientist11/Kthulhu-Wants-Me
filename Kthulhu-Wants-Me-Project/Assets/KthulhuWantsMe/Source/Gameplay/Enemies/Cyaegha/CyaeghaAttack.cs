@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -11,6 +12,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using VContainer;
+using Vertx.Debugging;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
@@ -29,6 +31,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private bool _isAttacking;
         
         private CyaeghaConfiguration _cyaeghaConfiguration;
+        private IGameFactory _gameFactory;
+        private IAIService _aiService;
+
+        [Inject]
+        public void Construct(IGameFactory gameFactory, IAIService aiService)
+        {
+            _aiService = aiService;
+            _gameFactory = gameFactory;
+        }
 
         private void Start()
         {
@@ -47,6 +58,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         private IEnumerator DoAttack(Vector3 lastPlayerPosition)
         {
+            _aiService.SomeonesAttacking = true;
             _attackPrepareFeedback?.PlayFeedbacks();
             yield return new WaitForSeconds(0.5f);
 
@@ -78,6 +90,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
           
 
             _isAttacking = false;
+            _aiService.SomeonesAttacking = false;
+
             _attackCooldown = _cyaeghaConfiguration.AttackCooldown;
         }
 
@@ -116,6 +130,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         public bool CanAttack()
         {
+            Vector3 directionToPlayer = (_gameFactory.Player.transform.position - transform.position).normalized;
+            Ray ray = new Ray(transform.position, directionToPlayer);
+            if (DrawPhysics.SphereCast(ray, 0.25f,  out RaycastHit hit,10f, LayerMasks.EnemyMask))
+            {
+                Debug.Log($"Raycast success {hit.transform.name}");
+                return false;
+            }
             return !_isAttacking && _attackCooldown <= 0f;
         }
 
