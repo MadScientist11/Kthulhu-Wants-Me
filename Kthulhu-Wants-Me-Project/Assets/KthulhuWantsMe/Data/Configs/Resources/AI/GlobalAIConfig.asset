@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da321b3d6514a14a8d6aec11e070f10, type: 3}
   m_Name: GlobalAIConfig
   m_EditorClassIdentifier: 
-  MaxChasingEnemies: 15
-  EnemiesFallBehindDistance: 10
-  AIBehaviourUpdateRate: 2
+  MaxChasingEnemies: 6
+  EnemiesFallBehindDistance: 19
+  AIBehaviourUpdateRate: 1.5

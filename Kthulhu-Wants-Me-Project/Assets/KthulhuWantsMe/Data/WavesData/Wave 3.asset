@@ -52,7 +52,7 @@ MonoBehaviour:
       - EnemyType: 0
         Quantity: 1
         SpawnAt: 0
-      WaitForBatchClearance: 0
+      WaitForBatchClearance: 1
       NextBatchDelay: 11
     TimeConstraint: 25
     SpawnRandomEnemyEverySeconds: 3
