@@ -76,7 +76,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             _aiService.SomeonesAttacking = true;
             _cyaeghaNavMesh.enabled = false;
             _attackPrepareFeedback?.PlayFeedbacks();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.75f);
 
             Vector3 jumpStartPos = transform.position;
             Vector3 dest = lastPlayerPosition;
