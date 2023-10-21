@@ -4,6 +4,7 @@ using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
+using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -26,10 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public EnemySpawner ClosestSpawner
         {
-            get
-            {
-                return ClosestSpawners.First();
-            }
+            get { return ClosestSpawners.First(); }
         }
 
 
@@ -76,7 +74,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         {
             return !_waveState.AliveEnemiesByPlace.ContainsKey(spawnerId) ||
                    (_waveState.AliveEnemiesByPlace[spawnerId]
-                       .All(enemyHealth => !enemyHealth.GetComponent<EnemyStatsContainer>().Config.IsElite() 
+                       .All(enemyHealth => !enemyHealth.GetComponent<EnemyStatsContainer>().Config.IsElite()
                                            && !_waveState.PendingEnemies.ContainsKey(spawnerId)));
         }
 
@@ -86,8 +84,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 return;
 
             EnemySpawner desired = ClosestSpawner;
-            
-            if(_waveState.PendingEnemies.ContainsKey(desired.Id))
+
+            if (_waveState.PendingEnemies.ContainsKey(desired.Id))
                 return;
 
             _waveState.DeregisterEnemy(currentSpawner, entity);
@@ -117,18 +115,27 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         {
             List<Health> batchEnemies = new();
             foreach (EnemyPack enemyPack in batch.EnemyPack)
+            {
                 batchEnemies.AddRange(SpawnEnemyPack(enemyPack));
+            }
+
             return batchEnemies;
         }
+
+        private readonly Dictionary<EnemySpawner, int> _spawnedCountAt = new();
 
         private IEnumerable<Health> SpawnEnemyPack(EnemyPack enemyPack)
         {
             for (int i = 0; i < enemyPack.Quantity; i++)
             {
                 EnemySpawner spawner = FindAppropriateSpawnerFor(enemyPack);
+                _spawnedCountAt.GetOrCreate(spawner);
+                _spawnedCountAt[spawner]++;
                 Health enemyHealth = SpawnEnemy(spawner, enemyPack.EnemyType);
                 yield return enemyHealth;
             }
+
+            _spawnedCountAt.Clear();
         }
 
         private EnemySpawner FindAppropriateSpawnerFor(EnemyPack batchEntry)
@@ -140,14 +147,24 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             else if (batchEntry.SpawnAt != EnemySpawnerId.Default)
                 return _enemySpawners[batchEntry.SpawnAt];
             else
-                return ClosestSpawner;
+            {
+                foreach (EnemySpawner closestSpawner in ClosestSpawners)
+                {
+                    if (!_spawnedCountAt.TryGetValue(closestSpawner, out int spawnedCount) || spawnedCount > _dataProvider.Waves.MaxEnemiesSpawnAtOnce)
+                    {
+                        return closestSpawner;
+                    }
+                }
+
+                return null;
+            }
         }
 
         private EnemySpawner FindUnoccupiedSpawner()
         {
             foreach (EnemySpawner closestSpawner in ClosestSpawners)
             {
-                if(IsSpawnerVacant(closestSpawner.Id))
+                if (IsSpawnerVacant(closestSpawner.Id))
                 {
                     return closestSpawner;
                 }
