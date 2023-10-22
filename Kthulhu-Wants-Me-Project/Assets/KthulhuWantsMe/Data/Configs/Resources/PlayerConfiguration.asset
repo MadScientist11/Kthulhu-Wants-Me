@@ -89,7 +89,7 @@ MonoBehaviour:
     type: 3}
   MoveSpeed: 4.7
   Gravity: {x: 0, y: -1000, z: 0}
-  DashStrength: 30
+  DashSpeed: 7
   AttackRadius: 1.5
   AttackEffectiveDistance: 1
   AttackStep: 18
