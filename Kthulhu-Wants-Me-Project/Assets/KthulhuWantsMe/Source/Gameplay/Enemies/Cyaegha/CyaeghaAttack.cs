@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using DG.Tweening;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 using VContainer;
-using Vertx.Debugging;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 {
@@ -21,14 +18,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         protected override float BaseDamage => _enemyStatsContainer.EnemyStats.Stats[StatType.BaseDamage];
         public bool IsAttacking => _isAttacking;
 
-        public AnimationCurve HeightCurve;
-        public AnimationCurve LandingCurve;
 
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
-        [FormerlySerializedAs("_attackFeedback")] [SerializeField] private MMFeedbacks _attackPrepareFeedback;
+        [FormerlySerializedAs("_attackFeedback")] [SerializeField]
+        private MMFeedbacks _attackPrepareFeedback;
 
         [SerializeField] private NavMeshAgent _cyaeghaNavMesh;
+
+        [Header("Jump")] [SerializeField] private Ease _jumpEasing;
+
+        [SerializeField] private float _delayBeforeJump = 0.75f;
+        [SerializeField] private float _jumpSpeed = 2;
+        [SerializeField] private float _jumpHeight = 2;
+
+        [Header("Landing")] [SerializeField] private Ease _landEasing;
+        [SerializeField] private float _landingSpeed = 5;
+
 
         private float _attackCooldown;
         private bool _isAttacking;
@@ -64,34 +70,31 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         {
             if (_isAttacking)
             {
-                _aiService.SomeonesAttacking = false;
-                _cyaeghaNavMesh.enabled = true;
+                ResetAttackState();
                 StopCoroutine(_attackCoroutine);
-                _attackCooldown = _cyaeghaConfiguration.AttackCooldown;
             }
         }
 
         private IEnumerator DoAttack(Vector3 lastPlayerPosition)
         {
-            _aiService.SomeonesAttacking = true;
-            _cyaeghaNavMesh.enabled = false;
+            SetAttackState();
+
             _attackPrepareFeedback?.PlayFeedbacks();
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(_delayBeforeJump);
 
             Vector3 jumpStartPos = transform.position;
             Vector3 dest = lastPlayerPosition;
-            _isAttacking = true;
 
             bool damaged = false;
 
             Vector3 damagePosition = Vector3.zero;
 
-            for (float t = 0; t < 1; t += Time.deltaTime * 2f)
+            for (float t = 0; t < 1; t += Time.deltaTime * _jumpSpeed)
             {
                 transform.position = Vector3.Lerp(jumpStartPos, dest, t)
-                                     + Vector3.up * (HeightCurve.Evaluate(t) * 2f);
-                
-                if ( t > 0.25f && TryDamage(.4f, out IDamageable player))
+                                     + Vector3.up * DOVirtual.EasedValue(0, _jumpHeight, t, _jumpEasing);
+
+                if (t > 0.25f && TryDamage(.4f, out IDamageable player))
                 {
                     ApplyDamage(to: player);
                     damagePosition = transform.position;
@@ -112,14 +115,45 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
                 if (sampleSuccess)
                 {
-                    for (float t = 0; t < 1; t += Time.deltaTime * 5f)
+                    for (float t = 0; t < 1; t += Time.deltaTime * _landingSpeed)
                     {
-                        transform.position = Vector3.Lerp(damagePosition, hit.position, LandingCurve.Evaluate(t));
+                        transform.position = Vector3.Lerp(damagePosition, hit.position,
+                            DOVirtual.EasedValue(0, 1, t, _landEasing));
+                        yield return null;
+                    }
+                }
+            }
+            else
+            {
+                Vector3 desiredXZ = transform.position + transform.forward * 1f;
+                bool sampleSuccess =
+                    NavMesh.SamplePosition(desiredXZ, out NavMeshHit hit, 3f, NavMesh.AllAreas);
+
+                if (sampleSuccess)
+                {
+                    Vector3 startPosition = transform.position;
+                    for (float t = 0; t < 1; t += Time.deltaTime * _landingSpeed)
+                    {
+                        transform.position = Vector3.Lerp(startPosition, hit.position,
+                            DOVirtual.EasedValue(0, 1, t, _jumpEasing));
+
                         yield return null;
                     }
                 }
             }
 
+            ResetAttackState();
+        }
+
+        private void SetAttackState()
+        {
+            _aiService.SomeonesAttacking = true;
+            _cyaeghaNavMesh.enabled = false;
+            _isAttacking = true;
+        }
+
+        private void ResetAttackState()
+        {
             _isAttacking = false;
             _aiService.SomeonesAttacking = false;
             _cyaeghaNavMesh.enabled = true;
@@ -143,15 +177,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             return false;
         }
 
-        private void FaceTarget(Vector3 destination)
-        {
-            Vector3 lookPos = destination - transform.position;
-            lookPos.y = 0;
-            Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 3);
-        }
-
-
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -162,13 +187,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         public bool CanAttack()
         {
             return !_isAttacking && _attackCooldown <= 0f;
-        }
-
-
-        private Vector3 AttackStartPoint()
-        {
-            return new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z) +
-                   transform.forward * 1.25f;
         }
     }
 }
