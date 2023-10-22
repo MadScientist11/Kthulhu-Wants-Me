@@ -56,52 +56,54 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
             Vector3 dir = _gameFactory.Player.transform.position - transform.position;
             Ray ray = new Ray(transform.position, dir.normalized);
 
-            if (Physics.SphereCast(ray, 1f, out RaycastHit hit, dir.magnitude, LayerMasks.FadeableObjectMask))
+            if (Physics.SphereCast(ray, 1f, out RaycastHit hit, dir.magnitude))
             {
-                if (hit.transform.TryGetComponent(out Renderer rendererComponent))
+                if (hit.transform.TryGetComponent(out FadeableObject fadeableObject))
                 {
-                    if (rendererComponent.material.renderQueue == (int)UnityEngine.Rendering.RenderQueue.Transparent &&
-                        (_inCameraView == null || hit.transform != _inCameraView.transform))
+                    if ((_inCameraView == null || hit.transform != _inCameraView.transform))
                     {
-                        StartCoroutine(DoFadeObject(rendererComponent));
-                        _inCameraView = rendererComponent;
+                        StartCoroutine(DoFadeObject(fadeableObject.Renderer));
+                        _inCameraView = fadeableObject.Renderer;
                     }
                 }
-
-                return;
-
-               
+                else
+                {
+                    if (_inCameraView != null)
+                    {
+                        StartCoroutine(DoUnFadeObject(_inCameraView));
+                        _inCameraView = null;
+                    }
+                }
             }
-            if (_inCameraView != null)
-            {
-                StartCoroutine(DoUnFadeObject(_inCameraView));
-                _inCameraView = null;
-            }
+           
           
         }
 
         private IEnumerator DoFadeObject(Renderer rendererComponent)
         {
-            rendererComponent.material.SetFloat("_StencilMode", 1);
-            rendererComponent.material.SetFloat("_StencilNo", 10);
-            for (float t = 0; t > -.75f; t -= Time.deltaTime * 2f)
+            //rendererComponent.material.SetFloat("_StencilMode", 1);
+            //rendererComponent.material.SetFloat("_StencilNo", 10);
+            rendererComponent.material.SetFloat("_DitherThreshold", 1);
+            Debug.Log(rendererComponent.transform);
+            for (float t = 1; t > .29f; t -= Time.deltaTime * 2f)
             {
-                rendererComponent.material.SetFloat("_Tweak_transparency", t);
+                rendererComponent.material.SetFloat("_DitherThreshold", t);
                 yield return null;
             }
         }
 
         private IEnumerator DoUnFadeObject(Renderer rendererComponent)
         {
-            rendererComponent.material.SetFloat("_StencilMode", 0);
-            rendererComponent.material.SetFloat("_StencilNo", 1);
-            for (float t = rendererComponent.material.GetFloat("_Tweak_transparency"); t < 0; t += Time.deltaTime * 2f)
+            yield return new WaitForSeconds(0.5f);
+            //rendererComponent.material.SetFloat("_StencilMode", 0);
+            //rendererComponent.material.SetFloat("_StencilNo", 1);
+            for (float t = rendererComponent.material.GetFloat("_DitherThreshold"); t < 1; t += Time.deltaTime * 2f)
             {
-                rendererComponent.material.SetFloat("_Tweak_transparency", t);
+                rendererComponent.material.SetFloat("_DitherThreshold", t);
                 yield return null;
             }
 
-            rendererComponent.material.SetFloat("_Tweak_transparency", 0);
+            rendererComponent.material.SetFloat("_DitherThreshold", 1);
         }
     }
 }
