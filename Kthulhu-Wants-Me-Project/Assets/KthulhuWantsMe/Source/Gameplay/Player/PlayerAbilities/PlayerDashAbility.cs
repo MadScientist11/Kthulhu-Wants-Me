@@ -60,7 +60,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
             _stopDashMovement = true;
             PlayerLocomotion.MovementController.ResetInputs();
-            PlayerLocomotion.MovementController.OverrideMoveSpeed(5);
+            PlayerLocomotion.MovementController.ResetSpeedOverride();
         }
       
         private void OnDashEnd()
@@ -83,7 +83,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _stopDashMovement = false;
             _inputService.GameplayScenario.Disable();
             PlayerLocomotion.MovementController.ResetInputs();
-            PlayerLocomotion.MovementController.OverrideMoveSpeed(7);
+            PlayerLocomotion.MovementController.OverrideMoveSpeed(_playerConfig.DashSpeed);
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
             
             _playerAnimator.PlayEvade();

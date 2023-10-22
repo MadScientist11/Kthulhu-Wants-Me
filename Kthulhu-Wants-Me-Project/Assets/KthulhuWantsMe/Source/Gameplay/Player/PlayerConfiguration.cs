@@ -3,6 +3,7 @@ using Cinemachine;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
@@ -18,7 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         public float MoveSpeed;
         public Vector3 Gravity = new(0, -30f, 0);
-        public float DashStrength;
+        public float DashSpeed;
         public float AttackRadius;
         public float AttackEffectiveDistance;
         public float AttackStep;

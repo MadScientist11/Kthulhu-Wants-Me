@@ -78,6 +78,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _moveSpeed = speed;
         }
 
+        public void ResetSpeedOverride()
+        {
+            _moveSpeed = _playerConfiguration.MoveSpeed;
+        }
+
         public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
         {
             if (_lookInputVector != Vector3.zero && _playerConfiguration.OrientationSharpness > 0f)
