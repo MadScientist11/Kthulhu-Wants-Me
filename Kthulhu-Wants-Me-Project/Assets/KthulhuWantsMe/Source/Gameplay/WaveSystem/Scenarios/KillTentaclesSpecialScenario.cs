@@ -19,7 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private int _remainingTentacles;
         private readonly int _waitForEnemiesRetreatDelay = 3;
 
-        private readonly EnemyType[] _additionalEnemies = { EnemyType.Cyeagha, EnemyType.YithCombo1, EnemyType.YithCombo2, EnemyType.YithCombo3 };
+        private readonly EnemyType[] _additionalEnemies = { EnemyType.Cyeagha, EnemyType.YithCombo1 };
         private int _additionalEnemiesCounter;
         
         private readonly IWaveSystemDirector _waveSystemDirector;
@@ -98,7 +98,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             _additionalEnemiesCounter++;
             EnemyType randomAdditionalEnemy = _additionalEnemies[Random.Range(0, _additionalEnemies.Length)];
-            _waveSystemDirector.WaveSpawner.SpawnEnemyClosestToPlayer(_waveSystemDirector.CurrentWaveState.CurrentWaveData.EnemyType);
+            _waveSystemDirector.WaveSpawner.SpawnEnemyClosestToPlayer(randomAdditionalEnemy);
         }
 
         private void RetreatAllEnemies()
