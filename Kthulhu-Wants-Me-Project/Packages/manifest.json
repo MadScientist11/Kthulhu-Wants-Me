@@ -21,6 +21,7 @@
     "com.unity.timeline": "1.7.5",
     "com.unity.toonshader": "0.9.5-preview",
     "com.unity.ugui": "1.0.0",
+    "com.unity.visualeffectgraph": "14.0.8",
     "com.unity.visualscripting": "1.8.0",
     "com.vertx.debugging": "2.1.4",
     "jp.hadashikick.vcontainer": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.13.2",
