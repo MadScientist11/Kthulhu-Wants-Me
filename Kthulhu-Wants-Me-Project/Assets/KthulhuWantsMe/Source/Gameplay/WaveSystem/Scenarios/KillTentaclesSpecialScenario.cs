@@ -79,7 +79,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             WaveData currentWaveData = _waveSystemDirector.CurrentWaveState.CurrentWaveData;
             
-            if (countdown % currentWaveData.SpawnRandomEnemyEverySeconds == 0 && _additionalEnemiesCounter < currentWaveData.SpawnedEnemiesCap)
+            if (countdown % currentWaveData.SpawnEnemyDelay == 0 && _additionalEnemiesCounter < currentWaveData.SpawnedEnemiesCap)
             {
                 SpawnAdditionalEnemy();
             }
@@ -98,7 +98,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             _additionalEnemiesCounter++;
             EnemyType randomAdditionalEnemy = _additionalEnemies[Random.Range(0, _additionalEnemies.Length)];
-            _waveSystemDirector.WaveSpawner.SpawnEnemyClosestToPlayer(randomAdditionalEnemy);
+            _waveSystemDirector.WaveSpawner.SpawnEnemyClosestToPlayer(_waveSystemDirector.CurrentWaveState.CurrentWaveData.EnemyType);
         }
 
         private void RetreatAllEnemies()

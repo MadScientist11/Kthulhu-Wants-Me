@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using Sirenix.OdinInspector;
+using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
@@ -16,7 +18,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         [ShowIf(nameof(WaveSystem.WaveObjective), WaveObjective.KillTentaclesSpecial)]
         public int TimeConstraint = 100;
         [ShowIf(nameof(WaveSystem.WaveObjective), WaveObjective.KillTentaclesSpecial)]
-        public int SpawnRandomEnemyEverySeconds = 3;
+        public int SpawnEnemyDelay = 3;
+        [ShowIf(nameof(WaveSystem.WaveObjective), WaveObjective.KillTentaclesSpecial)]
+        public EnemyType EnemyType = EnemyType.Cyeagha;
         [ShowIf(nameof(WaveSystem.WaveObjective), WaveObjective.KillTentaclesSpecial)]
         public int SpawnedEnemiesCap = 25;
         
