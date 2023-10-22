@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -15,6 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private MMFeedbacks _attackFeedback;
+        [SerializeField] private MMFeedbacks _attackPrepareFeedback;
 
         private float _attackCooldown;
         private bool _isAttacking;
@@ -31,8 +33,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _attackCooldown -= Time.deltaTime;
         }
 
-        public void PerformAttack()
+        public async void PerformAttack()
         {
+            _attackPrepareFeedback?.PlayFeedbacks();
+
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
+            
             if (!PhysicsUtility.HitFirst(transform, 
                     AttackStartPoint(), 
                     _yithConfiguration.AttackRadius, 

@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using UnityEngine;
@@ -13,15 +14,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         
         private GameObject _spellInstance;
 
-
         private float _spellEffectiveRadius = 3f;
         private float _spellCastCooldown = 3f;
+
+        private CancellationTokenSource _spellCastToken;
 
         
         private readonly PlayerFacade _player;
         private readonly ThePlayer _playerModel;
         private readonly TentacleSpellCastingAbility _spellCastingAbility;
-        private SpellConfiguration _spellConfiguration;
+        private readonly SpellConfiguration _spellConfiguration;
 
         public BasicAttackSpell(TentacleSpellCastingAbility spellCastingAbility, SpellConfiguration spellConfiguration,
             PlayerFacade player, ThePlayer playerModel)
@@ -40,7 +42,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             Vector3 spellCastPosition = _player.transform.position;
             _spellInstance = Object.Instantiate(_spellConfiguration.Prefab, spellCastPosition, Quaternion.identity);
             Active = true;
-            await UniTask.Delay(Mathf.FloorToInt(_spellConfiguration.ActivationTime * 1000));
+            await UniTask.Delay(Mathf.FloorToInt(_spellConfiguration.ActivationTime * 1000),false , PlayerLoopTiming.Update, _spellCastToken.Token);
             _spellCastingAbility.CastingSpell = false;
             
             if (Vector3.Distance(spellCastPosition, _player.transform.position) < _spellConfiguration.EffectiveRange)
