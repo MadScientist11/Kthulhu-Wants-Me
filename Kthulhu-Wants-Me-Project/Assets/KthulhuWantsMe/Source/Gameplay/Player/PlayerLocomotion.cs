@@ -1,3 +1,4 @@
+using System;
 using Freya;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
@@ -8,6 +9,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 using VContainer;
+using Vertx.Debugging;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
@@ -18,7 +20,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public Vector3 AverageVelocity => MovementController.AverageVelocity;
 
-
+        public Vector3 LastLookDirection => _lastLookDirection;
         public PlayerMovementController MovementController => _movementController;
 
         [SerializeField] private KinematicCharacterMotor _motor;
@@ -45,10 +47,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void Update()
         {
+            int mask = ~(LayerMasks.PlayerMask & LayerMasks.GroundMask);
+            bool b = DrawPhysics.SphereCast(transform.position, .2f,
+                -GetMovementDirection(_inputService.GameplayScenario.MovementInput).XZtoXYZ(), out RaycastHit hit, 1f,
+                ~LayerMasks.GroundMask);
+            
+         
             if (CanMove())
             {
                 if (MovementInputDetected())
+                {
+                    
                     _playerAnimator.Move();
+
+                }
                 else
                     _playerAnimator.StopMoving();
 
@@ -56,6 +68,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 return;
             }
 
+         
             _movementController.SetInputs(Vector2.zero, _lastLookDirection);
             _playerAnimator.StopMoving();
         }

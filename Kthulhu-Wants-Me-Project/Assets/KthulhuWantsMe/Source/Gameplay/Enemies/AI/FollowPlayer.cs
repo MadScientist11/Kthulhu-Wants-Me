@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -13,6 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 {
     public class FollowPlayer : MonoBehaviour
     {
+        public static List<FollowPlayer> _playerFollowers = new();
         public bool PlayerReached => DistanceToPlayer <= _reachDistance;
 
         public float DistanceToPlayer => Vector3.Distance(transform.position, _player.transform.position);
@@ -46,10 +49,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         private int _pathfindingMethod;
 
         private PlayerFacade _player;
+        private IFollowPlayerService _followPlayerService;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IGameFactory gameFactory, IFollowPlayerService followPlayerService)
         {
+            _followPlayerService = followPlayerService;
             _player = gameFactory.Player;
         }
 
@@ -71,12 +76,30 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         private void OnDrawGizmos()
         {
+            //foreach (PlayerPoint point in _followPlayerService.PointsAroundPlayer)
+            //{
+            //    Gizmos.color = point.IsVacant ? Color.green : Color.red;
+            //    Gizmos.DrawSphere(point.Point, 0.5f);
+            //}
+
             Gizmos.DrawSphere(_playerTarget, .5f);
         }
 
         public void MoveToPlayer(int pathfindingMethod = -1)
         {
             _playerTarget = _player.transform.position;
+
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 2f, LayerMasks.EnemyMask))
+            {
+                _movementMotor.Agent.stoppingDistance = 0;
+                Vector3 forward = Quaternion.Euler(0, -45, 0) * transform.forward;
+                _movementMotor.MoveTo(transform.position+ forward * 5f);
+                Debug.Log("Get aorund");
+            }
+            else
+            {
+                _movementMotor.Agent.stoppingDistance = _reachDistance;   
+            }
 
             if (PlayerReached)
             {
@@ -92,6 +115,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
             _movementMotor.MoveTo(_playerTarget);
         }
+        
+
+      
 
         private void FaceTarget(Vector3 destination)
         {

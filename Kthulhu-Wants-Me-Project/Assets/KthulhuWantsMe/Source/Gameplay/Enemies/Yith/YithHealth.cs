@@ -15,6 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public override float MaxHealth => enemyStatsContainer.EnemyStats.Stats[StatType.MaxHealth];
 
         [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
+        [SerializeField] private YithAIBrain _yithAIBrain;
         [SerializeField] private Collider _collider;
         [SerializeField] private MovementMotor _movementMotor;
         [SerializeField] private MMFeedbacks _hitFeedbacks;
@@ -24,23 +25,27 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private void Start()
         {
             Revive();
-            TookDamage += OnTookDamage;
             Died += HandleDeath;
             _yithConfiguration = (YithConfiguration)enemyStatsContainer.Config;
         }
 
         private void OnDestroy()
         {
-            TookDamage -= OnTookDamage;
             Died -= HandleDeath;
         }
 
-        private void OnTookDamage()
+        public override void TakeDamage(float damage, IDamageProvider damageProvider)
         {
             if (CurrentHealth <= 0)
                 return;
             
-            _movementMotor.AddVelocity(-transform.forward * _yithConfiguration.Knockback, _yithConfiguration.KnockbackTime);
+            base.TakeDamage(damage, damageProvider);
+
+            Debug.Log(damageProvider.DamageDealer.name);
+            
+            _movementMotor.AddVelocity(damageProvider.DamageDealer.forward * _yithConfiguration.Knockback, _yithConfiguration.KnockbackTime);
+            _yithAIBrain.Stunned = true;
+            
             _hitFeedbacks?.PlayFeedbacks();
         }
 

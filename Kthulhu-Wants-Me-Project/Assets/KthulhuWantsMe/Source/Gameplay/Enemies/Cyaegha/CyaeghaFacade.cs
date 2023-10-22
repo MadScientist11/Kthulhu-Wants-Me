@@ -20,6 +20,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
     {
         [SerializeField] private CyaeghaAIBrain _cyaeghaAIBrain;
         [SerializeField] private MovementMotor _movementMotor;
+        [SerializeField] private CyaeghaAttack _cyaeghaAttack;
         
         public void ResetState()
         {
@@ -29,6 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         public void StopEntityLogic()
         {
             _movementMotor.Disable();
+            _cyaeghaAttack.StopAttack();
             BlockAIProcessing();
         }
 

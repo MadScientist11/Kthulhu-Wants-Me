@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Freya;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -21,6 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
 
         private float _nextDashTime;
+        private bool _stopDashMovement;
 
         private IInputService _inputService;
         private PlayerStats _playerStats;
@@ -41,12 +43,29 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             _inputService.GameplayScenario.Dash -= PerformDash;
         }
-
-        private void OnDashEnd()
+        
+        private void OnAnimatorMove()
+        {
+            AnimatorStateInfo stateInfo = _playerAnimator.Animator.GetCurrentAnimatorStateInfo(0);
+ 
+            if (stateInfo.shortNameHash == PlayerAnimator.Evade && !_stopDashMovement)
+            {
+                PlayerLocomotion.MovementController.SetInputs(PlayerLocomotion.LastLookDirection.XZ(), PlayerLocomotion.LastLookDirection);
+            }
+        }
+        
+        private void OnDashRecovery()
         {
             _inputService.GameplayScenario.Enable();
-            PlayerLocomotion.AllowInput();
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
+            _stopDashMovement = true;
+            PlayerLocomotion.MovementController.ResetInputs();
+            PlayerLocomotion.MovementController.ResetSpeedOverride();
+        }
+      
+        private void OnDashEnd()
+        {
+
         }
 
         private void PerformDash()
@@ -61,18 +80,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void Dash()
         {
+            _stopDashMovement = false;
             _inputService.GameplayScenario.Disable();
-            PlayerLocomotion.BlockInput();
-            
+            PlayerLocomotion.MovementController.ResetInputs();
+            PlayerLocomotion.MovementController.OverrideMoveSpeed(_playerConfig.DashSpeed);
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
             
             _playerAnimator.PlayEvade();
-            //PlayerLocomotion.MovementController.AddVelocity(transform.forward * _playerConfig.DashStrength);
+            //PlayerLocomotion.MovementController.AddVelocity(transform.forward * 10);
         }
 
         private bool CanDash()
         {
-            return !_grabAbilityResponse.Grabbed && PlayerLocomotion.IsMoving && Time.time >= _nextDashTime;
+            return !_grabAbilityResponse.Grabbed && Time.time >= _nextDashTime;
         }
     }
 }

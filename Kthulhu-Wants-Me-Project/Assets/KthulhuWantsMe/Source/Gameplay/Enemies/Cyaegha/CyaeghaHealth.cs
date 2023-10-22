@@ -55,8 +55,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private IEnumerator Death()
         {
             _collider.enabled = false;
-            yield return new WaitForSeconds(.2f);
             GetComponent<IStoppable>().StopEntityLogic();
+            yield return new WaitForSeconds(.2f);
             Destroy(gameObject, 2f);
         }
     }

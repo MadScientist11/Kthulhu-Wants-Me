@@ -10,7 +10,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
     public class YithAIBrain : MonoBehaviour, IEnemyAIBrain
     {
         public bool BlockProcessing { get; set; }
-      
+        public bool Stunned { get; set; }
+
         [SerializeField] private YithHealth _yithHealth;
         [SerializeField] private YithAttack _yithAttack;
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
@@ -22,6 +23,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private float _attackDelayTime;
         private float _rageComboRandom;
         private float _reconsiderationTime;
+        private float _lastStunTime;
 
         private YithConfiguration _yithConfiguration;
 
@@ -45,8 +47,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             
         }
 
-        private void Update() => 
+        private void Update()
+        {
+            if (Stunned)
+            {
+                _lastStunTime = Time.time;
+                Stunned = false;
+            }
+            
             DecideStrategy();
+        }
 
         public void ResetState()
         {
@@ -56,6 +66,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             if(_yithHealth.IsDead || BlockProcessing)
                 return;
+
+            if (_lastStunTime + 2f > Time.time)
+            {
+                return;
+            }
 
             DecideMoveStrategy();
             DecideAttackStrategy();

@@ -8,6 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
     [CreateAssetMenu(menuName = "Create Waves Configuration", fileName = "WavesConfiguration", order = 0)]
     public class WavesConfiguration : SerializedScriptableObject
     {
+        public int MaxEnemiesSpawnAtOnce = 3;
         public EnemyScalingSO BaseEnemyScaling;
         public WavesContainer WavesContainer;
         
@@ -18,5 +19,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
                 return WavesContainer.WavesData[index].WaveData;
             }
         }
+
     }
 }

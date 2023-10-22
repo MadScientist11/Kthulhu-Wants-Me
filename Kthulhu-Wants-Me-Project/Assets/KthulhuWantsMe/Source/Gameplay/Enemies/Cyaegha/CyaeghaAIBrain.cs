@@ -27,6 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         
 
         private float _attackDelayTime;
+        private float _reconsiderationTime;
 
         private CyaeghaConfiguration _cyaeghaConfiguration;
         
@@ -58,13 +59,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         {
             if (_cyaeghaHealth.IsDead || BlockProcessing)
                 return;
+            
+            _reconsiderationTime -= Time.deltaTime;
 
+            if (_reconsiderationTime > 0)
+            {
+                return;
+            }
+            
             DecideMoveStrategy();
             DecideAttackStrategy();
         }
 
         private void DecideMoveStrategy()
         {
+            if(_cyaeghaAttack.IsAttacking)
+                return;
+            
             if (Vector3.Distance(transform.position, _player.transform.position) < 4)
             {
                 _aiService.AddToChase(gameObject);
@@ -89,11 +100,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
                 ResetAttackDelayCountdown();
 
 
-            if (CanDoBasicAttack())
-            {
-                _cyaeghaAttack.PerformAttack(_player.transform.position);
-                ResetAttackDelayCountdown();
-            }
+           if (CanDoBasicAttack())
+           {
+               _cyaeghaAttack.PerformAttack(_player.transform.position);
+               _reconsiderationTime = 2f;
+               ResetAttackDelayCountdown();
+           }
         }
 
         private void UpdateAttackDelayCountdown() =>
@@ -106,10 +118,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             => _attackDelayTime <= 0;
 
 
-
         private bool CanDoBasicAttack()
         {
-            return //_followLogic.TargetReached
+            return _aiService.CanAttack() &&
                     _cyaeghaAttack.CanAttack()
                    && AttackDelayCountdownIsUp();
         }

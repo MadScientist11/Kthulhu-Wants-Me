@@ -39,14 +39,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         private IEnumerator DoVelocityChange(Vector3 velocity, float resetAfter, Action action)
         {
-            _navMeshAgent.velocity = velocity;
             _navMeshAgent.angularSpeed = 0;
             
-            yield return new WaitForSeconds(resetAfter);
-            
-            _navMeshAgent.angularSpeed = _defaultAngularSpeed;
+            float startTime = Time.time;
+
+            while (startTime + resetAfter > Time.time)
+            {
+                _navMeshAgent.velocity = velocity;
+                yield return null;
+            }
+         
             _navMeshAgent.velocity = Vector3.zero;
-            
+            _navMeshAgent.angularSpeed = _defaultAngularSpeed;
+
             action?.Invoke();
         }
 
