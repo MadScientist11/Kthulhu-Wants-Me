@@ -36,6 +36,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
         public async UniTask Cast()
         {
+
+            _spellCastToken = new();
             InCooldown = true;
             
             _spellCastingAbility.CastingSpell = true;
