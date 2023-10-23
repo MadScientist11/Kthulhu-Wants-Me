@@ -55,7 +55,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore
 
         private void OnHit(Collider hit)
         {
-            Debug.Log($"Hit {hit.name}");
             if(hit.TryGetComponent(out IDamageable damageable))
             {
                 _claymoreSpecialAttack.Apply(damageable);

@@ -50,18 +50,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _player = gameFactory.Player;
         }
 
-        private void Awake()
-        {
-            _tentacleMaterial = _tentacleRenderer.material;
-        }
-
-        private void Update()
-        {
-            _tentacleMaterial.SetFloat(Radius, _tentacleGrabRadius);
-            _tentacleMaterial.SetFloat(TwirlStrength, _twirlStrength);
-            _tentacleMaterial.SetVector(InteractPos, _grabTarget.localPosition + _tentacleGrabOffset);
-        }
-        
+    
         public void PlayGrabPlayerAnimation(Transform playerFollowTarget)
         {
             //_playerFollowTarget = playerFollowTarget;

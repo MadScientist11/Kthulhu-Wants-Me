@@ -7,6 +7,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using Sirenix.Utilities;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
@@ -48,9 +49,12 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         private void OnBatchSpawned(IEnumerable<Health> enemies)
         {
-            _remainingTentacles = enemies
-                .Where(enemy => enemy.TryGetComponent(out TentacleAIBrain _))
-                .ForEach(TrackTentacleDeath).Count();
+            if (enemies.Any(enemy => enemy.TryGetComponent(out TentacleAIBrain _)))
+            {
+                _remainingTentacles = enemies
+                    .Where(enemy => enemy.TryGetComponent(out TentacleAIBrain _))
+                    .ForEach(TrackTentacleDeath).Count();
+            }
         }
 
         private async UniTaskVoid StartWaveLossTimer()
@@ -105,6 +109,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             for (var index = 0; index < _waveSystemDirector.CurrentWaveState.AliveEnemies.Count; index++)
             {
+                Debug.Log("Retreat enemies");
+
                 Health aliveEnemy = _waveSystemDirector.CurrentWaveState.AliveEnemies[index];
                 if (aliveEnemy.TryGetComponent(out IRetreatBehaviour retreatBehaviour))
                 {
@@ -118,7 +124,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             tentacleHealth.Died += () =>
             {
                 _remainingTentacles--;
-
+                Debug.Log($"Kill spcial tentacle {_remainingTentacles}");
                 if (_remainingTentacles == 0)
                 {
                     _waveSystemDirector.CompleteWaveAsVictory();
