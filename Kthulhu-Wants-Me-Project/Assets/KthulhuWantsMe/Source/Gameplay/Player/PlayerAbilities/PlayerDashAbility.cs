@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -17,6 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
     {
         [SerializeField] private PlayerFacade _player;
         [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private PlayerAttack _playerAttack;
         [SerializeField] private TentacleGrabAbilityResponse _grabAbilityResponse;
 
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
@@ -70,9 +72,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void PerformDash()
         {
-
             if (CanDash())
             {
+                _playerAttack.ResetAttackState();
                 Dash();
                 _nextDashTime = Time.time + _playerStats.MainStats[StatType.EvadeCooldown];
             }

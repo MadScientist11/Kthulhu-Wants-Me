@@ -2375,7 +2375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff1bb33c41de6cb4293cadaa58070437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerLocomotion: {fileID: 5663912579931136821}
   _animator: {fileID: 1823546143767556717}
 --- !u!114 &5663912579931136821
 MonoBehaviour:
@@ -2479,6 +2478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: -5172653069112829316}
   _playerAnimator: {fileID: -4856184112398116678}
+  _playerAttack: {fileID: -8648004300217098860}
   _grabAbilityResponse: {fileID: -2573202685680207158}
 --- !u!114 &1575893109066662898
 MonoBehaviour:
