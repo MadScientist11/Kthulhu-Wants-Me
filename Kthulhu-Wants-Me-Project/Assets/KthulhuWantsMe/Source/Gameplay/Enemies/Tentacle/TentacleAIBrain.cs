@@ -131,8 +131,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             
             
             
-            if (CanGrabPlayer())
-                return AttackDecision.GrabAbility;
+            //if (CanGrabPlayer())
+            //    return AttackDecision.GrabAbility;
             else if(CanDoBasicAttack())
                 return AttackDecision.BasicAttack;
             else if(CanCastAttackSpell())

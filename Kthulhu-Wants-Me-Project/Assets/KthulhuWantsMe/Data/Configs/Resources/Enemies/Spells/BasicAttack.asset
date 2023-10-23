@@ -22,7 +22,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   SpellId: 3
-  Prefab: {fileID: 3858957136978303227, guid: a6c6ea91ada8e554db05531afa8602fd, type: 3}
+  Prefab: {fileID: 1398281000895932739, guid: 641592fcd8cf3de4592d1525c1c028f0, type: 3}
   EffectiveRange: 3
   Cooldown: 2
-  ActivationTime: 1
+  ActivationTime: 2
