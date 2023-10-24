@@ -22,5 +22,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         
         public float ChaseCooldown = 10;
         public float ChaseAfterSeconds = 10;
+        public float RotationSpeed = 90;
     }
 }

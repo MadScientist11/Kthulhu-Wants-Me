@@ -154,7 +154,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro && _tentacleAggro.IsPlayerInFront;
         
         private bool CanCastAttackSpell() =>
-            _tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.BasicAttackSpell) && _tentacleAggro.HasAggro;
+            _tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.BasicAttackSpell) && _tentacleAggro.HasAggro && _tentacleAggro.DistanceToPlayer() > 3;
 
         private bool CanNotAttack() =>
             _tentacleGrabAbility.HoldsPlayer || _tentacleAttack.IsAttacking || _reconsiderationTime > 0 || Stunned;

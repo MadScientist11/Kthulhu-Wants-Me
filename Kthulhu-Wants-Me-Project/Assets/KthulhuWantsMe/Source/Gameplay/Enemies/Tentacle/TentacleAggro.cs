@@ -14,6 +14,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
+
+        private float _speed = 90;
         
         private PlayerFacade _player;
         private TentacleConfiguration _tentacleConfiguration;
@@ -31,6 +33,36 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void Update()
         {
+            if (PlayerInRange())
+            {
+                HasAggro = true;
+                _tentacleAnimator.PlayAggroIdle();
+              
+                Vector3 directionToPlayer = _player.transform.position - transform.position;
+                directionToPlayer.Normalize();
+                directionToPlayer.y = 0f;
+
+                if (directionToPlayer != Vector3.zero)
+                {
+                    float step = _tentacleConfiguration.RotationSpeed * Time.deltaTime;
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(directionToPlayer), step);
+                }
+   
+                if (DistanceToPlayer() < 3 && Vector3.Dot(transform.forward, directionToPlayer) > 0.7f)
+                {
+                    IsPlayerInFront = true;
+                }
+                else
+                {
+                    IsPlayerInFront = false;
+                }
+            }
+            else
+            {
+                HasAggro = false;
+                IsPlayerInFront = false;
+            }
+            return;
             if (PlayerInRange())
             {
                 _tentacleAnimator.PlayAggroIdle();
@@ -60,7 +92,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             return DistanceToPlayer() < _tentacleConfiguration.AggroRange;
         }
         
-        private float DistanceToPlayer()
+        public float DistanceToPlayer()
         {
             return Vector3.Distance(_player.transform.position, transform.position);
         }
