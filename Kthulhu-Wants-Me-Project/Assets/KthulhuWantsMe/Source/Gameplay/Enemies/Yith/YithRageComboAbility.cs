@@ -114,9 +114,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                     NavMesh.AllAreas))
             {
                 _target = hit.position;
+                return true;
+
             }
 
-            return true;
+            return false;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(_target, .5f);
         }
 
         private Vector3 AttackStartPoint()
