@@ -1,4 +1,4 @@
-using Sirenix.Utilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +8,14 @@ namespace KthulhuWantsMe.Source.UI
     {
         [SerializeField] private Image _hpBarImage;
         [SerializeField] private float _hpUnit;
+
+        [SerializeField] private TextMeshProUGUI _hpText;
         
         public void SetValue(float current, float max)
         {
             _hpBarImage.fillAmount = current / max;
+            if(_hpText != null)
+                _hpText.text = $"{current} / {max}";
         }
         
         public void SetNewMax(float newMax)

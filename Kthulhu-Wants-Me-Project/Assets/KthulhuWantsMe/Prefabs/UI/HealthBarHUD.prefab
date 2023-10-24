@@ -84,7 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2061230231301973966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,3 +189,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hpBarImage: {fileID: 5434032387455761941}
+  _hpUnit: 0
+  _hpText: {fileID: 0}

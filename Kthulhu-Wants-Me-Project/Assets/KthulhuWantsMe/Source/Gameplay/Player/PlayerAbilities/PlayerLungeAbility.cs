@@ -54,8 +54,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void Update()
         {
-            if (_lungeCharge) 
+            if (_lungeCharge)
+            {
                 _chargedVelocity += _chargeVelocityStep * Time.deltaTime;
+                _playerLocomotion.FaceMouse();
+            } 
 
             if (_lunge) 
                 ProcessLunge();

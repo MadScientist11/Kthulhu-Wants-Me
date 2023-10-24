@@ -52,6 +52,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         public void Show()
         {
             _indicatorsUI.Enable();
+            _playerHpBar.SetValue(_player.PlayerStats.CurrentHp, _player.PlayerStats.MainStats[StatType.MaxHealth]);
         }
 
         public void Hide()

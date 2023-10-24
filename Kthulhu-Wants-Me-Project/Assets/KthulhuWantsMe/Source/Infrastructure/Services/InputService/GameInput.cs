@@ -269,7 +269,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 {
                     ""name"": """",
                     ""id"": ""eb51251c-8341-4eca-ac99-f14dd6e4dfd0"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
