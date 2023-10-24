@@ -48,7 +48,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         private IEnumerator EmergeFromPortal(Vector3 from, Vector3 to)
         {
             OnEmerge();
-            
             Vector3 initialPosition = from;
             Vector3 targetPosition = to;
 

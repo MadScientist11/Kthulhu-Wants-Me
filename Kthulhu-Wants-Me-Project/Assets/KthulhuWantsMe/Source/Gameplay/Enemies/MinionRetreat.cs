@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using UnityEngine;
 using VContainer;

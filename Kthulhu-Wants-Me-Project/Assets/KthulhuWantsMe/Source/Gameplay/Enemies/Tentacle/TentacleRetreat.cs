@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public interface IRetreatBehaviour
     {
