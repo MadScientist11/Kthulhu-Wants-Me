@@ -55,10 +55,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<UpgradeService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
-            builder
-                .Register<PortalSystem>(Lifetime.Scoped)
-                .AsImplementedInterfaces();
-                
+
             builder
                 .Register<PortalFactory>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
