@@ -11,6 +11,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 {
     public class PlayerLungeAbility : MonoBehaviour, IAbility
     {
+        public bool IsInLunge => _lunge || _lungeCharge;
+        
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private PlayerAnimator _playerAnimator;

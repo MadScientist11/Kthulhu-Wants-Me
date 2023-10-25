@@ -89,7 +89,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""id"": ""79cc69a1-5ed3-40f4-9ad4-a485bad0b81a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -98,7 +98,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""id"": ""ca939fe4-fdf6-4d01-a8ce-b931b5b52d70"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=1)"",
                     ""initialStateCheck"": false
                 },
                 {

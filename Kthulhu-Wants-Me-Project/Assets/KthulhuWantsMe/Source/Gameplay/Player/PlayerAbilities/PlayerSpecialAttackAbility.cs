@@ -15,7 +15,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
     public class PlayerSpecialAttackAbility : MonoBehaviour, IAbility
     {
         [SerializeField] private PlayerAnimator _playerAnimator;
-        
         [SerializeField] private MMFeedbacks _specialAttackFeedback;
         
         private WeaponItem _currentWeapon;
@@ -44,9 +43,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void PerformSpecialAttack()
         {
+            if(GetComponent<PlayerLungeAbility>().IsInLunge)
+                return;
+            
             if (_player.Inventory.CurrentItem is WeaponItem weapon && weapon.WeaponData.WeaponMoveSet.HasSpecialAttack)
             {
                 _currentWeapon = weapon;
+                GetComponent<PlayerLocomotion>().FaceMouse();
                 _playerAnimator.PlaySpecialAttack();
                 _specialAttackFeedback?.PlayFeedbacks();
             }

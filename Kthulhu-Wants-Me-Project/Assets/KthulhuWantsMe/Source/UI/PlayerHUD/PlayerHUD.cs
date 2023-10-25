@@ -37,7 +37,6 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
             _playerHpBar.SetNewMax(_player.PlayerStats.MainStats[StatType.MaxHealth]);
             
             _player.HealthChanged += UpdateHealthBar;
-            _player.PlayerStats.StatChanged += GrowHealthBar;
 
             _waveSystemDirector.WaveStarted += OnWaveStarted;
             _waveSystemDirector.WaveCompleted += OnWaveCompleted;
@@ -46,7 +45,6 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         private void OnDestroy()
         {
             _player.HealthChanged -= UpdateHealthBar;
-            _player.PlayerStats.StatChanged -= GrowHealthBar;
         }
 
         public void Show()
