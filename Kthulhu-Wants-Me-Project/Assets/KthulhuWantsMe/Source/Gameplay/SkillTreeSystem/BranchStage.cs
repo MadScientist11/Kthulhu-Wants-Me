@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 
 namespace KthulhuWantsMe.Source.Gameplay.SkillTreeSystem
 {
     [Serializable]
-    public class Branch
+    public class BranchStage
     {
-        public List<BranchStageTemplate> BranchStages;
+        public List<UpgradeData> Upgrades;
     }
 }

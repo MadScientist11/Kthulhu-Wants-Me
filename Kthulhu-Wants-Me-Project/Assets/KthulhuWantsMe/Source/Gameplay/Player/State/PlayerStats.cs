@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using UnityEngine;
 
@@ -21,8 +22,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             }
         }
 
+        public List<SkillId> AcquiredSkills { get; }
+
+
         private readonly Dictionary<StatType, float> _mainStats;
-        
+
 
         private PlayerConfiguration _playerConfiguration;
 
@@ -31,7 +35,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             _playerConfiguration = playerConfiguration;
             _mainStats = playerConfiguration.BaseStats.ToDictionary(entry => entry.Key,
                 entry => entry.Value);
-
+            AcquiredSkills = new();
         }
 
         public void ChangeStat(StatType statType, float newValue)

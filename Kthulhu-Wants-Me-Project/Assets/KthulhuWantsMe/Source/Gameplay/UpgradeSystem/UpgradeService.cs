@@ -23,6 +23,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             IUpgrade upgrade = upgradeData.UpgradeType switch
             {
                 UpgradeType.StatUpgrade => new StatUpgrade(upgradeData, _player),
+                UpgradeType.SkillAcquirement => new SkillAcquirementUpgrade(upgradeData, _player),
                 _ => throw new ArgumentOutOfRangeException()
             };
             
