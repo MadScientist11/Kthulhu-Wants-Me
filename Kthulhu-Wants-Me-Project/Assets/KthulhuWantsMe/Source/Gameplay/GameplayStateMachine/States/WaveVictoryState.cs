@@ -18,7 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly GameplayStateMachine _gameplayStateMachine;
         private readonly IWaveSystemDirector _waveSystemDirector;
 
-        public WaveVictoryState(GameplayStateMachine gameplayStateMachine, IProgressService progressService, 
+        public WaveVictoryState(GameplayStateMachine gameplayStateMachine, IProgressService progressService,
             IInputService inputService, IUIService uiService, IWaveSystemDirector waveSystemDirector)
         {
             _waveSystemDirector = waveSystemDirector;
@@ -27,40 +27,30 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _inputService = inputService;
             _progressService = progressService;
         }
-        
+
         public async void Enter()
         {
             _progressService.ProgressData.CompletedWaveIndex++;
 
-            List<UpgradeData> upgradeRewards = _waveSystemDirector.CurrentWaveState.CurrentWaveData.UpgradeRewards;
-            
-            if (upgradeRewards != null && upgradeRewards.Count > 0)
-            {
-                _inputService.SwitchInputScenario(InputScenario.UI);
 
-                await UniTask.Delay(1000);
-            
-                UpgradeWindow window = (UpgradeWindow) _uiService.OpenWindow(WindowId.UpgradeWindow);
-                window.Init(upgradeRewards, OnUpgradePicked);
-            }
-            else
-            {
-                await StartNextWaveCounter(new CancellationTokenSource());
-            }
+            _inputService.SwitchInputScenario(InputScenario.UI);
 
+            await UniTask.Delay(1000);
+
+            UpgradeWindow window = (UpgradeWindow)_uiService.OpenWindow(WindowId.UpgradeWindow);
+            window.Init(OnUpgradePicked);
         }
 
         public void Exit()
         {
-            
         }
-        
+
         private async void OnUpgradePicked()
         {
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
             await StartNextWaveCounter(new CancellationTokenSource());
         }
-        
+
         public async UniTask StartNextWaveCounter(CancellationTokenSource cancellationToken)
         {
             int countdown = 10;
@@ -73,7 +63,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
                 {
                     cancellationToken.Cancel();
                     _gameplayStateMachine.SwitchState<WaveStartState>();
-
                 }
             }
         }

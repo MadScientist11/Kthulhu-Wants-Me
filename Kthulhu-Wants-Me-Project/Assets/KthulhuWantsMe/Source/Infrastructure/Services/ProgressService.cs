@@ -1,10 +1,13 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
     public class ProgressData
     {
         public int CompletedWaveIndex;
+        public Dictionary<Guid, int> CompletedBranchStages;
     }
     public interface IProgressService
     {
@@ -20,6 +23,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         {
             IsInitialized = true;
             ProgressData.CompletedWaveIndex = -1;
+            ProgressData.CompletedBranchStages = new();
             return UniTask.CompletedTask;
         }
     }

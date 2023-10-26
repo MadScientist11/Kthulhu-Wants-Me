@@ -4,15 +4,16 @@ using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.UI
 {
-    public class UpgradeUI : MonoBehaviour
+    public class BranchView : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private TextMeshProUGUI _upgradeDescription;
-        [SerializeField] private Button _upgradeButton;
+        [SerializeField] private TextMeshProUGUI _stageStats;
         
         private UpgradeData _upgradeData;
         private UpgradeWindow _upgradeWindow;
@@ -29,17 +30,10 @@ namespace KthulhuWantsMe.Source.UI
         {
             _upgradeWindow = upgradeWindow;
             _upgradeData = upgradeData;
-            _upgradeDescription.text = string.Format(upgradeData.UpgradeText, upgradeData.Value);
-            _upgradeButton.onClick.AddListener(OnUpgrade);
+            _stageStats.text = string.Format(upgradeData.UpgradeText, upgradeData.Value);
         }
 
-        private void OnDestroy()
-        {
-            _upgradeButton.onClick.RemoveListener(OnUpgrade);
-
-        }
-
-        private void OnUpgrade()
+        public void OnPointerClick(PointerEventData eventData)
         {
             _upgradeService.ApplyUpgrade(_upgradeData);
             _upgradeWindow.OnUpgradePicked?.Invoke();

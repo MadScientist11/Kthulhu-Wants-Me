@@ -5,13 +5,14 @@ using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.UI
 {
     public class UpgradeWindow : BaseWindow
     {
-        [SerializeField] private UpgradeUI _upgradeUIPrefab;
+        [FormerlySerializedAs("_upgradeUIPrefab")] [SerializeField] private BranchView branchViewPrefab;
         [SerializeField] private Transform _upgradesParent;
 
         public Action OnUpgradePicked { get; private set; }
@@ -26,10 +27,9 @@ namespace KthulhuWantsMe.Source.UI
             _gameFactory = gameFactory;
         }
 
-        public void Init(List<UpgradeData> upgrades, Action onUpgradePicked)
+        public void Init(Action onUpgradePicked)
         {
             OnUpgradePicked = onUpgradePicked;
-            _upgrades = upgrades;
             UpdateUI();
         }
 
@@ -37,8 +37,8 @@ namespace KthulhuWantsMe.Source.UI
         {
             foreach (UpgradeData upgrade in _upgrades)
             {
-                UpgradeUI upgradeUI = _gameFactory.CreatePrefabInjected(_upgradeUIPrefab, _upgradesParent);
-                upgradeUI.Init(upgrade, this);
+                BranchView branchView = _gameFactory.CreatePrefabInjected(branchViewPrefab, _upgradesParent);
+                branchView.Init(upgrade, this);
             }
         }
     }

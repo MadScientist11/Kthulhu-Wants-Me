@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BranchAggressor
   m_EditorClassIdentifier: 
   Branch:
-    Upgrades: []
+    BranchStages: []

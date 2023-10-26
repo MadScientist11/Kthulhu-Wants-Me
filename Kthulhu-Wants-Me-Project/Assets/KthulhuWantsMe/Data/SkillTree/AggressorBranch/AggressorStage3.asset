@@ -16,22 +16,8 @@ MonoBehaviour:
     Upgrades:
     - UpgradeTitle: 
       UpgradeText: 
-      UpgradeType: 0
+      UpgradeType: 1
       StatType: 0
-      SkillId: 0
-      UpgradeValueType: 0
-      Value: 0
-    - UpgradeTitle: 
-      UpgradeText: 
-      UpgradeType: 0
-      StatType: 0
-      SkillId: 0
-      UpgradeValueType: 0
-      Value: 0
-    - UpgradeTitle: 
-      UpgradeText: 
-      UpgradeType: 0
-      StatType: 0
-      SkillId: 0
+      SkillId: 2
       UpgradeValueType: 0
       Value: 0
