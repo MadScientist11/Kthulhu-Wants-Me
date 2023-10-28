@@ -22,6 +22,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         protected override float BaseDamage => _player.BaseDamage;
 
         public bool IsAttacking => _isAttacking;
+        public bool InRecoveryPhase => _inRecoveryPhase;
+        
+        public bool QueuedAttack { get; private set; }
         
         public MMFeedbacks TargetFeedbacks;
         [SerializeField] private PlayerAnimator _playerAnimator;
@@ -33,7 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         private int _comboAttackIndex;
         private WeaponItem _activeWeapon;
         private bool _isAttacking;
-        private bool _canProceedWithCombo;
+        private bool _inRecoveryPhase;
 
         private PlayerConfiguration _playerConfiguration;
         private IInputService _inputService;
@@ -48,14 +51,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _playerConfiguration = dataProvider.PlayerConfig;
 
             _inputService.GameplayScenario.Attack += PerformAttack;
-            _playerHealth.TookDamage += ResetAttackState;
             player.Inventory.OnCurrentItemChanged += UpdateActiveWeaponStatus;
         }
 
         private void OnDestroy()
         {
             _inputService.GameplayScenario.Attack -= PerformAttack;
-            _playerHealth.TookDamage -= ResetAttackState;
             _player.Inventory.OnCurrentItemChanged -= UpdateActiveWeaponStatus;
         }
 
@@ -66,14 +67,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         public void ResetAttackState()
         {
             _isAttacking = false;
-            _canProceedWithCombo = false;
+            _inRecoveryPhase = false;
             _comboAttackIndex = 0;
         }
 
         protected override void OnWindUpPhase()
         {
             _isAttacking = true;
-            _canProceedWithCombo = false;
+            QueuedAttack = false;
+            _inRecoveryPhase = false;
             Vector3 desiredDirection = _playerLocomotion.FaceMouse();
             //if (Physics.SphereCast(transform.position, 1, transform.forward, out RaycastHit hitInfo, 5,
             //        LayerMasks.EnemyMask))
@@ -106,7 +108,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         protected override void OnRecoveryPhase()
         {
-            _canProceedWithCombo = true;
+            _inRecoveryPhase = true;
             _comboAttackIndex++;
             _comboAttackIndex %= _activeWeapon.WeaponData.WeaponMoveSet.MoveSetAttackCount;
         }
@@ -121,7 +123,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             if (CantAttack())
                 return;
 
-            _playerLocomotion.BlockMovement(0.5f);
+            //_playerLocomotion.BlockMovement(0.1f);
+            QueuedAttack = true;
             _playerAnimator.PlayAttack(_comboAttackIndex);
         }
 
@@ -151,7 +154,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         }
 
         private bool CantAttack() =>
-            (_isAttacking && !_canProceedWithCombo)
+            (_isAttacking && !_inRecoveryPhase)
             || _playerAnimator.CurrentState == AnimatorState.Impact
             || tentacleGrabAbilityResponse.Grabbed
             || _activeWeapon == null

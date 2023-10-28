@@ -28,7 +28,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private PlayerAttack _playerAttack;
 
         private bool _blockMovement;
-        private bool _blockInputs;
         private Vector3 _lastLookDirection;
 
         private PlayerMovementController _movementController;
@@ -51,50 +50,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             bool b = DrawPhysics.SphereCast(transform.position, .2f,
                 -GetMovementDirection(_inputService.GameplayScenario.MovementInput).XZtoXYZ(), out RaycastHit hit, 1f,
                 ~LayerMasks.GroundMask);
-            
-         
+
+
             if (CanMove())
             {
                 if (MovementInputDetected())
-                {
-                    
                     _playerAnimator.Move();
-
-                }
                 else
                     _playerAnimator.StopMoving();
 
                 ProcessInput();
                 return;
             }
+            else if (_playerAttack.IsAttacking || _playerAttack.QueuedAttack)
+            {
+                ProcessInput();
+            }
 
-         
             _movementController.SetInputs(Vector2.zero, _lastLookDirection);
             _playerAnimator.StopMoving();
-        }
-
-        public void BlockMovement(float timeFor)
-        {
-            _blockMovement = true;
-            _movementController.ResetInputs();
-            _coroutineRunner.ExecuteAfter(timeFor, () => _blockMovement = false);
-        }
-
-        public void BlockInputAndResetPrevious(float timeFor)
-        {
-            BlockInput();
-            _movementController.ResetInputs();
-            _coroutineRunner.ExecuteAfter(timeFor, () => _blockInputs = false);
-        }
-        
-        public void BlockInput()
-        {
-            _blockInputs = true;
-        }
-        
-        public void AllowInput()
-        {
-            _blockInputs = false;
         }
 
         public Vector3 FaceMouse()
@@ -103,9 +77,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             _lastLookDirection = Vector3.zero;
             Plane plane = new Plane(Vector3.up, Vector3.zero);
-            
+
             Vector3 desiredDirection = transform.forward;
-            
+
             if (plane.Raycast(ray, out float enter))
             {
                 Vector3 hitPoint = ray.GetPoint(enter);
@@ -118,21 +92,25 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             return desiredDirection;
         }
 
+        public void BlockMovement(float timeFor)
+        {
+            _blockMovement = true;
+            _movementController.ResetInputs();
+            _coroutineRunner.ExecuteAfter(timeFor, () => _blockMovement = false);
+        }
+
         private void ProcessInput()
         {
-            if(_blockInputs)
-                return;
             //Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ();
             //movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
 
             Vector2 movementInput = -_inputService.GameplayScenario.MovementInput;
             movementInput = GetMovementDirection(movementInput);
-            
+
             if (movementInput.sqrMagnitude > 0)
             {
                 _lastLookDirection = movementInput.XZtoXYZ();
             }
-
 
             _movementController.SetInputs(movementInput, _lastLookDirection);
         }
@@ -154,19 +132,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             };
         }
 
-
         private bool CanMove()
         {
-            return !_playerAttack.IsAttacking && !_blockMovement;
+            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement && !_playerAttack.QueuedAttack;
         }
 
         private bool MovementInputDetected()
         {
-            if (_blockInputs)
-                return false;
-            
             return _inputService.GameplayScenario.MovementInput.sqrMagnitude > 0.1f;
         }
-
     }
 }
