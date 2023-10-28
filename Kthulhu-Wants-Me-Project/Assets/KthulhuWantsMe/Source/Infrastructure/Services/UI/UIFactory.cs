@@ -18,6 +18,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         PlayerHUD CreatePlayerHUD();
         MiscUI CreateMiscUI();
         UpgradeWindow CreateUpgradeWindow();
+        PauseWindow CreatePauseWindow();
     }
 
     public class UIFactory : IUIFactory
@@ -25,12 +26,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         public const string PlayerHUDPath = "PlayerHUD";
         public const string MiscUIPath = "MiscUI";
         public const string UpgradeWindowPath = "UpgradeWindow";
+        public const string PauseWindowPath = "PauseWindow";
         
         public bool IsInitialized { get; set; }
        
         private PlayerHUD _playerHUDPrefab;
         private MiscUI _miscUIPrefab;
         private UpgradeWindow _upgradeWindowPrefab;
+        private PauseWindow _pauseWindowPrefab;
 
         private Scene _uiScene;
 
@@ -54,6 +57,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _playerHUDPrefab = await _resourceManager.ProvideAssetAsync<PlayerHUD>(PlayerHUDPath);
             _miscUIPrefab = await _resourceManager.ProvideAssetAsync<MiscUI>(MiscUIPath);
             _upgradeWindowPrefab = await _resourceManager.ProvideAssetAsync<UpgradeWindow>(UpgradeWindowPath);
+            _pauseWindowPrefab = await _resourceManager.ProvideAssetAsync<PauseWindow>(PauseWindowPath);
         }
 
         public void EnqueueParent(LifetimeScope parent)
@@ -81,6 +85,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             UpgradeWindow upgradeWindow = _instantiator.Instantiate(_upgradeWindowPrefab);
             SceneManager.MoveGameObjectToScene(upgradeWindow.gameObject, _uiScene);
             return upgradeWindow;
+        }
+        
+        public PauseWindow CreatePauseWindow()
+        {
+            PauseWindow pauseWindow = _instantiator.Instantiate(_pauseWindowPrefab);
+            SceneManager.MoveGameObjectToScene(pauseWindow.gameObject, _uiScene);
+            return pauseWindow;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly ISceneDataProvider _sceneDataProvider;
         private readonly IUIService _uiService;
         private readonly ISceneLoader _sceneLoader;
-        private ThePlayer _player;
+        private readonly ThePlayer _player;
 
         public StartGameState(GameplayStateMachine gameplayStateMachine, IGameFactory gameFactory, IInputService inputService,
             ISceneDataProvider sceneDataProvider, IUIService uiService, ISceneLoader sceneLoader, ThePlayer player)

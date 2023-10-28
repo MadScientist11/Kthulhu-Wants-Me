@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
 using UnityEngine.SceneManagement;
 using VContainer;
+using Object = UnityEngine.Object;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
@@ -16,10 +17,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         PlayerHUD PlayerHUD { get; }
         void HideHUD();
         void ShowHUD();
+        void CloseActiveWindow();
     }
 
     public class UIService : IUIService
-    
+
     {
         public bool IsInitialized { get; set; }
 
@@ -35,6 +37,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
                 return _miscUI;
             }
         }
+
         public PlayerHUD PlayerHUD
         {
             get
@@ -47,11 +50,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
                 return _playerHUD;
             }
         }
-        
 
 
         private PlayerHUD _playerHUD;
         private MiscUI _miscUI;
+        private BaseWindow _activeWindow;
 
         private ISceneLoader _sceneLoader;
         private IUIFactory _uiFactory;
@@ -62,17 +65,26 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _uiFactory = uiFactory;
             _sceneLoader = sceneLoader;
         }
-        
+
         public BaseWindow OpenWindow(WindowId windowId)
         {
+            _activeWindow = null;
             switch (windowId)
             {
                 case WindowId.UpgradeWindow:
-                    UpgradeWindow upgradeWindow = _uiFactory.CreateUpgradeWindow();
-                    return upgradeWindow;
+                    _activeWindow = _uiFactory.CreateUpgradeWindow();
+                    return _activeWindow;
+                case WindowId.PauseWindow:
+                    _activeWindow = _uiFactory.CreatePauseWindow();
+                    return _activeWindow;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(windowId), windowId, null);
             }
+        }
+
+        public void CloseActiveWindow()
+        {
+            Object.Destroy(_activeWindow.gameObject);
         }
 
         public void ShowHUD()
@@ -81,14 +93,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             {
                 _playerHUD = _uiFactory.CreatePlayerHUD();
             }
-            
+
             _playerHUD.Show();
         }
-        
+
         public void HideHUD()
         {
             _playerHUD?.Hide();
         }
-        
     }
 }

@@ -3,5 +3,6 @@
     public enum WindowId
     {
         UpgradeWindow = 0,
+        PauseWindow = 1,
     }
 }
