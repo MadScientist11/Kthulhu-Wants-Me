@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+﻿using System.Text.RegularExpressions;
+using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using UnityEngine;
@@ -7,24 +8,25 @@ namespace KthulhuWantsMe.Source.Gameplay
 {
     public static class Extensions
     {
-        public static void SetLayer<T>(this GameObject gameobject, int layer, bool includeChildren = false) where T : Component
+        public static void SetLayer<T>(this GameObject gameobject, int layer, bool includeChildren = false)
+            where T : Component
         {
             gameobject.layer = layer;
             if (includeChildren == false) return;
- 
+
             var arr = gameobject.GetComponentsInChildren<T>(true);
-            
+
             for (int i = 0; i < arr.Length; i++)
                 arr[i].gameObject.layer = layer;
         }
-        
+
         public static void SetTransparency(this Material material, int cachedColorProperty, float value)
         {
             Color color = material.GetColor(cachedColorProperty);
             color.a = value;
             material.SetColor(cachedColorProperty, color);
         }
-        
+
         public static bool IsTransparent(this Material material)
         {
             return material.renderQueue == (int)UnityEngine.Rendering.RenderQueue.Transparent;
@@ -69,6 +71,19 @@ namespace KthulhuWantsMe.Source.Gameplay
         public static void SwitchOff(this GameObject go)
         {
             go.SetActive(false);
+        }
+
+        public static string SplitCamelCase(this string str)
+        {
+            return Regex.Replace(
+                Regex.Replace(
+                    str,
+                    @"(\P{Ll})(\P{Ll}\p{Ll})",
+                    "$1 $2"
+                ),
+                @"(\p{Ll})(\P{Ll})",
+                "$1 $2"
+            );
         }
     }
 }

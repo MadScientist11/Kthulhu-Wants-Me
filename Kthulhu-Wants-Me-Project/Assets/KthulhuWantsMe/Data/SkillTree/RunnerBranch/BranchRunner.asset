@@ -10,11 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b936993a57b4324bfa5193f0a3e3fd9, type: 3}
-  m_Name: BranchAggressor
+  m_Name: BranchRunner
   m_EditorClassIdentifier: 
   Branch:
-    BranchName: Aggressor
-    BranchStages:
-    - {fileID: 11400000, guid: 4cce3fd508f442744933789c6168f8a7, type: 2}
-    - {fileID: 11400000, guid: 1d2e4a342bbaac74193ca47eee0f0db0, type: 2}
-    - {fileID: 11400000, guid: 04f25553d33535f4db658e963880d12e, type: 2}
+    BranchName: 
+    BranchStages: []

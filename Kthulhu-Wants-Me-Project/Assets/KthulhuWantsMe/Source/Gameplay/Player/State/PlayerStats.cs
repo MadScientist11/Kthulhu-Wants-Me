@@ -40,6 +40,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public void ChangeStat(StatType statType, float newValue)
         {
+            if (statType == StatType.MaxHealth)
+            {
+                newValue = Mathf.Floor(newValue);
+            }
             _mainStats[statType] = newValue;
             StatChanged?.Invoke(statType, _mainStats[statType]);
         }

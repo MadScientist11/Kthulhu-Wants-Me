@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using KthulhuWantsMe.Source.Gameplay;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
@@ -51,7 +52,7 @@ namespace KthulhuWantsMe.Source.UI
             string stats = string.Empty;
             foreach (UpgradeData upgradeData in branchBranchStage.Upgrades)
             {
-                stats += upgradeData.UpgradeText + "\n";
+                stats += $"{upgradeData.StatType.ToString().SplitCamelCase()} [{upgradeData.Value}] \n";
             }
             _stageStats.text = stats;
         }
