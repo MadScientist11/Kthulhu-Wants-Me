@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: BranchAggressor
   m_EditorClassIdentifier: 
   Branch:
-    BranchStages: []
+    BranchStages:
+    - {fileID: 11400000, guid: 4cce3fd508f442744933789c6168f8a7, type: 2}
+    - {fileID: 11400000, guid: 1d2e4a342bbaac74193ca47eee0f0db0, type: 2}
+    - {fileID: 11400000, guid: 04f25553d33535f4db658e963880d12e, type: 2}

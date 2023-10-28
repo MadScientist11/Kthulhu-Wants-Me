@@ -4,6 +4,7 @@ using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
@@ -19,6 +20,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         WavesConfiguration Waves { get; }
         EnemyConfigsProvider EnemyConfigsProvider { get; }
         GameConfiguration GameConfig { get; }
+        SkillTreeTemplate SkillTree { get; }
     }
 
     public class DataProvider : IDataProvider
@@ -29,6 +31,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         private const string BuffItemsPath = "BuffItemsContainer";
         private const string WavesPath = "WavesConfiguration";
         private const string GameConfiguration = "GameConfiguration";
+        private const string SkillTreePath = "SkillTree";
         public PlayerConfiguration PlayerConfig { get; private set; }
         public PortalConfiguration PortalConfig { get; private set; }
         public BuffItemsContainer BuffItems { get; private set; }
@@ -36,6 +39,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         
         public GameConfiguration GameConfig { get; private set; }
         public EnemyConfigsProvider EnemyConfigsProvider { get; private set; }
+        public SkillTreeTemplate SkillTree { get; private set; }
 
         public async UniTask Initialize()
         {
@@ -46,6 +50,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
             BuffItems = (BuffItemsContainer)await Resources.LoadAsync<BuffItemsContainer>(BuffItemsPath);
             Waves = (WavesConfiguration)await Resources.LoadAsync<WavesConfiguration>(WavesPath);
             GameConfig = (GameConfiguration)await Resources.LoadAsync<GameConfiguration>(GameConfiguration);
+            SkillTree = (SkillTreeTemplate)await Resources.LoadAsync<SkillTreeTemplate>(SkillTreePath);
         }
         
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -20,10 +22,12 @@ namespace KthulhuWantsMe.Source.UI
         private List<UpgradeData> _upgrades;
         
         private IGameFactory _gameFactory;
+        private IDataProvider _dataProvider;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IGameFactory gameFactory, IDataProvider dataProvider)
         {
+            _dataProvider = dataProvider;
             _gameFactory = gameFactory;
         }
 
@@ -35,10 +39,10 @@ namespace KthulhuWantsMe.Source.UI
 
         public void UpdateUI()
         {
-            foreach (UpgradeData upgrade in _upgrades)
+            foreach (BranchTemplate branchTemplate in _dataProvider.SkillTree.SkillTree.Branches)
             {
                 BranchView branchView = _gameFactory.CreatePrefabInjected(branchViewPrefab, _upgradesParent);
-                branchView.Init(upgrade, this);
+                branchView.Init(branchTemplate.Branch, this);
             }
         }
     }

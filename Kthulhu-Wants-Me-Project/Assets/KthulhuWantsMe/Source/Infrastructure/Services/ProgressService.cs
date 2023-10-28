@@ -7,7 +7,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
     public class ProgressData
     {
         public int CompletedWaveIndex;
-        public Dictionary<Guid, int> CompletedBranchStages;
+        public Dictionary<Guid, int> CompletedSkillBranchStages;
     }
     public interface IProgressService
     {
@@ -23,7 +23,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         {
             IsInitialized = true;
             ProgressData.CompletedWaveIndex = -1;
-            ProgressData.CompletedBranchStages = new();
+            ProgressData.CompletedSkillBranchStages = new();
             return UniTask.CompletedTask;
         }
     }

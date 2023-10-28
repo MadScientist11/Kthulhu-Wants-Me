@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BranchStage:
     Upgrades:
-    - UpgradeTitle: 
-      UpgradeText: 
+    - UpgradeTitle: Max Health++
+      UpgradeText: Max Health++
       UpgradeType: 0
       StatType: 0
       SkillId: 0
       UpgradeValueType: 0
       Value: 0
-    - UpgradeTitle: 
-      UpgradeText: 
+    - UpgradeTitle: Attack++
+      UpgradeText: Attack++
       UpgradeType: 0
       StatType: 0
       SkillId: 0
       UpgradeValueType: 0
       Value: 0
-    - UpgradeTitle: 
-      UpgradeText: 
+    - UpgradeTitle: Sfwl++
+      UpgradeText: Sfwl++
       UpgradeType: 0
       StatType: 0
       SkillId: 0
