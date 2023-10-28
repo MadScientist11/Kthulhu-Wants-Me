@@ -23,7 +23,5 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public EnemyType EnemyType = EnemyType.Cyeagha;
         [ShowIf(nameof(WaveSystem.WaveObjective), WaveObjective.KillTentaclesSpecial)]
         public int SpawnedEnemiesCap = 25;
-        
-        public List<UpgradeData> UpgradeRewards;
     }
 }

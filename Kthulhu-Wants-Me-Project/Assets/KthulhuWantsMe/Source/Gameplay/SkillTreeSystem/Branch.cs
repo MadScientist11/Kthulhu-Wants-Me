@@ -7,6 +7,7 @@ namespace KthulhuWantsMe.Source.Gameplay.SkillTreeSystem
     public class Branch
     {
         public Guid InstanceId = Guid.NewGuid();
+        public string BranchName;
         public List<BranchStageTemplate> BranchStages;
     }
 }

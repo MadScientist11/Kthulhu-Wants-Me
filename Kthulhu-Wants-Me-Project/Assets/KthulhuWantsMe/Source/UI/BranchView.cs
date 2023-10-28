@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
@@ -18,6 +19,7 @@ namespace KthulhuWantsMe.Source.UI
     {
         [SerializeField] private TextMeshProUGUI _branchText;
         [SerializeField] private TextMeshProUGUI _stageStats;
+        [SerializeField] private List<Image> _points;
         
         private UpgradeData _upgradeData;
         private UpgradeWindow _upgradeWindow;
@@ -37,11 +39,15 @@ namespace KthulhuWantsMe.Source.UI
         {
             _branch = branch;
             _upgradeWindow = upgradeWindow;
-            _branchText.text = "Aggressor";
+            _branchText.text = branch.BranchName;
 
             int completedStage = _progressService.ProgressData.CompletedSkillBranchStages.GetOrCreate(branch.InstanceId);
             BranchStage branchBranchStage = branch.BranchStages[completedStage].BranchStage;
-            
+
+            for (int i = 0; i < completedStage; i++)
+            {
+                _points[i].color = Color.green;
+            }
             string stats = string.Empty;
             foreach (UpgradeData upgradeData in branchBranchStage.Upgrades)
             {
@@ -52,7 +58,6 @@ namespace KthulhuWantsMe.Source.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log("Click!");
             int completedStage = _progressService.ProgressData.CompletedSkillBranchStages.GetOrCreate(_branch.InstanceId);
             BranchStage branchStage = _branch.BranchStages[completedStage].BranchStage;
             foreach (UpgradeData upgradeData in branchStage.Upgrades)
