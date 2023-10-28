@@ -2360,6 +2360,7 @@ MonoBehaviour:
   _playerAnimator: {fileID: -4856184112398116678}
   _playerLocomotion: {fileID: 5663912579931136821}
   _playerAttack: {fileID: -8648004300217098860}
+  _playerDashAbility: {fileID: 8893785772502955102}
   _entityBuffDebuffContainer: {fileID: -6425494656952559277}
   _healFeedback: {fileID: 7787773168558362494}
   _invincibilityFeedback: {fileID: 7935056406712245860}

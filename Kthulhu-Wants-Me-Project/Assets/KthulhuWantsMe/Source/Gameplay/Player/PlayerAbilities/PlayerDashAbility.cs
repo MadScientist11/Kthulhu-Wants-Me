@@ -52,22 +52,28 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
  
             if (stateInfo.shortNameHash == PlayerAnimator.Evade && !_stopDashMovement)
             {
-                PlayerLocomotion.MovementController.SetInputs(PlayerLocomotion.LastLookDirection.XZ(), PlayerLocomotion.LastLookDirection);
+                Vector2 movementDirection = -PlayerLocomotion.GetMovementDirection(_inputService.GameplayScenario.MovementInput);
+                PlayerLocomotion.MovementController.SetInputs(movementDirection, PlayerLocomotion.LastLookDirection);
             }
         }
         
         private void OnDashRecovery()
+        {
+            ResetEvade();
+        }
+
+        private void OnDashEnd()
+        {
+
+        }
+
+        public void ResetEvade()
         {
             _inputService.GameplayScenario.Enable();
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
             _stopDashMovement = true;
             PlayerLocomotion.MovementController.ResetInputs();
             PlayerLocomotion.MovementController.ResetSpeedOverride();
-        }
-      
-        private void OnDashEnd()
-        {
-
         }
 
         private void PerformDash()
@@ -83,7 +89,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private void Dash()
         {
             _stopDashMovement = false;
-            _inputService.GameplayScenario.Disable();
+            //_inputService.GameplayScenario.Disable();
             PlayerLocomotion.MovementController.ResetInputs();
             PlayerLocomotion.MovementController.OverrideMoveSpeed(_playerConfig.DashSpeed);
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));

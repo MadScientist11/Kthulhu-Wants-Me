@@ -125,7 +125,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         }
 
 
-        private Vector2 GetMovementDirection(Vector2 movementInput)
+        public Vector2 GetMovementDirection(Vector2 movementInput)
         {
             return (movementInput.x, movementInput.y) switch
             {

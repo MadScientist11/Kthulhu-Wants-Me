@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
+using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -39,6 +40,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private PlayerAttack _playerAttack;
+        [SerializeField] private PlayerDashAbility _playerDashAbility;
         [SerializeField] private EntityBuffDebuffContainer _entityBuffDebuffContainer;
         [SerializeField] private MMFeedbacks _healFeedback;
         [SerializeField] private MMFeedbacks _invincibilityFeedback;
@@ -130,6 +132,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _playerAnimator.PlayImpact();
             _playerAttack.ResetAttackState();
+            _playerDashAbility.ResetEvade();
             _invincibilityFeedback?.PlayFeedbacks();
             AddKnockback(damageProvider.DamageDealer);
             _movementController.KillVelocity();
