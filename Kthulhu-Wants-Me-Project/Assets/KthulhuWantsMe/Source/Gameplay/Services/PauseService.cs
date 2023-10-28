@@ -60,8 +60,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                 PauseGame();
                 _uiService.OpenWindow(WindowId.PauseWindow);
             }
-
-            _gamePaused = !_gamePaused;
         }
     }
 }

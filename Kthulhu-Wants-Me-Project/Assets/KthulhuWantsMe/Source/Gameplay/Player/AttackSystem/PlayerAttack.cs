@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Effects;
@@ -23,9 +25,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         public bool IsAttacking => _isAttacking;
         public bool InRecoveryPhase => _inRecoveryPhase;
-        
-        public bool QueuedAttack { get; private set; }
-        
+
         public MMFeedbacks TargetFeedbacks;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerHealth _playerHealth;
@@ -64,23 +64,37 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             base.ProvideDamage() + _activeWeapon.WeaponData.BaseDamage +
             _activeWeapon.WeaponData.WeaponMoveSet.AttackMoveDamage[_comboAttackIndex];
 
-        public void ResetAttackState()
+        public void ResetAttackState(bool resetCombo = true)
         {
             _isAttacking = false;
             _inRecoveryPhase = false;
-            _comboAttackIndex = 0;
+            if(resetCombo)
+                _comboAttackIndex = 0;
+        }
+
+        private CancellationTokenSource _attackStateResetToken;
+        private bool _delayedResetInProgress;
+        
+        public async UniTaskVoid ResetAttackStateDelayed()
+        {
+            if(_delayedResetInProgress)
+                return;
+            _delayedResetInProgress = true;
+            _attackStateResetToken = new();
+            await UniTask.Delay(400, false, PlayerLoopTiming.Update, _attackStateResetToken.Token);
+            ResetAttackState();
+            _delayedResetInProgress = false;
         }
 
         protected override void OnWindUpPhase()
         {
-            _isAttacking = true;
-            QueuedAttack = false;
             _inRecoveryPhase = false;
+
             Vector3 desiredDirection = _playerLocomotion.FaceMouse();
+
             //if (Physics.SphereCast(transform.position, 1, transform.forward, out RaycastHit hitInfo, 5,
             //        LayerMasks.EnemyMask))
             {
-                
                 _playerLocomotion.MovementController.AddVelocity(desiredDirection * _playerConfiguration.AttackStep);
             }
         }
@@ -98,7 +112,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             foreach (IDamageable damageable in damageables)
             {
                 ApplyDamage(damageable);
-                
+
                 if (damageable.Transform.TryGetComponent(out IEffectReceiver effectReceiver))
                 {
                     _playerDamageModifier?.ApplyTo(effectReceiver);
@@ -108,9 +122,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         protected override void OnRecoveryPhase()
         {
-            _inRecoveryPhase = true;
             _comboAttackIndex++;
             _comboAttackIndex %= _activeWeapon.WeaponData.WeaponMoveSet.MoveSetAttackCount;
+            _inRecoveryPhase = true;
+            ResetAttackStateDelayed().Forget();
         }
 
         protected override void OnAttackEnd()
@@ -121,11 +136,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         private void PerformAttack()
         {
             if (CantAttack())
+            {
                 return;
-
-            //_playerLocomotion.BlockMovement(0.1f);
-            QueuedAttack = true;
+            }
+            _attackStateResetToken?.Cancel();
+            _delayedResetInProgress = false;
+            ResetAttackState(false);
+            _playerLocomotion.StopToAttack();
             _playerAnimator.PlayAttack(_comboAttackIndex);
+            _isAttacking = true;
         }
 
         private Vector3 AttackStartPoint() =>

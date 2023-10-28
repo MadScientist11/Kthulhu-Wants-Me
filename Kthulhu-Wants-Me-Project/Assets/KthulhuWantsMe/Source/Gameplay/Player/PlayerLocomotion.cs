@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Freya;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
@@ -51,22 +52,30 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 -GetMovementDirection(_inputService.GameplayScenario.MovementInput).XZtoXYZ(), out RaycastHit hit, 1f,
                 ~LayerMasks.GroundMask);
 
+            if (!MovementInputDetected())
+            {
+                _movementController.SetInputs(Vector2.zero, _lastLookDirection);
+                _playerAnimator.StopMoving();
+                return;
+            }
 
             if (CanMove())
             {
-                if (MovementInputDetected())
-                    _playerAnimator.Move();
-                else
-                    _playerAnimator.StopMoving();
-
+                _playerAnimator.Move();
+                if(_playerAttack.InRecoveryPhase)
+                    _playerAttack.ResetAttackStateDelayed().Forget();
+                
                 ProcessInput();
-                return;
             }
-            else if (_playerAttack.IsAttacking || _playerAttack.QueuedAttack)
+            else
             {
-                ProcessInput();
+                _movementController.SetInputs(Vector2.zero, _lastLookDirection);
+                _playerAnimator.StopMoving();
             }
+        }
 
+        public void StopToAttack()
+        {
             _movementController.SetInputs(Vector2.zero, _lastLookDirection);
             _playerAnimator.StopMoving();
         }
@@ -134,7 +143,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private bool CanMove()
         {
-            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement && !_playerAttack.QueuedAttack;
+            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement;
         }
 
         private bool MovementInputDetected()

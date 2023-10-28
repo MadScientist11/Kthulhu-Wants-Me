@@ -37,7 +37,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private void OnDie()
         {
             _tentacleRetreat.RetreatDefeated();
-            Debug.Log("rete");
         }
     }
 }
