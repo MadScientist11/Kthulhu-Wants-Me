@@ -24,7 +24,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         }
     }
 
-    public class ThePlayer : IInitializable
+    public class ThePlayer : IInitializable, ITickable
     {
         public event Action<HealthChange> HealthChanged;
         public event Action<IDamageProvider> TookDamage;
@@ -37,6 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public float MaxHealth => _playerStats.MainStats[StatType.MaxHealth];
         public float BaseDamage => _playerStats.MainStats[StatType.BaseDamage];
+        public float MaxStamina => _playerStats.MainStats[StatType.MaxStamina];
         
         public PlayerStats PlayerStats => _playerStats;
 
@@ -54,6 +55,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         {
             _playerStats = new PlayerStats(_playerConfiguration);
             RestoreHp();
+            RestoreStamina();
+        }
+        
+        public void Tick()
+        {
+            ModifyCurrentStamina(_playerConfiguration.StaminaRegenRate * Time.deltaTime);
         }
 
         public void TakeDamage(IDamageProvider damageProvider)
@@ -87,9 +94,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             return true;
         }
 
+        public void ModifyCurrentStamina(float value)
+        {
+            float previousValue = _playerStats.CurrentStamina;
+            _playerStats.CurrentStamina += value;
+            _playerStats.CurrentStamina = Mathf.Clamp(_playerStats.CurrentStamina, 0, MaxStamina);
+        }
+
         public void RestoreHp()
         {
             _playerStats.CurrentHp = MaxHealth;
+        }
+        public void RestoreStamina()
+        {
+            _playerStats.CurrentStamina = MaxStamina;
         }
 
         private void Kill()

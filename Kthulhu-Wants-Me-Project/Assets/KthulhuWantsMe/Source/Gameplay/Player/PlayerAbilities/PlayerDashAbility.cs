@@ -89,12 +89,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
             
             _playerAnimator.PlayEvade();
+            _thePlayer.ModifyCurrentStamina(-1000);
             //PlayerLocomotion.MovementController.AddVelocity(transform.forward * 10);
         }
 
         private bool CanDash()
         {
-            return !_grabAbilityResponse.Grabbed && Time.time >= _nextDashTime;
+            return !_grabAbilityResponse.Grabbed && IsStaminaFull();
+        }
+
+        private bool IsStaminaFull()
+        {
+            return (int)_thePlayer.PlayerStats.CurrentStamina == (int)_thePlayer.PlayerStats.MainStats[StatType.MaxStamina];
         }
     }
 }

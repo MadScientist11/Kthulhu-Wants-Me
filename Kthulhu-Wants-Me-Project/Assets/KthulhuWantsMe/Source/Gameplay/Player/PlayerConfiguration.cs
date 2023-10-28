@@ -35,5 +35,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float Drag = 0.1f;
 
         public float InvinciblityAfterAttackTime = 1f;
+        public float StaminaRegenRate = 1f;
     }
 }

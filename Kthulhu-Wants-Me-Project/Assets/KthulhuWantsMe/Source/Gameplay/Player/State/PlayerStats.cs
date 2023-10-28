@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         public event Action<StatType, float> StatChanged;
         
         public float CurrentHp;
+        public float CurrentStamina;
         public bool Immortal;
 
         public IReadOnlyDictionary<StatType, float> MainStats

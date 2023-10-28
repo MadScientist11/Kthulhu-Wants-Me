@@ -13,4 +13,18 @@ MonoBehaviour:
   m_Name: RunnerStage2
   m_EditorClassIdentifier: 
   BranchStage:
-    Upgrades: []
+    Upgrades:
+    - UpgradeTitle: 
+      UpgradeText: 
+      UpgradeType: 0
+      StatType: 0
+      SkillId: 0
+      UpgradeValueType: 0
+      Value: 10
+    - UpgradeTitle: 
+      UpgradeText: 
+      UpgradeType: 0
+      StatType: 100
+      SkillId: 0
+      UpgradeValueType: 0
+      Value: 10

@@ -18,6 +18,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         
         [SerializeField] private IndicatorsUI _indicatorsUI;
         [SerializeField] private HpBar _playerHpBar;
+        [SerializeField] private HpBar _playerStaminaBar;
 
         [SerializeField] private GameObject _objective;
         [SerializeField] private GameObject _waveLossTimer;
@@ -35,6 +36,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         public void Initialize()
         {
             _playerHpBar.SetNewMax(_player.PlayerStats.MainStats[StatType.MaxHealth]);
+            _playerStaminaBar.SetNewMax(_player.PlayerStats.MainStats[StatType.MaxStamina]);
             
             _player.HealthChanged += UpdateHealthBar;
 
@@ -45,6 +47,11 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         private void OnDestroy()
         {
             _player.HealthChanged -= UpdateHealthBar;
+        }
+
+        private void Update()
+        {
+            _playerStaminaBar.SetValue(_player.PlayerStats.CurrentStamina, _player.PlayerStats.MainStats[StatType.MaxStamina]);
         }
 
         public void Show()
