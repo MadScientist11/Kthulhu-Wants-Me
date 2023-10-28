@@ -39,6 +39,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         {
             GetComponent<Collider>().enabled = false;
             Portal portal = _portalFactory.GetOrCreatePortal(_desiredPosition, Quaternion.identity, EnemyType.Cyeagha);
+            Debug.Log(portal.gameObject.name);
             yield return new WaitForSeconds(2f);
             transform.position = _desiredPosition;
             portal.ClosePortal();

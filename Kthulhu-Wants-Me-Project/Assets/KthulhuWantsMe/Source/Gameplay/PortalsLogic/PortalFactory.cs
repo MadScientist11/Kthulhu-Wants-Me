@@ -30,7 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
         public Portal GetOrCreatePortal(Vector3 spawnPoint, Quaternion rotation, EnemyType portalType)
         {
             _portalType = portalType;
-            Portal portal = Get(null);
+            Portal portal = Get(portal => portal.EnemyType == portalType);
             portal.transform.position = spawnPoint;
             portal.transform.rotation = rotation;
             portal.Show();
@@ -47,6 +47,7 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
             Debug.Log(portalPrefab);
             portalPrefab.gameObject.SetActive(false);
             Portal portal = _instantiator.Instantiate(portalPrefab);
+            portal.EnemyType = _portalType;
             return portal;
         }
 

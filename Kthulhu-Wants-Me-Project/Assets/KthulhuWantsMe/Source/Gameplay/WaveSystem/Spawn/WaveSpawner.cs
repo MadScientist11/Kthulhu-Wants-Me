@@ -27,7 +27,10 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
 
         public EnemySpawner ClosestSpawner
         {
-            get { return ClosestSpawners.First(); }
+            get
+            {
+                return ClosestSpawners.First();
+            }
         }
 
 
