@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
@@ -71,6 +72,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             if (ModifyCurrentHp(-damageProvider.ProvideDamage()))
             {
                 TookDamage?.Invoke(damageProvider);
+                if (damageProvider is IBuffDebuff)
+                {
+                    return;
+                }
                 SetPlayerInvincibleAfterDamageFor(_playerConfiguration.InvinciblityAfterAttackTime).Forget();
             }
         }
