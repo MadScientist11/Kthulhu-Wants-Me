@@ -10,7 +10,7 @@ namespace KthulhuWantsMe.Source.UI
         [SerializeField] private float _hpUnit;
 
         [SerializeField] private TextMeshProUGUI _hpText;
-        
+
         public void SetValue(float current, float max)
         {
             _hpBarImage.fillAmount = current / max;

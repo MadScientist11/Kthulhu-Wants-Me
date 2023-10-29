@@ -973,6 +973,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBarHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 3979007218438102765, guid: 07cab17e2a23a7e4381fb5ecc2733bc1,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028837322137927287, guid: 07cab17e2a23a7e4381fb5ecc2733bc1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028837322137927287, guid: 07cab17e2a23a7e4381fb5ecc2733bc1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028837322137927287, guid: 07cab17e2a23a7e4381fb5ecc2733bc1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028837322137927287, guid: 07cab17e2a23a7e4381fb5ecc2733bc1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028837322137927287, guid: 07cab17e2a23a7e4381fb5ecc2733bc1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028837322137927287, guid: 07cab17e2a23a7e4381fb5ecc2733bc1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6142462463806374018, guid: 07cab17e2a23a7e4381fb5ecc2733bc1,
         type: 3}
       propertyPath: m_Pivot.x
