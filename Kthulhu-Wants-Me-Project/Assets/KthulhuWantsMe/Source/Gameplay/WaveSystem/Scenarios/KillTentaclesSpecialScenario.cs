@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
+using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     public class KillTentaclesSpecialScenario : IWaveScenario
     {
+        public event Action BatchCleared;
         public event Action<int> WaveLossTimerTick;
         private CancellationTokenSource _timerToken;
 
@@ -32,19 +34,38 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _waveSystemDirector = waveSystemDirector;
         }
 
+
         public void Initialize()
         {
             StartWaveLossTimer().Forget();
             
             _waveSystemDirector.WaveSpawner.BatchSpawned += OnBatchSpawned;
             _waveSystemDirector.WaveCompleted += OnWaveCompleted;
+            _waveSystemDirector.CurrentWaveState.WaveEnemyDied += OnEnemyDied;
+
         }
 
         public void Dispose()
         {
             _waveSystemDirector.WaveSpawner.BatchSpawned -= OnBatchSpawned;
             _waveSystemDirector.WaveCompleted -= OnWaveCompleted;
+            _waveSystemDirector.CurrentWaveState.WaveEnemyDied -= OnEnemyDied;
 
+        }
+        
+        private void OnEnemyDied(EnemySpawnerId id, Health health)
+        {
+            if (_waveSystemDirector.CurrentWaveState.NoEnemiesLeft())
+            {
+                if (_waveSystemDirector.CurrentWaveState.IsLastBatch())
+                {
+                    BatchCleared?.Invoke();
+                    _waveSystemDirector.CompleteWaveAsVictory();
+                    return;
+                }
+
+                BatchCleared?.Invoke();
+            }
         }
 
         private void OnBatchSpawned(IEnumerable<Health> enemies)
@@ -88,8 +109,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
                 SpawnAdditionalEnemy();
             }
             WaveLossTimerTick?.Invoke(countdown);
-            
-            
         }
 
         private void OnWaveCompleted()
@@ -109,8 +128,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             for (var index = 0; index < _waveSystemDirector.CurrentWaveState.AliveEnemies.Count; index++)
             {
-                Debug.Log("Retreat enemies");
-
                 Health aliveEnemy = _waveSystemDirector.CurrentWaveState.AliveEnemies[index];
                 if (aliveEnemy.TryGetComponent(out IRetreatBehaviour retreatBehaviour))
                 {
@@ -124,7 +141,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             tentacleHealth.Died += () =>
             {
                 _remainingTentacles--;
-                Debug.Log($"Kill spcial tentacle {_remainingTentacles}");
                 if (_remainingTentacles == 0)
                 {
                     _waveSystemDirector.CompleteWaveAsVictory();

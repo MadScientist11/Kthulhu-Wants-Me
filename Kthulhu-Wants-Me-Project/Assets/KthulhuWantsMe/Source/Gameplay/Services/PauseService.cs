@@ -37,13 +37,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         public void PauseGame()
         {
             Time.timeScale = 0;
-            _inputService.ActiveScenario.Disable();
             _gamePaused = true;
         }
         
         public void ResumeGame()
         {
-            _inputService.ActiveScenario.Enable();
             Time.timeScale = 1;
             _gamePaused = false;
         }

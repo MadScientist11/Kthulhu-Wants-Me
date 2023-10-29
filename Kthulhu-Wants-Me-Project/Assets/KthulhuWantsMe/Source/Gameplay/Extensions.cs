@@ -62,7 +62,7 @@ namespace KthulhuWantsMe.Source.Gameplay
         {
             behaviour.enabled = false;
         }
-
+        
         public static void SwitchOn(this GameObject go)
         {
             go.SetActive(true);

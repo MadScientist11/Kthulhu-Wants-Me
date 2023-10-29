@@ -44,7 +44,6 @@ namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
                 EnemyType.Tentacle or EnemyType.BleedTentacle or EnemyType.PoisonousTentacle or EnemyType.TentacleSpecial => _dataProvider.PortalConfig.TentaclePortalPrefab,
                 _ => _dataProvider.PortalConfig.MinionsPortalPrefab
             };
-            Debug.Log(portalPrefab);
             portalPrefab.gameObject.SetActive(false);
             Portal portal = _instantiator.Instantiate(portalPrefab);
             portal.EnemyType = _portalType;

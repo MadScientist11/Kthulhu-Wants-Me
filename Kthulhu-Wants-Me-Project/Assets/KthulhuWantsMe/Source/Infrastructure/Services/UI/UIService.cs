@@ -55,6 +55,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private PlayerHUD _playerHUD;
         private MiscUI _miscUI;
         private BaseWindow _activeWindow;
+        private WindowId _activeWindowId;
 
         private ISceneLoader _sceneLoader;
         private IUIFactory _uiFactory;
@@ -73,9 +74,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             {
                 case WindowId.UpgradeWindow:
                     _activeWindow = _uiFactory.CreateUpgradeWindow();
+                    _activeWindowId = WindowId.UpgradeWindow;
                     return _activeWindow;
                 case WindowId.PauseWindow:
                     _activeWindow = _uiFactory.CreatePauseWindow();
+                    _activeWindowId = WindowId.PauseWindow;
                     return _activeWindow;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(windowId), windowId, null);

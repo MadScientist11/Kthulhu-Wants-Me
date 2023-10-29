@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
@@ -20,21 +21,29 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         
         public void Retreat(bool destroyObject, Action onRetreated = null)
         {
-            StartCoroutine(DoRetreat());
+            RetreatVisual().Forget();
         }
 
         public void RetreatDefeated()
         {
         }
-        
-        private IEnumerator DoRetreat()
+
+        private async UniTaskVoid RetreatVisual()
         {
-            GetComponent<IStoppable>().StopEntityLogic();
+            MinionSpawn minionSpawn = GetComponent<MinionSpawn>();
+            IStoppable enemyLogic = GetComponent<IStoppable>();
+            Collider enemyCollider = GetComponent<Collider>();
+            
+            minionSpawn.SpawnToken.Cancel();
+            enemyLogic.StopEntityLogic();
+            enemyCollider.enabled = false;
+            
             Portal portal = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity, EnemyType.Cyeagha);
-            yield return new WaitForSeconds(2f);
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(2), false, PlayerLoopTiming.Update, destroyCancellationToken);
+            
             portal.ClosePortal();
             Destroy(gameObject);
         }
-        
     }
 }

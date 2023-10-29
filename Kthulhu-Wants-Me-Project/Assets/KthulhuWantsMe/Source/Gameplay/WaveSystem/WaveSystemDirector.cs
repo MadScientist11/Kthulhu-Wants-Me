@@ -17,7 +17,7 @@ using VContainer.Unity;
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {
     public interface IWaveSystemDirector
-    {        
+    {
         event Action WaveStarted;
         event Action WaveCompleted;
         WaveState CurrentWaveState { get; }
@@ -38,26 +38,17 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public WaveState CurrentWaveState
         {
-            get
-            {
-                return _currentWaveState;
-            }
+            get { return _currentWaveState; }
         }
-        
+
         public WaveSpawner WaveSpawner
         {
-            get
-            {
-                return _waveSpawner;
-            }
+            get { return _waveSpawner; }
         }
-        
+
         public IWaveScenario CurrentWaveScenario
         {
-            get
-            {
-                return _currentWaveScenario;
-            }
+            get { return _currentWaveScenario; }
         }
 
         private WaveState _currentWaveState;
@@ -67,7 +58,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         private bool _batchCleared;
         private bool _waveOngoing;
-        
+
         private Dictionary<WaveObjective, IWaveScenario> _waveScenarios;
 
         private readonly IGameFactory _gameFactory;
@@ -75,6 +66,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private readonly IDataProvider _dataProvider;
         private readonly GameplayStateMachine.GameplayStateMachine _gameplayStateMachine;
         private readonly IUIService _uiService;
+        private CancellationTokenSource _spawnLoopToken;
 
 
         public WaveSystemDirector(ISceneDataProvider sceneDataProvider, IDataProvider dataProvider,
@@ -108,23 +100,22 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             WaveData waveData = _dataProvider.Waves[waveIndex];
 
             _currentWaveState = new WaveState(waveData);
-            _currentWaveState.BatchCleared += OnBatchCleared;
-            _currentWaveState.WaveCleared += OnWaveCleared;
-            
+
             _currentWaveScenario = _waveScenarios[_currentWaveState.WaveObjective];
             _currentWaveScenario.Initialize();
+            _currentWaveScenario.BatchCleared += OnBatchCleared;
 
             _waveSpawner.Initialize(_currentWaveState);
-            
+
             SpawnBatchLoop().Forget();
             _waveOngoing = true;
-            
+
             WaveStarted?.Invoke();
         }
 
         public void CompleteWaveAsFailure()
         {
-            if(!_waveOngoing)
+            if (!_waveOngoing)
                 return;
 
             Debug.Log("Failure");
@@ -134,9 +125,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public void CompleteWaveAsVictory()
         {
-            if(!_waveOngoing)
+            if (!_waveOngoing)
                 return;
-            
+
 
             _gameplayStateMachine.SwitchState<WaveVictoryState>();
             CompleteWave();
@@ -145,11 +136,13 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public void CompleteWave()
         {
             _uiService.PlayerHUD.HideObjective();
-            
+
+            _spawnLoopToken.Cancel();
             _waveOngoing = false;
             WaveCompleted?.Invoke();
             _currentWaveState.CleanUp();
             _currentWaveScenario.Dispose();
+            _currentWaveScenario.BatchCleared -= OnBatchCleared;
         }
 
         private void OnBatchCleared()
@@ -157,29 +150,21 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _batchCleared = true;
         }
 
-        private void OnWaveCleared()
-        {
-        }
-
-        private void WaveIsOngoing()
-        {
-        }
-
         private async UniTaskVoid SpawnBatchLoop()
         {
-            CancellationTokenSource spawnLoopToken = new CancellationTokenSource();
-            
+            _spawnLoopToken = new CancellationTokenSource();
+
             // Spawn first wave
             _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
-            
-            while (!spawnLoopToken.IsCancellationRequested)
+
+            while (!_spawnLoopToken.IsCancellationRequested)
             {
                 if (_currentWaveState.IsLastBatch())
                 {
-                    spawnLoopToken.Cancel();
+                    _spawnLoopToken.Cancel();
                     return;
                 }
-                
+
                 if (_currentWaveState.CurrentBatchData.WaitForBatchClearance)
                 {
                     // Wait until the batch is cleared and spawn next batch then
@@ -188,13 +173,13 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
                         await UniTask.Yield();
                     }
                 }
-                
+
 
                 TimeSpan nextBatchDelay = TimeSpan.FromSeconds(_currentWaveState.CurrentBatchData.NextBatchDelay);
-                await UniTask.Delay(nextBatchDelay);
+                await UniTask.Delay(nextBatchDelay, false, PlayerLoopTiming.Update, _spawnLoopToken.Token);
 
                 SpawnNextBatch();
-                
+
                 _batchCleared = false;
             }
         }

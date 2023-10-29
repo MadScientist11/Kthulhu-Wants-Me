@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
@@ -11,15 +13,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 {
     public class MinionSpawn : MonoBehaviour, ISpawnBehaviour
     {
-        public bool Spawned { get; set; } = true;
         public EnemySpawnerId SpawnedAt { get; set; }
+        
+        public CancellationTokenSource SpawnToken { get; private set; }
         
         [SerializeField] private float _height;
 
         private Vector3 _desiredPosition;
 
         private IPortalFactory _portalFactory;
-
+        private Portal _boundPortal;
 
         [Inject]
         public void Construct(IPortalFactory portalFactory)
@@ -29,24 +32,46 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
         public void OnSpawn(Action onSpawned)
         {
-            GetComponent<IStoppable>().StopEntityLogic();
-            _desiredPosition = transform.position;
-            transform.position = transform.position.AddY(-_height);
-            StartCoroutine(DoSpawnEnemy());
+            SpawnToken = new();
+            SpawnToken.RegisterRaiseCancelOnDestroy(gameObject);
+            SpawnToken.Token.Register(() =>
+            {
+                if(_boundPortal != null)
+                    _boundPortal.ClosePortal();
+            });
+            SpawnVisual().Forget();
         }
 
-        private IEnumerator DoSpawnEnemy()
+        private async UniTaskVoid SpawnVisual()
         {
-            GetComponent<Collider>().enabled = false;
-            Portal portal = _portalFactory.GetOrCreatePortal(_desiredPosition, Quaternion.identity, EnemyType.Cyeagha);
-            Debug.Log(portal.gameObject.name);
-            yield return new WaitForSeconds(2f);
-            transform.position = _desiredPosition;
-            portal.ClosePortal();
-            GetComponent<IStoppable>().ResumeEntityLogic();
+            IStoppable enemyLogic = GetComponent<IStoppable>();
+            Collider enemyCollider = GetComponent<Collider>();
+            _desiredPosition = transform.position;
+            
+            enemyLogic.StopEntityLogic();
+            enemyCollider.enabled = false;
+            
+            WarpUnderground();
+            _boundPortal = _portalFactory.GetOrCreatePortal(_desiredPosition, Quaternion.identity, EnemyType.Cyeagha);
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(2), false, PlayerLoopTiming.Update, SpawnToken.Token);
+            
+            WarpToDesiredLocation();
+            _boundPortal.ClosePortal();
+            
+            enemyLogic.ResumeEntityLogic();
+            await UniTask.Delay(TimeSpan.FromSeconds(1), false, PlayerLoopTiming.Update, SpawnToken.Token);
+            enemyCollider.enabled = true;
+        }
 
-            yield return new WaitForSeconds(1f);
-            GetComponent<Collider>().enabled = true;
+        private void WarpUnderground()
+        {
+            transform.position = transform.position.AddY(-_height);
+        }
+        
+        private void WarpToDesiredLocation()
+        {
+            transform.position = _desiredPosition;
         }
     }
 }
