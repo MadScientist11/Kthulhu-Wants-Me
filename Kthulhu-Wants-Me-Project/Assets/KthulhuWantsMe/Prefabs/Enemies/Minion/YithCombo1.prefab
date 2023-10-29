@@ -11,7 +11,12 @@ PrefabInstance:
     - target: {fileID: 1590797425616401305, guid: 5b14604e5d0c952468ee301feeffa770,
         type: 3}
       propertyPath: m_Name
-      value: YithBase
+      value: YithCombo1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2522923863610313792, guid: 5b14604e5d0c952468ee301feeffa770,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5757831141683792899, guid: 5b14604e5d0c952468ee301feeffa770,
         type: 3}
