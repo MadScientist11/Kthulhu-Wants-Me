@@ -26,7 +26,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         public bool IsAttacking => _isAttacking;
         public bool InRecoveryPhase => _inRecoveryPhase;
 
-        public MMFeedbacks TargetFeedbacks;
+        [SerializeField] private MMFeedbacks _attackFeedback;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
@@ -107,7 +107,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
 
             _weaponTrails.Play(_comboAttackIndex);
-            TargetFeedbacks.PlayFeedbacks(AttackStartPoint());
+            _attackFeedback?.PlayFeedbacks(AttackStartPoint());
 
             foreach (IDamageable damageable in damageables)
             {

@@ -2404,7 +2404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e135206245487286e1ef8ffd3c19c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetFeedbacks: {fileID: 8662729706895713989}
+  _attackFeedback: {fileID: 8662729706895713989}
   _playerAnimator: {fileID: -4856184112398116678}
   _playerHealth: {fileID: 6482385733598322139}
   _playerLocomotion: {fileID: 5663912579931136821}
@@ -3858,6 +3858,10 @@ PrefabInstance:
     - target: {fileID: 1612276239566916, guid: ab764946428361d499eb0f88769e33b7, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1612276239566916, guid: ab764946428361d499eb0f88769e33b7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1917764307762936, guid: ab764946428361d499eb0f88769e33b7, type: 3}
       propertyPath: m_Layer
