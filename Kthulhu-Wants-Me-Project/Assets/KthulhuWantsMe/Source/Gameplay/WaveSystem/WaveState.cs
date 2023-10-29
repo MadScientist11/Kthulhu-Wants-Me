@@ -115,15 +115,13 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public void CleanUp()
         {
+            foreach ((Health health, Action callback) in _registeredEnemiesCallbacks) 
+                health.Died -= callback;
+            
+            _registeredEnemiesCallbacks.Clear();
             _aliveEnemiesByPlace.Clear();
             _aliveEnemies.Clear();
             _currentBatchIndex = 0;
-            
-            // TODO: Unsub
-            foreach ((Health health, Action callback) in _registeredEnemiesCallbacks)
-            {
-                health.Died -= callback;
-            }
         }
 
         private Action TrackEnemyTillDeath(EnemySpawnerId enemySpawnPlace, Health enemy)
