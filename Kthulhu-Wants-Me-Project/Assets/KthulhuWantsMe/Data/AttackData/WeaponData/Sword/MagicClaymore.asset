@@ -19,5 +19,5 @@ MonoBehaviour:
   WeaponType: 1
   BaseDamage: 10
   WeaponMoveSet: {fileID: 11400000, guid: eec6806aa787fab47b70ed570fc16182, type: 2}
-  WeaponTrailsPrefab: {fileID: 7377915809740980766, guid: 0168a8e6782f64446b9739c8fd5b193f,
+  WeaponTrailsPrefab: {fileID: 7377915809740980766, guid: 69a6ee5ca91f4644d9f34a9556a388a9,
     type: 3}

@@ -101,12 +101,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         protected override void OnContactPhase()
         {
+            _weaponTrails.Play(_comboAttackIndex);
+
             if (!PhysicsUtility.HitMany(AttackStartPoint(), _playerConfiguration.AttackRadius,
                     LayerMasks.EnemyMask, out List<IDamageable> damageables))
                 return;
 
 
-            _weaponTrails.Play(_comboAttackIndex);
             _attackFeedback?.PlayFeedbacks(AttackStartPoint());
 
             foreach (IDamageable damageable in damageables)
