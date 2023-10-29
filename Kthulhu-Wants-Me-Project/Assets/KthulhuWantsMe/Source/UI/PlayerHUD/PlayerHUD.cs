@@ -3,8 +3,10 @@ using KthulhuWantsMe.Source.Gameplay;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using MoreMountains.Feedbacks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VContainer;
@@ -22,13 +24,17 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 
         [SerializeField] private GameObject _objective;
         [SerializeField] private GameObject _waveLossTimer;
+        [SerializeField] private GameObject _waveCounter;
+        [SerializeField] private TextMeshProUGUI _waveCounterText;
         
         private ThePlayer _player;
         private IWaveSystemDirector _waveSystemDirector;
+        private IProgressService _progressService;
 
         [Inject]
-        public void Construct(ThePlayer player, IWaveSystemDirector waveSystemDirector)
+        public void Construct(ThePlayer player, IWaveSystemDirector waveSystemDirector, IProgressService progressService)
         {
+            _progressService = progressService;
             _waveSystemDirector = waveSystemDirector;
             _player = player;
         }
@@ -67,6 +73,9 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         private void OnWaveStarted()
         {
             _objective.SwitchOn();
+            _waveCounter.SwitchOn();
+
+            _waveCounterText.text = $"{_progressService.ProgressData.CompletedWaveIndex + 2}/10";
             
             if(_waveSystemDirector.CurrentWaveState.WaveObjective == WaveObjective.KillTentaclesSpecial)
                 _waveLossTimer.SwitchOn();
@@ -75,6 +84,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         private void OnWaveCompleted()
         {
             _objective.SwitchOff();
+            _waveCounter.SwitchOff();
             
             if(_waveSystemDirector.CurrentWaveState.WaveObjective == WaveObjective.KillTentaclesSpecial)
                 _waveLossTimer.SwitchOff();
