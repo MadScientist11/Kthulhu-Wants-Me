@@ -15,7 +15,7 @@ namespace KthulhuWantsMe.Source.UI
         {
             _hpBarImage.fillAmount = current / max;
             if(_hpText != null)
-                _hpText.text = $"{current} / {max}";
+                _hpText.text = $"{(int)current} / {(int)max}";
         }
         
         public void SetNewMax(float newMax)

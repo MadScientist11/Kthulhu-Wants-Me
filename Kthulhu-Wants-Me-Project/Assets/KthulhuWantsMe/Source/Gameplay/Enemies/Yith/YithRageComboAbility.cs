@@ -50,6 +50,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _comboAttackCooldown -= Time.deltaTime;
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(_target, .5f);
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + transform.forward);
+        }
+
         public void PerformCombo()
         {
             StartCoroutine(ComboAttack());
@@ -99,6 +108,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             {
                 return false;
             }
+            
+            Vector3 directionToTarget = (_gameFactory.Player.transform.position - transform.position).normalized;
+            float dot = Vector3.Dot(directionToTarget, transform.forward);
+            
+            if (dot < 0.8)
+            {
+                return false;
+            }
 
             //Vector3 randomPoint = _gameFactory.Player.transform.position + Random.insideUnitSphere * .5f;
             bool sampleSuccess = NavMesh.SamplePosition(_gameFactory.Player.transform.position, out NavMeshHit hit, 0.25f, NavMesh.AllAreas);
@@ -119,12 +136,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             }
 
             return false;
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(_target, .5f);
         }
 
         private Vector3 AttackStartPoint()
