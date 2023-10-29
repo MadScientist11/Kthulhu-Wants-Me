@@ -30,7 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         private IEnumerator DoRetreat()
         {
             GetComponent<IStoppable>().StopEntityLogic();
-            Portal portal = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity, EnemyType.Tentacle);
+            Portal portal = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity, EnemyType.Cyeagha);
             yield return new WaitForSeconds(2f);
             portal.ClosePortal();
             Destroy(gameObject);

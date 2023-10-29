@@ -14,11 +14,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
     {
         public override float MaxHealth => enemyStatsContainer.EnemyStats.Stats[StatType.MaxHealth];
 
-        [FormerlySerializedAs("_enemy")] [SerializeField]
-        private EnemyStatsContainer enemyStatsContainer;
+        [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
 
         [SerializeField] private Collider _collider;
         [SerializeField] private MMFeedbacks _hitFeedbacks;
+        [SerializeField] private MMFeedbacks _deathFeedback;
+
+        [SerializeField] private CyaeghaFacade _cyaeghaFacade;
         [SerializeField] private MovementMotor _movementMotor;
         [SerializeField] private AnimationCurve _knockbackCurve;
 
@@ -55,9 +57,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private IEnumerator Death()
         {
             _collider.enabled = false;
+            _cyaeghaFacade.CyaeghaWiggle.SwitchOff();
+            _deathFeedback?.PlayFeedbacks();
             GetComponent<IStoppable>().StopEntityLogic();
             yield return new WaitForSeconds(.2f);
-            Destroy(gameObject, 2f);
+            Destroy(gameObject, 1f);
         }
     }
 }

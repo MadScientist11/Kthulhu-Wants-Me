@@ -1,6 +1,7 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
@@ -18,6 +19,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
     
     public class CyaeghaFacade : MonoBehaviour, IStateResetter, IStoppable
     {
+        [field: SerializeField] public MMWiggle CyaeghaWiggle { get; private set; }
+        
         [SerializeField] private CyaeghaAIBrain _cyaeghaAIBrain;
         [SerializeField] private MovementMotor _movementMotor;
         [SerializeField] private CyaeghaAttack _cyaeghaAttack;
