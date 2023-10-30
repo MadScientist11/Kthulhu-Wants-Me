@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd51b08b9ec14f8891e0e8f0e21b177c, type: 3}
-  m_Name: StubbornStage3
+  m_Name: RunnerStage4
   m_EditorClassIdentifier: 
   BranchStage:
     Upgrades:
     - UpgradeType: 0
-      StatType: 100
+      StatType: 0
       SkillId: 0
       UpgradeValueType: 0
-      Value: 10
+      Value: 35

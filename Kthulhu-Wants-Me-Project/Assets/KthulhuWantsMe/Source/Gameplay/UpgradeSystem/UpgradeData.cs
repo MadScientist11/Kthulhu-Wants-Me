@@ -8,8 +8,7 @@ namespace KthulhuWantsMe.Source.Gameplay.UpgradeSystem
     [Serializable]
     public class UpgradeData
     {
-        public string UpgradeTitle;
-        public string UpgradeText;
+     
         public UpgradeType UpgradeType;
 
         [ShowIf(nameof(UpgradeType), UpgradeType.StatUpgrade)]

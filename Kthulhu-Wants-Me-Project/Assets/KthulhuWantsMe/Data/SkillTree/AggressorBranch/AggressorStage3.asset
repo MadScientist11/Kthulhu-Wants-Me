@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BranchStage:
     Upgrades:
-    - UpgradeTitle: 
-      UpgradeText: 
-      UpgradeType: 1
+    - UpgradeType: 0
       StatType: 0
       SkillId: 2
       UpgradeValueType: 0
-      Value: 0
+      Value: 15
