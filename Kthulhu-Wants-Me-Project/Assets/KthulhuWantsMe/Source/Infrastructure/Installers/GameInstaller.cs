@@ -11,6 +11,7 @@ using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using VContainer;
 using VContainer.Unity;
 
@@ -34,6 +35,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<EnemiesAIBrainService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
+            
+   
             
 
             builder
