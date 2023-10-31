@@ -42,7 +42,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         public void Initialize()
         {
             _playerHpBar.SetNewMax(_player.PlayerStats.MainStats[StatType.MaxHealth]);
-            _playerStaminaBar.SetNewMax(_player.PlayerStats.MainStats[StatType.MaxStamina]);
+            _playerStaminaBar.SetNewMax(_player.MaxStamina);
             
             _player.HealthChanged += UpdateHealthBar;
 
@@ -57,7 +57,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 
         private void Update()
         {
-            _playerStaminaBar.SetValue(_player.PlayerStats.CurrentStamina, _player.PlayerStats.MainStats[StatType.MaxStamina]);
+            _playerStaminaBar.SetValue(_player.PlayerStats.CurrentStamina, _player.MaxStamina);
         }
 
         public void Show()
