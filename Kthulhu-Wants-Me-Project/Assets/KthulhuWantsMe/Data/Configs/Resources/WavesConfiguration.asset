@@ -23,4 +23,4 @@ MonoBehaviour:
     SerializationNodes: []
   MaxEnemiesSpawnAtOnce: 3
   BaseEnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  WavesContainer: {fileID: 11400000, guid: 6a4a98267bc74fc45ad4eeb178dbd2af, type: 2}
+  WavesContainer: {fileID: 11400000, guid: e346f8727d4408041bb4bf5f4ffb88d9, type: 2}

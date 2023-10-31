@@ -148,7 +148,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         
         private bool CanDoComboAttack()
         {
-            return _followPlayerBehaviour.DistanceToPlayer is < 6f and > 4f && _yithRageComboAbility.CanComboAttack();
+            if (_followPlayerBehaviour.DistanceToPlayer < _yithConfiguration.ComboAttackTriggerDistance.x
+                || _followPlayerBehaviour.DistanceToPlayer > _yithConfiguration.ComboAttackTriggerDistance.y)
+                return false;
+            
+            return _yithRageComboAbility.CanComboAttack();
         }
 
         private bool CanNotAttack()

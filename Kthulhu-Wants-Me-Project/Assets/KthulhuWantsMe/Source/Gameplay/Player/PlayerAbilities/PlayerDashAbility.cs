@@ -106,7 +106,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private bool IsStaminaFull()
         {
-            return (int)_thePlayer.PlayerStats.CurrentStamina == (int)_thePlayer.PlayerStats.MainStats[StatType.MaxStamina];
+            return (int)_thePlayer.PlayerStats.CurrentStamina == (int)_thePlayer.MaxStamina;
         }
     }
 }

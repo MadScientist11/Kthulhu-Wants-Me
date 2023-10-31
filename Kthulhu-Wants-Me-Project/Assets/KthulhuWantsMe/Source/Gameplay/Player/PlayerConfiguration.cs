@@ -16,7 +16,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public Dictionary<StatType, float> BaseStats;
 
-        
         public float MoveSpeed;
         public Vector3 Gravity = new(0, -30f, 0);
         public float DashSpeed;
@@ -35,6 +34,5 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float Drag = 0.1f;
 
         public float InvinciblityAfterAttackTime = 1f;
-        public float StaminaRegenRate = 1f;
     }
 }

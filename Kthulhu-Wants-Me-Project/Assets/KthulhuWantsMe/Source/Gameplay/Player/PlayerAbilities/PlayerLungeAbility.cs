@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+using KthulhuWantsMe.Source.Gameplay.Player.State;
+using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -30,10 +33,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         
         private IInputService _inputService;
         private PlayerConfiguration _playerConfiguration;
+        private ThePlayer _player;
 
         [Inject]
-        public void Construct(IInputService inputService, IDataProvider dataProvider)
+        public void Construct(IInputService inputService, IDataProvider dataProvider, ThePlayer player)
         {
+            _player = player;
             _playerConfiguration = dataProvider.PlayerConfig;
             _inputService = inputService;
 
@@ -68,18 +73,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void OnLungeInitiated()
         {
+            if(!_player.PlayerStats.AcquiredSkills.Contains(SkillId.Lunge))
+                return;
+            
             _lungeCharge = true;
             _playerAnimator.PlayLungeCharge();
         }
 
         private void OnLunge()
         {
+            if(!_player.PlayerStats.AcquiredSkills.Contains(SkillId.Lunge))
+                return;
+            
             if (_chargedVelocity < MinLungeChargeVelocity)
             {
                 CancelLungeCharge();
                 return;
             }
-
 
             ApplyLungeVelocity();
             CancelLungeCharge();

@@ -4,6 +4,7 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using MoreMountains.Feedbacks;
@@ -43,10 +44,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void PerformSpecialAttack()
         {
-            if(GetComponent<PlayerLungeAbility>().IsInLunge)
+            if(GetComponent<PlayerLungeAbility>().IsInLunge || !_player.PlayerStats.AcquiredSkills.Contains(SkillId.SwordSpecialAttack))
                 return;
             
-            if (_player.Inventory.CurrentItem is WeaponItem weapon && weapon.WeaponData.WeaponMoveSet.HasSpecialAttack)
+            if (_player.Inventory.CurrentItem is WeaponItem weapon)
             {
                 _currentWeapon = weapon;
                 GetComponent<PlayerLocomotion>().FaceMouse();

@@ -1,6 +1,10 @@
 ﻿namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
 {
-    public class AudioService
+    public interface IAudioService
+    {
+    }
+
+    public class AudioService : IAudioService
     {
         
     }

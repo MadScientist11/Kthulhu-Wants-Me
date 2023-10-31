@@ -1,4 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
@@ -23,6 +24,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
             builder
                 .Register<DataProvider>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
+            builder
+                .Register<BackgroundMusicPlayer>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
    
             builder

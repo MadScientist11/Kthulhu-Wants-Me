@@ -85,3 +85,4 @@ MonoBehaviour:
   ComboAttackDelay: 0.1
   ComboAttackDashSpeed: 0.25
   DashDistance: 18
+  ComboAttackTriggerDistance: {x: 4, y: 12}

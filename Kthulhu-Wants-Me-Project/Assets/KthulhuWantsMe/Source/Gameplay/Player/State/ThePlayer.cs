@@ -38,7 +38,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public float MaxHealth => _playerStats.MainStats[StatType.MaxHealth];
         public float BaseDamage => _playerStats.MainStats[StatType.BaseDamage];
-        public float MaxStamina => _playerStats.MainStats[StatType.MaxStamina];
+        public float MaxStamina => 100;
+
+        private float RegenRate
+        {
+            get
+            {
+                return (MaxStamina / _playerStats.MainStats[StatType.EvadeCooldown]);
+            }
+        }
         
         public PlayerStats PlayerStats => _playerStats;
 
@@ -61,7 +69,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         
         public void Tick()
         {
-            ModifyCurrentStamina(_playerConfiguration.StaminaRegenRate * Time.deltaTime);
+            ModifyCurrentStamina(RegenRate * Time.deltaTime);
         }
 
         public void TakeDamage(IDamageProvider damageProvider)

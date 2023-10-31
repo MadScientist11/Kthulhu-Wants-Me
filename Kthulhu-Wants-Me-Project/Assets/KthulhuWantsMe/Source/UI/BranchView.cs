@@ -18,6 +18,7 @@ namespace KthulhuWantsMe.Source.UI
 {
     public class BranchView : MonoBehaviour, IPointerClickHandler
     {
+        [SerializeField] private GameObject _availabilityPanel;
         [SerializeField] private TextMeshProUGUI _branchText;
         [SerializeField] private TextMeshProUGUI _stageStats;
         [SerializeField] private List<Image> _points;
@@ -43,8 +44,15 @@ namespace KthulhuWantsMe.Source.UI
             _branchText.text = branch.BranchName;
 
             int completedStage = _progressService.ProgressData.CompletedSkillBranchStages.GetOrCreate(branch.InstanceId);
-            BranchStage branchBranchStage = branch.BranchStages[completedStage].BranchStage;
 
+            if (completedStage >= branch.BranchStages.Count)
+            {
+                _availabilityPanel.SetActive(true);
+            }
+            completedStage = Mathf.Clamp(completedStage, 0, branch.BranchStages.Count - 1);
+            
+            BranchStage branchBranchStage = branch.BranchStages[completedStage].BranchStage;
+            
             for (int i = 0; i < completedStage; i++)
             {
                 _points[i].color = Color.green;
@@ -60,6 +68,10 @@ namespace KthulhuWantsMe.Source.UI
         public void OnPointerClick(PointerEventData eventData)
         {
             int completedStage = _progressService.ProgressData.CompletedSkillBranchStages.GetOrCreate(_branch.InstanceId);
+            if (completedStage >= _branch.BranchStages.Count)
+            {
+               return;
+            }
             BranchStage branchStage = _branch.BranchStages[completedStage].BranchStage;
             foreach (UpgradeData upgradeData in branchStage.Upgrades)
             {
