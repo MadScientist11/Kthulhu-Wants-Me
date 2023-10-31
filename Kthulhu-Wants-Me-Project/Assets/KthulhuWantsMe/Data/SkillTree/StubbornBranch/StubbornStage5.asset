@@ -15,7 +15,17 @@ MonoBehaviour:
   BranchStage:
     Upgrades:
     - UpgradeType: 0
+      StatType: 0
+      SkillId: 0
+      UpgradeValueType: 0
+      Value: 20
+    - UpgradeType: 0
       StatType: 100
       SkillId: 0
       UpgradeValueType: 0
-      Value: 50
+      Value: 10
+    - UpgradeType: 0
+      StatType: 501
+      SkillId: 0
+      UpgradeValueType: 0
+      Value: -0.05

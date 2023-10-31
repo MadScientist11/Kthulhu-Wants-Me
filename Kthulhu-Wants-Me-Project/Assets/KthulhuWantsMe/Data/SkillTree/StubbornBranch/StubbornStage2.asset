@@ -28,4 +28,4 @@ MonoBehaviour:
       StatType: 501
       SkillId: 0
       UpgradeValueType: 0
-      Value: 0.05
+      Value: -0.05

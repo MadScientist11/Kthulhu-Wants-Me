@@ -16,6 +16,21 @@ MonoBehaviour:
     Upgrades:
     - UpgradeType: 0
       StatType: 0
-      SkillId: 2
+      SkillId: 0
       UpgradeValueType: 0
-      Value: 20
+      Value: 5
+    - UpgradeType: 0
+      StatType: 100
+      SkillId: 0
+      UpgradeValueType: 0
+      Value: 15
+    - UpgradeType: 0
+      StatType: 501
+      SkillId: 0
+      UpgradeValueType: 0
+      Value: -0.1
+    - UpgradeType: 1
+      StatType: 0
+      SkillId: 1
+      UpgradeValueType: 0
+      Value: 0
