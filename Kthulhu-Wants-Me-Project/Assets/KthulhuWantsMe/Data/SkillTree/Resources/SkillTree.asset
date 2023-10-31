@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillTree:
     Branches:
+    - {fileID: 11400000, guid: a78ad46a68477644aaf63b4ce4681560, type: 2}
     - {fileID: 11400000, guid: 63b3105471a92f948bd790f630a494da, type: 2}
     - {fileID: 11400000, guid: 0a4cef72a7f8a5e47a58a30c161ba735, type: 2}
-    - {fileID: 11400000, guid: a78ad46a68477644aaf63b4ce4681560, type: 2}
