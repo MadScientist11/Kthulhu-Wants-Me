@@ -52,7 +52,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
  
             if (stateInfo.shortNameHash == PlayerAnimator.Evade && !_stopDashMovement)
             {
-                Vector2 movementDirection = -PlayerLocomotion.GetMovementDirection(_inputService.GameplayScenario.MovementInput);
+                Vector2 movementDirection = Vector2.zero;
+
+                if (_inputService.GameplayScenario.MovementInput.magnitude > 0.011f)
+                {
+                    movementDirection = -PlayerLocomotion.GetMovementDirection(_inputService.GameplayScenario.MovementInput);
+                }
+                else
+                {
+                    movementDirection = PlayerLocomotion.LastLookDirection.XZ();
+                }
+                
                 PlayerLocomotion.MovementController.SetInputs(movementDirection, PlayerLocomotion.LastLookDirection);
             }
         }
