@@ -13,70 +13,45 @@ MonoBehaviour:
   m_Name: Wave 8
   m_EditorClassIdentifier: 
   WaveData:
-    WaveObjective: 0
+    WaveObjective: 1
     Batches:
     - EnemyPack:
-      - EnemyType: 4
-        Quantity: 8
-        SpawnAt: 0
-      - EnemyType: 100
-        Quantity: 2
-        SpawnAt: 0
+      - EnemyType: 300
+        Quantity: 1
+        SpawnAt: 12
+      - EnemyType: 300
+        Quantity: 1
+        SpawnAt: 24
+      - EnemyType: 300
+        Quantity: 1
+        SpawnAt: 8
       WaitForBatchClearance: 0
       NextBatchDelay: 5
     - EnemyPack:
       - EnemyType: 4
-        Quantity: 10
-        SpawnAt: 0
-      - EnemyType: 100
-        Quantity: 3
-        SpawnAt: 0
-      - EnemyType: 0
-        Quantity: 1
-        SpawnAt: 0
-      WaitForBatchClearance: 0
-      NextBatchDelay: 7
-    - EnemyPack:
-      - EnemyType: 4
-        Quantity: 12
-        SpawnAt: 0
-      - EnemyType: 100
         Quantity: 4
         SpawnAt: 0
-      - EnemyType: 0
-        Quantity: 1
-        SpawnAt: 0
       WaitForBatchClearance: 0
-      NextBatchDelay: 9
+      NextBatchDelay: 10
     - EnemyPack:
       - EnemyType: 4
-        Quantity: 12
-        SpawnAt: 0
-      - EnemyType: 100
         Quantity: 4
         SpawnAt: 0
-      - EnemyType: 1
-        Quantity: 1
+      WaitForBatchClearance: 0
+      NextBatchDelay: 15
+    - EnemyPack:
+      - EnemyType: 4
+        Quantity: 4
         SpawnAt: 0
       WaitForBatchClearance: 0
-      NextBatchDelay: 11
+      NextBatchDelay: 20
+    - EnemyPack:
+      - EnemyType: 4
+        Quantity: 4
+        SpawnAt: 0
+      WaitForBatchClearance: 0
+      NextBatchDelay: 30
     TimeConstraint: 25
-    UpgradeRewards:
-    - UpgradeTitle: Increase Max Health by +{0}
-      UpgradeText: Increase Max Health by +{0}
-      UpgradeType: 0
-      StatType: 0
-      UpgradeValueType: 0
-      Value: 10
-    - UpgradeTitle: Increase Attack Damage by +{0}
-      UpgradeText: Increase Attack Damage by +{0}
-      UpgradeType: 0
-      StatType: 100
-      UpgradeValueType: 0
-      Value: 15
-    - UpgradeTitle: Decrease Evade Cooldown by {0}
-      UpgradeText: Decrease Evade Cooldown by {0}
-      UpgradeType: 0
-      StatType: 501
-      UpgradeValueType: 1
-      Value: -0.1
+    SpawnEnemyDelay: 2
+    EnemyType: 4
+    SpawnedEnemiesCap: 25

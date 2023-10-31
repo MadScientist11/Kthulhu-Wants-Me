@@ -34,24 +34,6 @@ MonoBehaviour:
       WaitForBatchClearance: 0
       NextBatchDelay: 5
     TimeConstraint: 4
-    SpawnRandomEnemyEverySeconds: 3
+    SpawnEnemyDelay: 3
+    EnemyType: 4
     SpawnedEnemiesCap: 25
-    UpgradeRewards:
-    - UpgradeTitle: Increase Max Health by +{0}
-      UpgradeText: Increase Max Health by +{0}
-      UpgradeType: 0
-      StatType: 0
-      UpgradeValueType: 0
-      Value: 10
-    - UpgradeTitle: Increase Attack Damage by +{0}
-      UpgradeText: Increase Attack Damage by +{0}
-      UpgradeType: 0
-      StatType: 100
-      UpgradeValueType: 0
-      Value: 15
-    - UpgradeTitle: Decrease Evade Cooldown by {0}
-      UpgradeText: Drecrease Evade Cooldown by {0}
-      UpgradeType: 0
-      StatType: 501
-      UpgradeValueType: 1
-      Value: -0.1

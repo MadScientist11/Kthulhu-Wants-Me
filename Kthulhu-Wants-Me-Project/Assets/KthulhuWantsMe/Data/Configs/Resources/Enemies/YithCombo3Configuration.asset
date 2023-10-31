@@ -77,11 +77,11 @@ MonoBehaviour:
   Knockback: 5
   KnockbackTime: 0.25
   MoveSpeed: {x: 1, y: 3}
-  ComboAttackCooldown: 10
+  ComboAttackCooldown: 6
   DelayBetweenComboAttacks: 0.75
   ComboFollowSpeedIncrement: 6
   AttackRadius: 1.25
   ReconsiderationTime: 2
   ComboAttackDelay: 0.1
   ComboAttackDashSpeed: 0.25
-  DashDistance: 15
+  DashDistance: 20
