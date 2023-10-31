@@ -49,7 +49,7 @@ MonoBehaviour:
       - EnemyType: 1
         Quantity: 2
         SpawnAt: 0
-      WaitForBatchClearance: 0
+      WaitForBatchClearance: 1
       NextBatchDelay: 11
     - EnemyPack:
       - EnemyType: 4
@@ -61,28 +61,12 @@ MonoBehaviour:
       - EnemyType: 0
         Quantity: 2
         SpawnAt: 0
-      - EnemyType: 0
+      - EnemyType: 1
         Quantity: 2
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 13
     TimeConstraint: 25
-    UpgradeRewards:
-    - UpgradeTitle: Increase Max Health by +{0}
-      UpgradeText: Increase Max Health by +{0}
-      UpgradeType: 0
-      StatType: 0
-      UpgradeValueType: 0
-      Value: 10
-    - UpgradeTitle: Increase Attack Damage by +{0}
-      UpgradeText: Increase Attack Damage by +{0}
-      UpgradeType: 0
-      StatType: 100
-      UpgradeValueType: 0
-      Value: 15
-    - UpgradeTitle: Decrease Evade Cooldown by {0}
-      UpgradeText: Decrease Evade Cooldown by {0}
-      UpgradeType: 0
-      StatType: 501
-      UpgradeValueType: 1
-      Value: -0.1
+    SpawnEnemyDelay: 3
+    EnemyType: 4
+    SpawnedEnemiesCap: 25
