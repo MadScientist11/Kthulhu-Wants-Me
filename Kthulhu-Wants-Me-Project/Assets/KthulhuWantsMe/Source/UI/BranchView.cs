@@ -43,6 +43,11 @@ namespace KthulhuWantsMe.Source.UI
             _branchText.text = branch.BranchName;
 
             int completedStage = _progressService.ProgressData.CompletedSkillBranchStages.GetOrCreate(branch.InstanceId);
+
+            if (completedStage > branch.BranchStages.Count)
+            {
+               
+            }
             BranchStage branchBranchStage = branch.BranchStages[completedStage].BranchStage;
 
             for (int i = 0; i < completedStage; i++)
