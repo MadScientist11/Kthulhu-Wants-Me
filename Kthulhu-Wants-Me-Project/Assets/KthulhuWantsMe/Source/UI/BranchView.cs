@@ -49,7 +49,7 @@ namespace KthulhuWantsMe.Source.UI
                
             }
             BranchStage branchBranchStage = branch.BranchStages[completedStage].BranchStage;
-
+            Debug.Log(completedStage);
             for (int i = 0; i < completedStage; i++)
             {
                 _points[i].color = Color.green;
