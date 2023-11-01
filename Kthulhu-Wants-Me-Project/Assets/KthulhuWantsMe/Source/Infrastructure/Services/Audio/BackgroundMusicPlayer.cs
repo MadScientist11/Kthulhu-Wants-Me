@@ -8,7 +8,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
 {
     public interface IBackgroundMusicPlayer
     {
-        void Play();
+        void PlayBattleMusic();
+        void PlayDefeatMusic();
+        void PlayConcernMusic();
     }
 
     public class BackgroundMusicPlayer : IBackgroundMusicPlayer, IInitializableService
@@ -33,9 +35,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
             _simpleAudioManager = _instantiator.Instantiate(bgmPlayerPrefab);
         }
 
-        public void Play()
-        {
+        public void PlayBattleMusic() => 
             _simpleAudioManager.PlaySong(0);
-        }
+
+        public void PlayDefeatMusic() => 
+            _simpleAudioManager.PlaySong(2);
+
+        public void PlayConcernMusic() => 
+            _simpleAudioManager.PlaySong(1);
     }
 }

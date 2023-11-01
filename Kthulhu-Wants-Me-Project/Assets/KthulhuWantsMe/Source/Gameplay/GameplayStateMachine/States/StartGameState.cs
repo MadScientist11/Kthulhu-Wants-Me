@@ -57,8 +57,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
 
             _uiService.ShowHUD();
-            _backgroundMusicPlayer.Play();
-            
+            _backgroundMusicPlayer.PlayConcernMusic();            
             _player.Inventory.OnItemAdded += StartWaveOnWeaponEquip;
         }
 

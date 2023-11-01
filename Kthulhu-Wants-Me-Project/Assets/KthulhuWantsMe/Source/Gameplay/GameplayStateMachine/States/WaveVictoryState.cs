@@ -45,26 +45,10 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
         }
 
-        private async void OnUpgradePicked()
+        private void OnUpgradePicked()
         {
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
-            await StartNextWaveCounter(new CancellationTokenSource());
-        }
-
-        public async UniTask StartNextWaveCounter(CancellationTokenSource cancellationToken)
-        {
-            int countdown = 10;
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                await UniTask.Delay(1000);
-                countdown--;
-                _uiService.MiscUI.UpdateWaveCountdownText(countdown);
-                if (countdown == 0)
-                {
-                    cancellationToken.Cancel();
-                    _gameplayStateMachine.SwitchState<WaveStartState>();
-                }
-            }
+            _gameplayStateMachine.SwitchState<WaitForNextWaveState>();
         }
     }
 }

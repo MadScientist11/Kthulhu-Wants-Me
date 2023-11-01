@@ -105,6 +105,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder.Register<WaveStartState>(Lifetime.Singleton);
             builder.Register<WaveVictoryState>(Lifetime.Singleton);
             builder.Register<WaveFailState>(Lifetime.Singleton);
+            builder.Register<WaitForNextWaveState>(Lifetime.Singleton);
         }
     }
 }

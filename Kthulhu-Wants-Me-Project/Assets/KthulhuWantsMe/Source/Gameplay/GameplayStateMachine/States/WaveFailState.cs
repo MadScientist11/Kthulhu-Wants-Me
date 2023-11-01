@@ -21,27 +21,11 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         public void Enter()
         {
             _progressService.ProgressData.CompletedWaveIndex++;
-            StartNextWaveCounter(new CancellationTokenSource()).Forget();
+            _gameplayStateMachine.SwitchState<WaitForNextWaveState>();
         }
 
         public void Exit()
         {
-        }
-        
-        private async UniTaskVoid StartNextWaveCounter(CancellationTokenSource cancellationToken)
-        {
-            int countdown = 10;
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                await UniTask.Delay(1000);
-                countdown--;
-                _uiService.MiscUI.UpdateWaveCountdownText(countdown);
-                if (countdown == 0)
-                {
-                    cancellationToken.Cancel();
-                    _gameplayStateMachine.SwitchState<WaveStartState>();
-                }
-            }
         }
     }
 }
