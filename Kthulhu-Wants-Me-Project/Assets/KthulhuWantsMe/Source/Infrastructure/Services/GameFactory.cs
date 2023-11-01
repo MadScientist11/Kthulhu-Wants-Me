@@ -78,7 +78,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
             if (instance.TryGetComponent(out EnemyStatsContainer enemy))
             {
-                EnemyStats enemyStats = _enemyStatsProvider.StatsFor(enemyType, _progressService.ProgressData.CompletedWaveIndex);
+                EnemyStats enemyStats = _enemyStatsProvider.StatsFor(enemyType, _progressService.ProgressData.CompletedWaveIndex + 1);
                 enemy.Initialize(enemyType, enemyStats);
             }
 
