@@ -45,28 +45,33 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             _inputService.GameplayScenario.Dash -= PerformDash;
         }
-        
+
         private void OnAnimatorMove()
         {
             AnimatorStateInfo stateInfo = _playerAnimator.Animator.GetCurrentAnimatorStateInfo(0);
- 
+
             if (stateInfo.shortNameHash == PlayerAnimator.Evade && !_stopDashMovement)
             {
                 Vector2 movementDirection = Vector2.zero;
 
-                if (_inputService.GameplayScenario.MovementInput.magnitude > 0.011f)
+                if (_inputService.GameplayScenario.MovementInput.magnitude > Mathfs.Epsilon)
                 {
-                    movementDirection = -PlayerLocomotion.GetMovementDirection(_inputService.GameplayScenario.MovementInput);
+                    movementDirection =
+                        -PlayerLocomotion.GetMovementDirection(_inputService.GameplayScenario.MovementInput);
                 }
-                else
+                else if (PlayerLocomotion.LastLookDirection.magnitude > Mathfs.Epsilon)
                 {
                     movementDirection = PlayerLocomotion.LastLookDirection.XZ();
                 }
-                
+                else
+                {
+                    movementDirection = transform.forward.XZ();
+                }
+
                 PlayerLocomotion.MovementController.SetInputs(movementDirection, PlayerLocomotion.LastLookDirection);
             }
         }
-        
+
         private void OnDashRecovery()
         {
             ResetEvade();
@@ -74,7 +79,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void OnDashEnd()
         {
-
         }
 
         public void ResetEvade()
@@ -103,7 +107,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             PlayerLocomotion.MovementController.ResetInputs();
             PlayerLocomotion.MovementController.OverrideMoveSpeed(_playerConfig.DashSpeed);
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
-            
+
             _playerAnimator.PlayEvade();
             _thePlayer.ModifyCurrentStamina(-1000);
             //PlayerLocomotion.MovementController.AddVelocity(transform.forward * 10);
