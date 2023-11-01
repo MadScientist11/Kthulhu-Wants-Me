@@ -95,7 +95,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         public BuffItem CreateHealItem(Vector3 position, Quaternion rotation)
         {
             BuffItem instance =
-                _instantiator.Instantiate(_dataProvider.BuffItems.Get<InstaHealthItem>(), position, rotation);
+                _instantiator.Instantiate(_dataProvider.BuffItems.Get<HealthSoul>(), position, rotation);
             return instance;
         }
 
