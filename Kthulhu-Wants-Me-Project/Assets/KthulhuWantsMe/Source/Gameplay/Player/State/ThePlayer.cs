@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -42,17 +43,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         private float RegenRate
         {
-            get
-            {
-                return (MaxStamina / _playerStats.MainStats[StatType.EvadeCooldown]);
-            }
+            get { return (MaxStamina / _playerStats.MainStats[StatType.EvadeCooldown]); }
         }
-        
+
         public PlayerStats PlayerStats => _playerStats;
 
         private PlayerStats _playerStats;
 
         private readonly PlayerConfiguration _playerConfiguration;
+        private float _regenAccumulation;
 
         public ThePlayer(IDataProvider dataProvider)
         {
@@ -66,10 +65,21 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             RestoreHp();
             RestoreStamina();
         }
-        
+
+
         public void Tick()
         {
             ModifyCurrentStamina(RegenRate * Time.deltaTime);
+
+            if (_playerStats.AcquiredSkills.Contains(SkillId.HealthRegen))
+            {
+                _regenAccumulation += _playerConfiguration.HealthRegenRate * Time.deltaTime;
+                if (_regenAccumulation >= 1f)
+                {
+                    ModifyCurrentHp(_regenAccumulation);
+                    _regenAccumulation = 0;
+                }
+            }
         }
 
         public void TakeDamage(IDamageProvider damageProvider)
@@ -84,6 +94,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
                 {
                     return;
                 }
+
                 SetPlayerInvincibleAfterDamageFor(_playerConfiguration.InvinciblityAfterAttackTime).Forget();
             }
         }
@@ -118,6 +129,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
         {
             _playerStats.CurrentHp = MaxHealth;
         }
+
         public void RestoreStamina()
         {
             _playerStats.CurrentStamina = MaxStamina;

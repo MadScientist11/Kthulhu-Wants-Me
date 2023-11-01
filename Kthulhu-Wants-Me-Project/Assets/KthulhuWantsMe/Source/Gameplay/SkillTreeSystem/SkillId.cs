@@ -5,5 +5,6 @@
         None = 0,
         SwordSpecialAttack = 1,
         Lunge = 2,
+        HealthRegen = 3,
     }
 }

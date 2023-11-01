@@ -29,3 +29,8 @@ MonoBehaviour:
       SkillId: 0
       UpgradeValueType: 0
       Value: -0.05
+    - UpgradeType: 1
+      StatType: 0
+      SkillId: 3
+      UpgradeValueType: 0
+      Value: 0

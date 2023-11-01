@@ -114,7 +114,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             
             if (dot < 0.8)
             {
-                Debug.Log("Dot");
                 return false;
             }
 

@@ -27,6 +27,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         public float LungeBaseDamage;
         public float LungeRadius;
         
+        
+        public float HealthRegenRate = 1;
+        
         public float StableMovementSharpness = 15;
         public float OrientationSharpness = 10;
         public float MaxAirMoveSpeed = 10f;

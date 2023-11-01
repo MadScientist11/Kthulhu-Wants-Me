@@ -60,7 +60,10 @@ namespace KthulhuWantsMe.Source.UI
             string stats = string.Empty;
             foreach (UpgradeData upgradeData in branchBranchStage.Upgrades)
             {
-                stats += $"{upgradeData.StatType.ToString().SplitCamelCase()} [{upgradeData.Value}] \n";
+                if (upgradeData.UpgradeType == UpgradeType.StatUpgrade)
+                {
+                    stats += $"{upgradeData.StatType.ToString().SplitCamelCase()} [{upgradeData.Value}] \n";
+                }
             }
             _stageStats.text = stats;
         }
