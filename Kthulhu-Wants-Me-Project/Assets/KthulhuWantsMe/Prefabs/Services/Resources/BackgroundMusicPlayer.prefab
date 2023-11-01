@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSourcePrefab: {fileID: 8699329177265040740, guid: 5b06f07a08fb86b40b3d5ea4171fd057,
     type: 3}
-  loopCurrentSong: 0
+  loopCurrentSong: 1
   playOnAwake: 0
   maxVolume: 0.5
   defaultSongBlendDuration: 1
