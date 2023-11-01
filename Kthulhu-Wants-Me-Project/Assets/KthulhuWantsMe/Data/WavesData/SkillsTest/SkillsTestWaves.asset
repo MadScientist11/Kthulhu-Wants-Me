@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786bc9f8c1de44f087a28889423b2851, type: 3}
+  m_Name: SkillsTestWaves
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  WavesData:
+  - {fileID: 11400000, guid: bb60f60daeb0d6449a92e8ec8e75dc8d, type: 2}
+  - {fileID: 11400000, guid: 68352d907c44cd74281859adc93f210f, type: 2}
+  - {fileID: 11400000, guid: 765d36aa9c992e248ae7db424d9f0070, type: 2}
+  - {fileID: 11400000, guid: 73f7901eadeffb545a023db340fa5180, type: 2}
+  - {fileID: 11400000, guid: 5211d63e88019fb49bd61b615484b5a5, type: 2}
+  - {fileID: 11400000, guid: d32b6ba19bb7482458c9257beef0fb6a, type: 2}

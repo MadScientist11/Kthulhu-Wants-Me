@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 50
+      Data: 75
     - Name: 
       Entry: 8
       Data: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 8
       Data: 
@@ -80,7 +80,7 @@ MonoBehaviour:
   ComboAttackCooldown: 8
   DelayBetweenComboAttacks: 1
   ComboFollowSpeedIncrement: 6
-  AttackRadius: 1.25
+  AttackRadius: 1.15
   ReconsiderationTime: 2
   ComboAttackDelay: 0.1
   ComboAttackDashSpeed: 0.25

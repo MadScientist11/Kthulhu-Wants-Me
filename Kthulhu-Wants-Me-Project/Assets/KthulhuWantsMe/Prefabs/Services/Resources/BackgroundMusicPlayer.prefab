@@ -53,5 +53,5 @@ MonoBehaviour:
   defaultIntensityBlendDuration: 1
   _songs:
   - {fileID: 11400000, guid: 6db0b0675964bfe418e6d5597dd440c3, type: 2}
-  - {fileID: 11400000, guid: 150e6ca7eab10474390be1cabcd8defd, type: 2}
+  - {fileID: 11400000, guid: fb342b57e63f3634fa0f2286e950745d, type: 2}
   - {fileID: 11400000, guid: 57a94c5ab24330b45afa8145d988b1e5, type: 2}
