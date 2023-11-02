@@ -9,6 +9,7 @@ using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -50,11 +51,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private IInputService _inputService;
         private ThePlayer _thePlayer;
         private ICoroutineRunner _coroutineRunner;
+        private IBackgroundMusicPlayer _backgroundMusicPlayer;
 
 
         [Inject]
-        public void Construct(IInputService inputService, ThePlayer thePlayer, ICoroutineRunner coroutineRunner)
+        public void Construct(IInputService inputService, ThePlayer thePlayer, ICoroutineRunner coroutineRunner, IBackgroundMusicPlayer backgroundMusicPlayer)
         {
+            _backgroundMusicPlayer = backgroundMusicPlayer;
             _coroutineRunner = coroutineRunner;
             _thePlayer = thePlayer;
             _inputService = inputService;
@@ -126,6 +129,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             RaiseDiedEvent();
             Die();
+            _backgroundMusicPlayer.PlayDefeatMusic();
         }
         
         private void ReceiveDamageVisual(IDamageProvider damageProvider)
