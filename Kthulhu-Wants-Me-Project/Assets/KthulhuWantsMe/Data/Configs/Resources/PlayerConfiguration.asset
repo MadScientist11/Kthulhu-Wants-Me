@@ -95,7 +95,7 @@ MonoBehaviour:
   AttackStep: 18
   LungeBaseDamage: 100
   LungeRadius: 2
-  HealthRegenRate: 1
+  HealthRegenRate: 10
   StableMovementSharpness: 17
   OrientationSharpness: 35
   MaxAirMoveSpeed: 10

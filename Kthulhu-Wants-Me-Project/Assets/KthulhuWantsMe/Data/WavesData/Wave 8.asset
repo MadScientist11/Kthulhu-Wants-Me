@@ -51,7 +51,7 @@ MonoBehaviour:
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 30
-    TimeConstraint: 25
+    TimeConstraint: 60
     SpawnEnemyDelay: 2
     EnemyType: 4
     SpawnedEnemiesCap: 25

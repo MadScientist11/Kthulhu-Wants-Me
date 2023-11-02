@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 150
+      Data: 200
     - Name: 
       Entry: 8
       Data: 
@@ -88,4 +88,4 @@ MonoBehaviour:
   AttackCooldownTime: 1
   ChaseCooldown: 15
   ChaseAfterSeconds: 15
-  RotationSpeed: 95
+  RotationSpeed: 100

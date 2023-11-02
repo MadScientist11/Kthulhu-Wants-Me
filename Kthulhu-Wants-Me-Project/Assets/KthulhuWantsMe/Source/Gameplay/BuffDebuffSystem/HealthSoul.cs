@@ -36,7 +36,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             
             try
             {
-                await transform.DOMove(transform.position + Random.insideUnitCircle.XZtoXYZ() * 7, .5f).SetEase(Ease.InSine)
+                await transform.DOMove(transform.position + Random.insideUnitCircle.XZtoXYZ() * 3, .5f).SetEase(Ease.InSine)
                     .AwaitForComplete();
                 await UniTask.Delay(TimeSpan.FromSeconds(7), false, PlayerLoopTiming.Update, destroyCancellationToken);
                 await transform.DOScale(0, 3f).SetEase(Ease.InBounce).AwaitForComplete();

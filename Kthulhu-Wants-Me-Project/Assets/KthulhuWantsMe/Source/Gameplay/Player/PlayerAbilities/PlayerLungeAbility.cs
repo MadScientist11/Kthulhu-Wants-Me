@@ -20,7 +20,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private PlayerAnimator _playerAnimator;
 
-        private const float LungeChargeTime = 5f;
+        private const float LungeChargeTime = 1f;
         private const float LungeChargeMaxVelocity = 100f;
         private const float MinLungeChargeVelocity = 30;
 
