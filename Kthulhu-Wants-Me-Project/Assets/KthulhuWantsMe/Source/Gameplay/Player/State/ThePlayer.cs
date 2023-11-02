@@ -35,6 +35,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public PlayerInventory Inventory { get; private set; }
 
+        public bool IsFullHp => Math.Abs(CurrentHp - MaxHealth) < 0.01f;
+
         public float CurrentHp => _playerStats.CurrentHp;
 
         public float MaxHealth => _playerStats.MainStats[StatType.MaxHealth];

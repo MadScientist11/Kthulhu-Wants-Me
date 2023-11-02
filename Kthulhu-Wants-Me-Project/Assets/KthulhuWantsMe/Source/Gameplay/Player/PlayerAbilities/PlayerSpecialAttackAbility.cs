@@ -41,6 +41,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             _currentWeapon.GetComponent<ISpecialAttack>().RespondTo(this);
         }
+ 
 
         private void PerformSpecialAttack()
         {
@@ -50,7 +51,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             if (_player.Inventory.CurrentItem is WeaponItem weapon)
             {
                 _currentWeapon = weapon;
-                GetComponent<PlayerLocomotion>().FaceMouse();
+                PlayerLocomotion playerLocomotion = GetComponent<PlayerLocomotion>();
+                playerLocomotion.BlockMovement(0.6f);
+                playerLocomotion.StopToAttack();
+                playerLocomotion.FaceMouse();
                 _playerAnimator.PlaySpecialAttack();
                 _specialAttackFeedback?.PlayFeedbacks();
             }

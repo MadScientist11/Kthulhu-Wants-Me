@@ -20,6 +20,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
        
         public void RespondTo(PlayerInteractionAbility ability)
         {
+            if(ProvideBuff() == null)
+                return;
+            
             ability.ApplyEffectToPlayer(ProvideBuff());
             Destroy(gameObject);
         }

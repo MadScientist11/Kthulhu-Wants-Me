@@ -44,6 +44,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         public void ApplyEffectToPlayer(IBuffDebuff effect)
         {
+            if(effect == null)
+                return;
+            
             _buffDebuffService.ApplyEffect(effect, GetComponent<EntityBuffDebuffContainer>());
         }
 
