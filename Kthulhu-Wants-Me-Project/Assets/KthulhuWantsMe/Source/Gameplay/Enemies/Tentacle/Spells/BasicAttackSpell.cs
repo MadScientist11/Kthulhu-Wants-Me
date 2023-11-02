@@ -38,6 +38,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         {
 
             _spellCastToken = new();
+            _spellCastToken.RegisterRaiseCancelOnDestroy(_spellCastingAbility.gameObject);
             InCooldown = true;
             
             _spellCastingAbility.CastingSpell = true;

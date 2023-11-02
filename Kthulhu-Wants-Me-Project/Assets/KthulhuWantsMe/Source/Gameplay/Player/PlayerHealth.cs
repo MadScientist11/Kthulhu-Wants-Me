@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
@@ -51,13 +52,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private IInputService _inputService;
         private ThePlayer _thePlayer;
         private ICoroutineRunner _coroutineRunner;
-        private IBackgroundMusicPlayer _backgroundMusicPlayer;
+        private GameplayStateMachine.GameplayStateMachine _gameplayStateMachine;
 
 
         [Inject]
-        public void Construct(IInputService inputService, ThePlayer thePlayer, ICoroutineRunner coroutineRunner, IBackgroundMusicPlayer backgroundMusicPlayer)
+        public void Construct(GameplayStateMachine.GameplayStateMachine gameplayStateMachine, IInputService inputService, ThePlayer thePlayer, ICoroutineRunner coroutineRunner)
         {
-            _backgroundMusicPlayer = backgroundMusicPlayer;
+            _gameplayStateMachine = gameplayStateMachine;
             _coroutineRunner = coroutineRunner;
             _thePlayer = thePlayer;
             _inputService = inputService;
@@ -129,7 +130,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             RaiseDiedEvent();
             Die();
-            _backgroundMusicPlayer.PlayDefeatMusic();
+            _gameplayStateMachine.SwitchState<PlayerDeathState>();
         }
         
         private void ReceiveDamageVisual(IDamageProvider damageProvider)

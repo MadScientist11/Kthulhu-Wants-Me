@@ -1,9 +1,11 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
 using Object = UnityEngine.Object;
@@ -18,6 +20,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         void HideHUD();
         void ShowHUD();
         void CloseActiveWindow();
+        void ClearUI();
     }
 
     public class UIService : IUIService
@@ -80,8 +83,24 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
                     _activeWindow = _uiFactory.CreatePauseWindow();
                     _activeWindowId = WindowId.PauseWindow;
                     return _activeWindow;
+                case WindowId.DefeatWindow:
+                    _activeWindow = _uiFactory.CreateDefeatWindow();
+                    _activeWindowId = WindowId.DefeatWindow;
+                    return _activeWindow;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(windowId), windowId, null);
+            }
+        }
+
+        public void ClearUI()
+        {
+            Scene sceneByName = SceneManager.GetSceneByName("GameUI");
+            foreach (GameObject go in sceneByName.GetRootGameObjects())
+            {
+                if (!go.TryGetComponent(out GameUILifetimeScope _))
+                {
+                    Object.Destroy(go);
+                }
             }
         }
 

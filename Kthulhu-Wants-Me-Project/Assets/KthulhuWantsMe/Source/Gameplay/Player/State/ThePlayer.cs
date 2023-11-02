@@ -35,8 +35,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public PlayerInventory Inventory { get; private set; }
 
+        public bool IsDead { get; set; }
         public bool IsFullHp => Math.Abs(CurrentHp - MaxHealth) < 0.01f;
-
         public float CurrentHp => _playerStats.CurrentHp;
 
         public float MaxHealth => _playerStats.MainStats[StatType.MaxHealth];
@@ -108,6 +108,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         private bool ModifyCurrentHp(float value)
         {
+            if (IsDead)
+                return false;
+
             float previousValue = _playerStats.CurrentHp;
             _playerStats.CurrentHp += value;
             _playerStats.CurrentHp = Mathf.Clamp(_playerStats.CurrentHp, 0, MaxHealth);
@@ -139,6 +142,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         private void Kill()
         {
+            IsDead = true;
             Died?.Invoke();
         }
 

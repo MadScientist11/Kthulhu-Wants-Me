@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         MiscUI CreateMiscUI();
         UpgradeWindow CreateUpgradeWindow();
         PauseWindow CreatePauseWindow();
+        TryAgainWindow CreateDefeatWindow();
     }
 
     public class UIFactory : IUIFactory
@@ -27,6 +29,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         public const string MiscUIPath = "MiscUI";
         public const string UpgradeWindowPath = "UpgradeWindow";
         public const string PauseWindowPath = "PauseWindow";
+        public const string TryAgainWindowPath = "TryAgainWindow";
         
         public bool IsInitialized { get; set; }
        
@@ -34,6 +37,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private MiscUI _miscUIPrefab;
         private UpgradeWindow _upgradeWindowPrefab;
         private PauseWindow _pauseWindowPrefab;
+        private TryAgainWindow _tryAgainWindowPrefab;
 
         private Scene _uiScene;
 
@@ -58,6 +62,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _miscUIPrefab = await _resourceManager.ProvideAssetAsync<MiscUI>(MiscUIPath);
             _upgradeWindowPrefab = await _resourceManager.ProvideAssetAsync<UpgradeWindow>(UpgradeWindowPath);
             _pauseWindowPrefab = await _resourceManager.ProvideAssetAsync<PauseWindow>(PauseWindowPath);
+            _tryAgainWindowPrefab = await _resourceManager.ProvideAssetAsync<TryAgainWindow>(TryAgainWindowPath);
         }
 
         public void EnqueueParent(LifetimeScope parent)
@@ -92,6 +97,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             PauseWindow pauseWindow = _instantiator.Instantiate(_pauseWindowPrefab);
             SceneManager.MoveGameObjectToScene(pauseWindow.gameObject, _uiScene);
             return pauseWindow;
+        }
+
+        public TryAgainWindow CreateDefeatWindow()
+        {
+            TryAgainWindow tryAgainWindow = _instantiator.Instantiate(_tryAgainWindowPrefab);
+            SceneManager.MoveGameObjectToScene(tryAgainWindow.gameObject, _uiScene);
+            return tryAgainWindow;
         }
     }
 }
