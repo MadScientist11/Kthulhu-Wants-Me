@@ -2,14 +2,22 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 3Tone
   m_Shader: {fileID: 4800000, guid: 933f24cde1e3f6a41818f56d729421ab, type: 3}
-  m_ShaderKeywords: _OUTLINE _RIMLIGHTING_ON _TOON_SHADING_ON
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _HALFTONESHAPE_DOT
+  - _OUTLINE
+  - _RIMLIGHTING_ON
+  - _TOON_SHADING_ON
+  m_InvalidKeywords:
+  - _STEPVIARAMPTEXTURE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -18,6 +26,7 @@ Material:
     RenderType: Opaque
   disabledShaderPasses:
   - SRPDEFAULTUNLIT
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -54,6 +63,10 @@ Material:
         m_Scale: {x: 0, y: 0}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceShadowMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -133,6 +146,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _ActiveRenderFeature: 1
     - _AlphaClip: 0
@@ -151,11 +165,16 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DiffuseStep: -0.1
+    - _DitherTexelSize: 1
+    - _DitherThreshold: 1
     - _DotSize: 0.7
     - _DotTilling: 30
     - _DstBlend: 0
     - _EnabledHairSpec: 0
     - _EnvironmentReflections: 1
+    - _FaceShadowMapEnabled: 0
+    - _FaceShadowMapPow: 0.2
+    - _FaceShadowSmoothness: 0.1
     - _Farthest_Distance: 100
     - _FlatGlitterEdgeSmoothness: 0
     - _FlatGlitterGlossness: 0
@@ -188,7 +207,10 @@ Material:
     - _HalfToneIncludeReceivedShadow: 0
     - _HalfToneShape: 0
     - _HalfToneUvMode: 0
+    - _HalftoneFadeDistance: 10
+    - _HalftoneFadeToColor: 0
     - _HalftoneNoiseClip: 0.8
+    - _HalftoneTilling: 8
     - _HatchDiffuseOffset: 0
     - _HatchDrawStrength: 1
     - _HatchLowerBound: 0.1
@@ -279,6 +301,8 @@ Material:
     - _ColorDimSteps: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _ColorGradient: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FaceFrontDirection: {r: 0, g: 0, b: 1, a: 0}
+    - _FaceRightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _FlatGlitterColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _FlatRimColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
     - _FlatSpecularColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}

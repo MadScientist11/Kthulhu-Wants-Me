@@ -7,7 +7,7 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material #25
+      name: FloorMat
     second: {fileID: 2100000, guid: 1de34d6a3e32c0b4f8ee1283b12cfebf, type: 2}
   materials:
     materialImportMode: 2
@@ -37,7 +37,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
