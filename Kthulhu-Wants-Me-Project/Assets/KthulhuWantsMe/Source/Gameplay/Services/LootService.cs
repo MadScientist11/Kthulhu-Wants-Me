@@ -57,7 +57,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
                 iterations++;
 
-                if (iterations > 100)
+                if (iterations > 10000)
                     break;
             }
 

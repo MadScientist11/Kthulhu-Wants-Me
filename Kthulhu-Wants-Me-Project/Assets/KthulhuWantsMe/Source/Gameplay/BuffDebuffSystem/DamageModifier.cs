@@ -16,6 +16,8 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
 
         private IBuffDebuffService _buffDebuffService;
         private IBuffDebuffFactory _buffDebuffFactory;
+        private float _damagePerSecond;
+        private float _duration;
 
         [Inject]
         public void Construct(IBuffDebuffService buffDebuffService, IBuffDebuffFactory buffDebuffFactory)
@@ -32,8 +34,10 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             _buffDebuffService.ApplyEffect(CreateEffect(), effectReceiver);
         }
 
-        public void SetModifier(DamageModifierId damageModifierId)
+        public void SetModifier(DamageModifierId damageModifierId, float damagePerSecond = 9, float duration = 3)
         {
+            _duration = duration;
+            _damagePerSecond = damagePerSecond;
             _damageModifierId = damageModifierId;
         }
 
@@ -44,7 +48,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
                 DamageModifierId.None => null,
                 DamageModifierId.Poison => _buffDebuffFactory.CreateEffect<PoisonDebuff>().Init(5, 5f, _effectVfxPrefab),
                 DamageModifierId.Bleed => _buffDebuffFactory.CreateEffect<BleedDebuff>().Init(2, 10f, _effectVfxPrefab),
-                DamageModifierId.Fire => _buffDebuffFactory.CreateEffect<FireDebuff>().Init(9,3,_effectVfxPrefab),
+                DamageModifierId.Fire => _buffDebuffFactory.CreateEffect<FireDebuff>().Init(_damagePerSecond,_duration,_effectVfxPrefab),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
