@@ -27,6 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             MaxQueueSize = Mathf.CeilToInt(1f / _historicalPositionInterval * _historicalPositionDuration);
             _historicalVelocities = new Queue<Vector3>(MaxQueueSize);
             _moveSpeed = playerConfiguration.MoveSpeed;
+            _rotationSpeed = playerConfiguration.OrientationSharpness;
         }
 
         public void SetInputs(Vector2 moveInput, Vector3 lookDirection)
@@ -73,14 +74,26 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         }
 
         private float _moveSpeed;
+        private float _rotationSpeed;
         public void OverrideMoveSpeed(float speed)
         {
             _moveSpeed = speed;
         }
+        
+        public void OverrideRotationSpeed(float speed)
+        {
+            _rotationSpeed = speed;
+        }
+
 
         public void ResetSpeedOverride()
         {
             _moveSpeed = _playerConfiguration.MoveSpeed;
+        }
+        
+        public void ResetRotationOverride()
+        {
+            _rotationSpeed = _playerConfiguration.OrientationSharpness;
         }
 
         public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
@@ -89,7 +102,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             {
                 // Smoothly interpolate from current to target look direction
                 Vector3 smoothedLookInputDirection = Vector3.Slerp(_motor.CharacterForward, _lookInputVector,
-                    1 - Mathf.Exp(-_playerConfiguration.OrientationSharpness * deltaTime)).normalized;
+                    1 - Mathf.Exp(-_rotationSpeed * deltaTime)).normalized;
 
                 // Set the current rotation (which will be used by the KinematicCharacterMotor)
                 currentRotation = Quaternion.LookRotation(smoothedLookInputDirection, _motor.CharacterUp);
@@ -104,51 +117,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 _killVelocity = false;
             }
 
-            Vector3 targetMovementVelocity = Vector3.zero;
             if (_motor.GroundingStatus.IsStableOnGround)
             {
-                // Reorient velocity on slope
-                currentVelocity =
-                    _motor.GetDirectionTangentToSurface(currentVelocity, _motor.GroundingStatus.GroundNormal) *
-                    currentVelocity.magnitude;
-
-                // Calculate target velocity
-                Vector3 inputRight = Vector3.Cross(_moveInputVector, _motor.CharacterUp);
-                Vector3 reorientedInput = Vector3.Cross(_motor.GroundingStatus.GroundNormal, inputRight).normalized *
-                                          _moveInputVector.magnitude;
-                targetMovementVelocity = reorientedInput * _moveSpeed;
-
-                // Smooth movement Velocity
-                currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity,
-                    1 - Mathf.Exp(-_playerConfiguration.StableMovementSharpness * deltaTime));
+                Move(ref currentVelocity, deltaTime, _moveSpeed);
             }
             else
             {
-                // Add move input
-                if (_moveInputVector.sqrMagnitude > 0f)
-                {
-                    targetMovementVelocity = _moveInputVector * _playerConfiguration.MaxAirMoveSpeed;
-
-                    // Prevent climbing on un-stable slopes with air movement
-                    if (_motor.GroundingStatus.FoundAnyGround)
-                    {
-                        Vector3 perpenticularObstructionNormal = Vector3
-                            .Cross(Vector3.Cross(_motor.CharacterUp, _motor.GroundingStatus.GroundNormal),
-                                _motor.CharacterUp).normalized;
-                        targetMovementVelocity =
-                            Vector3.ProjectOnPlane(targetMovementVelocity, perpenticularObstructionNormal);
-                    }
-
-                    Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity,
-                        _playerConfiguration.Gravity);
-                    currentVelocity += velocityDiff * _playerConfiguration.AirAccelerationSpeed * deltaTime;
-                }
-
-                // Gravity
-                currentVelocity += _playerConfiguration.Gravity * deltaTime;
-
-                // Drag
-                currentVelocity *= (1f / (1f + (_playerConfiguration.Drag * deltaTime)));
+                AirMove(ref currentVelocity, deltaTime);
             }
 
             // Take into account additive velocity
@@ -157,6 +132,55 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 currentVelocity += _internalVelocityAdd;
                 _internalVelocityAdd = Vector3.zero;
             }
+        }
+
+        private void Move(ref Vector3 currentVelocity, float deltaTime, float moveSpeed)
+        {
+            Vector3 targetMovementVelocity;
+            // Reorient velocity on slope
+            currentVelocity =
+                _motor.GetDirectionTangentToSurface(currentVelocity, _motor.GroundingStatus.GroundNormal) *
+                currentVelocity.magnitude;
+
+            // Calculate target velocity
+            Vector3 inputRight = Vector3.Cross(_moveInputVector, _motor.CharacterUp);
+            Vector3 reorientedInput = Vector3.Cross(_motor.GroundingStatus.GroundNormal, inputRight).normalized *
+                                      _moveInputVector.magnitude;
+            targetMovementVelocity = reorientedInput * moveSpeed;
+
+            // Smooth movement Velocity
+            currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity,
+                1 - Mathf.Exp(-_playerConfiguration.StableMovementSharpness * deltaTime));
+        }
+
+        private void AirMove(ref Vector3 currentVelocity, float deltaTime)
+        {
+            Vector3 targetMovementVelocity;
+            // Add move input
+            if (_moveInputVector.sqrMagnitude > 0f)
+            {
+                targetMovementVelocity = _moveInputVector * _playerConfiguration.MaxAirMoveSpeed;
+
+                // Prevent climbing on un-stable slopes with air movement
+                if (_motor.GroundingStatus.FoundAnyGround)
+                {
+                    Vector3 perpenticularObstructionNormal = Vector3
+                        .Cross(Vector3.Cross(_motor.CharacterUp, _motor.GroundingStatus.GroundNormal),
+                            _motor.CharacterUp).normalized;
+                    targetMovementVelocity =
+                        Vector3.ProjectOnPlane(targetMovementVelocity, perpenticularObstructionNormal);
+                }
+
+                Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - currentVelocity,
+                    _playerConfiguration.Gravity);
+                currentVelocity += velocityDiff * _playerConfiguration.AirAccelerationSpeed * deltaTime;
+            }
+
+            // Gravity
+            currentVelocity += _playerConfiguration.Gravity * deltaTime;
+
+            // Drag
+            currentVelocity *= (1f / (1f + (_playerConfiguration.Drag * deltaTime)));
         }
 
         private float _historicalPositionDuration = 1f;
@@ -181,6 +205,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private Queue<Vector3> _historicalVelocities;
         private float _lastPositionTime;
         private int MaxQueueSize;
+        private Vector3 _faceDirection;
 
         public void AfterCharacterUpdate(float deltaTime)
         {

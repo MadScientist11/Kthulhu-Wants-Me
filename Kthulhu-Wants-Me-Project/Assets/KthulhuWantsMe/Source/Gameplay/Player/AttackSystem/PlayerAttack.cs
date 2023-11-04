@@ -68,16 +68,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         {
             _isAttacking = false;
             _inRecoveryPhase = false;
-            if(resetCombo)
+            
+
+            if (resetCombo)
                 _comboAttackIndex = 0;
         }
 
         private CancellationTokenSource _attackStateResetToken;
         private bool _delayedResetInProgress;
-        
+
         public async UniTaskVoid ResetAttackStateDelayed()
         {
-            if(_delayedResetInProgress)
+            if (_delayedResetInProgress)
                 return;
             _delayedResetInProgress = true;
             _attackStateResetToken = new();
@@ -91,16 +93,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             _inRecoveryPhase = false;
 
             Vector3 desiredDirection = _playerLocomotion.FaceMouse();
+            _playerLocomotion.MovementController.AddVelocity(desiredDirection * _playerConfiguration.AttackStep);
 
             //if (Physics.SphereCast(transform.position, 1, transform.forward, out RaycastHit hitInfo, 5,
             //        LayerMasks.EnemyMask))
-            {
-                _playerLocomotion.MovementController.AddVelocity(desiredDirection * _playerConfiguration.AttackStep);
-            }
         }
 
         protected override void OnContactPhase()
         {
+
             _weaponTrails.Play(_comboAttackIndex);
 
             if (!PhysicsUtility.HitMany(AttackStartPoint(), _playerConfiguration.AttackRadius,
@@ -123,6 +124,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         protected override void OnRecoveryPhase()
         {
+
             _comboAttackIndex++;
             _comboAttackIndex %= _activeWeapon.WeaponData.WeaponMoveSet.MoveSetAttackCount;
             _inRecoveryPhase = true;
@@ -140,6 +142,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             {
                 return;
             }
+
             _attackStateResetToken?.Cancel();
             _delayedResetInProgress = false;
             ResetAttackState(false);

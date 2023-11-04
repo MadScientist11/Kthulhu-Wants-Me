@@ -62,10 +62,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             if (CanMove())
             {
                 _playerAnimator.Move();
-                if(_playerAttack.InRecoveryPhase)
-                    _playerAttack.ResetAttackStateDelayed().Forget();
+                //if(_playerAttack.InRecoveryPhase)
+                //    _playerAttack.ResetAttackStateDelayed().Forget();
                 
-                ProcessInput();
+                _movementController.SetInputs(GetMoveDirection(), GetLookDirection());
+
             }
             else
             {
@@ -123,6 +124,23 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             _movementController.SetInputs(movementInput, _lastLookDirection);
         }
+
+        private Vector2 GetMoveDirection()
+        {
+            return GetMovementDirection(-_inputService.GameplayScenario.MovementInput);
+        }
+        
+        private Vector3 GetLookDirection()
+        {
+            Vector2 moveDirection = GetMoveDirection();
+            
+            if (moveDirection.sqrMagnitude > Mathfs.Epsilon)
+            {
+                _lastLookDirection = moveDirection.XZtoXYZ();
+            }
+            return _lastLookDirection;
+        }
+
 
 
         public Vector2 GetMovementDirection(Vector2 movementInput)
