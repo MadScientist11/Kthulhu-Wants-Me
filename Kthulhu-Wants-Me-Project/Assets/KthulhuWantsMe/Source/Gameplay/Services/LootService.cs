@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using Unity.AI.Navigation;
 using UnityEngine;
+using Vertx.Debugging;
 using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
@@ -18,12 +21,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     public class LootService : ILootService
     {
         private readonly IGameFactory _gameFactory;
+        private readonly NavMeshSurface _navMeshSurface;
 
         private readonly RaycastHit[] _results = new RaycastHit[2];
 
-        public LootService(IGameFactory gameFactory)
+        public LootService(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider)
         {
             _gameFactory = gameFactory;
+            _navMeshSurface = sceneDataProvider.MapNavMesh;
         }
 
         public BuffItem SpawnBuff<T>(Vector3 at, Quaternion rotation) where T : BuffItem
@@ -35,23 +40,27 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         {
             PlayerFacade player = _gameFactory.Player;
 
-            bool spawned = false;
             int iterations = 0;
-            while (!spawned || iterations > 100)
+            while (true)
             {
-                Vector3 randomPosition = player.transform.position.AddY(5) + Random.insideUnitCircle.XZtoXYZ() * 20f;
-                int count = Physics.SphereCastNonAlloc(randomPosition, 1f, Vector3.down, _results, 50);
+                Vector3 randomPosition = player.transform.position.AddY(4) + Random.insideUnitCircle.XZtoXYZ() * 50f;
+                Bounds navMeshBounds = _navMeshSurface.navMeshData.sourceBounds;
+                Bounds adjustedBounds = new Bounds(navMeshBounds.center, navMeshBounds.size - new Vector3(1,0,1) * 10);
 
-                if (count == 1 && IsGround(_results[0]))
+                int count = DrawPhysics.SphereCastNonAlloc(randomPosition, .75f, Vector3.down, _results, 50);
+
+                if (count == 1 && adjustedBounds.Contains(randomPosition) && IsGround(_results[0]))
                 {
                     RaycastHit raycastHit = _results[0];
-                    spawned = true;
-                    return SpawnBuff<FlameSoul>(raycastHit.point, Quaternion.identity);
+                    return SpawnBuff<FlameSoul>(raycastHit.point.AddY(1), Quaternion.identity);
                 }
 
                 iterations++;
+
+                if (iterations > 100)
+                    break;
             }
-          
+
 
             throw new Exception("Couldn't spawn flame soul");
         }

@@ -84,7 +84,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         {
             if (context.performed)
             {
-                Debug.Log("Release");
                 SpecialAttack?.Invoke();
             }
         }

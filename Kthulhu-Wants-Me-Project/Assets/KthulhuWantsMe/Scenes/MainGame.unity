@@ -9468,7 +9468,7 @@ PrefabInstance:
     - target: {fileID: 4042497827778508959, guid: 692f5f7839e611c4e9975b7803cb330c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20
+      value: 20.4
       objectReference: {fileID: 0}
     - target: {fileID: 4042497827778508959, guid: 692f5f7839e611c4e9975b7803cb330c,
         type: 3}
@@ -21434,7 +21434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _allSpawnPoints: {fileID: 747148615}
   _cameraController: {fileID: 0}
-  _mapNavMesh: {fileID: 0}
+  _mapNavMesh: {fileID: 2027087564}
 --- !u!4 &1523681596
 Transform:
   m_ObjectHideFlags: 0
