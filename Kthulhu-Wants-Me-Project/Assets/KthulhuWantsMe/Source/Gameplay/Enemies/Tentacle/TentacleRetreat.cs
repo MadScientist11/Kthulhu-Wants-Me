@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.Services;
@@ -86,7 +87,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
             if (_spawnLootAfterRetreat)
             {
-                BuffItem buffItem = _lootService.SpawnRandomBuff(transform.position + Vector3.up * _height * 1.2f, Quaternion.identity);
+                _lootService.SpawnFlameSoul();
+
+                //BuffItem buffItem = _lootService.SpawnBuff<FlameSoul>(transform.position + Vector3.up * _height * 1.2f, Quaternion.identity);
             }
 
             

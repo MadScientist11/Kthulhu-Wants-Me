@@ -27,6 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         public bool InRecoveryPhase => _inRecoveryPhase;
 
         [SerializeField] private MMFeedbacks _attackFeedback;
+        [SerializeField] private MMFeedbacks _hitFeedback;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
@@ -101,15 +102,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         protected override void OnContactPhase()
         {
-
+            UpdateActiveWeaponStatus(_player.Inventory.CurrentItem);
             _weaponTrails.Play(_comboAttackIndex);
+            _attackFeedback?.PlayFeedbacks(AttackStartPoint());
 
             if (!PhysicsUtility.HitMany(AttackStartPoint(), _playerConfiguration.AttackRadius,
                     LayerMasks.EnemyMask, out List<IDamageable> damageables))
                 return;
 
 
-            _attackFeedback?.PlayFeedbacks(AttackStartPoint());
+            _hitFeedback?.PlayFeedbacks(AttackStartPoint());
 
             foreach (IDamageable damageable in damageables)
             {
@@ -165,12 +167,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             WeaponMoveSet weaponMoveSet = _activeWeapon == null ? null : _activeWeapon.WeaponData.WeaponMoveSet;
             if (_activeWeapon != null && _weaponTrails == null)
             {
-                _weaponTrails = Instantiate(_activeWeapon.WeaponData.WeaponTrailsPrefab, transform);
+                _weaponTrails = Instantiate(_activeWeapon.WeaponData.WeaponTrailsPrefab, transform.position, transform.rotation);
             }
             else if (_activeWeapon != null)
             {
-                Destroy(_weaponTrails);
-                _weaponTrails = Instantiate(_activeWeapon.WeaponData.WeaponTrailsPrefab, transform);
+                Destroy(_weaponTrails.gameObject);
+                _weaponTrails = Instantiate(_activeWeapon.WeaponData.WeaponTrailsPrefab, transform.position, transform.rotation);
             }
 
             _playerAnimator.ApplyWeaponMoveSet(weaponMoveSet);

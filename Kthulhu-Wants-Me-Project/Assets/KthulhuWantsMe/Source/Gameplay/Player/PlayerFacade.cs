@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Cinemachine;
+using Freya;
 using KthulhuWantsMe.Source.Gameplay.Camera;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Services;
@@ -9,6 +10,8 @@ using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer;
+using Vertx.Debugging;
+using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {

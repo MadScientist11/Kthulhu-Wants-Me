@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuffItems:
   - {fileID: 1717804991820437883, guid: 0eaca65b7ba6592448cd8c7aa92ccfbf, type: 3}
+  - {fileID: -2610252180936509441, guid: 4876fc1853dfee04997aedec742694c3, type: 3}
