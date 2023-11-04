@@ -31,9 +31,6 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
 
         private async void Start()
         {
-            if(_thePlayer.IsFullHp)
-                return;
-            
             try
             {
                 await transform.DOMove(transform.position + Random.insideUnitCircle.XZtoXYZ() * 3, .5f).SetEase(Ease.InSine)
@@ -54,10 +51,8 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             if(_thePlayer.IsFullHp)
                 return;
             
-            if (Vector3.Distance(transform.position, _player.transform.position) < 3)
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, _player.transform.position.AddY(.5f), ref _velocity, 0.2f);
-            }
+            if (InRange()) 
+                FollowPlayer();
         }
 
         protected override IBuffDebuff ProvideBuff()
@@ -69,6 +64,15 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             InstaHealBuff effect = EffectFactory.CreateEffect<InstaHealBuff>();
             effect.Init(_healAmount);
             return effect;
+        }
+
+        private bool InRange() => 
+            Vector3.Distance(transform.position, _player.transform.position) < 3;
+
+        private void FollowPlayer()
+        {
+            transform.position =
+                Vector3.SmoothDamp(transform.position, _player.transform.position.AddY(.5f), ref _velocity, 0.2f);
         }
     }
 }
