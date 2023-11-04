@@ -1,13 +1,8 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
+﻿using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
-using KthulhuWantsMe.Source.Infrastructure;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
-using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using VContainer;
 
@@ -17,7 +12,7 @@ namespace KthulhuWantsMe.Source.UI
     {
         [SerializeField] private Button _yesButton;
         [SerializeField] private Button _noButton;
-        
+
         private GameplayStateMachine _gameplayStateMachine;
 
         [Inject]
@@ -45,6 +40,11 @@ namespace KthulhuWantsMe.Source.UI
 
         private void Quit()
         {
+#if UNITY_EDITOR
+            EditorApplication.ExitPlaymode();
+#else
+            Application.Quit();
+#endif
         }
     }
 }
