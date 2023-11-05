@@ -28,12 +28,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         [Header("Jump")] [SerializeField] private Ease _jumpEasing;
 
-        [SerializeField] private float _delayBeforeJump = 0.75f;
-        [SerializeField] private float _jumpSpeed = 2;
-        [SerializeField] private float _jumpHeight = 2;
+      
 
         [Header("Landing")] [SerializeField] private Ease _landEasing;
-        [SerializeField] private float _landingSpeed = 5;
 
 
         private float _attackCooldown;
@@ -80,7 +77,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             SetAttackState();
 
             _attackPrepareFeedback?.PlayFeedbacks();
-            yield return new WaitForSeconds(_delayBeforeJump);
+            yield return new WaitForSeconds(_cyaeghaConfiguration.DelayBeforeJump);
 
             Vector3 jumpStartPos = transform.position;
             Vector3 dest = lastPlayerPosition;
@@ -89,10 +86,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
             Vector3 damagePosition = Vector3.zero;
 
-            for (float t = 0; t < 1; t += Time.deltaTime * _jumpSpeed)
+            for (float t = 0; t < 1; t += Time.deltaTime * _cyaeghaConfiguration.JumpSpeed)
             {
                 transform.position = Vector3.Lerp(jumpStartPos, dest, t)
-                                     + Vector3.up * DOVirtual.EasedValue(0, _jumpHeight, t, _jumpEasing);
+                                     + Vector3.up * DOVirtual.EasedValue(0, _cyaeghaConfiguration.JumpHeight, t, _jumpEasing);
 
                 if (t > 0.25f && TryDamage(.4f, out IDamageable player))
                 {
@@ -115,7 +112,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
                 if (sampleSuccess)
                 {
-                    for (float t = 0; t < 1; t += Time.deltaTime * _landingSpeed)
+                    for (float t = 0; t < 1; t += Time.deltaTime * _cyaeghaConfiguration.LandingSpeed)
                     {
                         transform.position = Vector3.Lerp(damagePosition, hit.position,
                             DOVirtual.EasedValue(0, 1, t, _landEasing));
@@ -132,7 +129,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
                 if (sampleSuccess)
                 {
                     Vector3 startPosition = transform.position;
-                    for (float t = 0; t < 1; t += Time.deltaTime * _landingSpeed)
+                    for (float t = 0; t < 1; t += Time.deltaTime * _cyaeghaConfiguration.LandingSpeed)
                     {
                         transform.position = Vector3.Lerp(startPosition, hit.position,
                             DOVirtual.EasedValue(0, 1, t, _jumpEasing));
@@ -182,7 +179,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, transform.position + transform.forward);
         }
-
 
         public bool CanAttack()
         {
