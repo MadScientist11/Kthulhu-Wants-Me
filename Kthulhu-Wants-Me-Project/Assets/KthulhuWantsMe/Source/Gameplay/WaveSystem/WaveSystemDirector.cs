@@ -85,11 +85,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public void Initialize()
         {
             _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider, _dataProvider);
-            
+
             IWaveScenario eliminateAllEnemiesScenario = new EliminateAllEnemiesScenario(this);
-            IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService);
-            IWaveScenario endlessWaveScenario = new EndlessWaveScenario(this, _gameFactory, _waveSpawner);
-            
+            IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService, _gameFactory);
+            IWaveScenario endlessWaveScenario = new EndlessWaveScenario(this, _gameFactory, _uiService, _waveSpawner);
+
             _waveScenarios = new()
             {
                 { WaveObjective.KillAllEnemies, eliminateAllEnemiesScenario },
@@ -114,7 +114,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             {
                 SpawnBatchLoop().Forget();
             }
-            
+
             _waveOngoing = true;
 
             WaveStarted?.Invoke();

@@ -16,7 +16,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 {
     public class PlayerHUD : MonoBehaviour, IUIElement
     {
-        [FormerlySerializedAs("SpecialObjectWaveLossTimerUI")] public SpecialObjectiveWaveLossTimerUI specialObjectiveWaveLossTimerUI;
+        [FormerlySerializedAs("specialObjectiveWaveLossTimerUI")] [FormerlySerializedAs("SpecialObjectWaveLossTimerUI")] public TimerUI timerUI;
         
         [SerializeField] private IndicatorsUI _indicatorsUI;
         [SerializeField] private HpBar _playerHpBar;
@@ -77,17 +77,14 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 
             _waveCounterText.text = $"{_progressService.ProgressData.CompletedWaveIndex + 2}/10";
             
-            if(_waveSystemDirector.CurrentWaveState.WaveObjective == WaveObjective.KillTentaclesSpecial)
-                _waveLossTimer.SwitchOn();
+        
         }
 
         private void OnWaveCompleted()
         {
             _objective.SwitchOff();
             _waveCounter.SwitchOff();
-            
-            if(_waveSystemDirector.CurrentWaveState.WaveObjective == WaveObjective.KillTentaclesSpecial)
-                _waveLossTimer.SwitchOff();
+
         }
 
         private void UpdateHealthBar(HealthChange healthChange)

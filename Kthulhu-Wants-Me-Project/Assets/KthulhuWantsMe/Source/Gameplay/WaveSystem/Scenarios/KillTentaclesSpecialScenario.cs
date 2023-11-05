@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using Sirenix.Utilities;
 using UnityEngine;
@@ -27,9 +28,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly IUIService _uiService;
+        private readonly IGameFactory _gameFactory;
 
-        public KillTentaclesSpecialScenario(IWaveSystemDirector waveSystemDirector, IUIService uiService)
+        public KillTentaclesSpecialScenario(IWaveSystemDirector waveSystemDirector, IUIService uiService, IGameFactory gameFactory)
         {
+            _gameFactory = gameFactory;
             _uiService = uiService;
             _waveSystemDirector = waveSystemDirector;
         }
@@ -38,6 +41,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public void Initialize()
         {
             StartWaveLossTimer().Forget();
+            _uiService.PlayerHUD.timerUI.gameObject.SwitchOn();
             
             _waveSystemDirector.WaveSpawner.BatchSpawned += OnBatchSpawned;
             _waveSystemDirector.WaveCompleted += OnWaveCompleted;
@@ -47,6 +51,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public void Dispose()
         {
+            _uiService.PlayerHUD.timerUI.gameObject.SwitchOff();
+
             _waveSystemDirector.WaveSpawner.BatchSpawned -= OnBatchSpawned;
             _waveSystemDirector.WaveCompleted -= OnWaveCompleted;
             _waveSystemDirector.CurrentWaveState.WaveEnemyDied -= OnEnemyDied;
@@ -88,7 +94,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
             while (!_timerToken.IsCancellationRequested)
             {
-                await UniTask.Delay(tick);
+                await UniTask.Delay(tick, false, PlayerLoopTiming.Update, _gameFactory.Player.destroyCancellationToken);
                 countdown--;
 
                 OnWaveLossTimerTick(countdown);
@@ -108,6 +114,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             {
                 SpawnAdditionalEnemy();
             }
+            _uiService.PlayerHUD.timerUI.UpdateTImerText(countdown);
             WaveLossTimerTick?.Invoke(countdown);
         }
 

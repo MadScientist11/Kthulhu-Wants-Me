@@ -8,6 +8,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
@@ -21,12 +22,15 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly WaveSpawner _waveSpawner;
         private readonly IGameFactory _gameFactory;
+        private readonly IUIService _uiService;
 
         private CancellationTokenSource _spawnLoopToken;
 
 
-        public EndlessWaveScenario(IWaveSystemDirector waveSystemDirector, IGameFactory gameFactory, WaveSpawner waveSpawner)
+        public EndlessWaveScenario(IWaveSystemDirector waveSystemDirector, IGameFactory gameFactory,
+            IUIService uiService, WaveSpawner waveSpawner)
         {
+            _uiService = uiService;
             _gameFactory = gameFactory;
             _waveSpawner = waveSpawner;
             _waveSystemDirector = waveSystemDirector;
@@ -39,23 +43,41 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             AddBatches(1);
             _waveSpawner.SpawnBatchNotified(_waveSystemDirector.CurrentWaveState.CurrentBatchData);
             SpawnBatchLoop().Forget();
+            StartObjectiveTimer().Forget();
+
+            _uiService.PlayerHUD.timerUI.gameObject.SwitchOn();
         }
 
         public void Dispose()
         {
+            _uiService.PlayerHUD.timerUI.gameObject.SwitchOff();
         }
 
-   
+
         private async UniTaskVoid SpawnBatchLoop()
         {
             _spawnLoopToken = new();
             _spawnLoopToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
             while (!_spawnLoopToken.IsCancellationRequested)
             {
-                TimeSpan nextBatchDelay = TimeSpan.FromSeconds(_waveSystemDirector.CurrentWaveState.CurrentBatchData.NextBatchDelay);
+                TimeSpan nextBatchDelay =
+                    TimeSpan.FromSeconds(_waveSystemDirector.CurrentWaveState.CurrentBatchData.NextBatchDelay);
                 await UniTask.Delay(nextBatchDelay, false, PlayerLoopTiming.Update, _spawnLoopToken.Token);
                 AddBatches(1);
                 _waveSystemDirector.SpawnNextBatch();
+            }
+        }
+
+        private async UniTaskVoid StartObjectiveTimer()
+        {
+            TimeSpan tick = TimeSpan.FromSeconds(1);
+            int countUp = 0;
+
+            while (true)
+            {
+                await UniTask.Delay(tick, false, PlayerLoopTiming.Update, _gameFactory.Player.destroyCancellationToken);
+                countUp++;
+                _uiService.PlayerHUD.timerUI.UpdateTImerText(countUp);
             }
         }
 
@@ -74,7 +96,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
             int aliveTentacles = _waveSystemDirector.CurrentWaveState.AliveEnemies.Count(health =>
                 health.TryGetComponent(out TentacleAIBrain _));
-            
+
             if (aliveTentacles >= 4)
             {
                 allowedEnemies = new List<EnemyType> { EnemyType.Cyeagha, EnemyType.YithCombo1 };
@@ -91,6 +113,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             {
                 enemyPack.Quantity = 1;
             }
+
             return new Batch()
             {
                 EnemyPack = new List<EnemyPack>()
