@@ -58,6 +58,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
                 _buffDebuffService.CancelEffect(this, _effectReceiver);
                 return;
             }
+
             _damageable.TakeDamage(ProvideDamage(), this);
         }
 

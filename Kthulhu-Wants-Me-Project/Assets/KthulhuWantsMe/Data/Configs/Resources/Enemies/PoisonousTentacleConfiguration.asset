@@ -89,3 +89,7 @@ MonoBehaviour:
   ChaseCooldown: 15
   ChaseAfterSeconds: 15
   RotationSpeed: 100
+  PoisonDamagePerSecond: 2
+  PoisonEffectDuration: 7
+  PoisonEffectPrefab: {fileID: 7163259385320301113, guid: 6cc1df5af8285d84481515a5ec44bdf4,
+    type: 3}

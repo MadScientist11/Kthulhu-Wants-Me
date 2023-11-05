@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -12,6 +13,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 {
     public class TentacleSpellCastingAbility : MonoBehaviour, IAbility
     {
+        public EnemyStatsContainer Stats => _enemyStatsContainer;
         public bool CastingSpell { get; set; }
 
         public Transform SpellSpawnPoint;
@@ -25,11 +27,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         private IGameFactory _gameFactory;
         private ThePlayer _playerModel;
         private IBuffDebuffFactory _buffDebuffFactory;
+        private IBuffDebuffService _buffDebuffService;
 
         [Inject]
         public void Construct(IDataProvider dataProvider, IGameFactory gameFactory, ThePlayer playerModel,
-            IBuffDebuffFactory buffDebuffFactory)
+            IBuffDebuffFactory buffDebuffFactory, IBuffDebuffService buffDebuffService)
         {
+            _buffDebuffService = buffDebuffService;
             _buffDebuffFactory = buffDebuffFactory;
             _playerModel = playerModel;
             _gameFactory = gameFactory;
@@ -80,6 +84,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             {
                 allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpellsElite");
             }
+            else if (_enemyStatsContainer.Config.EnemyType == EnemyType.PoisonousTentacle)
+            {
+                allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpellsPoison");
+            }
             else
             {
                 allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpells");
@@ -94,7 +102,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
             BasicAttackSpell basicAttackSpell
                 = new BasicAttackSpell(this, allSpells[TentacleSpell.BasicAttackSpell], _gameFactory.Player,
-                    _playerModel);
+                    _playerModel, _buffDebuffFactory, _buffDebuffService);
 
             BuffSpell buffSpell
                 = new BuffSpell(this, allSpells[TentacleSpell.Buff], _buffDebuffFactory);
