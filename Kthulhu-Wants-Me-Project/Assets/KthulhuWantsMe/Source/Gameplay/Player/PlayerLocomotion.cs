@@ -4,6 +4,7 @@ using Freya;
 using KinematicCharacterController;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
+using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -27,6 +28,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private KinematicCharacterMotor _motor;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerAttack _playerAttack;
+        [SerializeField] private PlayerLungeAbility _playerLungeAbility;
+
 
         private bool _blockMovement;
         private Vector3 _lastLookDirection;
@@ -161,7 +164,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private bool CanMove()
         {
-            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement;
+            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement && !_playerLungeAbility.IsInLunge;
         }
 
         private bool MovementInputDetected()

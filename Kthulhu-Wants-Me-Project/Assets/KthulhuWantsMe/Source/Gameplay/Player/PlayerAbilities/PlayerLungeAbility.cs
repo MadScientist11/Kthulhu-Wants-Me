@@ -19,6 +19,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private PlayerAnimator _playerAnimator;
+        
+        [SerializeField] private Canvas _abilityCanvas;
 
         private const float LungeChargeTime = 1f;
         private const float LungeChargeMaxVelocity = 100f;
@@ -65,7 +67,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             {
                 _chargedVelocity += _chargeVelocityStep * Time.deltaTime;
                 _playerLocomotion.FaceMouse();
-            } 
+                _abilityCanvas.gameObject.SetActive(true);
+            }
+            else
+            {
+                _abilityCanvas.gameObject.SetActive(false);
+            }
 
             if (_lunge) 
                 ProcessLunge();
