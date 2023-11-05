@@ -33,7 +33,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             
             Vector3 spawnPoint = _spawnPoint.Position.AddY(5) + randomOffset;
             
-            if (enemyConfig.IsElite())
+            if (enemyConfig.EnemyType.OccupiesSpawner())
                 spawnPoint = Position.AddY(5);
             
             return spawnPoint;

@@ -77,7 +77,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         {
             return !_waveState.AliveEnemiesByPlace.ContainsKey(spawnerId) ||
                    (_waveState.AliveEnemiesByPlace[spawnerId]
-                       .All(enemyHealth => !enemyHealth.GetComponent<EnemyStatsContainer>().Config.IsElite()
+                       .All(enemyHealth => !enemyHealth.GetComponent<EnemyStatsContainer>().Config.EnemyType.OccupiesSpawner()
                                            && !_waveState.PendingEnemies.ContainsKey(spawnerId)));
         }
 
@@ -143,7 +143,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         {
             EnemyConfiguration enemyConfig = _dataProvider.EnemyConfigsProvider.EnemyConfigs[batchEntry.EnemyType];
 
-            if (batchEntry.SpawnAt == EnemySpawnerId.Default && enemyConfig.IsElite())
+            if (batchEntry.SpawnAt == EnemySpawnerId.Default && enemyConfig.EnemyType.OccupiesSpawner())
                 return FindUnoccupiedSpawner();
             else if (batchEntry.SpawnAt != EnemySpawnerId.Default)
                 return _enemySpawners[batchEntry.SpawnAt];

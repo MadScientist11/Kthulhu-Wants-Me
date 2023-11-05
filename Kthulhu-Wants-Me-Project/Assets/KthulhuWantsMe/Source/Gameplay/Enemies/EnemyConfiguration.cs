@@ -19,11 +19,5 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         
         [MinMaxSlider(0, 20, true)]
         public Vector2 MoveSpeed = new(3,4);
-
-        public bool IsElite()
-        {
-            return EnemyType == EnemyType.Tentacle || EnemyType == EnemyType.BleedTentacle ||
-                    EnemyType == EnemyType.PoisonousTentacle || EnemyType == EnemyType.TentacleSpecial;
-        }
     }
 }

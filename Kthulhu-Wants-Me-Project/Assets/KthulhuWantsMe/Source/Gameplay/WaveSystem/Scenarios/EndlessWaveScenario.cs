@@ -109,7 +109,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
                 Quantity = Random.Range(1, 3),
             };
 
-            if (enemyPack.EnemyType == EnemyType.Tentacle)
+            if (enemyPack.EnemyType.IsTentacleVariant())
             {
                 enemyPack.Quantity = 1;
             }
