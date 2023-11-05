@@ -62,7 +62,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
                             .CreateEffect<PoisonDebuff>()
                             .Init(tentacleConfig.PoisonDamagePerSecond, tentacleConfig.PoisonEffectDuration, tentacleConfig.PoisonEffectPrefab);
                        // _playerModel.TakeDamage(poisonDebuff);
-                       Debug.Log("Cast?");
                         _buffDebuffService.ApplyEffect(poisonDebuff, container);
                     }
                 }

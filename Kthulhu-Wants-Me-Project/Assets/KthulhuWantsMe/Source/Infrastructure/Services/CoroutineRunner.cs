@@ -12,11 +12,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
     public class CoroutineRunner : MonoBehaviour, ICoroutineRunner
     {
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
         public Coroutine StartRoutine(IEnumerator routine)
         {
             return StartCoroutine(routine);
