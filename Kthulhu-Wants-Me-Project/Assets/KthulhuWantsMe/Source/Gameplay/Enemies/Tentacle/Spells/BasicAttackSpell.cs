@@ -42,7 +42,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             InCooldown = true;
             
             _spellCastingAbility.CastingSpell = true;
-            Vector3 spellCastPosition = _player.transform.position;
+            Vector3 spellCastPosition = _player.transform.position.AddY(.05f);
             _spellInstance = Object.Instantiate(_spellConfiguration.Prefab, spellCastPosition, _spellConfiguration.Prefab.transform.rotation);
             Active = true;
             await UniTask.Delay(Mathf.FloorToInt(_spellConfiguration.ActivationTime * 1000),false , PlayerLoopTiming.Update, _spellCastToken.Token);

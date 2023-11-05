@@ -12,7 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay
         public static bool IsTentacleVariant(this EnemyType enemyType)
         {
             return enemyType == EnemyType.Tentacle || enemyType == EnemyType.BleedTentacle ||
-                   enemyType == EnemyType.PoisonousTentacle || enemyType == EnemyType.TentacleSpecial;
+                   enemyType == EnemyType.PoisonousTentacle || enemyType == EnemyType.TentacleSpecial || enemyType == EnemyType.TentacleElite;
         }
     }
 }

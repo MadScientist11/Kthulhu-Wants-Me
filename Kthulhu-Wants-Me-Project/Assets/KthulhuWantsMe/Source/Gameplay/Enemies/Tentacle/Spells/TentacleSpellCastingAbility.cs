@@ -15,10 +15,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public bool CastingSpell { get; set; }
 
         public Transform SpellSpawnPoint;
+        [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
         private Dictionary<TentacleSpell, ITentacleSpell> _tentacleSpells;
 
-        private List<TentacleSpell> _activeSpells = new();
+        private readonly List<TentacleSpell> _activeSpells = new();
 
 
         private IGameFactory _gameFactory;
@@ -74,7 +75,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
         private async UniTaskVoid CreateSpells()
         {
-            AllSpells allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpells");
+            AllSpells allSpells = null;
+            if (_enemyStatsContainer.Config.EnemyType == EnemyType.TentacleElite)
+            {
+                allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpellsElite");
+            }
+            else
+            {
+                allSpells = (AllSpells)await Resources.LoadAsync<AllSpells>("Enemies/Spells/AllSpells");
+            }
+
 
             ProhibitHealthItemsUsageSpell prohibitHealthItemsUsageSpell
                 = new ProhibitHealthItemsUsageSpell(_gameFactory.Player, this);
