@@ -33,6 +33,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
         {
             Manager bgmPlayerPrefab = await _resourceManager.ProvideAssetAsync<Manager>(BgmPlayerPath);
             _simpleAudioManager = _instantiator.Instantiate(bgmPlayerPrefab);
+            Object.DontDestroyOnLoad(_simpleAudioManager);
         }
 
         public void PlayBattleMusic() => 

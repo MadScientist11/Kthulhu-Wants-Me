@@ -29,6 +29,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<BackgroundMusicPlayer>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
+            
+            builder
+                .Register<AudioService>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
    
             builder
                 .Register<ProgressService>(Lifetime.Singleton)

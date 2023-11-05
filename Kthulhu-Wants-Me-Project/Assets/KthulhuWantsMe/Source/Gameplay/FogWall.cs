@@ -32,7 +32,6 @@ namespace KthulhuWantsMe.Source.Gameplay
 
         private void UnlockArea()
         {
-            Debug.Log("Unlock wave");
             if (!_unlocked && _progressService.ProgressData.CompletedWaveIndex >= _unlockOnWave - 1)
             {
                 _unlocked = true;
