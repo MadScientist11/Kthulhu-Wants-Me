@@ -27,35 +27,51 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             _gameFactory = gameFactory;
         }
 
+        private Vector3 SpawnPointFor(EnemyConfiguration enemyConfig)
+        {
+            Vector3 randomOffset = Random.insideUnitCircle.XZtoXYZ() * Radius;
+            
+            Vector3 spawnPoint = _spawnPoint.Position.AddY(5) + randomOffset;
+            
+            if (enemyConfig.IsElite())
+                spawnPoint = Position.AddY(5);
+            
+            return spawnPoint;
+        }
 
         public Health Spawn(EnemyType enemyType)
         {
-            Vector3 randomPoint = Random.insideUnitCircle.XZtoXYZ() * Radius;
-            Vector3 spawnPosition = _spawnPoint.Position.AddY(5) + randomPoint;
-            
             EnemyConfiguration enemyConfig = _dataProvider.EnemyConfigsProvider.EnemyConfigs[enemyType];
-            if (enemyConfig.IsElite())
-                spawnPosition = Position.AddY(5);
+            Vector3 spawnPosition = SpawnPointFor(enemyConfig);
+            
+            int iterations = 0;
+            RaycastHit hitInfo;
 
-            if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100, LayerMasks.GroundMask))
+            while (!Physics.Raycast(spawnPosition, Vector3.down, out hitInfo, 100, LayerMasks.GroundMask))
             {
-                GameObject enemy =
-                    _gameFactory.CreatePortalWithEnemy(hitInfo.point + Vector3.one * 0.05f, Quaternion.identity,
-                        enemyType);
-                
-                if (enemy.TryGetComponent(out ISpawnBehaviour spawnBehaviour))
+                if (iterations > 100)
                 {
-                    spawnBehaviour.OnSpawn();
-                    spawnBehaviour.SpawnedAt = Id;
+                    Debug.LogError($"Couldn't spawn an enemy {enemyType} at {Id}, position was {spawnPosition} make sure floor has Ground layer.");
+                    return null;
                 }
-
-                return enemy.GetComponent<Health>();
+                spawnPosition = SpawnPointFor(enemyConfig);
+                iterations++;
             }
 
-            Debug.LogError("Couldn't spawn an enemy, make sure floor has Ground layer");
-            return null;
+
+            GameObject enemy =
+                _gameFactory.CreatePortalWithEnemy(hitInfo.point + Vector3.one * 0.05f, Quaternion.identity,
+                    enemyType);
+
+            if (enemy.TryGetComponent(out ISpawnBehaviour spawnBehaviour))
+            {
+                spawnBehaviour.OnSpawn();
+                spawnBehaviour.SpawnedAt = Id;
+            }
+
+            return enemy.GetComponent<Health>();
         }
-        
+
         public Health Spawn(Health enemyHealth, EnemyType enemyType, Action onSpawned)
         {
             Vector3 randomPoint = Random.insideUnitCircle.XZtoXYZ() * Radius;
@@ -68,7 +84,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100, LayerMasks.GroundMask))
             {
                 enemyHealth.transform.position = hitInfo.point + Vector3.one * 0.05f;
-                
+
                 if (enemyHealth.TryGetComponent(out ISpawnBehaviour spawnBehaviour))
                 {
                     spawnBehaviour.SpawnedAt = Id;

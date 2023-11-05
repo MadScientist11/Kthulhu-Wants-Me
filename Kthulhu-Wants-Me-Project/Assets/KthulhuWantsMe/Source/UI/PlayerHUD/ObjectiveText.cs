@@ -30,6 +30,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
             {
                 WaveObjective.KillAllEnemies => "Defeat All Enemies",
                 WaveObjective.KillTentaclesSpecial => "Defeat All Tentacles",
+                WaveObjective.EndlessWave => "No Escape",
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

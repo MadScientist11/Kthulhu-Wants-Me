@@ -121,7 +121,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
             if (CanDoBasicAttack())
             {
-                _yithAttack.PerformAttack();
+                _yithAttack.PerformAttack().Forget();
                 ResetAttackDelayCountdown();
                 _reconsiderationTime = _yithConfiguration.ReconsiderationTime;
             }

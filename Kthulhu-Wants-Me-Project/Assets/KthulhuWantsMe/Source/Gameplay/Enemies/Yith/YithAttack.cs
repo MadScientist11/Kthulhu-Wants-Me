@@ -33,11 +33,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _attackCooldown -= Time.deltaTime;
         }
 
-        public async void PerformAttack()
+        public async UniTaskVoid PerformAttack()
         {
             _attackPrepareFeedback?.PlayFeedbacks();
 
-            await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), false, PlayerLoopTiming.Update, destroyCancellationToken);
             
             if (!PhysicsUtility.HitFirst(transform, 
                     AttackStartPoint(), 

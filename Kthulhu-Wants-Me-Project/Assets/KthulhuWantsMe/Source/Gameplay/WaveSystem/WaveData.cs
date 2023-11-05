@@ -13,6 +13,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         [TableColumnWidth(10)]
         [LabelWidth(10)]
         public WaveObjective WaveObjective;
+        
+        [HideIf(nameof(WaveSystem.WaveObjective), WaveObjective.EndlessWave)]
         public List<Batch> Batches;
         
         [ShowIf(nameof(WaveSystem.WaveObjective), WaveObjective.KillTentaclesSpecial)]

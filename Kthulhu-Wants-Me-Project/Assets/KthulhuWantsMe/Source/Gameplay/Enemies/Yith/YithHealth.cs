@@ -41,8 +41,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             
             base.TakeDamage(damage, damageProvider);
 
-            _movementMotor.AddVelocity(damageProvider.DamageDealer.forward * _yithConfiguration.Knockback, _yithConfiguration.KnockbackTime);
-            _yithAIBrain.Stunned = true;
+            if (damageProvider.DamageDealer != null)
+            {
+                _movementMotor.AddVelocity(damageProvider.DamageDealer.forward * _yithConfiguration.Knockback, _yithConfiguration.KnockbackTime);
+                _yithAIBrain.Stunned = true;
+            }
+            
             
             _hitFeedbacks?.PlayFeedbacks();
         }

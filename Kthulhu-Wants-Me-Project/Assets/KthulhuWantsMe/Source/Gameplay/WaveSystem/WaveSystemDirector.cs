@@ -27,6 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         void CompleteWave();
         void CompleteWaveAsVictory();
         void CompleteWaveAsFailure();
+        void SpawnNextBatch();
     }
 
 
@@ -83,15 +84,18 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public void Initialize()
         {
+            _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider, _dataProvider);
+            
             IWaveScenario eliminateAllEnemiesScenario = new EliminateAllEnemiesScenario(this);
             IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService);
+            IWaveScenario endlessWaveScenario = new EndlessWaveScenario(this, _gameFactory, _waveSpawner);
+            
             _waveScenarios = new()
             {
                 { WaveObjective.KillAllEnemies, eliminateAllEnemiesScenario },
                 { WaveObjective.KillTentaclesSpecial, killTentaclesSpecial },
+                { WaveObjective.EndlessWave, endlessWaveScenario }
             };
-
-            _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider, _dataProvider);
         }
 
 
@@ -100,14 +104,17 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             WaveData waveData = _dataProvider.Waves[waveIndex];
 
             _currentWaveState = new WaveState(waveData);
+            _waveSpawner.Initialize(_currentWaveState);
 
             _currentWaveScenario = _waveScenarios[_currentWaveState.WaveObjective];
             _currentWaveScenario.Initialize();
             _currentWaveScenario.BatchCleared += OnBatchCleared;
 
-            _waveSpawner.Initialize(_currentWaveState);
-
-            SpawnBatchLoop().Forget();
+            if (_currentWaveState.WaveObjective is not WaveObjective.EndlessWave)
+            {
+                SpawnBatchLoop().Forget();
+            }
+            
             _waveOngoing = true;
 
             WaveStarted?.Invoke();
@@ -153,6 +160,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private async UniTaskVoid SpawnBatchLoop()
         {
             _spawnLoopToken = new CancellationTokenSource();
+            _spawnLoopToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
 
             // Spawn first wave
             _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
@@ -184,7 +192,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             }
         }
 
-        private void SpawnNextBatch()
+        public void SpawnNextBatch()
         {
             _currentWaveState.ModifyBatchIndex(_currentWaveState.CurrentBatchIndex + 1);
             _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
