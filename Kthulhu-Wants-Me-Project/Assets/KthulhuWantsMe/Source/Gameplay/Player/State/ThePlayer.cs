@@ -71,6 +71,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public void Tick()
         {
+            if (Time.timeScale == 0)
+            {
+                return;
+            }
+            
             ModifyCurrentStamina(RegenRate * Time.deltaTime);
 
             if (_playerStats.AcquiredSkills.Contains(SkillId.HealthRegen))
