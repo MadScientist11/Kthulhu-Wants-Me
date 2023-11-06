@@ -87,9 +87,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
             if (_spawnLootAfterRetreat)
             {
-                _lootService.SpawnFlameSoul();
-
-                //BuffItem buffItem = _lootService.SpawnBuff<FlameSoul>(transform.position + Vector3.up * _height * 1.2f, Quaternion.identity);
+                BuffItem buffItem = _lootService.SpawnBuff<HealthSoul>(transform.position + Vector3.up * _height * 1.2f, Quaternion.identity);
             }
 
             

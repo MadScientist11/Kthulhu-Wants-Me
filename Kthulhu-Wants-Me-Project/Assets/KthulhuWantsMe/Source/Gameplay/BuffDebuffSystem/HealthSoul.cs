@@ -18,7 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
         [SerializeField] private int _healAmount;
 
         private Vector3 _velocity;
-        
+
         private PlayerFacade _player;
         private ThePlayer _thePlayer;
 
@@ -33,25 +33,29 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
         {
             try
             {
-                await transform.DOMove(transform.position + Random.insideUnitCircle.XZtoXYZ() * 3, .5f).SetEase(Ease.InSine)
-                    .AwaitForComplete();
+                await transform.DOMove(transform.position + Random.insideUnitCircle.XZtoXYZ() * 3, .5f)
+                    .SetEase(Ease.InSine)
+                    .AwaitForComplete(TweenCancelBehaviour.Kill, destroyCancellationToken);
+                
                 await UniTask.Delay(TimeSpan.FromSeconds(7), false, PlayerLoopTiming.Update, destroyCancellationToken);
-                await transform.DOScale(0, 3f).SetEase(Ease.InBounce).AwaitForComplete();
+                
+                await transform.DOScale(0, 3f)
+                    .SetEase(Ease.InBounce)
+                    .AwaitForComplete(TweenCancelBehaviour.Kill, destroyCancellationToken);;
                 Destroy(gameObject);
             }
             catch (OperationCanceledException e)
             {
                 Debug.Log("Cancellation occurred, so this task block is executed");
             }
-         
         }
 
         private void Update()
         {
-            if(_thePlayer.IsFullHp)
+            if (_thePlayer.IsFullHp)
                 return;
-            
-            if (InRange()) 
+
+            if (InRange())
                 FollowPlayer();
         }
 
@@ -61,12 +65,13 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             {
                 return null;
             }
+
             InstaHealBuff effect = EffectFactory.CreateEffect<InstaHealBuff>();
             effect.Init(_healAmount);
             return effect;
         }
 
-        private bool InRange() => 
+        private bool InRange() =>
             Vector3.Distance(transform.position, _player.transform.position) < 3;
 
         private void FollowPlayer()
