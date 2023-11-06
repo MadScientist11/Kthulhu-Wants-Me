@@ -9,6 +9,8 @@ namespace KthulhuWantsMe.Source.Gameplay
 {
     public class FogWall : MonoBehaviour, IInjectable
     {
+        public bool Unlocked => _unlocked;
+        
         [SerializeField] private int _unlockOnWave;
         
         private bool _unlocked;

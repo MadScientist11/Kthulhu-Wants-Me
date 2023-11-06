@@ -1,24 +1,58 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 using VContainer;
+using Freya;
+using UnityEngine.Serialization;
+using Vertx.Debugging;
+using Random = Freya.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Rooms
 {
-    public class Room : MonoBehaviour, IInjectable
+    public interface IRoom
     {
+        bool Locked { get; }
+        bool Contains(Vector3 point);
+        Vector3 GetRandomPositionInside();
+    }
+    public class Room : MonoBehaviour, IRoom, IInjectable
+    {
+        public bool Locked
+        {
+            get
+            {
+                if (_roomBarriers.Count == 0)
+                {
+                    return false;
+                }
+                
+                return _roomBarriers.All(barrier => !barrier.Unlocked);
+            }
+        }
+
+        [SerializeField] private List<FogWall> _roomBarriers;
         [SerializeField] private List<Collider> _roomColliders;
 
         private PlayerFacade _player;
+        private IRoomOverseer _roomOverseer;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IGameFactory gameFactory, IRoomOverseer roomOverseer)
         {
+            _roomOverseer = roomOverseer;
             _player = gameFactory.Player;
         }
+
+        private void Start() => 
+            _roomOverseer.Register(this);
+
+        private void OnDestroy() => 
+            _roomOverseer.Unregister(this);
 
         public bool Contains(Vector3 point)
         {
@@ -33,29 +67,57 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
             return false;
         }
 
-        public Vector3 GetRandomPositionInside(bool snapToGround = false)
+        private void OnDrawGizmos()
+        {
+           // Gizmos.DrawSphere(GetRandomPositionInside(), 1f);
+        }
+
+        public Vector3 GetRandomPositionInside()
         {
             Collider roomPartCollider = _roomColliders[Random.Range(0, _roomColliders.Count)];
-            Vector3 randomPositionInside = RandomPosition.GetRandomPosition(roomPartCollider.bounds);
-            
-            if (snapToGround)
+            Vector3 randomPositionInside = Vector3.positiveInfinity;
+
+            int iterations = 0;
+
+            while (!ValidRandomPosition(ref randomPositionInside, roomPartCollider))
             {
-                if (Physics.Raycast(
-                        randomPositionInside, 
-                        Vector3.down, 
-                        out RaycastHit hitInfo, 
+                Vector3 inUnitSphere = Random.InUnitSphere;
+                Vector3 hemiSphereDirections = new Vector3(inUnitSphere.x, -Mathfs.Abs(inUnitSphere.y), inUnitSphere.z);
+                Ray ray = new(roomPartCollider.bounds.center.AddY(roomPartCollider.bounds.extents.y), hemiSphereDirections);
+                
+                if (DrawPhysics.Raycast(
+                        ray,
+                        out RaycastHit hitInfo,
                         100,
                         LayerMasks.GroundMask))
                 {
                     randomPositionInside = hitInfo.point;
                 }
-                else
+
+                iterations++;
+
+                Debug.Log(iterations);
+                if (iterations > 1000)
                 {
-                    Debug.LogError("Couldn't find ground");
+                    Debug.LogError("Couldn't find a random point");
+                    break;
                 }
             }
+            Debug.Log(randomPositionInside);
 
             return randomPositionInside;
+        }
+
+        private bool ValidRandomPosition(ref Vector3 position, Collider colliderFrom)
+        {
+            Bounds fromBounds = colliderFrom.bounds;
+            Bounds adjustedBounds = new Bounds(fromBounds.center, fromBounds.extents - new Vector3(1, 0, 1) * 5f);
+            if (adjustedBounds.Contains(position))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

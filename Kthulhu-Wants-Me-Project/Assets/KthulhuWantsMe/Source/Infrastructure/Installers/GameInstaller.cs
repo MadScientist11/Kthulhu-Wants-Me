@@ -7,6 +7,7 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.Rooms;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
@@ -48,6 +49,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             
             builder
                 .Register<LootService>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
+            
+            builder
+                .Register<RoomOverseer>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
             builder
