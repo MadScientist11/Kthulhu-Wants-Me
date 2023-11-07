@@ -23,6 +23,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         WaveState CurrentWaveState { get; }
         WaveSpawner WaveSpawner { get; }
         IWaveScenario CurrentWaveScenario { get; }
+        bool WaveOngoing { get; }
         void StartWave(int waveIndex);
         void CompleteWave();
         void CompleteWaveAsVictory();
@@ -36,6 +37,14 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public event Action WaveStarted;
         public event Action WaveCompleted;
         public event Action<IEnumerable<Health>> BatchSpawned;
+
+        public bool WaveOngoing
+        {
+            get
+            {
+                return _waveOngoing;
+            }
+        }
 
         public WaveState CurrentWaveState
         {

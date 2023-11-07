@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -52,11 +53,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         private PlayerStats _playerStats;
 
-        private readonly PlayerConfiguration _playerConfiguration;
         private float _regenAccumulation;
+        
+        private IWaveSystemDirector _waveSystemDirector;
+        private readonly PlayerConfiguration _playerConfiguration;
 
-        public ThePlayer(IDataProvider dataProvider)
+        public ThePlayer(IDataProvider dataProvider, IWaveSystemDirector waveSystemDirector)
         {
+            _waveSystemDirector = waveSystemDirector;
             _playerConfiguration = dataProvider.PlayerConfig;
             Inventory = new PlayerInventory();
         }
@@ -71,7 +75,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public void Tick()
         {
-            if (Time.timeScale == 0)
+            if (Time.timeScale == 0 || !_waveSystemDirector.WaveOngoing)
             {
                 return;
             }
