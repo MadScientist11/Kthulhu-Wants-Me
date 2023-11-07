@@ -23,7 +23,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
 
         public Vector3 GetRandomPositionInUnlockedRoom()
         {
-            IRoom unlockedRoom = _rooms.First(room => !room.Locked);
+            IRoom unlockedRoom = _rooms.Where(room => !room.Locked).RandomElement();
+            Debug.Log(unlockedRoom.Transform.name);
             return unlockedRoom.GetRandomPositionInside();
         }
     }

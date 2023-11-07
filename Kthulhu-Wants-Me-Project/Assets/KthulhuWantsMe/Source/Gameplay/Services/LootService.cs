@@ -38,11 +38,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         
         public void Tick()
         {
-            return;
             if (_flameSoulLastSpawnTime + _flameSoulSpawnInterval <= Time.time)
             {
                 _flameSoulLastSpawnTime = Time.time;
-                SpawnBuff<FlameSoul>(_roomOverseer.GetRandomPositionInUnlockedRoom(), Quaternion.identity);
+                Vector3 position = _roomOverseer.GetRandomPositionInUnlockedRoom().AddY(GameConstants.SpawnItemsElevation);
+                SpawnBuff<FlameSoul>(position, Quaternion.identity);
             }
         }
 

@@ -16,12 +16,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
 {
     public interface IRoom
     {
+        Transform Transform { get; }
         bool Locked { get; }
         bool Contains(Vector3 point);
         Vector3 GetRandomPositionInside();
     }
     public class Room : MonoBehaviour, IRoom, IInjectable
     {
+        public Transform Transform => transform;
+
         public bool Locked
         {
             get

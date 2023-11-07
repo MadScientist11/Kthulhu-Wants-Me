@@ -2,6 +2,8 @@
 {
     public static class GameConstants
     {
+        public const float SpawnItemsElevation = 1f;
+        
         public const string MenuPath = "KthulhuWantsMe/";
         public static class Layers
         {

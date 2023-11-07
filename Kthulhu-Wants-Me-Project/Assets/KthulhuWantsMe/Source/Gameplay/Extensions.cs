@@ -1,13 +1,27 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using UnityEngine;
+using Random = System.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay
 {
     public static class Extensions
     {
+        public static T RandomElement<T>(this IEnumerable<T> enumerable)
+        {
+            return enumerable.RandomElementUsing<T>(new Random());
+        }
+
+        public static T RandomElementUsing<T>(this IEnumerable<T> enumerable, Random rand)
+        {
+            int index = rand.Next(0, enumerable.Count());
+            return enumerable.ElementAt(index);
+        }
+        
         public static void SetLayer<T>(this GameObject gameobject, int layer, bool includeChildren = false)
             where T : Component
         {
