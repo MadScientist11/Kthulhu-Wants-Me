@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 150
+      Data: 300
     - Name: 
       Entry: 8
       Data: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 6
+      Data: 10
     - Name: 
       Entry: 8
       Data: 
@@ -80,12 +80,15 @@ MonoBehaviour:
   StunWearOffTime: 3
   TentacleGrabDamage: 100
   GrabAbilityChance: 0.15
-  AggroRange: 10
+  AggroRange: 12
   AttackRange: 3
   ReconsiderationTime: 2
   AttackRadius: 1
   AttackEffectiveDistance: 0.8
-  AttackCooldownTime: 5
-  ChaseCooldown: 10
-  ChaseAfterSeconds: 10
-  RotationSpeed: 90
+  AttackCooldownTime: 4
+  ChaseCooldown: 8
+  ChaseAfterSeconds: 8
+  RotationSpeed: 120
+  PoisonDamagePerSecond: 0
+  PoisonEffectDuration: 0
+  PoisonEffectPrefab: {fileID: 0}

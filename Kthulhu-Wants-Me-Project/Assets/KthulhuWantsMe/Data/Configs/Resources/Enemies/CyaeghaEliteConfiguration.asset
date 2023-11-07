@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 15
+      Data: 85
     - Name: 
       Entry: 8
       Data: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 2
+      Data: 6
     - Name: 
       Entry: 8
       Data: 
@@ -76,9 +76,9 @@ MonoBehaviour:
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
   Knockback: 10
   KnockbackTime: 0.15
-  MoveSpeed: {x: 4, y: 6}
-  AttackCooldown: 1.4
-  DelayBeforeJump: 0.75
-  JumpSpeed: 2
+  MoveSpeed: {x: 6, y: 8}
+  AttackCooldown: 0.8
+  DelayBeforeJump: 0.6
+  JumpSpeed: 3
   JumpHeight: 2
-  LandingSpeed: 5
+  LandingSpeed: 6

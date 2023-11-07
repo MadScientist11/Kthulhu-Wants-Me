@@ -24,5 +24,5 @@ MonoBehaviour:
   SpellId: 3
   Prefab: {fileID: 1398281000895932739, guid: af1dd2339740e6d459da200525f605a8, type: 3}
   EffectiveRange: 3
-  Cooldown: 2
+  Cooldown: 1
   ActivationTime: 2
