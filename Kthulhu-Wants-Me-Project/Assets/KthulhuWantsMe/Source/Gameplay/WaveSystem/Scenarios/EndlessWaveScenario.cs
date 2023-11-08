@@ -45,12 +45,12 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             SpawnBatchLoop().Forget();
             StartObjectiveTimer().Forget();
 
-            _uiService.PlayerHUD.timerUI.gameObject.SwitchOn();
+            _uiService.PlayerHUD._timerUI.gameObject.SwitchOn();
         }
 
         public void Dispose()
         {
-            _uiService.PlayerHUD.timerUI.gameObject.SwitchOff();
+            _uiService.PlayerHUD._timerUI.gameObject.SwitchOff();
         }
 
 
@@ -77,7 +77,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             {
                 await UniTask.Delay(tick, false, PlayerLoopTiming.Update, _gameFactory.Player.destroyCancellationToken);
                 countUp++;
-                _uiService.PlayerHUD.timerUI.UpdateTImerText(countUp);
+                _uiService.PlayerHUD._timerUI.UpdateTImerText(countUp);
             }
         }
 

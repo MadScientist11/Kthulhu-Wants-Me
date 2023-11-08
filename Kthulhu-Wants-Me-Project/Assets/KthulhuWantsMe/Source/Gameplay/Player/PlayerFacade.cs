@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Cinemachine;
-using Freya;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Camera;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Services;
@@ -10,8 +10,6 @@ using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer;
-using Vertx.Debugging;
-using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {
@@ -23,6 +21,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [field: SerializeField] public TentacleGrabAbilityResponse TentacleGrabAbilityResponse { get; private set; }
         [field: SerializeField] public PlayerInteractionAbility PlayerInteractionAbility { get; private set; }
         [field: SerializeField] public TentacleSpellResponse TentacleSpellResponse { get; private set; }
+        [field: SerializeField] public EntityBuffDebuffContainer PlayerEffectsContainer { get; private set; }
         public CinemachineVirtualCamera PlayerVirtualCamera { get; set; }
 
         private IUpgradeService _upgradeService;

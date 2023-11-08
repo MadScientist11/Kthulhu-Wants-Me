@@ -6,6 +6,8 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 {
     public class  FireDebuff : IBuffDebuff, IUpdatableEffect, IDamageProvider
     {
+        public EffectId EffectId => EffectId.FireEffect;
+        
         private float _damagePerSecond;
         private float _duration;
 

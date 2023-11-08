@@ -1,22 +1,20 @@
-using System;
 using KthulhuWantsMe.Source.Gameplay;
+using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
-using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using VContainer;
-using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.UI.PlayerHUD
 {
     public class PlayerHUD : MonoBehaviour, IUIElement
     {
-        [FormerlySerializedAs("specialObjectiveWaveLossTimerUI")] [FormerlySerializedAs("SpecialObjectWaveLossTimerUI")] public TimerUI timerUI;
+        public TimerUI _timerUI;
         
         [SerializeField] private IndicatorsUI _indicatorsUI;
         [SerializeField] private HpBar _playerHpBar;
@@ -45,6 +43,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
             _playerStaminaBar.SetNewMax(_player.MaxStamina);
             
             _player.HealthChanged += UpdateHealthBar;
+            
 
             _waveSystemDirector.WaveStarted += OnWaveStarted;
             _waveSystemDirector.WaveCompleted += OnWaveCompleted;
@@ -58,6 +57,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         private void Update()
         {
             _playerStaminaBar.SetValue(_player.PlayerStats.CurrentStamina, _player.MaxStamina);
+
         }
 
         public void Show()

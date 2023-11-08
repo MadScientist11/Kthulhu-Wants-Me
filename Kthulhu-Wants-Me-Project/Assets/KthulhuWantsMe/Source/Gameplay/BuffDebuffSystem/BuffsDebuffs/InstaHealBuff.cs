@@ -7,6 +7,8 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 {
     public class InstaHealBuff : IBuffDebuff
     {
+        public EffectId EffectId => EffectId.Unknown;
+        
         private float _healAmount;
 
         private const string InstaHealVFXPath = "Effects/InstaHealVFX";

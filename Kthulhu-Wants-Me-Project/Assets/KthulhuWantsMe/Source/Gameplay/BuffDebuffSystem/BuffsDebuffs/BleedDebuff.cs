@@ -6,6 +6,8 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
 {
     public class BleedDebuff : IBuffDebuff, IUpdatableEffect, IDamageProvider
     {
+        public EffectId EffectId => EffectId.Unknown;
+        
         private float _damagePerSecond;
         private float _duration;
 
@@ -31,6 +33,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
             _damagePerSecond = damagePerSecond;
             return this;
         }
+
 
         public void ApplyEffect(IEffectReceiver effectReceiver)
         {

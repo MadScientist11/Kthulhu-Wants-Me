@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs
     }
     public class PoisonDebuff : IBuffDebuff, IUpdatableEffect, IDamageProvider
     {
+        public EffectId EffectId => EffectId.PoisonEffect;
         private float _damagePerSecond;
         private float _duration;
         

@@ -2346,6 +2346,7 @@ MonoBehaviour:
   <TentacleGrabAbilityResponse>k__BackingField: {fileID: -2573202685680207158}
   <PlayerInteractionAbility>k__BackingField: {fileID: 4421352636050686118}
   <TentacleSpellResponse>k__BackingField: {fileID: 8209058745014812478}
+  <PlayerEffectsContainer>k__BackingField: {fileID: -6425494656952559277}
 --- !u!114 &6482385733598322139
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -41,14 +41,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
         [SerializeField] private List<FogWall> _roomBarriers;
         [SerializeField] private List<Collider> _roomColliders;
 
-        private PlayerFacade _player;
         private IRoomOverseer _roomOverseer;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IRoomOverseer roomOverseer)
+        public void Construct(IRoomOverseer roomOverseer)
         {
             _roomOverseer = roomOverseer;
-            _player = gameFactory.Player;
         }
 
         private void Start() => 
@@ -106,7 +104,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
                     break;
                 }
             }
-            Debug.Log(randomPositionInside);
 
             return randomPositionInside;
         }

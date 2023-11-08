@@ -41,7 +41,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public void Initialize()
         {
             StartWaveLossTimer().Forget();
-            _uiService.PlayerHUD.timerUI.gameObject.SwitchOn();
+            _uiService.PlayerHUD._timerUI.gameObject.SwitchOn();
             
             _waveSystemDirector.WaveSpawner.BatchSpawned += OnBatchSpawned;
             _waveSystemDirector.WaveCompleted += OnWaveCompleted;
@@ -51,7 +51,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
         public void Dispose()
         {
-            _uiService.PlayerHUD.timerUI.gameObject.SwitchOff();
+            _uiService.PlayerHUD._timerUI.gameObject.SwitchOff();
 
             _waveSystemDirector.WaveSpawner.BatchSpawned -= OnBatchSpawned;
             _waveSystemDirector.WaveCompleted -= OnWaveCompleted;
@@ -114,7 +114,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             {
                 SpawnAdditionalEnemy();
             }
-            _uiService.PlayerHUD.timerUI.UpdateTImerText(countdown);
+            _uiService.PlayerHUD._timerUI.UpdateTImerText(countdown);
             WaveLossTimerTick?.Invoke(countdown);
         }
 
