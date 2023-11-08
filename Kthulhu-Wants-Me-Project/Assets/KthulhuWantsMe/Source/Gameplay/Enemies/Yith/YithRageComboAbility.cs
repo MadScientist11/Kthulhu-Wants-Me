@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using MoreMountains.Feedbacks;
+using SickscoreGames.HUDNavigationSystem;
 using UnityEngine;
 using UnityEngine.AI;
 using VContainer;
@@ -21,6 +22,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private MMFeedbacks _comboFeedback;
         [SerializeField] private MMFeedbacks _comboChargeFeedback;
         [SerializeField] private MovementMotor _movementMotor;
+
+        [SerializeField] private HUDNavigationElement _navigationElement;
 
         [SerializeField] private int _comboCount;
 
@@ -68,8 +71,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             _isAttacking = true;
 
+            _navigationElement.SwitchOn();
             _comboChargeFeedback?.PlayFeedbacks();
             yield return new WaitForSeconds(_yithConfiguration.ComboAttackDelay);
+            _navigationElement.SwitchOff();
+
 
             for (int i = 0; i < _comboCount; i++)
             {
