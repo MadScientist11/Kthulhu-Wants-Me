@@ -5663,7 +5663,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 3893149329671589609}
         DebugActive: 0
-        BoundRenderer: {fileID: 3866458989373868424}
+        BoundRenderer: {fileID: 1310798935784533819}
         Mode: 1
         PropertyName: _BaseColor
         FlickerDuration: 0.3
@@ -5740,7 +5740,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 3893149329671589609}
         DebugActive: 0
-        BoundRenderer: {fileID: 3866458989373868424}
+        BoundRenderer: {fileID: 1310798935784533819}
         Mode: 1
         PropertyName: _1st_ShadeColor
         FlickerDuration: 0.3
@@ -6599,7 +6599,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 7353896890652654407}
         DebugActive: 0
-        BoundRenderer: {fileID: 3866458989373868424}
+        BoundRenderer: {fileID: 1310798935784533819}
         Mode: 1
         PropertyName: _1st_ShadeColor
         FlickerDuration: 0.5
@@ -6676,7 +6676,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 7353896890652654407}
         DebugActive: 0
-        BoundRenderer: {fileID: 3866458989373868424}
+        BoundRenderer: {fileID: 1310798935784533819}
         Mode: 1
         PropertyName: _BaseColor
         FlickerDuration: 0.5

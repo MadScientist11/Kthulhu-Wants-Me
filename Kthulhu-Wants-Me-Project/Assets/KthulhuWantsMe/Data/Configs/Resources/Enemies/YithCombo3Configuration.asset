@@ -82,7 +82,7 @@ MonoBehaviour:
   ComboFollowSpeedIncrement: 5
   AttackRadius: 1.15
   ReconsiderationTime: 2
-  ComboAttackDelay: 0.15
+  ComboAttackDelay: 1.3
   ComboAttackDashSpeed: 0.175
   DashDistance: 19
   ComboAttackTriggerDistance: {x: 4, y: 18}
