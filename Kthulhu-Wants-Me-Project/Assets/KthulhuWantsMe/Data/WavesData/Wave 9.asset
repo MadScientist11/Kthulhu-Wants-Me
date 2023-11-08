@@ -22,7 +22,7 @@ MonoBehaviour:
       - EnemyType: 200
         Quantity: 3
         SpawnAt: 0
-      - EnemyType: 0
+      - EnemyType: 104
         Quantity: 1
         SpawnAt: 0
       WaitForBatchClearance: 0

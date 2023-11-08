@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d35f8722c6c48b7910f191697918512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flameBuffDuration: 10
+  _flameBuffDuration: 20
   _waitBeforeDestroy: 15
   _shrinkTime: 3
   _shrinkEasing: 29
