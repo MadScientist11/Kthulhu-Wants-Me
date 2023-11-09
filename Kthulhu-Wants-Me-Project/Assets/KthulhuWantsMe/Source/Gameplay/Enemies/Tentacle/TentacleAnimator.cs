@@ -116,6 +116,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         
         public async void PlayEnchant()
         {
+            Debug.Log("VAR");
             _tentacleAnimator.SetBool(Enchanting, true);
             await UniTask.Yield();
             _tentacleAnimator.SetBool(Enchanting, false);
