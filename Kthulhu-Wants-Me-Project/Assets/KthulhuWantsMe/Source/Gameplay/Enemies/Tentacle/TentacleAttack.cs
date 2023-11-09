@@ -39,6 +39,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfiguration.AttackRadius,
                     LayerMasks.PlayerMask, out Transform player))
                 return;
+            
 
             ApplyDamage(to: player.GetComponent<IDamageable>());
             _damageModifier?.ApplyTo(player.GetComponent<IEffectReceiver>());

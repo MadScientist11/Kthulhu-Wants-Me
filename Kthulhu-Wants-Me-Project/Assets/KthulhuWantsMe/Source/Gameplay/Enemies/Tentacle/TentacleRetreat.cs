@@ -27,6 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private bool _destroyObject;
         
         private ILootService _lootService;
+        private Action _onRetreated;
 
         [Inject]
         public void Construct(ILootService lootService)
@@ -41,8 +42,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         
         public void Retreat(bool destroyObject, Action onRetreated = null)
         {
+            _onRetreated = onRetreated;
             _destroyObject = destroyObject;
-            StartCoroutine(RetreatToPortal(transform.position.AddY(-_height), onRetreated));
+            OnRetreat();
         }
 
         public void RetreatDefeated()
@@ -51,30 +53,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             Retreat(true);
         }
 
-        private IEnumerator RetreatToPortal(Vector3 to, Action onRetreated)
-        {
-            OnRetreat();
-            
-            Vector3 initialPosition = transform.position;
-            Vector3 targetPosition = to;
-
-            float duration = _retreatDuration;
-            float elapsedTime = 0f;
-
-            while (elapsedTime < duration)
-            {
-                float t = elapsedTime / duration;
-                transform.position = Vector3.Lerp(initialPosition, targetPosition, t);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            OnRetreated();
-            onRetreated?.Invoke();
-        }
-
         private void OnRetreat()
         {
+            //_tentacleFacade.TentacleAnimator.EnableRootMotion();
             _tentacleFacade.TentacleAnimator.PlayRetreat();
             _tentacleFacade.BlockAIProcessing();
             _tentacleFacade.CancelActiveSpells();
@@ -87,10 +68,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
             if (_spawnLootAfterRetreat)
             {
-                BuffItem buffItem = _lootService.SpawnBuff<HealthSoul>(transform.position + Vector3.up * _height * 1.2f, Quaternion.identity);
+                BuffItem buffItem = _lootService.SpawnBuff<HealthSoul>(transform.position + Vector3.up * GameConstants.SpawnItemsElevation, Quaternion.identity);
             }
 
-            
+            _onRetreated?.Invoke();
+            //_tentacleFacade.TentacleAnimator.DisableRootMotion();
+
             if(_destroyObject)
                 Destroy(gameObject);
         }

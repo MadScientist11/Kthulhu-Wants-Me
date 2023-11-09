@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.AnimatorHelpers;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.StaterResetter;
@@ -37,6 +38,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private static readonly int GrabPlayer = Animator.StringToHash("GrabPlayer");
         private static readonly int Emerge = Animator.StringToHash("Emerged");
         private static readonly int Retreat = Animator.StringToHash("Retreat");
+        private static readonly int Enchanting = Animator.StringToHash("Enchanting");
+        private static readonly int SpellAttack = Animator.StringToHash("SpellAttack");
 
         
         private static readonly int _idleStateHash = Animator.StringToHash("Idle");
@@ -54,6 +57,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public void PlayGrabPlayerAnimation(Transform playerFollowTarget)
         {
             //_playerFollowTarget = playerFollowTarget;
+        }
+
+        public void EnableRootMotion()
+        {
+            _tentacleAnimator.applyRootMotion = true;
+        }
+        
+        public void DisableRootMotion()
+        {
+            _tentacleAnimator.applyRootMotion = false;
         }
 
         public void PlayGrabPlayerAttack()
@@ -100,6 +113,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         {
             _tentacleAnimator.SetTrigger(Impact);
         }
+        
+        public async void PlayEnchant()
+        {
+            _tentacleAnimator.SetBool(Enchanting, true);
+            await UniTask.Yield();
+            _tentacleAnimator.SetBool(Enchanting, false);
+        }
+        
+        public void PlaySpellAttack()
+        {
+            _tentacleAnimator.SetBool(Enchanting, false);
+            _tentacleAnimator.SetTrigger(SpellAttack);
+        }
 
         public void PlayEmerge()
         {
@@ -115,7 +141,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         public void PlayRetreat()
         {
-            _tentacleAnimator.SetBool(Retreat, true);
+            _tentacleAnimator.SetTrigger(Retreat);
             _tentacleRig.weight = 0;
         }
 

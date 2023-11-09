@@ -18,6 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
         public Transform SpellSpawnPoint;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
+        [SerializeField] private TentacleAnimator _tentacleAnimator;
 
         private Dictionary<TentacleSpell, ITentacleSpell> _tentacleSpells;
 
@@ -46,7 +47,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         {
             //In collection, cancel if 
             _activeSpells.Add(spell);
+            _tentacleAnimator.PlayEnchant();
             await _tentacleSpells[spell].Cast();
+            //_tentacleAnimator.PlaySpellAttack();
+
         }
 
         public void CancelActiveSpells()

@@ -1,4 +1,5 @@
 using System;
+using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -13,6 +14,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         public bool IsPlayerInFront { get; private set; }
         
         [SerializeField] private TentacleAnimator _tentacleAnimator;
+        [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
         private float _speed = 90;
@@ -33,6 +35,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void Update()
         {
+            Debug.Log(_tentacleSpellCastingAbility.CastingSpell);
+            if (_tentacleSpellCastingAbility.CastingSpell)
+            {
+                return;
+            }
+            
             if (PlayerInRange())
             {
                 HasAggro = true;

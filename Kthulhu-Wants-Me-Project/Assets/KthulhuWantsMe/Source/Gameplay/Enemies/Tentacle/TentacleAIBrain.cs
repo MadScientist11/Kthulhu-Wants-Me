@@ -87,10 +87,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private void DecideAttackStrategy()
         {
             _reconsiderationTime -= Time.deltaTime;
-            
+
             if (CanNotAttack())
                 return;
-
 
             _reconsiderationTime = _tentacleConfiguration.ReconsiderationTime;
 
@@ -128,12 +127,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                 return AttackDecision.CastBuff;
             else if (_specialTentacle)
                 return AttackDecision.Nothing;
-            
-            
-            
+
+
+
+            Debug.Log(_tentacleAttack.CanAttack());
+            Debug.Log(_tentacleAggro.HasAggro);
+            Debug.Log(_tentacleAggro.IsPlayerInFront);
             //if (CanGrabPlayer())
             //    return AttackDecision.GrabAbility;
-            else if(CanDoBasicAttack())
+            if(CanDoBasicAttack())
                 return AttackDecision.BasicAttack;
             else if(CanCastAttackSpell())
                 return AttackDecision.SpellCast;
