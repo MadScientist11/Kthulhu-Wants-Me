@@ -74,18 +74,20 @@ MonoBehaviour:
   EnemyType: 0
   Prefab: {fileID: 2543864529464768167, guid: b2a1390fa35be8c4c9e850651ae965b2, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  Knockback: 10
-  KnockbackTime: 0.25
   MoveSpeed: {x: 3, y: 4}
   StunWearOffTime: 3
   TentacleGrabDamage: 100
   GrabAbilityChance: 0.15
-  AggroRange: 10
-  AttackRange: 3
   ReconsiderationTime: 2
+  AttackActivationDistance: 3
   AttackRadius: 1
   AttackEffectiveDistance: 0.8
-  AttackCooldownTime: 5
+  AttackCooldownTime: 3
+  SpellAttackActivationDistance: 3
   ChaseCooldown: 10
   ChaseAfterSeconds: 10
   RotationSpeed: 90
+  AggroRange: 10
+  PoisonDamagePerSecond: 0
+  PoisonEffectDuration: 0
+  PoisonEffectPrefab: {fileID: 0}
