@@ -32,6 +32,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                     StartCoroutine(StunWearOff());
             }
         }
+
+        public bool SpecialTentacle => _specialTentacle;
         
         [SerializeField] private TentacleAttack _tentacleAttack;
         [SerializeField] private TentacleGrabAbility _tentacleGrabAbility;
@@ -91,6 +93,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             if (CanNotAttack())
                 return;
 
+
             _reconsiderationTime = _tentacleConfiguration.ReconsiderationTime;
 
             AttackDecision attackDecision = MakeAttackDecision();
@@ -129,10 +132,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                 return AttackDecision.Nothing;
 
 
-
-            Debug.Log(_tentacleAttack.CanAttack());
-            Debug.Log(_tentacleAggro.HasAggro);
-            Debug.Log(_tentacleAggro.IsPlayerInFront);
             //if (CanGrabPlayer())
             //    return AttackDecision.GrabAbility;
             if(CanDoBasicAttack())
@@ -153,10 +152,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             Random.value < _tentacleConfiguration.GrabAbilityChance && _tentacleAggro.HasAggro;
 
         private bool CanDoBasicAttack() =>
-            _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro && _tentacleAggro.IsPlayerInFront;
+            _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro && _tentacleAggro.IsPlayerInFront && _tentacleAggro.DistanceToPlayer() > _tentacleConfiguration.AttackActivationDistance;
         
         private bool CanCastAttackSpell() =>
-            _tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.BasicAttackSpell) && _tentacleAggro.HasAggro && _tentacleAggro.DistanceToPlayer() > _tentacleConfiguration.AttackRange;
+            _tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.BasicAttackSpell) && _tentacleAggro.HasAggro && _tentacleAggro.DistanceToPlayer() > _tentacleConfiguration.SpellAttackActivationDistance;
 
         private bool CanNotAttack() =>
             _tentacleGrabAbility.HoldsPlayer || _tentacleAttack.IsAttacking || _reconsiderationTime > 0 || Stunned;

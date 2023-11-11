@@ -7,6 +7,7 @@ using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using MoreMountains.Feedbacks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +23,8 @@ namespace KthulhuWantsMe.Source.UI
         [SerializeField] private TextMeshProUGUI _branchText;
         [SerializeField] private TextMeshProUGUI _stageStats;
         [SerializeField] private List<Image> _points;
+
+        [SerializeField] private MMFeedbacks _buttonFeedback;
         
         private UpgradeData _upgradeData;
         private UpgradeWindow _upgradeWindow;
@@ -80,7 +83,7 @@ namespace KthulhuWantsMe.Source.UI
             {
                 _upgradeService.ApplyUpgrade(upgradeData);
             }
-
+            _buttonFeedback?.PlayFeedbacks();
             _progressService.ProgressData.CompletedSkillBranchStages[_branch.InstanceId]++;
             
             _upgradeWindow.OnUpgradePicked?.Invoke();

@@ -16,6 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleSpellCastingAbility _tentacleSpellCastingAbility;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
+        [SerializeField] private TentacleAIBrain _tentacleAIBrain;
 
         private float _speed = 90;
         
@@ -35,12 +36,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 
         private void Update()
         {
-            Debug.Log(_tentacleSpellCastingAbility.CastingSpell);
-            if (_tentacleSpellCastingAbility.CastingSpell)
-            {
-                return;
-            }
-            
             if (PlayerInRange())
             {
                 HasAggro = true;
@@ -50,13 +45,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
                 directionToPlayer.Normalize();
                 directionToPlayer.y = 0f;
 
-                if (directionToPlayer != Vector3.zero)
+
+                if (directionToPlayer != Vector3.zero && !_tentacleSpellCastingAbility.CastingSpell && !_tentacleAIBrain.SpecialTentacle)
                 {
                     float step = _tentacleConfiguration.RotationSpeed * Time.deltaTime;
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(directionToPlayer), step);
                 }
    
-                if (DistanceToPlayer() < 3 && Vector3.Dot(transform.forward, directionToPlayer) > 0.7f)
+                if (Vector3.Dot(transform.forward, directionToPlayer) > 0.7f)
                 {
                     IsPlayerInFront = true;
                 }

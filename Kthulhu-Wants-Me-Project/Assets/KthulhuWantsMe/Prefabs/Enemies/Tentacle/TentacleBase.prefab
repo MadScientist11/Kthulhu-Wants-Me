@@ -496,6 +496,7 @@ MonoBehaviour:
   SpellSpawnPoint: {fileID: 2076584000519452278}
   _enemyStatsContainer: {fileID: 8187939092874492644}
   _tentacleAnimator: {fileID: 7893959025167172210}
+  _tentacleAggro: {fileID: 423395108823978285}
 --- !u!114 &423395108823978285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,6 +512,7 @@ MonoBehaviour:
   _tentacleAnimator: {fileID: 7893959025167172210}
   _tentacleSpellCastingAbility: {fileID: 7743905234635742817}
   _enemyStatsContainer: {fileID: 8187939092874492644}
+  _tentacleAIBrain: {fileID: -2563807488164230852}
 --- !u!114 &7442634767459381635
 MonoBehaviour:
   m_ObjectHideFlags: 0

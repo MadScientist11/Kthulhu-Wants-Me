@@ -75,12 +75,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public void Tick()
         {
+            ModifyCurrentStamina(RegenRate * Time.deltaTime);
+            
             if (Time.timeScale == 0 || !_waveSystemDirector.WaveOngoing)
             {
                 return;
             }
-            
-            ModifyCurrentStamina(RegenRate * Time.deltaTime);
 
             if (_playerStats.AcquiredSkills.Contains(SkillId.HealthRegen))
             {

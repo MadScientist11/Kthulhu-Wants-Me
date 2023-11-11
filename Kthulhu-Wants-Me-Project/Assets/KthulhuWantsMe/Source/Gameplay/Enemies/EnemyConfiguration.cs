@@ -14,8 +14,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         public Dictionary<StatType, float> BaseStats = new();
         public EnemyScalingSO EnemyScaling;
         
-        public float Knockback = 10;
-        public float KnockbackTime = .25f;
+      
         
         [MinMaxSlider(0, 20, true)]
         public Vector2 MoveSpeed = new(3,4);

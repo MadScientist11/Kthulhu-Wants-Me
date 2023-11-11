@@ -19,6 +19,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public Transform SpellSpawnPoint;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
         [SerializeField] private TentacleAnimator _tentacleAnimator;
+        [SerializeField] private TentacleAggro _tentacleAggro;
 
         private Dictionary<TentacleSpell, ITentacleSpell> _tentacleSpells;
 
@@ -50,7 +51,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             _tentacleAnimator.PlayEnchant();
             await _tentacleSpells[spell].Cast();
             //_tentacleAnimator.PlaySpellAttack();
-
         }
 
         public void CancelActiveSpells()
@@ -68,9 +68,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             await _tentacleSpells[spell].Undo();
         }
 
-        public bool CanCastSpell(TentacleSpell spell) => !CastingSpell && !IsActive(spell) && IsNotOnCooldown(spell) &&
-                                                         !_gameFactory.Player.TentacleSpellResponse.IsActiveDebuff(
-                                                             spell);
+        public bool CanCastSpell(TentacleSpell spell)
+        {
+            bool common = !CastingSpell && !IsActive(spell) && IsNotOnCooldown(spell) &&
+                          !_gameFactory.Player.TentacleSpellResponse.IsActiveDebuff(
+                              spell);
+
+            if (!common)
+                return false;
+
+
+            if (spell == TentacleSpell.BasicAttackSpell)
+            {
+                return _tentacleAggro.IsPlayerInFront;
+            }
+
+
+            return common;
+        }
 
         public bool IsActive(TentacleSpell spell)
             => _tentacleSpells[spell].Active;

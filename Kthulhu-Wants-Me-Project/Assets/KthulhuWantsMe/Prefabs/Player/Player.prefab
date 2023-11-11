@@ -2962,7 +2962,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 8662729706895713989}
         DebugActive: 0
-        Sfx: {fileID: 8300000, guid: 37833d49b489f9e4396590bc744f2294, type: 3}
+        Sfx: {fileID: 8300000, guid: 84b8a6aecd60ffd4bae128c9d796934e, type: 3}
         RandomSfx: []
         SequentialOrder: 0
         SequentialOrderHoldLast: 0
@@ -4029,7 +4029,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 3743268344251599665}
         DebugActive: 0
-        Sfx: {fileID: 8300000, guid: 37833d49b489f9e4396590bc744f2294, type: 3}
+        Sfx: {fileID: 8300000, guid: 699355115a980a146a5549860bbb3a86, type: 3}
         RandomSfx: []
         SequentialOrder: 0
         SequentialOrderHoldLast: 0

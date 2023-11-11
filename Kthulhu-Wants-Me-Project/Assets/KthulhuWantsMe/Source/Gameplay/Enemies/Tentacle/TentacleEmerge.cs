@@ -17,7 +17,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
     public class TentacleEmerge : MonoBehaviour, ISpawnBehaviour
     {
-        public bool Spawned { get; set; }
         public EnemySpawnerId SpawnedAt { get; set; }
 
         [SerializeField] private TentacleAnimator _tentacleAnimator;
@@ -36,11 +35,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             _portalFactory = portalFactory;
         }
 
-
         public void OnSpawn(Action onSpawned)
         {
             _onSpawned = onSpawned;
-            GetComponent<Collider>().enabled = false;
             Portal portal = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity, EnemyType.Tentacle);
             GetComponent<TentacleRetreat>().Init(portal);
             StartCoroutine(EmergeFromPortal(transform.position.AddY(-_height), transform.position));
@@ -66,15 +63,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
                 yield return null;
             }
             
-            OnEmerged();
-            Spawned = true;
-            
+            _tentacleAnimator.SetEmerged();
             yield return new WaitForSeconds(1f);
-            GetComponent<Collider>().enabled = true;
+            OnEmerged();
+            
         }
 
         private void OnEmerge()
         {
+            GetComponent<Collider>().enabled = false;
             _tentacleFacade.ResetState();
             _tentacleFacade.BlockAIProcessing();
             _tentacleAnimator.PlayEmerge();
@@ -82,9 +79,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
 
         private void OnEmerged()
         {
-            _tentacleAnimator.SetEmerged();
             _tentacleFacade.ResumeAIProcessing();
             _onSpawned?.Invoke();
+            GetComponent<Collider>().enabled = true;
         }
     }
 }
