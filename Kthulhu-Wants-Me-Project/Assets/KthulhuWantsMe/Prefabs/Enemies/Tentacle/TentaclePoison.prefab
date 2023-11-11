@@ -23,6 +23,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TentaclePoison
       objectReference: {fileID: 0}
+    - target: {fileID: 4119135256880231113, guid: b2a1390fa35be8c4c9e850651ae965b2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: daa1f64d17d2c5f44949d9e1327a83c0, type: 2}
     - target: {fileID: 5174028308077087162, guid: b2a1390fa35be8c4c9e850651ae965b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -106,5 +111,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageModifierId: 1
-  _poisonVFXPrefab: {fileID: 7163259385320301113, guid: 6cc1df5af8285d84481515a5ec44bdf4,
+  _effectVfxPrefab: {fileID: 7163259385320301113, guid: 6cc1df5af8285d84481515a5ec44bdf4,
     type: 3}

@@ -152,7 +152,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             Random.value < _tentacleConfiguration.GrabAbilityChance && _tentacleAggro.HasAggro;
 
         private bool CanDoBasicAttack() =>
-            _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro && _tentacleAggro.IsPlayerInFront && _tentacleAggro.DistanceToPlayer() > _tentacleConfiguration.AttackActivationDistance;
+            _tentacleAttack.CanAttack() && _tentacleAggro.HasAggro && _tentacleAggro.IsPlayerInFront && _tentacleAggro.DistanceToPlayer() < _tentacleConfiguration.AttackActivationDistance;
         
         private bool CanCastAttackSpell() =>
             _tentacleSpellCastingAbility.CanCastSpell(TentacleSpell.BasicAttackSpell) && _tentacleAggro.HasAggro && _tentacleAggro.DistanceToPlayer() > _tentacleConfiguration.SpellAttackActivationDistance;
