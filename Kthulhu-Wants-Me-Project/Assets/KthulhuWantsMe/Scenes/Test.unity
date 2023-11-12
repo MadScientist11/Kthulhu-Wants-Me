@@ -1045,16 +1045,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cyaegha
       objectReference: {fileID: 0}
-    - target: {fileID: 3900409656979045455, guid: e9ac9c8f83e7b194a95c06458d2a7fb1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ac9c8f83e7b194a95c06458d2a7fb1, type: 3}
+--- !u!4 &2424229848356777178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093771318634755680}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3093771318634755680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2424229848356777178}
+  m_Layer: 0
+  m_Name: CyaeghaEnemyCharacter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1001 &3125429675647866633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1202,6 +1228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: YithBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590797425616401305, guid: 5b14604e5d0c952468ee301feeffa770,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5757831141683792899, guid: 5b14604e5d0c952468ee301feeffa770,
         type: 3}
@@ -1462,3 +1493,4 @@ SceneRoots:
   - {fileID: 3803095942155103608}
   - {fileID: 4454048743193469730}
   - {fileID: 5554931276167431182}
+  - {fileID: 2424229848356777178}

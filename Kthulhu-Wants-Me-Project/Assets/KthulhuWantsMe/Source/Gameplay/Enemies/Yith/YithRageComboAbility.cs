@@ -97,6 +97,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 Vector3 directionToTarget = (_target - transform.position).normalized;
                 _movementMotor.AddVelocity(directionToTarget * _yithConfiguration.DashDistance, _yithConfiguration.ComboAttackDashSpeed);
                 _yithAnimator.PlayAttack();
+                GetComponent<Collider>().enabled = false;
                 Debug.Log("Play attack!");
             }
             else
@@ -115,6 +116,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _yithAnimator.ResetAttack();
             _isAttacking = false;
             _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
+            GetComponent<Collider>().enabled = true;
         }
 
         public bool CanComboAttack()
