@@ -462,6 +462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyStatsContainer: {fileID: 8187939092874492644}
   _tentacleAnimator: {fileID: 7893959025167172210}
+  _tentacleFacade: {fileID: 8662503218968821094}
   _damageModifier: {fileID: 0}
 --- !u!114 &3629999761114246035
 MonoBehaviour:

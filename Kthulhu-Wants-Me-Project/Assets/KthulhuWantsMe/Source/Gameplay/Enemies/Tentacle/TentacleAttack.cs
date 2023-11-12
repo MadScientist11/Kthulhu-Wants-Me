@@ -9,13 +9,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public class TentacleAttack : Attack
     {
-
         public bool IsAttacking => _isAttacking;
         
         protected override float BaseDamage => enemyStatsContainer.EnemyStats.Stats[StatType.BaseDamage];
         
         [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private TentacleAnimator _tentacleAnimator;
+        [SerializeField] private TentacleFacade _tentacleFacade;
         [SerializeField] private DamageModifier _damageModifier;
 
         private bool _isAttacking;
@@ -37,10 +37,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         protected override void OnAttack()
         {
             if (!PhysicsUtility.HitFirst(transform, AttackStartPoint(), _tentacleConfiguration.AttackRadius,
-                    LayerMasks.PlayerMask, out Transform player))
+                    LayerMasks.PlayerMask, out Transform player) || _tentacleFacade.TentacleAIBrain.BlockProcessing)
                 return;
             
-
+            
             ApplyDamage(to: player.GetComponent<IDamageable>());
             _damageModifier?.ApplyTo(player.GetComponent<IEffectReceiver>());
         }
