@@ -17,8 +17,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private YithRageComboAbility _yithRageComboAbility;
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
 
+        [SerializeField] private YithMovement _yithMovement;
         [SerializeField] private FollowPlayer _followPlayerBehaviour;
-        [SerializeField] private Patrol _patrolBehaviour;
 
         private float _attackDelayTime;
         private float _rageComboRandom;
@@ -73,13 +73,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             }
 
             DecideMoveStrategy();
-            DecideAttackStrategy();
+            //DecideAttackStrategy();
         }
 
         private void DecideMoveStrategy()
         {
             if (_yithRageComboAbility.InProcess)
             {
+                _yithMovement.Stop();
                 return;
             }
             
@@ -90,12 +91,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
             if (_aiService.AllowedChasingPlayer(gameObject))
             {
-                _patrolBehaviour.CancelPatrol();
-                _followPlayerBehaviour.MoveToPlayer(_aiService.EnemiesCount < 10 ? 1 : -1);
+                _yithMovement.FollowPlayer();
             }
             else
             {
-                _patrolBehaviour.PatrolArea();
+                _yithMovement.PatrolArea();
             }
         }
         

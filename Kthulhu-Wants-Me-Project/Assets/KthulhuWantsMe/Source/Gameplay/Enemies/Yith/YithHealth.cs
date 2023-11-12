@@ -20,6 +20,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private MovementMotor _movementMotor;
         [SerializeField] private MMFeedbacks _hitFeedbacks;
 
+        [SerializeField] private YithAnimator _yithAnimator;
         private YithConfiguration _yithConfiguration;
         
         private void Start()
@@ -60,8 +61,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         {
             //_movementMotor.Velocity = -transform.forward * 15f;
             _collider.enabled = false;
-            yield return new WaitForSeconds(.2f);
             GetComponent<IStoppable>().StopEntityLogic();
+            yield return new WaitForSeconds(.2f);
+            _yithAnimator.PlayDie();
             Destroy(gameObject, 2f);
         }
     }
