@@ -13,6 +13,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public float AttackDelay = 1;
 
         [Header("Combo Attack")] 
+        public int ComboCount = 1;
         public float ComboAttackCooldown;
         public float DelayBetweenComboAttacks;
         public float ComboAttackDelay = 0.1f;

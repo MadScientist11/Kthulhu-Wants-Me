@@ -78,11 +78,12 @@ MonoBehaviour:
   AttackRadius: 1.15
   AttackCooldown: 1
   AttackDelay: 1
+  ComboCount: 3
   ComboAttackCooldown: 10
-  DelayBetweenComboAttacks: 2
+  DelayBetweenComboAttacks: 0.5
   ComboAttackDelay: 1.3
-  ComboAttackDashSpeed: 0.25
-  DashDistance: 15
+  ComboAttackDashTime: 0.3
+  DashDistance: 20
   ComboAttackTriggerDistance: {x: 4, y: 12}
   ReconsiderationTime: 2
   ChaseDistance: 4

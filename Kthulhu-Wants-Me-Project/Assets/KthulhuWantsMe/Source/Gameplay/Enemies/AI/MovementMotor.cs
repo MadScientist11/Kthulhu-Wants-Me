@@ -12,12 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         [SerializeField] private NavMeshAgent _navMeshAgent;
 
-        private float _defaultAngularSpeed;
-
-        private void Start()
-        {
-            _defaultAngularSpeed = _navMeshAgent.angularSpeed;
-        }
+        private float _previousAngularSpeed;
 
         private void OnValidate()
         {
@@ -39,6 +34,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
 
         private IEnumerator DoVelocityChange(Vector3 velocity, float resetAfter, Action action)
         {
+            _previousAngularSpeed = _navMeshAgent.angularSpeed;
             _navMeshAgent.angularSpeed = 0;
             
             float startTime = Time.time;
@@ -50,7 +46,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             }
          
             _navMeshAgent.velocity = Vector3.zero;
-            _navMeshAgent.angularSpeed = _defaultAngularSpeed;
+            _navMeshAgent.angularSpeed = _previousAngularSpeed;
 
             action?.Invoke();
         }
