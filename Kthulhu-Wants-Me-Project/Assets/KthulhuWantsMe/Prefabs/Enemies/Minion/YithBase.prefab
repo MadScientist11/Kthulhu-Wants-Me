@@ -672,6 +672,7 @@ MonoBehaviour:
   _attackFeedback: {fileID: 4541535061017115652}
   _attackPrepareFeedback: {fileID: 3893149329671589609}
   _yithAnimator: {fileID: 5777217987381979659}
+  _followPlayerBehaviour: {fileID: 4690465305620889120}
 --- !u!114 &2838533250784125204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,6 +689,7 @@ MonoBehaviour:
   _comboFeedback: {fileID: 5463552140370051989}
   _comboChargeFeedback: {fileID: 7353896890652654407}
   _movementMotor: {fileID: 855018551297982499}
+  _yithAnimator: {fileID: 5777217987381979659}
   _navigationElement: {fileID: 2545568645281062649}
   _comboCount: 1
 --- !u!114 &3316429485802251377

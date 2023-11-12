@@ -20,7 +20,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private YithMovement _yithMovement;
         [SerializeField] private FollowPlayer _followPlayerBehaviour;
 
-        private float _attackDelayTime;
         private float _rageComboRandom;
         private float _reconsiderationTime;
         private float _lastStunTime;
@@ -84,7 +83,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 return;
             }
             
-            if (Vector3.Distance(transform.position, _player.transform.position) < 4) // detect player distance
+            if (Vector3.Distance(transform.position, _player.transform.position) < _yithConfiguration.ChaseDistance) // detect player distance
             {
                 _aiService.AddToChase(gameObject);
             }
@@ -106,42 +105,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if(CanNotAttack())
                 return;
             
-            if(_followPlayerBehaviour.PlayerReached)
-                UpdateAttackDelayCountdown();
-            else
-                ResetAttackDelayCountdown();
-
-            
-            //if (ComboAttackConditionsFulfilled())
-            //{
-            //    _yithRageComboAbility.PerformCombo();
-            //    _reconsiderationTime = _yithConfiguration.ReconsiderationTime;
-            //    return;
-            //}
+            if (ComboAttackConditionsFulfilled())
+            {
+                _yithRageComboAbility.PerformCombo();
+                _reconsiderationTime = _yithConfiguration.ReconsiderationTime;
+                return;
+            }
 
             if (CanDoBasicAttack())
             {
-                
                 _yithAttack.PerformAttack().Forget();
-                ResetAttackDelayCountdown();
                 _reconsiderationTime = _yithConfiguration.ReconsiderationTime;
             }
         }
 
-        private void UpdateAttackDelayCountdown() => 
-            _attackDelayTime -= Time.deltaTime;
-
-        private void ResetAttackDelayCountdown() => 
-            _attackDelayTime = 1f;
-
-        private bool AttackDelayCountdownIsUp() 
-            => _attackDelayTime <= 0;
-
         private bool CanDoBasicAttack()
         {
             return _followPlayerBehaviour.PlayerReached
-                   && _yithAttack.CanAttack() 
-                   && AttackDelayCountdownIsUp();
+                   && _yithAttack.CanAttack();
         }
 
         private bool ComboAttackConditionsFulfilled()

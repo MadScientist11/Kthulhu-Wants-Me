@@ -6,36 +6,48 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
     {
         [SerializeField] private Animator _animator;
         
-        private static readonly int Move = Animator.StringToHash("Move");
-        private static readonly int Die = Animator.StringToHash("Die");
-        private static readonly int Combat = Animator.StringToHash("Combat");
-        private static readonly int Stance = Animator.StringToHash("Stance");
-        private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int MoveHash = Animator.StringToHash("Move");
+        private static readonly int DieHash = Animator.StringToHash("Die");
+        private static readonly int CombatHash = Animator.StringToHash("Combat");
+        private static readonly int StanceHash = Animator.StringToHash("Stance");
+        private static readonly int AttackHash = Animator.StringToHash("Attack");
+        private static readonly int ResetAttackHash = Animator.StringToHash("ResetAttack");
 
         public void PlayMove()
         {
-            _animator.SetBool(Move, true);
+            _animator.SetBool(MoveHash, true);
         }
 
         public void StopMove()
         {
-            _animator.SetBool(Move, false);
+            _animator.SetBool(MoveHash, false);
         }
         
         public void PlayStance(int stanceId)
         {
-            _animator.SetInteger(Stance, stanceId);
-            _animator.SetTrigger(Combat);
+            _animator.SetBool(ResetAttackHash, false);
+            _animator.SetInteger(StanceHash, stanceId);
+            _animator.SetTrigger(CombatHash);
         }
 
         public void PlayAttack()
         {
-            _animator.SetTrigger(Attack);
+            _animator.ResetTrigger(CombatHash);
+            _animator.SetInteger(StanceHash, -1);
+            _animator.SetTrigger(AttackHash);
+        }
+        
+        public void ResetAttack()
+        {
+            _animator.SetBool(ResetAttackHash, true);
+            _animator.SetInteger(StanceHash, -1);
+            _animator.ResetTrigger(CombatHash);
+            _animator.ResetTrigger(AttackHash);
         }
 
         public void PlayDie()
         {
-            _animator.SetTrigger(Die);
+            _animator.SetTrigger(DieHash);
         }
     }
 }

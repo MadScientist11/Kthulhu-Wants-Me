@@ -22,12 +22,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private MMFeedbacks _comboFeedback;
         [SerializeField] private MMFeedbacks _comboChargeFeedback;
         [SerializeField] private MovementMotor _movementMotor;
+        [SerializeField] private YithAnimator _yithAnimator;
 
         [SerializeField] private HUDNavigationElement _navigationElement;
 
         [SerializeField] private int _comboCount;
 
         private bool _isAttacking;
+        private bool _oneAttackFinished;
         private float _comboAttackCooldown;
 
         private YithConfiguration _yithConfiguration;
@@ -51,51 +53,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private void Update()
         {
             _comboAttackCooldown -= Time.deltaTime;
-        }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(_target, .5f);
-            
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, transform.position + transform.forward);
-        }
-
-        public void PerformCombo()
-        {
-            StartCoroutine(ComboAttack());
-        }
-
-        private IEnumerator ComboAttack()
-        {
-            _isAttacking = true;
-
-            _navigationElement.SwitchOn();
-            _comboChargeFeedback?.PlayFeedbacks();
-            yield return new WaitForSeconds(_yithConfiguration.ComboAttackDelay);
-            _navigationElement.SwitchOff();
-
-
-            for (int i = 0; i < _comboCount; i++)
+            if (_isAttacking)
             {
-                PerformAttack();
-                yield return new WaitForSeconds(_yithConfiguration.DelayBetweenComboAttacks);
-            }
-
-            _isAttacking = false;
-            _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
-        }
-
-        private void PerformAttack()
-        {
-            Vector3 directionToTarget = (_target - transform.position).normalized;
-            _movementMotor.AddVelocity(directionToTarget * _yithConfiguration.DashDistance, _yithConfiguration.ComboAttackDashSpeed, OnDashed);
-
-            void OnDashed()
-            {
-                _comboFeedback.PlayFeedbacks();
-
                 if (!PhysicsUtility.HitFirst(transform,
                         AttackStartPoint(),
                         .75f,
@@ -103,9 +63,58 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                         out IDamageable damageable))
                     return;
 
-
                 damageable.TakeDamage(10);
+                
+                ResetAttackState();
             }
+
+            Debug.Log(_isAttacking);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(_target, .5f);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + transform.forward);
+        }
+
+        public void PerformCombo()
+        {
+            StartCoroutine(DoCombo());
+        }
+
+        private IEnumerator DoCombo()
+        {
+            _isAttacking = true;
+
+            _yithAnimator.PlayStance(0);
+            yield return new WaitForSeconds(_yithConfiguration.ComboAttackDelay);
+
+            if (IsPlayerReachable())
+            {
+                Vector3 directionToTarget = (_target - transform.position).normalized;
+                _movementMotor.AddVelocity(directionToTarget * _yithConfiguration.DashDistance, _yithConfiguration.ComboAttackDashSpeed);
+                _yithAnimator.PlayAttack();
+                Debug.Log("Play attack!");
+            }
+            else
+            {
+                ResetAttackState();
+            }
+        }
+
+        private void OnAttackFinished()
+        {
+            ResetAttackState();
+        }
+
+        public void ResetAttackState()
+        {
+            _yithAnimator.ResetAttack();
+            _isAttacking = false;
+            _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
         }
 
         public bool CanComboAttack()
@@ -114,16 +123,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             {
                 return false;
             }
-            
+
+            return IsPlayerReachable();
+        }
+
+        private bool IsPlayerReachable()
+        {
             Vector3 directionToTarget = (_gameFactory.Player.transform.position - transform.position).normalized;
             float dot = Vector3.Dot(directionToTarget, transform.forward);
-            
+
             if (dot < 0.8)
             {
                 return false;
             }
 
-            //Vector3 randomPoint = _gameFactory.Player.transform.position + Random.insideUnitSphere * .5f;
             bool sampleSuccess = NavMesh.SamplePosition(_gameFactory.Player.transform.position, out NavMeshHit hit, 0.25f, NavMesh.AllAreas);
             if (!sampleSuccess)
             {
@@ -132,13 +145,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             }
 
             _movementMotor.Agent.CalculatePath(hit.position, _navMeshPath);
+            //TODO: Raycast shouldn't take into account the enemy component is on
             if (_navMeshPath.status == NavMeshPathStatus.PathComplete &&
                 !NavMesh.Raycast(transform.position, hit.position, out NavMeshHit _,
                     NavMesh.AllAreas))
             {
                 _target = hit.position;
                 return true;
-
             }
 
             return false;
