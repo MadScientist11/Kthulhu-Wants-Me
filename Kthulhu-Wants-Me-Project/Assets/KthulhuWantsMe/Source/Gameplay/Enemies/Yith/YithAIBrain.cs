@@ -73,7 +73,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             }
 
             DecideMoveStrategy();
-            //DecideAttackStrategy();
+            DecideAttackStrategy();
         }
 
         private void DecideMoveStrategy()
@@ -112,15 +112,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 ResetAttackDelayCountdown();
 
             
-            if (ComboAttackConditionsFulfilled())
-            {
-                _yithRageComboAbility.PerformCombo();
-                _reconsiderationTime = _yithConfiguration.ReconsiderationTime;
-                return;
-            }
+            //if (ComboAttackConditionsFulfilled())
+            //{
+            //    _yithRageComboAbility.PerformCombo();
+            //    _reconsiderationTime = _yithConfiguration.ReconsiderationTime;
+            //    return;
+            //}
 
             if (CanDoBasicAttack())
             {
+                
                 _yithAttack.PerformAttack().Forget();
                 ResetAttackDelayCountdown();
                 _reconsiderationTime = _yithConfiguration.ReconsiderationTime;

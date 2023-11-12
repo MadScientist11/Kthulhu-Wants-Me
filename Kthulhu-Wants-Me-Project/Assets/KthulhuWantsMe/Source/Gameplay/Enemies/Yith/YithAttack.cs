@@ -17,6 +17,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private MMFeedbacks _attackFeedback;
         [SerializeField] private MMFeedbacks _attackPrepareFeedback;
+        [SerializeField] private YithAnimator _yithAnimator;
 
         private float _attackCooldown;
         private bool _isAttacking;
@@ -35,11 +36,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         public async UniTaskVoid PerformAttack()
         {
+            _yithAnimator.PlayStance(0);
             _attackPrepareFeedback?.PlayFeedbacks();
 
             await UniTask.Delay(TimeSpan.FromSeconds(0.3f), false, PlayerLoopTiming.Update, destroyCancellationToken);
+            _yithAnimator.PlayAttack();
             
-            if (!PhysicsUtility.HitFirst(transform, 
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), false, PlayerLoopTiming.Update, destroyCancellationToken);
+            
+            if (!PhysicsUtility.HitFirst(
+                    transform, 
                     AttackStartPoint(), 
                     _yithConfiguration.AttackRadius, 
                     LayerMasks.PlayerMask, 
@@ -54,6 +60,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _isAttacking = false;
             _attackCooldown = 1f;
         }
+        
+        
 
         public bool CanAttack()
         {

@@ -671,6 +671,7 @@ MonoBehaviour:
   enemyStatsContainer: {fileID: 8151728752701681097}
   _attackFeedback: {fileID: 4541535061017115652}
   _attackPrepareFeedback: {fileID: 3893149329671589609}
+  _yithAnimator: {fileID: 5777217987381979659}
 --- !u!114 &2838533250784125204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,7 +996,7 @@ MonoBehaviour:
     - rid: 3174550863441035264
       type: {class: MMF_Particles, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: 1882078640
         Label: Particles Play
         ChannelMode: 0
