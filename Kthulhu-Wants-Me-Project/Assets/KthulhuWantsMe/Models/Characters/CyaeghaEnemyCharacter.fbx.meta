@@ -3,12 +3,7 @@ guid: 510381d26c625e9458c1f4448dde03f6
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: CyaeghaSkin
-    second: {fileID: 2100000, guid: 9d7aa1a4f77c3194eadec19e5d60cc6a, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
