@@ -16,7 +16,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public float ComboAttackCooldown;
         public float DelayBetweenComboAttacks;
         public float ComboAttackDelay = 0.1f;
-        public float ComboAttackDashSpeed = 0.25f;
+        [FormerlySerializedAs("ComboAttackDashSpeed")] public float ComboAttackDashTime = 0.25f;
         public float DashDistance = 15;
         [MinMaxSlider(2, 20)] public Vector2 ComboAttackTriggerDistance = new(4, 6);
 

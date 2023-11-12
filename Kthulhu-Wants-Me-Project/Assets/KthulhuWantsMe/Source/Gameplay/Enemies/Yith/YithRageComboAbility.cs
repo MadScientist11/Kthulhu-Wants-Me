@@ -67,8 +67,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 
                 ResetAttackState();
             }
-
-            Debug.Log(_isAttacking);
         }
 
         private void OnDrawGizmos()
@@ -95,10 +93,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if (IsPlayerReachable())
             {
                 Vector3 directionToTarget = (_target - transform.position).normalized;
-                _movementMotor.AddVelocity(directionToTarget * _yithConfiguration.DashDistance, _yithConfiguration.ComboAttackDashSpeed);
-                _yithAnimator.PlayAttack();
                 GetComponent<Collider>().enabled = false;
-                Debug.Log("Play attack!");
+                _movementMotor.Agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+                _movementMotor.AddVelocity(directionToTarget * _yithConfiguration.DashDistance, _yithConfiguration.ComboAttackDashTime);
+                _yithAnimator.PlayAttack();
             }
             else
             {
@@ -111,11 +109,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             ResetAttackState();
         }
 
-        public void ResetAttackState()
+        private void ResetAttackState()
         {
             _yithAnimator.ResetAttack();
             _isAttacking = false;
             _comboAttackCooldown = _yithConfiguration.ComboAttackCooldown;
+            _movementMotor.Agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
             GetComponent<Collider>().enabled = true;
         }
 
@@ -139,24 +138,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 return false;
             }
 
-            bool sampleSuccess = NavMesh.SamplePosition(_gameFactory.Player.transform.position, out NavMeshHit hit, 0.25f, NavMesh.AllAreas);
-            if (!sampleSuccess)
-            {
-                Debug.Log("Sample failed");
-                return false;
-            }
-
-            _movementMotor.Agent.CalculatePath(hit.position, _navMeshPath);
-            //TODO: Raycast shouldn't take into account the enemy component is on
-            if (_navMeshPath.status == NavMeshPathStatus.PathComplete &&
-                !NavMesh.Raycast(transform.position, hit.position, out NavMeshHit _,
-                    NavMesh.AllAreas))
-            {
-                _target = hit.position;
-                return true;
-            }
-
-            return false;
+            _target = _gameFactory.Player.transform.position;
+            return true;
         }
 
         private Vector3 AttackStartPoint()

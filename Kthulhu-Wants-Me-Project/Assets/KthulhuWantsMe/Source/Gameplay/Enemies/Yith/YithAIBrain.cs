@@ -126,7 +126,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         }
 
         private bool ComboAttackConditionsFulfilled()
-            => CanDoComboAttack() && _rageComboRandom > 0.5f;
+            => CanDoComboAttack();
         
         private bool CanDoComboAttack()
         {
