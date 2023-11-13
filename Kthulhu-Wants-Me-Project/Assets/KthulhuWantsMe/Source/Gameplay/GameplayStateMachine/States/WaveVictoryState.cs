@@ -17,10 +17,12 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly IUIService _uiService;
         private readonly GameplayStateMachine _gameplayStateMachine;
         private readonly IWaveSystemDirector _waveSystemDirector;
+        private ISceneDataProvider _sceneDataProvider;
 
         public WaveVictoryState(GameplayStateMachine gameplayStateMachine, IProgressService progressService,
-            IInputService inputService, IUIService uiService, IWaveSystemDirector waveSystemDirector)
+            IInputService inputService, IUIService uiService, IWaveSystemDirector waveSystemDirector, ISceneDataProvider sceneDataProvider)
         {
+            _sceneDataProvider = sceneDataProvider;
             _waveSystemDirector = waveSystemDirector;
             _gameplayStateMachine = gameplayStateMachine;
             _uiService = uiService;
@@ -39,6 +41,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 
             UpgradeWindow window = (UpgradeWindow)_uiService.OpenWindow(WindowId.UpgradeWindow);
             window.Init(OnUpgradePicked);
+            
+            _sceneDataProvider.MapNavMesh.BuildNavMesh();
         }
 
         public void Exit()
