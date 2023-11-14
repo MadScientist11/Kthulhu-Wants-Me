@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BranchRunner
   m_EditorClassIdentifier: 
   Branch:
-    BranchName: Runner
+    BranchName: Lightweighter
     BranchStages:
     - {fileID: 11400000, guid: 5c43f465f4b4318459a0b0feff9a7815, type: 2}
     - {fileID: 11400000, guid: 6fe684ed572058242a5851b05a909791, type: 2}

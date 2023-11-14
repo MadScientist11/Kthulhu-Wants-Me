@@ -85,14 +85,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
                 Vector3 inUnitSphere = Random.InUnitSphere;
                 Vector3 hemiSphereDirections = new Vector3(inUnitSphere.x, -Mathfs.Abs(inUnitSphere.y), inUnitSphere.z);
                 Ray ray = new(roomPartCollider.bounds.center.AddY(roomPartCollider.bounds.extents.y), hemiSphereDirections);
-                
-                if (DrawPhysics.Raycast(
-                        ray,
-                        out RaycastHit hitInfo,
-                        100,
-                        LayerMasks.GroundMask))
+
+                RaycastHit[] results = DrawPhysics.SphereCastAll(ray, 1, 100, LayerMasks.All, QueryTriggerInteraction.Ignore);
+
+                if (results.Length == 1 && results[0].transform.gameObject.layer == LayerMasks.GroundLayer)
                 {
-                    randomPositionInside = hitInfo.point;
+                    randomPositionInside = results[0].point;
                 }
 
                 iterations++;

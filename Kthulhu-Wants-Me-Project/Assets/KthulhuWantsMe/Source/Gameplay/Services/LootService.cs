@@ -14,6 +14,7 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using VContainer.Unity;
 using Vertx.Debugging;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
@@ -21,6 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     public interface ILootService
     {
         BuffItem SpawnBuff<T>(Vector3 at, Quaternion rotation) where T : BuffItem;
+        void DespawnAllLoot();
     }
 
     public class LootService : ILootService, ITickable
@@ -31,6 +33,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
         private const float _flameSoulSpawnInterval = 10;
         private float _flameSoulLastSpawnTime;
+
+        private readonly List<BuffItem> _loot = new();
 
         public LootService(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, IRoomOverseer roomOverseer)
         {
@@ -64,11 +68,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
                 if (room != null)
                 {
-                    Vector3 position = room.GetRandomPositionInside()
+                    Vector3 position = room
+                        .GetRandomPositionInside()
                         .AddY(GameConstants.SpawnItemsElevation);
-                    SpawnBuff<FlameSoul>(position, Quaternion.identity);
+                    
+                    BuffItem flameSoul = SpawnBuff<FlameSoul>(position, Quaternion.identity);
+                    _loot.Add(flameSoul);
                 }
             }
+        }
+
+        public void DespawnAllLoot()
+        {
+            foreach (BuffItem loot in _loot.Where(t => t != null))
+            {
+                Object.Destroy(loot.gameObject);
+            }
+
+            _loot.Clear();
         }
 
         public BuffItem SpawnBuff<T>(Vector3 at, Quaternion rotation) where T : BuffItem

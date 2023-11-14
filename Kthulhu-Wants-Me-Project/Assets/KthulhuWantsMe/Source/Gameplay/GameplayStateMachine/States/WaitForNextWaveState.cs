@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 
@@ -9,10 +10,16 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
     {
         private readonly IUIService _uiService;
         private readonly GameplayStateMachine _gameplayStateMachine;
-        private IBackgroundMusicPlayer _backgroundMusicPlayer;
+        private readonly IBackgroundMusicPlayer _backgroundMusicPlayer;
+        private readonly ILootService _lootService;
 
-        public WaitForNextWaveState(GameplayStateMachine gameplayStateMachine, IUIService uiService, IBackgroundMusicPlayer backgroundMusicPlayer)
+        public WaitForNextWaveState(
+            GameplayStateMachine gameplayStateMachine,
+            IUIService uiService, 
+            IBackgroundMusicPlayer backgroundMusicPlayer,
+            ILootService lootService)
         {
+            _lootService = lootService;
             _backgroundMusicPlayer = backgroundMusicPlayer;
             _gameplayStateMachine = gameplayStateMachine;
             _uiService = uiService;
@@ -21,6 +28,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         public void Enter()
         {
             _backgroundMusicPlayer.PlayConcernMusic();
+            _lootService.DespawnAllLoot();
             StartNextWaveCounter(new CancellationTokenSource()).Forget();
         }
 

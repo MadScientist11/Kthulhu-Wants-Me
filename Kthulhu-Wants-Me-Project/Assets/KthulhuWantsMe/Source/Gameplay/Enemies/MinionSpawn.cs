@@ -38,6 +38,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             {
                 if(_boundPortal != null)
                     _boundPortal.ClosePortal();
+                
+                Destroy(gameObject);
             });
             SpawnVisual().Forget();
         }
