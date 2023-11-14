@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
+using KthulhuWantsMe.Source.UI.PlayerHUD.TooltipSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
@@ -21,6 +22,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         UpgradeWindow CreateUpgradeWindow();
         PauseWindow CreatePauseWindow();
         TryAgainWindow CreateDefeatWindow();
+        Tooltip CreateTooltip();
     }
 
     public class UIFactory : IUIFactory
@@ -30,6 +32,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         public const string UpgradeWindowPath = "UpgradeWindow";
         public const string PauseWindowPath = "PauseWindow";
         public const string TryAgainWindowPath = "TryAgainWindow";
+        public const string TooltipPath = "Tooltip";
         
         public bool IsInitialized { get; set; }
        
@@ -38,6 +41,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private UpgradeWindow _upgradeWindowPrefab;
         private PauseWindow _pauseWindowPrefab;
         private TryAgainWindow _tryAgainWindowPrefab;
+        private Tooltip _tooltipPrefab;
 
         private Scene _uiScene;
 
@@ -63,6 +67,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _upgradeWindowPrefab = await _resourceManager.ProvideAssetAsync<UpgradeWindow>(UpgradeWindowPath);
             _pauseWindowPrefab = await _resourceManager.ProvideAssetAsync<PauseWindow>(PauseWindowPath);
             _tryAgainWindowPrefab = await _resourceManager.ProvideAssetAsync<TryAgainWindow>(TryAgainWindowPath);
+            _tooltipPrefab = await _resourceManager.ProvideAssetAsync<Tooltip>(TooltipPath);
         }
 
         public void EnqueueParent(LifetimeScope parent)
@@ -104,6 +109,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             TryAgainWindow tryAgainWindow = _instantiator.Instantiate(_tryAgainWindowPrefab);
             SceneManager.MoveGameObjectToScene(tryAgainWindow.gameObject, _uiScene);
             return tryAgainWindow;
+        }
+
+        public Tooltip CreateTooltip()
+        {
+            Tooltip tooltip = _instantiator.Instantiate(_tooltipPrefab);
+            SceneManager.MoveGameObjectToScene(tooltip.gameObject, _uiScene);
+            return tooltip;
         }
     }
 }

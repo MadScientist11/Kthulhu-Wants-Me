@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
+using KthulhuWantsMe.Source.UI.PlayerHUD.TooltipSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
@@ -17,6 +18,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         BaseWindow OpenWindow(WindowId windowId);
         MiscUI MiscUI { get; }
         PlayerHUD PlayerHUD { get; }
+        Tooltip Tooltip { get; }
         void HideHUD();
         void ShowHUD();
         void CloseActiveWindow();
@@ -53,10 +55,23 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
                 return _playerHUD;
             }
         }
+        
+        public Tooltip Tooltip
+        {
+            get
+            {
+                if (_tooltip == null)
+                {
+                    _tooltip = _uiFactory.CreateTooltip();
+                }
 
+                return _tooltip;
+            }
+        }
 
         private PlayerHUD _playerHUD;
         private MiscUI _miscUI;
+        private Tooltip _tooltip;
         private BaseWindow _activeWindow;
         private WindowId _activeWindowId;
 

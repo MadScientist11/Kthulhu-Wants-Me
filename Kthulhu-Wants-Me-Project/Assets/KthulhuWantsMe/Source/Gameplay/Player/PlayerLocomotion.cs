@@ -63,7 +63,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 return;
             }
 
-            Debug.Log(_playerAttack.IsAttacking);
             if (CanMove())
             {
                 _playerAnimator.Move();
@@ -169,7 +168,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private bool CanMove()
         {
-            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement && !_playerLungeAbility.IsInLunge;
+            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement;
         }
 
         private bool MovementInputDetected()

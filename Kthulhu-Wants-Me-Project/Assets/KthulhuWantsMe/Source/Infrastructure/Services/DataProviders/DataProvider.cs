@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
@@ -21,6 +20,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         EnemyConfigsProvider EnemyConfigsProvider { get; }
         GameConfiguration GameConfig { get; }
         SkillTreeTemplate SkillTree { get; }
+        AllSkills AllSkills { get; }
     }
 
     public class DataProvider : IDataProvider
@@ -40,6 +40,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
         public GameConfiguration GameConfig { get; private set; }
         public EnemyConfigsProvider EnemyConfigsProvider { get; private set; }
         public SkillTreeTemplate SkillTree { get; private set; }
+        
+        public AllSkills AllSkills { get; private set; }
 
         public async UniTask Initialize()
         {
@@ -51,6 +53,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
             Waves = (WavesConfiguration)await Resources.LoadAsync<WavesConfiguration>(WavesPath);
             GameConfig = (GameConfiguration)await Resources.LoadAsync<GameConfiguration>(GameConfiguration);
             SkillTree = (SkillTreeTemplate)await Resources.LoadAsync<SkillTreeTemplate>(SkillTreePath);
+            AllSkills = new();
         }
         
 

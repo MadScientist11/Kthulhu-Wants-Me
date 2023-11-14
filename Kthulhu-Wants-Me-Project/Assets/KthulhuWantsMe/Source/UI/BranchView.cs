@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using MoreMountains.Feedbacks;
 using TMPro;
@@ -17,25 +18,31 @@ using VContainer;
 
 namespace KthulhuWantsMe.Source.UI
 {
-    public class BranchView : MonoBehaviour, IPointerClickHandler
+    public class BranchView : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private GameObject _availabilityPanel;
         [SerializeField] private TextMeshProUGUI _branchText;
         [SerializeField] private TextMeshProUGUI _stageStats;
+        [SerializeField] private Image _skillImage;
         [SerializeField] private List<Image> _points;
 
         [SerializeField] private MMFeedbacks _buttonFeedback;
         
         private UpgradeData _upgradeData;
         private UpgradeWindow _upgradeWindow;
+        private Branch _branch;
+        
         
         private IUpgradeService _upgradeService;
         private IProgressService _progressService;
-        private Branch _branch;
+        private IUIService _uiService;
+        private IDataProvider _dataProvider;
 
         [Inject]
-        public void Construct(IUpgradeService upgradeService, IProgressService progressService)
+        public void Construct(IUpgradeService upgradeService, IProgressService progressService, IUIService uiService, IDataProvider dataProvider)
         {
+            _dataProvider = dataProvider;
+            _uiService = uiService;
             _progressService = progressService;
             _upgradeService = upgradeService;
         }
@@ -67,6 +74,10 @@ namespace KthulhuWantsMe.Source.UI
                 {
                     stats += $"{upgradeData.StatType.ToString().SplitCamelCase()} [{upgradeData.Value}] \n";
                 }
+                else if (upgradeData.UpgradeType == UpgradeType.SkillAcquirement)
+                {
+                    _skillImage.sprite = _dataProvider.AllSkills[upgradeData.SkillId].Sprite;
+                }
             }
             _stageStats.text = stats;
         }
@@ -88,6 +99,16 @@ namespace KthulhuWantsMe.Source.UI
             
             _upgradeWindow.OnUpgradePicked?.Invoke();
             Destroy(_upgradeWindow.gameObject);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _uiService.Tooltip.Show("");
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            
         }
     }
 }
