@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -17,10 +18,15 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly IUIService _uiService;
         private readonly GameplayStateMachine _gameplayStateMachine;
         private readonly IWaveSystemDirector _waveSystemDirector;
+        private readonly ISceneDataProvider _sceneDataProvider;
+        private readonly IPauseService _pauseService;
 
         public WaveVictoryState(GameplayStateMachine gameplayStateMachine, IProgressService progressService,
-            IInputService inputService, IUIService uiService, IWaveSystemDirector waveSystemDirector)
+            IInputService inputService, IUIService uiService, IWaveSystemDirector waveSystemDirector, ISceneDataProvider sceneDataProvider,
+            IPauseService pauseService)
         {
+            _pauseService = pauseService;
+            _sceneDataProvider = sceneDataProvider;
             _waveSystemDirector = waveSystemDirector;
             _gameplayStateMachine = gameplayStateMachine;
             _uiService = uiService;
@@ -37,12 +43,17 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 
             await UniTask.Delay(1000);
 
+            
             UpgradeWindow window = (UpgradeWindow)_uiService.OpenWindow(WindowId.UpgradeWindow);
             window.Init(OnUpgradePicked);
+            
+            _sceneDataProvider.MapNavMesh.BuildNavMesh();
+            _pauseService.PauseGame();
         }
 
         public void Exit()
         {
+            _pauseService.ResumeGame();
         }
 
         private void OnUpgradePicked()

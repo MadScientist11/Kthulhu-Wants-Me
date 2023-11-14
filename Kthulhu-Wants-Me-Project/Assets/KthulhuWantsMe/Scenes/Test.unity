@@ -1045,6 +1045,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cyaegha
       objectReference: {fileID: 0}
+    - target: {fileID: 3900409656979045455, guid: e9ac9c8f83e7b194a95c06458d2a7fb1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1232,7 +1237,7 @@ PrefabInstance:
     - target: {fileID: 1590797425616401305, guid: 5b14604e5d0c952468ee301feeffa770,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5757831141683792899, guid: 5b14604e5d0c952468ee301feeffa770,
         type: 3}

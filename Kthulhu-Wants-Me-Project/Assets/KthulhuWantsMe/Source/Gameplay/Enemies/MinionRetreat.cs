@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
     public class MinionRetreat : MonoBehaviour, IRetreatBehaviour
     {
         private IPortalFactory _portalFactory;
+        private Portal _portal;
 
         [Inject]
         public void Construct(IPortalFactory portalFactory)
@@ -38,12 +39,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
             enemyLogic.StopEntityLogic();
             enemyCollider.enabled = false;
             
-            Portal portal = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity, EnemyType.Cyeagha);
+            _portal = _portalFactory.GetOrCreatePortal(transform.position, Quaternion.identity, EnemyType.Cyeagha);
             
             await UniTask.Delay(TimeSpan.FromSeconds(2), false, PlayerLoopTiming.Update, destroyCancellationToken);
             
-            portal.ClosePortal();
+            _portal.ClosePortal();
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if(_portal != null)
+                _portal.ClosePortal();
         }
     }
 }

@@ -21,7 +21,7 @@ MonoBehaviour:
         SpawnAt: 12
       - EnemyType: 300
         Quantity: 1
-        SpawnAt: 24
+        SpawnAt: 23
       - EnemyType: 300
         Quantity: 1
         SpawnAt: 8

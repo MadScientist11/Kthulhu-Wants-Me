@@ -16,6 +16,11 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             get
             {
+                if (index > WavesContainer.WavesData.Count - 1)
+                {
+                    Debug.LogError("The wave data index is out of range, returning last wave data in collection.");
+                    return WavesContainer.WavesData[^1].WaveData;
+                }
                 return WavesContainer.WavesData[index].WaveData;
             }
         }

@@ -77,8 +77,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             Vector3 randomPoint = Random.insideUnitCircle.XZtoXYZ() * Radius;
             Vector3 spawnPosition = _spawnPoint.Position.AddY(5) + randomPoint;
 
-            if (enemyType == EnemyType.Tentacle || enemyType == EnemyType.BleedTentacle ||
-                enemyType == EnemyType.TentacleSpecial || enemyType == EnemyType.PoisonousTentacle)
+            if (enemyType.OccupiesSpawner())
                 spawnPosition = Position.AddY(5);
 
             if (Physics.Raycast(spawnPosition, Vector3.down, out RaycastHit hitInfo, 100, LayerMasks.GroundMask))

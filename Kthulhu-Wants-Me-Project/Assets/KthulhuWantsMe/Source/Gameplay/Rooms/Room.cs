@@ -97,10 +97,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
 
                 iterations++;
 
-                Debug.Log(iterations);
                 if (iterations > 1000)
                 {
-                    Debug.LogError("Couldn't find a random point");
+                    Debug.LogError($"Couldn't find a random point in {gameObject.name}");
                     break;
                 }
             }

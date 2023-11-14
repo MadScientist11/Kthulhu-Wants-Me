@@ -1,4 +1,5 @@
 using System;
+using Codice.Client.BaseCommands;
 using Cysharp.Threading.Tasks;
 using Freya;
 using KinematicCharacterController;
@@ -62,6 +63,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 return;
             }
 
+            Debug.Log(_playerAttack.IsAttacking);
             if (CanMove())
             {
                 _playerAnimator.Move();
@@ -76,6 +78,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 _movementController.SetInputs(Vector2.zero, _lastLookDirection);
                 _playerAnimator.StopMoving();
             }
+
         }
 
         public void StopToAttack()
@@ -104,6 +107,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             return desiredDirection;
         }
+        
+        
 
         public void BlockMovement(float timeFor)
         {

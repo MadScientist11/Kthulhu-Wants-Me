@@ -45,10 +45,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
             {
                 _flameSoulLastSpawnTime = Time.time;
 
+                IRoom playerCurrentRoom = _roomOverseer.CurrentRoom;
+
+                if (playerCurrentRoom == null)
+                {
+                    return;
+                }
+                
                 IRoom[] roomsByDistance = _roomOverseer.UnlockedRooms
                     .OrderByDescending(room =>
-                        Vector3.Distance(room.Transform.position, _roomOverseer.CurrentRoom.Transform.position))
-                    .Where(r => r != _roomOverseer.CurrentRoom)
+                        Vector3.Distance(room.Transform.position, playerCurrentRoom.Transform.position))
+                    .Where(r => r != playerCurrentRoom)
                     .ToArray()
                     .MMShuffle();
 
