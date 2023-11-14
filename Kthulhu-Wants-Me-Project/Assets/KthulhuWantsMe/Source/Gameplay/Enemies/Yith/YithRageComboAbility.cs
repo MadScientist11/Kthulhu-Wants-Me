@@ -89,7 +89,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _movementMotor.Agent.angularSpeed = 60;
 
             _yithAnimator.PlayStance(0);
+            _navigationElement.SwitchOn();
             yield return new WaitForSeconds(_yithConfiguration.ComboAttackDelay);
+            _navigationElement.SwitchOff();
 
             if (IsPlayerReachable())
             {

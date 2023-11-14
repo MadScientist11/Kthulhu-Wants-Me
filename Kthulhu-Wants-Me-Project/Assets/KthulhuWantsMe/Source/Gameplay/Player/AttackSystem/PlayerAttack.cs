@@ -7,6 +7,7 @@ using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Effects;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
+using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.Weapons;
@@ -30,6 +31,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
         [SerializeField] private MMFeedbacks _hitFeedback;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerHealth _playerHealth;
+        [SerializeField] private PlayerDashAbility _playerDashAbility;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private TentacleGrabAbilityResponse tentacleGrabAbilityResponse;
         [SerializeField] private DamageModifier _playerDamageModifier;
@@ -150,6 +152,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             ResetAttackState(false);
             _playerLocomotion.StopToAttack();
             _playerAnimator.PlayAttack(_comboAttackIndex);
+            _playerDashAbility.ResetEvade();
             _isAttacking = true;
         }
 
@@ -180,9 +183,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
 
         private bool CantAttack() =>
             (_isAttacking && !_inRecoveryPhase)
-            || _playerAnimator.CurrentState == AnimatorState.Impact
+            || _playerAnimator.CurrentState == AnimatorState.Impact || _playerAnimator.CurrentState == AnimatorState.SpecialAttack
             || tentacleGrabAbilityResponse.Grabbed
             || _activeWeapon == null
-            || _playerLocomotion.MovementController.InternalVelocityAdd.sqrMagnitude > 0;
+            || _playerLocomotion.MovementController.InternalVelocityAdd.sqrMagnitude > 0
+            || _playerDashAbility.Dashing;
     }
 }

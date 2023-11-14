@@ -25,10 +25,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private static readonly int Die = Animator.StringToHash("Die");
         private static readonly int LungeCharge = Animator.StringToHash("LungeCharge");
         private static readonly int Lunge = Animator.StringToHash("Lunge");
+        public static readonly int Evade = Animator.StringToHash("Evade");
 
         
         private static readonly int _impactStateHash = Animator.StringToHash("Impact");
-        public static readonly int Evade = Animator.StringToHash("Evade");
+        private static readonly int _specialAttackStateHash = Animator.StringToHash("SpecialAttack");
 
         private RuntimeAnimatorController _defaultAnimatorController;
 
@@ -120,6 +121,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
             if (stateHash == _impactStateHash)
                 state = AnimatorState.Impact;
+            else if (stateHash == _specialAttackStateHash)
+                state = AnimatorState.SpecialAttack;
             else
                 state = AnimatorState.Unknown;
 
@@ -134,6 +137,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         Attack = 2,
         Impact = 3,
         Die = 4,
+        SpecialAttack = 5,
         Unknown = 100,
     }
 }

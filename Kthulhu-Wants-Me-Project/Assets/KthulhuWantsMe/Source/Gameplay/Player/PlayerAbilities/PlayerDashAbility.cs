@@ -16,6 +16,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 {
     public class PlayerDashAbility : MonoBehaviour, IAbility
     {
+        public bool Dashing => !_stopDashMovement;
+        
         [SerializeField] private PlayerFacade _player;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerAttack _playerAttack;
@@ -24,7 +26,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
 
         private float _nextDashTime;
-        private bool _stopDashMovement;
+        private bool _stopDashMovement = true;
 
         private IInputService _inputService;
         private PlayerStats _playerStats;
@@ -79,6 +81,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void OnDashEnd()
         {
+            ResetEvade();
         }
 
         public void ResetEvade()

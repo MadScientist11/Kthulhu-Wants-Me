@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
@@ -99,13 +100,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
             _inputService.GameplayScenario.Disable();
+            StartCoroutine(DoImpactEnd());
         }
 
         private void OnImpactEnd()
         {
-            _coroutineRunner.ExecuteAfter(1f,() =>
-                _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player)));
+          
+        }
+
+        private IEnumerator DoImpactEnd()
+        {
+            yield return Utilities.WaitForSeconds.Wait(.25f);
             _inputService.GameplayScenario.Enable();
+            yield return Utilities.WaitForSeconds.Wait(1.5f);
+            _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
         }
         
         private void OnTookDamage(IDamageProvider damageProvider)

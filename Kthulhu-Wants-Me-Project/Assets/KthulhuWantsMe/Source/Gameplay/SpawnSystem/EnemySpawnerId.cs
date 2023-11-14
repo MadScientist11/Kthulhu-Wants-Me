@@ -26,8 +26,5 @@
         EnemySpawner21 = 21,
         EnemySpawner22 = 22,
         EnemySpawner23 = 23,
-        EnemySpawner24 = 24,
-        EnemySpawner25 = 25,
-
     }
 }
