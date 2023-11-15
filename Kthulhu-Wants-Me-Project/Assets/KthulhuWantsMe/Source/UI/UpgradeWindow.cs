@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,6 +15,8 @@ namespace KthulhuWantsMe.Source.UI
 {
     public class UpgradeWindow : BaseWindow
     {
+        public override WindowId Id => WindowId.UpgradeWindow;
+        
         [FormerlySerializedAs("_upgradeUIPrefab")] [SerializeField] private BranchView branchViewPrefab;
         [SerializeField] private Transform _upgradesParent;
 
@@ -45,5 +48,6 @@ namespace KthulhuWantsMe.Source.UI
                 branchView.Init(branchTemplate.Branch, this);
             }
         }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace KthulhuWantsMe.Source.UI
 {
     public class TryAgainWindow : BaseWindow
     {
+        public override WindowId Id => WindowId.DefeatWindow;
+        
         [SerializeField] private Button _yesButton;
         [SerializeField] private Button _noButton;
 
@@ -46,5 +49,6 @@ namespace KthulhuWantsMe.Source.UI
             Application.Quit();
 #endif
         }
+
     }
 }

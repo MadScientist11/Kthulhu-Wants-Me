@@ -1,5 +1,6 @@
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
+using KthulhuWantsMe.Source.Gameplay.Game;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
@@ -55,9 +56,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<RoomOverseer>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
-            builder
-                .Register<PauseService>(Lifetime.Scoped)
-                .AsImplementedInterfaces();
+
             
             builder
                 .Register<UpgradeService>(Lifetime.Scoped)
@@ -84,7 +83,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<EnemyStatsScalingService>(Lifetime.Scoped)
                 .AsSelf();
             
-           
+            builder
+                .Register<GameApp>(Lifetime.Scoped)
+                .AsSelf()
+                .AsImplementedInterfaces();
             
             builder
                 .Register<EnemyStatsProvider>(Lifetime.Scoped)

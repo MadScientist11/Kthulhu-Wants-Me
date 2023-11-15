@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KthulhuWantsMe.Source.Gameplay;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
@@ -31,6 +32,7 @@ namespace KthulhuWantsMe.Source.UI
         private UpgradeData _upgradeData;
         private UpgradeWindow _upgradeWindow;
         private Branch _branch;
+        private UpgradeData _skillUpgradeData;
         
         
         private IUpgradeService _upgradeService;
@@ -62,6 +64,8 @@ namespace KthulhuWantsMe.Source.UI
             completedStage = Mathf.Clamp(completedStage, 0, branch.BranchStages.Count - 1);
             
             BranchStage branchBranchStage = branch.BranchStages[completedStage].BranchStage;
+            _skillUpgradeData = branch.BranchStages[4].BranchStage.Upgrades.First(upgradeData => upgradeData.UpgradeType == UpgradeType.SkillAcquirement);
+            _skillImage.sprite = _dataProvider.AllSkills[_skillUpgradeData.SkillId].Sprite;
             
             for (int i = 0; i < completedStage; i++)
             {
@@ -74,12 +78,13 @@ namespace KthulhuWantsMe.Source.UI
                 {
                     stats += $"{upgradeData.StatType.ToString().SplitCamelCase()} [{upgradeData.Value}] \n";
                 }
-                else if (upgradeData.UpgradeType == UpgradeType.SkillAcquirement)
-                {
-                    _skillImage.sprite = _dataProvider.AllSkills[upgradeData.SkillId].Sprite;
-                }
             }
             _stageStats.text = stats;
+        }
+        
+        private void OnDestroy()
+        {
+            _uiService.Tooltip.Hide();
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -98,17 +103,20 @@ namespace KthulhuWantsMe.Source.UI
             _progressService.ProgressData.CompletedSkillBranchStages[_branch.InstanceId]++;
             
             _upgradeWindow.OnUpgradePicked?.Invoke();
-            Destroy(_upgradeWindow.gameObject);
+            _uiService.CloseWindow(_upgradeWindow.Id);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _uiService.Tooltip.Show("");
+            Skill skill = _dataProvider.AllSkills[_skillUpgradeData.SkillId];
+            _uiService.Tooltip.Show(skill.Description);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            
+            _uiService.Tooltip.Hide();
         }
+
+       
     }
 }

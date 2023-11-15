@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1393208116125715140}
   - component: {fileID: 5060972205194029314}
   m_Layer: 0
-  m_Name: TooltipSystem
+  m_Name: Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 6572227202736183065}
   - component: {fileID: 7508687025430454111}
   - component: {fileID: 5941573030312884088}
-  - component: {fileID: 4580752413890944390}
   m_Layer: 5
   m_Name: TooltipCanvas
   m_TagString: Untagged
@@ -131,23 +130,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &4580752413890944390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8928713973256529036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 2567735
 --- !u!1001 &2505659223604251344
 PrefabInstance:
   m_ObjectHideFlags: 0

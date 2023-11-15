@@ -1,8 +1,5 @@
-﻿using System;
-using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
-using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+﻿using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using UnityEngine;
-using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
 {
@@ -12,28 +9,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         void PauseGame();
     }
 
-    public class PauseService : IPauseService, IInitializable, IDisposable
+    public class PauseService : IPauseService
     {
         private bool _gamePaused;
-        private readonly IInputService _inputService;
-        private IUIService _uiService;
-
-        public PauseService(IInputService inputService, IUIService uiService)
-        {
-            _uiService = uiService;
-            _inputService = inputService;
-        }
+        private BaseWindow _settingsWindow;
         
-        public void Initialize()
-        {
-            _inputService.GameScenario.PauseGame += OnPauseGame;
-        }
-
-        public void Dispose()
-        {
-            _inputService.GameScenario.PauseGame -= OnPauseGame;
-        }
-
+        
         public void PauseGame()
         {
             Time.timeScale = 0;
@@ -44,20 +25,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         {
             Time.timeScale = 1;
             _gamePaused = false;
-        }
-
-        private void OnPauseGame()
-        {
-            if (_gamePaused)
-            {
-                ResumeGame();
-                _uiService.CloseActiveWindow();
-            }
-            else
-            {
-                PauseGame();
-                _uiService.OpenWindow(WindowId.PauseWindow);
-            }
         }
     }
 }

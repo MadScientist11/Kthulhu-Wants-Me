@@ -48,12 +48,10 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             window.Init(OnUpgradePicked);
             
             _sceneDataProvider.MapNavMesh.BuildNavMesh();
-            _pauseService.PauseGame();
         }
 
         public void Exit()
         {
-            _pauseService.ResumeGame();
         }
 
         private void OnUpgradePicked()

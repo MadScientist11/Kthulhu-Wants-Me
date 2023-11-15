@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -24,6 +25,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
             builder
                 .Register<DataProvider>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
+            builder
+                .Register<PauseService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
             builder

@@ -11,18 +11,18 @@ namespace KthulhuWantsMe.Source.UI
 {
     public class PauseWindow : BaseWindow
     {
+        public override WindowId Id => WindowId.PauseWindow;
+        
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _howToPlayButton;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _quitButton;
         
         private IPauseService _pauseService;
-        private IUIService _uiService;
 
         [Inject]
-        public void Construct(IPauseService pauseService, IUIService uiService)
+        public void Construct(IPauseService pauseService)
         {
-            _uiService = uiService;
             _pauseService = pauseService;
         }
         
@@ -40,8 +40,7 @@ namespace KthulhuWantsMe.Source.UI
 
         private void ContinueGame()
         {
-            _pauseService.ResumeGame();
-            _uiService.CloseActiveWindow();
+            Hide();
         }
 
         private void QuitGame()
@@ -52,5 +51,6 @@ namespace KthulhuWantsMe.Source.UI
             Application.Quit();
 #endif
         }
+
     }
 }

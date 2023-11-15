@@ -372,6 +372,7 @@ MonoBehaviour:
   _availabilityPanel: {fileID: 5601215826710308070}
   _branchText: {fileID: 5921884168616881207}
   _stageStats: {fileID: 6136998921206753302}
+  _skillImage: {fileID: 5238630282587319155}
   _points:
   - {fileID: 3054585711188172687}
   - {fileID: 8892990359990152337}

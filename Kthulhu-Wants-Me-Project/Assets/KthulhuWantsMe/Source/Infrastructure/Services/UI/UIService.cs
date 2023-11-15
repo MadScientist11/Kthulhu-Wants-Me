@@ -1,6 +1,9 @@
 ﻿using System;
-using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
+using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
@@ -15,18 +18,19 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
     public interface IUIService
     {
-        BaseWindow OpenWindow(WindowId windowId);
         MiscUI MiscUI { get; }
         PlayerHUD PlayerHUD { get; }
         Tooltip Tooltip { get; }
+        BaseWindow OpenWindow(WindowId windowId);
+        void CloseWindow(WindowId windowId);
+
+        bool IsOpen(WindowId windowId);
         void HideHUD();
         void ShowHUD();
-        void CloseActiveWindow();
         void ClearUI();
     }
 
     public class UIService : IUIService
-
     {
         public bool IsInitialized { get; set; }
 
@@ -72,40 +76,73 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private PlayerHUD _playerHUD;
         private MiscUI _miscUI;
         private Tooltip _tooltip;
-        private BaseWindow _activeWindow;
+        private readonly List<BaseWindow> _activeWindows = new();
         private WindowId _activeWindowId;
 
         private ISceneLoader _sceneLoader;
         private IUIFactory _uiFactory;
+        private IPauseService _pauseService;
+        private IInputService _inputService;
+
 
         [Inject]
-        public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory)
+        public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory, IPauseService pauseService, IInputService inputService)
         {
+            _pauseService = pauseService;
             _uiFactory = uiFactory;
             _sceneLoader = sceneLoader;
+            _inputService = inputService;
         }
 
         public BaseWindow OpenWindow(WindowId windowId)
         {
-            _activeWindow = null;
-            switch (windowId)
+            BaseWindow window = windowId switch
             {
-                case WindowId.UpgradeWindow:
-                    _activeWindow = _uiFactory.CreateUpgradeWindow();
-                    _activeWindowId = WindowId.UpgradeWindow;
-                    return _activeWindow;
-                case WindowId.PauseWindow:
-                    _activeWindow = _uiFactory.CreatePauseWindow();
-                    _activeWindowId = WindowId.PauseWindow;
-                    return _activeWindow;
-                case WindowId.DefeatWindow:
-                    _activeWindow = _uiFactory.CreateDefeatWindow();
-                    _activeWindowId = WindowId.DefeatWindow;
-                    return _activeWindow;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(windowId), windowId, null);
+                WindowId.UpgradeWindow => _uiFactory.CreateUpgradeWindow(),
+                WindowId.PauseWindow => _uiFactory.CreatePauseWindow(),
+                WindowId.DefeatWindow => _uiFactory.CreateDefeatWindow(),
+                _ => throw new ArgumentOutOfRangeException(nameof(windowId), windowId, null)
+            };
+            RenderOnTop(window);
+            _activeWindows.Add(window);
+            
+            if (_activeWindows.Count > 0)
+            {
+                _pauseService.PauseGame();
+            }
+            else
+            {
+                _pauseService.ResumeGame();
+            }
+            
+            return window;
+        }
+
+        public void CloseWindow(WindowId windowId)
+        {
+            BaseWindow windowToClose = _activeWindows.FirstOrDefault(window => window.Id == windowId);
+
+            if (windowToClose == null)
+            {
+                Debug.LogWarning("Window you're trying to clo9se, doesn't exist.");
+                return;
+            }
+            _activeWindows.Remove(windowToClose);
+            Object.Destroy(windowToClose.gameObject);
+
+            if (_activeWindows.Count > 0)
+            {
+                _pauseService.PauseGame();
+            }
+            else
+            {
+                _pauseService.ResumeGame();
             }
         }
+        
+
+        public bool IsOpen(WindowId windowId) => 
+            _activeWindows.FirstOrDefault(window => window.Id == windowId) != null;
 
         public void ClearUI()
         {
@@ -117,11 +154,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
                     Object.Destroy(go);
                 }
             }
-        }
-
-        public void CloseActiveWindow()
-        {
-            Object.Destroy(_activeWindow.gameObject);
         }
 
         public void ShowHUD()
@@ -137,6 +169,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         public void HideHUD()
         {
             _playerHUD?.Hide();
+        }
+        
+        private void RenderOnTop(BaseWindow window)
+        {
+            if(_activeWindows.Count == 0)
+                return;
+            
+            int renderOrder = _activeWindows[^1].GetComponent<Canvas>().sortingOrder;
+            window.GetComponent<Canvas>().sortingOrder = renderOrder + 1;
         }
     }
 }

@@ -107,8 +107,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             return desiredDirection;
         }
         
-        
-
         public void BlockMovement(float timeFor)
         {
             _blockMovement = true;
@@ -116,29 +114,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _coroutineRunner.ExecuteAfter(timeFor, () => _blockMovement = false);
         }
 
-        private void ProcessInput()
-        {
-            //Vector2 movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ()).XZ();
-            //movementInput = transform.TransformDirection(_inputService.GameplayScenario.MovementInput.XZtoXYZ())
-
-            Vector2 movementInput = -_inputService.GameplayScenario.MovementInput;
-            movementInput = GetMovementDirection(movementInput);
-
-            if (movementInput.sqrMagnitude > 0)
-            {
-                _lastLookDirection = movementInput.XZtoXYZ();
-            }
-
-            _movementController.SetInputs(movementInput, _lastLookDirection);
-        }
-
         private Vector2 GetMoveDirection()
         {
+            //return GetMoveDirectionMouseBased().normalized;
             return GetMovementDirection(-_inputService.GameplayScenario.MovementInput);
         }
-        
+
         private Vector3 GetLookDirection()
         {
+            //return GetLookDirectionFromMouse();
             Vector2 moveDirection = GetMoveDirection();
             
             if (moveDirection.sqrMagnitude > Mathfs.Epsilon)
@@ -148,8 +132,32 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             return _lastLookDirection;
         }
 
+        private Vector2 GetMoveDirectionMouseBased()
+        {
+            Vector3 lookDirection = GetLookDirectionFromMouse();
+            Vector3 right = Vector3.Cross(transform.up, lookDirection);
+            Vector2 movementInput = _inputService.GameplayScenario.MovementInput;
+            return right.XZ() * movementInput.x + lookDirection.XZ() * movementInput.y;
+        }
 
+        private Vector3 GetLookDirectionFromMouse()
+        {
+            Ray ray = MousePointer.GetWorldRay(UnityEngine.Camera.main);
 
+            Vector3 lookDirection = Vector3.zero;
+            Plane plane = new Plane(Vector3.up, Vector3.zero);
+            if (plane.Raycast(ray, out float enter))
+            {
+                Vector3 hitPoint = ray.GetPoint(enter);
+
+                Vector3 hitPointXZ = new Vector3(hitPoint.x, transform.position.y, hitPoint.z);
+                lookDirection = (hitPointXZ - transform.position).normalized;
+            }
+
+            return lookDirection;
+
+        }
+        
         public Vector2 GetMovementDirection(Vector2 movementInput)
         {
             return (movementInput.x, movementInput.y) switch
