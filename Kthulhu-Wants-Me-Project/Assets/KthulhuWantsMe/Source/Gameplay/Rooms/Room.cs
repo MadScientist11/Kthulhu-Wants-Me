@@ -80,17 +80,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
 
             int iterations = 0;
 
-            while (!ValidRandomPosition(ref randomPositionInside, roomPartCollider))
+            while (!ValidRandomPosition(in randomPositionInside, roomPartCollider))
             {
                 Vector3 inUnitSphere = Random.InUnitSphere;
                 Vector3 hemiSphereDirections = new Vector3(inUnitSphere.x, -Mathfs.Abs(inUnitSphere.y), inUnitSphere.z);
-                Ray ray = new(roomPartCollider.bounds.center.AddY(roomPartCollider.bounds.extents.y), hemiSphereDirections);
+                float raycastOriginElevation = 5f;
+                Ray ray = new(roomPartCollider.bounds.center.AddY(raycastOriginElevation), hemiSphereDirections);
 
                 RaycastHit[] results = DrawPhysics.SphereCastAll(ray, 1, 100, LayerMasks.All, QueryTriggerInteraction.Ignore);
 
                 if (results.Length == 1 && results[0].transform.gameObject.layer == LayerMasks.GroundLayer)
                 {
                     randomPositionInside = results[0].point;
+                    break;
                 }
 
                 iterations++;
@@ -105,7 +107,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
             return randomPositionInside;
         }
 
-        private bool ValidRandomPosition(ref Vector3 position, Collider colliderFrom)
+        private bool ValidRandomPosition(in Vector3 position, Collider colliderFrom)
         {
             Bounds fromBounds = colliderFrom.bounds;
             Bounds adjustedBounds = new Bounds(fromBounds.center, fromBounds.extents - new Vector3(1, 0, 1) * 5f);
