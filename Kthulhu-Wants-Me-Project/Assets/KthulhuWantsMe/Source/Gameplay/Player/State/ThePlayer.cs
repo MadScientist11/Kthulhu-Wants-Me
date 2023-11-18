@@ -149,17 +149,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
             _playerStats.CurrentStamina = MaxStamina;
         }
 
-        private void Kill()
-        {
-            IsDead = true;
-            Died?.Invoke();
-        }
-
-        private async UniTaskVoid SetPlayerInvincibleAfterDamageFor(float seconds)
+        public async UniTaskVoid SetPlayerInvincibleAfterDamageFor(float seconds)
         {
             _playerStats.Immortal = true;
             await UniTask.Delay((int)(seconds * 1000));
             _playerStats.Immortal = false;
+        }
+
+        private void Kill()
+        {
+            IsDead = true;
+            Died?.Invoke();
         }
     }
 }

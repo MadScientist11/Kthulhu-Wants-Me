@@ -113,6 +113,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
             _playerAnimator.PlayEvade();
             _thePlayer.ModifyCurrentStamina(-1000);
+            _thePlayer.SetPlayerInvincibleAfterDamageFor(.8f).Forget();
             //PlayerLocomotion.MovementController.AddVelocity(transform.forward * 10);
         }
 
