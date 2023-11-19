@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786bc9f8c1de44f087a28889423b2851, type: 3}
+  m_Name: MainWaves
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  WavesData:
+  - {fileID: 11400000, guid: 321d4830dcebdfc4f835ec9de836e225, type: 2}
+  - {fileID: 11400000, guid: 4441b904e390aca448ba7e11eb57492c, type: 2}
+  - {fileID: 11400000, guid: 58ba7aa71b98a2846a8b33a7fb5db7c9, type: 2}
+  - {fileID: 11400000, guid: c4c6c86bf083dfe489c9c9fb1dbe1a99, type: 2}
+  - {fileID: 11400000, guid: 7afb6026f4ad26e49833f7aea1fabf88, type: 2}
+  - {fileID: 11400000, guid: 2c350a809239b4e41be3fd30d996e001, type: 2}
+  - {fileID: 11400000, guid: 6654f431da01cda4b96c732156f82db6, type: 2}
+  - {fileID: 11400000, guid: 744109e59f8ef234c85147490a8f7859, type: 2}
+  - {fileID: 11400000, guid: 6688220b08e70ce429d0ee30ab21f2c1, type: 2}
+  - {fileID: 11400000, guid: 08e73eee24f9607408bb2d17974d03a0, type: 2}
+  - {fileID: 11400000, guid: 2816915cf7406e2408cde6da4bcf5ee5, type: 2}

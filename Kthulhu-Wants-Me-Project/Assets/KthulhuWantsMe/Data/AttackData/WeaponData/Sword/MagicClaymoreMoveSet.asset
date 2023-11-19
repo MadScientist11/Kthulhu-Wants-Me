@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29683cb4bd2d4c66bf5c21f53611c315, type: 3}
+  m_Name: MagicClaymoreMoveSet
+  m_EditorClassIdentifier: 
+  MoveSetAttackCount: 3
+  MoveSetAnimations: {fileID: 22100000, guid: 749742a7b0c20fa4ab311babb7b1c428, type: 2}
+  AttackMoveDamage:
+  - 3
+  - 5
+  - 10
+  HasSpecialAttack: 1
+  SpecialAttackDamage: 40

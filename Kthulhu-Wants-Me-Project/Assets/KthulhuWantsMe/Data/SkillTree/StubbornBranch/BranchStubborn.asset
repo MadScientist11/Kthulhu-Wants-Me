@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b936993a57b4324bfa5193f0a3e3fd9, type: 3}
+  m_Name: BranchStubborn
+  m_EditorClassIdentifier: 
+  Branch:
+    BranchName: Stubborn
+    BranchStages:
+    - {fileID: 11400000, guid: fdcd1086b4bbc8041a6fdfa19f6814fb, type: 2}
+    - {fileID: 11400000, guid: 64fb42367147b93489e20fd1ddd368b2, type: 2}
+    - {fileID: 11400000, guid: 329be5766d6713f438083ebf9d4db61e, type: 2}
+    - {fileID: 11400000, guid: e379d0381eee25d46abbbe7f3f5d513e, type: 2}
+    - {fileID: 11400000, guid: a4aa29258e20a8d45915b5364280ec8b, type: 2}

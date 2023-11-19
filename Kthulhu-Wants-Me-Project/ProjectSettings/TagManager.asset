@@ -14,19 +14,19 @@ TagManager:
   - 
   - 
   - 
+  - Player
+  - Enemy
+  - PlayerRoll
+  - 
+  - Ground
   - 
   - 
+  - Item
+  - Interactable
+  - PlayerInteractionZone
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - FadeableObject
   - 
   - 
   - 

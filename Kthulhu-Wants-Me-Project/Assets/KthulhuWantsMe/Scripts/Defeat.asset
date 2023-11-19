@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1727db5f4f489848a541c9857af5ff1, type: 3}
+  m_Name: Defeat
+  m_EditorClassIdentifier: 
+  reverbTail: 6
+  intensityClips:
+  - {fileID: 8300000, guid: 529d9b11a714d6c4da9286d61cf45207, type: 3}
+  - {fileID: 8300000, guid: 658324804f9b6dd4dbf60552b6491d35, type: 3}
+  - {fileID: 8300000, guid: 8752a32d9d1166c46b373b33da630208, type: 3}

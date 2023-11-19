@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MagicClaymoreAnimations
+  m_Controller: {fileID: 9100000, guid: d4ce36211d4453d4f82c26ed92fb4a45, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: a48681af679ca35498aa3da40483be0a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bf0dd31e7aa4d194fa74cff9acdf4e92, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 98a2f4ffa5d6e2c4d9b45cec35ff7079, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a63ff18d278ffed4a981002a8902b227, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ba4937b17ef0ac44484cd2c3392c2eb6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 25ceeb7b144ca72418fde7084b434bc3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 258782e63f6a748448d395c8775b574c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: cada3a917be355d498ea34c1dea5127d, type: 2}
