@@ -89,17 +89,17 @@ MonoBehaviour:
     type: 3}
   MoveSpeed: 4.7
   Gravity: {x: 0, y: -1000, z: 0}
-  DashSpeed: 7
+  DashSpeed: 7.75
   AttackRadius: 1.5
   AttackEffectiveDistance: 1
   AttackStep: 18
   LungeBaseDamage: 100
   LungeRadius: 2
-  HealthRegenRate: 0.15
+  HealthRegenRate: 0.175
   StableMovementSharpness: 17
   OrientationSharpness: 35
   MaxAirMoveSpeed: 10
   AirAccelerationSpeed: 5
   Drag: 0.1
   InvinciblityAfterAttackTime: 1.5
-  UnlockAllSkills: 1
+  UnlockAllSkills: 0
