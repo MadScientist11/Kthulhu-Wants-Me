@@ -3,6 +3,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Game;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+using KthulhuWantsMe.Source.Gameplay.InGameConsole;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore;
 using KthulhuWantsMe.Source.Gameplay.Locations;
@@ -37,16 +38,21 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<EnemiesAIBrainService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
-            
-   
-            
+
+
+            builder
+                .RegisterComponentOnNewGameObject<InGameConsoleService>(Lifetime.Singleton, "InGameConsoleService")
+                .AsSelf();
 
             builder
                 .RegisterComponent(_sceneDataProvider)
                 .AsImplementedInterfaces();
 
 
-            builder.Register<ThePlayer>(Lifetime.Singleton).As<IInitializable>().As<ITickable>().AsSelf();
+            builder.Register<ThePlayer>(Lifetime.Singleton)
+                .As<IInitializable>()
+                .As<ITickable>()
+                .AsSelf();
             
             builder
                 .Register<LootService>(Lifetime.Scoped)

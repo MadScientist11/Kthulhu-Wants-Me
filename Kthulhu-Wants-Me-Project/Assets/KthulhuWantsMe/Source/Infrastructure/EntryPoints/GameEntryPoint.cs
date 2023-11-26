@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
 using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+using KthulhuWantsMe.Source.Gameplay.InGameConsole;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
@@ -23,7 +24,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
 
 
         public GameEntryPoint(IReadOnlyList<IInitializableService> services, GameplayStateMachine gameplayStateMachine, 
-            IUIFactory uiFactory, IInputService inputService, GameLifetimeScope gameLifetimeScope
+            IUIFactory uiFactory, IInputService inputService, GameLifetimeScope gameLifetimeScope,
+            InGameConsoleService gameConsoleService
         )
         {
             _inputService = inputService;

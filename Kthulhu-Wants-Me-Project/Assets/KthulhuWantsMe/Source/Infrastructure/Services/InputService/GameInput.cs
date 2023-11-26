@@ -319,6 +319,15 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleConsole"",
+                    ""type"": ""Button"",
+                    ""id"": ""e18d1a82-73e8-41c5-ab45-b73cae0c3fcc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -330,6 +339,17 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0aa302eb-4c5d-4a33-96f3-2d5dbe2eb65a"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleConsole"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -354,6 +374,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
             m_Game_Pause = m_Game.FindAction("Pause", throwIfNotFound: true);
+            m_Game_ToggleConsole = m_Game.FindAction("ToggleConsole", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -564,11 +585,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         private readonly InputActionMap m_Game;
         private List<IGameActions> m_GameActionsCallbackInterfaces = new List<IGameActions>();
         private readonly InputAction m_Game_Pause;
+        private readonly InputAction m_Game_ToggleConsole;
         public struct GameActions
         {
             private @GameInput m_Wrapper;
             public GameActions(@GameInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @Pause => m_Wrapper.m_Game_Pause;
+            public InputAction @ToggleConsole => m_Wrapper.m_Game_ToggleConsole;
             public InputActionMap Get() { return m_Wrapper.m_Game; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -581,6 +604,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @ToggleConsole.started += instance.OnToggleConsole;
+                @ToggleConsole.performed += instance.OnToggleConsole;
+                @ToggleConsole.canceled += instance.OnToggleConsole;
             }
 
             private void UnregisterCallbacks(IGameActions instance)
@@ -588,6 +614,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
                 @Pause.started -= instance.OnPause;
                 @Pause.performed -= instance.OnPause;
                 @Pause.canceled -= instance.OnPause;
+                @ToggleConsole.started -= instance.OnToggleConsole;
+                @ToggleConsole.performed -= instance.OnToggleConsole;
+                @ToggleConsole.canceled -= instance.OnToggleConsole;
             }
 
             public void RemoveCallbacks(IGameActions instance)
@@ -623,6 +652,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         public interface IGameActions
         {
             void OnPause(InputAction.CallbackContext context);
+            void OnToggleConsole(InputAction.CallbackContext context);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
         private GameInput.GameActions _gameActions;
         
         public event Action PauseGame;
+        public event Action ToggleConsole;
 
         public GameScenario(GameInput.GameActions gameActions)
         {
@@ -20,6 +21,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
             if (context.performed)
             {
                 PauseGame?.Invoke();
+            }
+        }
+
+        public void OnToggleConsole(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                ToggleConsole?.Invoke();
             }
         }
 

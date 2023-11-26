@@ -7,6 +7,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
 using KthulhuWantsMe.Source.UI.PlayerHUD.TooltipSystem;
+using QFSW.QC;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
@@ -16,6 +17,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
     public interface IUIFactory : IInitializableService
     {
+        Scene UIScene { get; }
         void EnqueueParent(LifetimeScope parent);
         PlayerHUD CreatePlayerHUD();
         MiscUI CreateMiscUI();
@@ -23,6 +25,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         PauseWindow CreatePauseWindow();
         TryAgainWindow CreateDefeatWindow();
         Tooltip CreateTooltip();
+        QuantumConsole CreateConsoleUI();
     }
 
     public class UIFactory : IUIFactory
@@ -33,20 +36,23 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         public const string PauseWindowPath = "PauseWindow";
         public const string TryAgainWindowPath = "TryAgainWindow";
         public const string TooltipPath = "Tooltip";
-        
+        public const string ConsolePath = "InGameConsole";
+
         public bool IsInitialized { get; set; }
-       
+        public Scene UIScene => _uiScene;
+
         private PlayerHUD _playerHUDPrefab;
         private MiscUI _miscUIPrefab;
         private UpgradeWindow _upgradeWindowPrefab;
         private PauseWindow _pauseWindowPrefab;
         private TryAgainWindow _tryAgainWindowPrefab;
         private Tooltip _tooltipPrefab;
+        private QuantumConsole _consolePrefab;
 
         private Scene _uiScene;
 
         private IObjectResolver _instantiator;
-        
+
         private readonly IResourceManager _resourceManager;
         private readonly ISceneLoader _sceneLoader;
 
@@ -56,18 +62,19 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _sceneLoader = sceneLoader;
             _resourceManager = resourceManager;
         }
-        
+
         public async UniTask Initialize()
         {
             await _sceneLoader.LoadScene("GameUI", LoadSceneMode.Additive);
             _uiScene = SceneManager.GetSceneByName("GameUI");
-            
+
             _playerHUDPrefab = await _resourceManager.ProvideAssetAsync<PlayerHUD>(PlayerHUDPath);
             _miscUIPrefab = await _resourceManager.ProvideAssetAsync<MiscUI>(MiscUIPath);
             _upgradeWindowPrefab = await _resourceManager.ProvideAssetAsync<UpgradeWindow>(UpgradeWindowPath);
             _pauseWindowPrefab = await _resourceManager.ProvideAssetAsync<PauseWindow>(PauseWindowPath);
             _tryAgainWindowPrefab = await _resourceManager.ProvideAssetAsync<TryAgainWindow>(TryAgainWindowPath);
             _tooltipPrefab = await _resourceManager.ProvideAssetAsync<Tooltip>(TooltipPath);
+            _consolePrefab = await _resourceManager.ProvideAssetAsync<QuantumConsole>(ConsolePath);
         }
 
         public void EnqueueParent(LifetimeScope parent)
@@ -82,7 +89,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             playerHUD.Initialize();
             return playerHUD;
         }
-        
+
         public MiscUI CreateMiscUI()
         {
             MiscUI miscUI = _instantiator.Instantiate(_miscUIPrefab);
@@ -96,7 +103,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             SceneManager.MoveGameObjectToScene(upgradeWindow.gameObject, _uiScene);
             return upgradeWindow;
         }
-        
+
         public PauseWindow CreatePauseWindow()
         {
             PauseWindow pauseWindow = _instantiator.Instantiate(_pauseWindowPrefab);
@@ -116,6 +123,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             Tooltip tooltip = _instantiator.Instantiate(_tooltipPrefab);
             SceneManager.MoveGameObjectToScene(tooltip.gameObject, _uiScene);
             return tooltip;
+        }
+
+        public QuantumConsole CreateConsoleUI()
+        {
+            QuantumConsole console = _instantiator.Instantiate(_consolePrefab);
+            SceneManager.MoveGameObjectToScene(console.gameObject, _uiScene);
+            return console;
         }
     }
 }
