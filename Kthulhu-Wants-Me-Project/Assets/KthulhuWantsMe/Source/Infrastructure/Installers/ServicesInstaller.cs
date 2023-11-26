@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.UI.MainMenu.Settings;
 using VContainer;
 using VContainer.Unity;
 
@@ -31,6 +32,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<PauseService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
+
+            builder
+                .Register<SettingsService>(Lifetime.Scoped);
             
             
             builder

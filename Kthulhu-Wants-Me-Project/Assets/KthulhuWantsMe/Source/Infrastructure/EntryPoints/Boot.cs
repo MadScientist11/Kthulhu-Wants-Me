@@ -42,7 +42,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             await UniTask.WhenAll(initializationTasks);
             
             await _sceneLoader
-                .LoadSceneInjected(_dataProvider.GameConfig.MainScene, LoadSceneMode.Additive, _appLifetimeScope);
+                .LoadSceneInjected("MainMenu", LoadSceneMode.Additive, _appLifetimeScope);
         }
     }
 }

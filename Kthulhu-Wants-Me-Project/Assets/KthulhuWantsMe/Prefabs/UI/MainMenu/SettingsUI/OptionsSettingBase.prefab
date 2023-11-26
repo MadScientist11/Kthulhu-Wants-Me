@@ -33,10 +33,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6806578735962800909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 260, y: -40.25}
-  m_SizeDelta: {x: 520, y: 80.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 80.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4595022481969279652
 CanvasRenderer:
@@ -309,10 +309,10 @@ RectTransform:
   - {fileID: 8400392132652276071}
   m_Father: {fileID: 6806578735962800909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 850, y: -40.25}
-  m_SizeDelta: {x: 660, y: 80.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 80.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6665491361220520711
 MonoBehaviour:
@@ -479,9 +479,9 @@ GameObject:
   - component: {fileID: 8004240668567084184}
   - component: {fileID: 3163898977936618332}
   - component: {fileID: 3804430714766593609}
-  - component: {fileID: -4109603833437161661}
+  - component: {fileID: -2666650415330910201}
   m_Layer: 5
-  m_Name: SettingOptions
+  m_Name: OptionsSettingBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-4109603833437161661
+--- !u!114 &-2666650415330910201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -554,9 +554,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5712498649240514493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f998797180e4b75ab42b285f4ce9f82, type: 3}
+  m_Script: {fileID: 11500000, guid: 1000194c336442499bf6d568e9a26708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PreviousButton: {fileID: 575585858264107115}
+  NextButton: {fileID: 6789686440597724808}
+  ValueText: {fileID: 1519774443601757097}
+  SettingId: 0
 --- !u!1 &5773386986791684397
 GameObject:
   m_ObjectHideFlags: 0
