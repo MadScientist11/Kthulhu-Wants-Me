@@ -1,11 +1,13 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using QFSW.QC;
@@ -83,9 +85,45 @@ namespace KthulhuWantsMe.Source.Gameplay.InGameConsole
 
             for (int i = waveSystemDirector.CurrentWaveState.AliveEnemies.Count - 1; i >= 0; i--)
             {
-                var aliveEnemy = waveSystemDirector.CurrentWaveState.AliveEnemies[i];
+                Health aliveEnemy = waveSystemDirector.CurrentWaveState.AliveEnemies[i];
                 aliveEnemy.TakeDamage(10000000);
             }
+        }
+
+        public enum WaveOutcome
+        {
+            Victory,
+            Loss,
+        }
+        
+        [Command("complete-wave", MonoTargetType.All)]
+        private void CompleteWave(WaveOutcome waveOutcome)
+        {
+            IWaveSystemDirector waveSystemDirector = _resolver.Resolve<IWaveSystemDirector>();
+            KillAll();
+            if (waveOutcome == WaveOutcome.Victory)
+            {
+                waveSystemDirector.CompleteWaveAsVictory();
+            }
+            else
+            {
+                waveSystemDirector.CompleteWaveAsFailure();
+            }
+        }
+        
+        [Command("load-wave", MonoTargetType.All)]
+        private void LoadWave(int index)
+        {
+            IProgressService progressService = _resolver.Resolve<IProgressService>();
+            progressService.ProgressData.CompletedWaveIndex = index - 3;
+            CompleteWave(WaveOutcome.Loss);
+        }
+        
+        [Command("die", MonoTargetType.All)]
+        private void Die()
+        {
+            ThePlayer player = _resolver.Resolve<ThePlayer>();
+            player.TakeDamage(new Damage(1000000000));
         }
     }
 }

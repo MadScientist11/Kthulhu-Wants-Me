@@ -32,11 +32,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
         public void Install(IContainerBuilder builder)
         {
             builder
-                .Register<GameFactory>(Lifetime.Singleton)
+                .Register<GameFactory>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
             builder
-                .Register<EnemiesAIBrainService>(Lifetime.Singleton)
+                .Register<EnemiesAIBrainService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
 
 
@@ -49,7 +49,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
 
 
-            builder.Register<ThePlayer>(Lifetime.Singleton)
+            builder.Register<ThePlayer>(Lifetime.Scoped)
                 .As<IInitializable>()
                 .As<ITickable>()
                 .AsSelf();
@@ -79,10 +79,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             
             builder
                 .Register<BuffDebuffFactory>(Lifetime.Scoped)
-                .AsImplementedInterfaces();
-            
-            builder
-                .Register<FollowPlayerService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
             
             builder

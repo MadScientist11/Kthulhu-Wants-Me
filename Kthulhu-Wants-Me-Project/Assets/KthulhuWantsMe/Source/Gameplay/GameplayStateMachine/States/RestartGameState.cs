@@ -14,7 +14,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly IDataProvider _dataProvider;
         private readonly IUIService _uiService;
 
-
         public RestartGameState(AppLifetimeScope appLifetimeScope, ISceneLoader sceneLoader, IDataProvider dataProvider, IUIService uiService)
         {
             _uiService = uiService;

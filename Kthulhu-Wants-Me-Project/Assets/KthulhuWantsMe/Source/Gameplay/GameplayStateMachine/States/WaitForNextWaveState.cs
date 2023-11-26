@@ -8,6 +8,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 {
     public class WaitForNextWaveState : IGameplayState
     {
+        private CancellationTokenSource _counterToken;
+        
         private readonly IUIService _uiService;
         private readonly GameplayStateMachine _gameplayStateMachine;
         private readonly IBackgroundMusicPlayer _backgroundMusicPlayer;
@@ -29,11 +31,13 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             _backgroundMusicPlayer.PlayConcernMusic();
             _lootService.DespawnAllLoot();
-            StartNextWaveCounter(new CancellationTokenSource()).Forget();
+            _counterToken = new CancellationTokenSource();
+            StartNextWaveCounter(_counterToken).Forget();
         }
 
         public void Exit()
         {
+            //_counterToken?.Cancel();
         }
         
         private async UniTaskVoid StartNextWaveCounter(CancellationTokenSource cancellationToken)

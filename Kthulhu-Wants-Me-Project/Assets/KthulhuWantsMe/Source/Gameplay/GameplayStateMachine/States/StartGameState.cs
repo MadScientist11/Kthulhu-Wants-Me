@@ -27,12 +27,15 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly IUIService _uiService;
         private readonly ISceneLoader _sceneLoader;
         private readonly ThePlayer _player;
-        private IBackgroundMusicPlayer _backgroundMusicPlayer;
+        private readonly IBackgroundMusicPlayer _backgroundMusicPlayer;
+        private IPauseService _pauseService;
 
         public StartGameState(GameplayStateMachine gameplayStateMachine, IGameFactory gameFactory, IInputService inputService,
             ISceneDataProvider sceneDataProvider, IUIService uiService, ISceneLoader sceneLoader, ThePlayer player,
-            IBackgroundMusicPlayer backgroundMusicPlayer)
+            IBackgroundMusicPlayer backgroundMusicPlayer,
+            IPauseService pauseService)
         {
+            _pauseService = pauseService;
             _backgroundMusicPlayer = backgroundMusicPlayer;
             _player = player;
             _sceneLoader = sceneLoader;
@@ -59,6 +62,8 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _uiService.ShowHUD();
             _backgroundMusicPlayer.PlayConcernMusic();            
             _player.Inventory.OnItemAdded += StartWaveOnWeaponEquip;
+            
+            _pauseService.ResumeGame();
         }
 
         public void Exit()

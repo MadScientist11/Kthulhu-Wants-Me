@@ -49,12 +49,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         private int _pathfindingMethod;
 
         private PlayerFacade _player;
-        private IFollowPlayerService _followPlayerService;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IFollowPlayerService followPlayerService)
+        public void Construct(IGameFactory gameFactory)
         {
-            _followPlayerService = followPlayerService;
             _player = gameFactory.Player;
         }
 
@@ -218,7 +216,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                         result = hit.position;
                         pointFound = true;
                         _maxIterations = 0;
-                        Debug.Log($"Switch pathfinding {_maxIterations}");
+//                        Debug.Log($"Switch pathfinding {_maxIterations}");
                     }
                 }
 
