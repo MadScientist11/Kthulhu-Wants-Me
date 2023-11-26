@@ -1,6 +1,11 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
+using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
+using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using QFSW.QC;
@@ -32,7 +37,6 @@ namespace KthulhuWantsMe.Source.Gameplay.InGameConsole
             SceneManager.MoveGameObjectToScene(gameObject, startUp);
             _console = _uiFactory.CreateConsoleUI();
 
-
             _inputService.GameScenario.ToggleConsole += ToggleConsole;
         }
 
@@ -60,6 +64,28 @@ namespace KthulhuWantsMe.Source.Gameplay.InGameConsole
             player.Heal(amount);
         }
 
+        [Command("unlock-skill", MonoTargetType.All)]
+        private void UnlockSkill(SkillId skillId)
+        {
+            IUpgradeService upgradeService = _resolver.Resolve<IUpgradeService>();
+
+            upgradeService.ApplyUpgrade(new UpgradeData()
+            {
+                UpgradeType = UpgradeType.SkillAcquirement,
+                SkillId = skillId,
+            });
+        }
         
+        [Command("kill-all", MonoTargetType.All)]
+        private void KillAll()
+        {
+            IWaveSystemDirector waveSystemDirector = _resolver.Resolve<IWaveSystemDirector>();
+
+            for (int i = waveSystemDirector.CurrentWaveState.AliveEnemies.Count - 1; i >= 0; i--)
+            {
+                var aliveEnemy = waveSystemDirector.CurrentWaveState.AliveEnemies[i];
+                aliveEnemy.TakeDamage(10000000);
+            }
+        }
     }
 }

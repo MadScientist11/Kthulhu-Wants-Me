@@ -66,6 +66,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         {
             IEnumerable<Health> spawnedBatch = SpawnBatch(batch);
             BatchSpawned?.Invoke(spawnedBatch);
+            _batchEnemiesCache.Clear();
         }
 
         public Health SpawnEnemyClosestToPlayer(EnemyType enemyType)
@@ -114,12 +115,13 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             return enemyHealth;
         }
 
+        private List<Health> _batchEnemiesCache = new();
         private IEnumerable<Health> SpawnBatch(Batch batch)
         {
             List<Health> batchEnemies = new();
             foreach (EnemyPack enemyPack in batch.EnemyPack)
             {
-                batchEnemies.AddRange(SpawnEnemyPack(enemyPack));
+                _batchEnemiesCache.AddRange(SpawnEnemyPack(enemyPack));
             }
             _spawnedCountAt.Clear();
             return batchEnemies;

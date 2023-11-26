@@ -27,7 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             int newWaveIndex = _progressService.ProgressData.CompletedWaveIndex + 1;
             _waveSystem.StartWave(newWaveIndex);
-            _backgroundMusicPlayer.PlayBattleMusic();
+            //_backgroundMusicPlayer.PlayBattleMusic();
             //_sceneDataProvider.MapNavMesh.BuildNavMesh();
 
         }

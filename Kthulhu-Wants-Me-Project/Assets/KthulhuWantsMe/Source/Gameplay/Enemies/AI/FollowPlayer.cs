@@ -94,7 +94,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
                 _movementMotor.Agent.stoppingDistance = 0;
                 Vector3 forward = Quaternion.Euler(0, -45, 0) * transform.forward;
                 _movementMotor.MoveTo(transform.position+ forward * 5f);
-                Debug.Log("Get aorund");
             }
             else
             {

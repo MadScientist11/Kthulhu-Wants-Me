@@ -48,10 +48,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void Update()
         {
-            int mask = ~(LayerMasks.PlayerMask & LayerMasks.GroundMask);
-            bool b = DrawPhysics.SphereCast(transform.position, .2f,
-                -GetMovementDirection(_inputService.GameplayScenario.MovementInput).XZtoXYZ(), out RaycastHit hit, 1f,
-                ~LayerMasks.GroundMask);
+           // int mask = ~(LayerMasks.PlayerMask & LayerMasks.GroundMask);
+           // bool b = DrawPhysics.SphereCast(transform.position, .2f,
+           //     -GetMovementDirection(_inputService.GameplayScenario.MovementInput).XZtoXYZ(), out RaycastHit hit, 1f,
+           //     ~LayerMasks.GroundMask);
 
             if (!MovementInputDetected())
             {

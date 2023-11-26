@@ -38,12 +38,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _player = player;
             _inputService = inputService;
-            inputService.GameplayScenario.SwitchItem += SwitchItem;
+           // inputService.GameplayScenario.SwitchItem += SwitchItem;
         }
 
         private void OnDestroy()
         {
-            _inputService.GameplayScenario.SwitchItem -= SwitchItem;
+            //_inputService.GameplayScenario.SwitchItem -= SwitchItem;
         }
 
         public bool PickUpItem()
