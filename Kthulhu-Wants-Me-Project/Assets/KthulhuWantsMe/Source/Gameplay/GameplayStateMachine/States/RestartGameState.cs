@@ -28,7 +28,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         {
             _uiService.ClearUI();
             await _sceneLoader.UnloadSceneAsync(GameConstants.Scenes.GameSceneName);
-            await UniTask.WaitForSeconds(3);
             LifetimeScope lifetimeScope = LifetimeScope.Find<AppLifetimeScope>();
             await _sceneLoader.LoadSceneInjected(GameConstants.Scenes.GameSceneName, LoadSceneMode.Additive, lifetimeScope);
         }
