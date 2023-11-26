@@ -42,7 +42,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         }
 
         private void Start() =>
-            CreateSpells();
+            CreateSpells().Forget();
 
         public async UniTaskVoid CastSpell(TentacleSpell spell)
         {

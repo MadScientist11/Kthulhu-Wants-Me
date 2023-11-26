@@ -26,14 +26,13 @@ namespace KthulhuWantsMe.Source.Gameplay.InGameConsole
         private IInputService _inputService;
 
         [Inject]
-        public void Construct(IObjectResolver resolver, IUIFactory uiFactory, IInputService inputService)
+        public void Construct(IUIFactory uiFactory, IInputService inputService)
         {
             _inputService = inputService;
             _uiFactory = uiFactory;
-            _resolver = resolver;
         }
 
-        private  void Start()
+        private void Start()
         {
             Scene startUp = SceneManager.GetSceneByPath(GameConstants.Scenes.StartUpPath);
             SceneManager.MoveGameObjectToScene(gameObject, startUp);
@@ -45,6 +44,11 @@ namespace KthulhuWantsMe.Source.Gameplay.InGameConsole
         private void OnDestroy()
         {
             _inputService.GameScenario.ToggleConsole -= ToggleConsole;
+        }
+
+        public void Enqueue(IObjectResolver objectResolver)
+        {
+            _resolver = objectResolver;
         }
 
         private void ToggleConsole()

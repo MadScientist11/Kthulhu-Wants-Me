@@ -41,10 +41,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
 
 
             builder
-                .RegisterComponentOnNewGameObject<InGameConsoleService>(Lifetime.Singleton, "InGameConsoleService")
-                .AsSelf();
-
-            builder
                 .RegisterComponent(_sceneDataProvider)
                 .AsImplementedInterfaces();
 

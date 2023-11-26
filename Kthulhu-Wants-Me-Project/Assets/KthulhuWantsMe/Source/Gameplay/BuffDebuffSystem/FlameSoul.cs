@@ -27,7 +27,7 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             }
             catch (OperationCanceledException e)
             {
-                Debug.Log("Cancellation occurred, so this task block is executed");
+                Debug.Log($"Cancellation occurred, so this task block is executed {e}");
             }
          
         }

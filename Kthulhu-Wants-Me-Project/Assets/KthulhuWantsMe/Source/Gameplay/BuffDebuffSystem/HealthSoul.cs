@@ -44,9 +44,9 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
                     .AwaitForComplete(TweenCancelBehaviour.Kill, destroyCancellationToken);;
                 Destroy(gameObject);
             }
-            catch (OperationCanceledException _)
+            catch (OperationCanceledException e)
             {
-                Debug.Log("Cancellation occurred, so this task block is executed");
+                Debug.Log($"Cancellation occurred, so this task block is executed {e}");
             }
         }
 

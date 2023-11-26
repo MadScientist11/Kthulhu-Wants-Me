@@ -1,9 +1,11 @@
-﻿using KthulhuWantsMe.Source.Infrastructure;
+﻿using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using UnityEngine.SceneManagement;
+using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 {
@@ -24,7 +26,11 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         
         public async void Enter()
         {
-            await _sceneLoader.LoadScene("StartUp", LoadSceneMode.Single);
+            _uiService.ClearUI();
+            await _sceneLoader.UnloadSceneAsync(GameConstants.Scenes.GameSceneName);
+            await UniTask.WaitForSeconds(3);
+            LifetimeScope lifetimeScope = LifetimeScope.Find<AppLifetimeScope>();
+            await _sceneLoader.LoadSceneInjected(GameConstants.Scenes.GameSceneName, LoadSceneMode.Additive, lifetimeScope);
         }
 
         public void Exit()

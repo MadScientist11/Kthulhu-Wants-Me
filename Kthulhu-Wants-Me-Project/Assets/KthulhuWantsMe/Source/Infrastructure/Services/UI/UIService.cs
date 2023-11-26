@@ -146,14 +146,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
         public void ClearUI()
         {
-            Scene sceneByName = SceneManager.GetSceneByName("GameUI");
-            foreach (GameObject go in sceneByName.GetRootGameObjects())
+            Object.Destroy(_playerHUD.gameObject);
+            
+            foreach (WindowId windowId in Enum.GetValues(typeof(WindowId)).Cast<WindowId>())
             {
-                if (!go.TryGetComponent(out GameUILifetimeScope _))
-                {
-                    Object.Destroy(go);
-                }
+                CloseWindow(windowId);
             }
+
         }
 
         public void ShowHUD()

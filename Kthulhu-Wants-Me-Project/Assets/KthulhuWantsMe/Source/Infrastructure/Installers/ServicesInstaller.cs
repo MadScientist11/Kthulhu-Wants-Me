@@ -1,4 +1,5 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Services;
+﻿using KthulhuWantsMe.Source.Gameplay.InGameConsole;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -30,6 +31,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder
                 .Register<PauseService>(Lifetime.Scoped)
                 .AsImplementedInterfaces();
+            
+            
+            builder
+                .RegisterComponentOnNewGameObject<InGameConsoleService>(Lifetime.Singleton, "InGameConsoleService")
+                .AsSelf();
+
             
             builder
                 .Register<BackgroundMusicPlayer>(Lifetime.Singleton)

@@ -21,6 +21,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
         private readonly IUIFactory _uiFactory;
         private readonly IInputService _inputService;
         private readonly GameLifetimeScope _gameLifetimeScope;
+        private InGameConsoleService _gameConsoleService;
 
 
         public GameEntryPoint(IReadOnlyList<IInitializableService> services, GameplayStateMachine gameplayStateMachine, 
@@ -28,6 +29,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             InGameConsoleService gameConsoleService
         )
         {
+            _gameConsoleService = gameConsoleService;
             _inputService = inputService;
             _gameLifetimeScope = gameLifetimeScope;
             _uiFactory = uiFactory;
@@ -40,7 +42,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             List<UniTask> initializationTasks = _services.Where(service => service.IsInitialized == false).Select(service => service.Initialize()).ToList();
             await UniTask.WhenAll(initializationTasks);
             _uiFactory.EnqueueParent(_gameLifetimeScope);
-            
+            _gameConsoleService.Enqueue(_gameLifetimeScope.Container);
             _gameplayStateMachine.SwitchState<StartGameState>();
         }
 
