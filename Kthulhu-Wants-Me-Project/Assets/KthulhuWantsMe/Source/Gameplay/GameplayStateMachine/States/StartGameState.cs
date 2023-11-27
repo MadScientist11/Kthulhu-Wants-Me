@@ -13,6 +13,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.UI.MainMenu.Settings;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,12 +30,15 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly ThePlayer _player;
         private readonly IBackgroundMusicPlayer _backgroundMusicPlayer;
         private IPauseService _pauseService;
+        private SettingsService _settingsService;
 
         public StartGameState(GameplayStateMachine gameplayStateMachine, IGameFactory gameFactory, IInputService inputService,
             ISceneDataProvider sceneDataProvider, IUIService uiService, ISceneLoader sceneLoader, ThePlayer player,
             IBackgroundMusicPlayer backgroundMusicPlayer,
-            IPauseService pauseService)
+            IPauseService pauseService,
+            SettingsService settingsService)
         {
+            _settingsService = settingsService;
             _pauseService = pauseService;
             _backgroundMusicPlayer = backgroundMusicPlayer;
             _player = player;
@@ -59,7 +63,9 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _gameFactory.CreatePlayer(playerSpawnPoint.Position, playerSpawnPoint.Rotation);
             _inputService.SwitchInputScenario(InputScenario.Gameplay);
 
-            _uiService.ShowHUD();
+         
+            _uiService.InitHUD();
+            
             _backgroundMusicPlayer.PlayConcernMusic();            
             _player.Inventory.OnItemAdded += StartWaveOnWeaponEquip;
             

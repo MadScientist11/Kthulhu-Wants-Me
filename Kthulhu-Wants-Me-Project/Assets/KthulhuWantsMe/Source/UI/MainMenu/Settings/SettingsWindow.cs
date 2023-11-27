@@ -2,14 +2,18 @@ using System;
 using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
 {
-    public class SettingsWindow : MonoBehaviour, IInjectable
+    public class SettingsWindow : BaseWindow
     {
+        public override WindowId Id => WindowId.SettingsWindow;
+        
         [SerializeField] private Button _applyButton;
         [SerializeField] private Button _backButton;
         
@@ -21,12 +25,14 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
         [SerializeField] private Transform _displaySettings;
         [SerializeField] private Transform _constrolsSettings;
 
-        private SettingsService _settingsService;
         private readonly List<Transform> _allTabs = new();
+        private SettingsService _settingsService;
+        private IUIService _uiService;
 
         [Inject]
-        public void Construct(SettingsService settingsService)
+        public void Construct(SettingsService settingsService, IUIService uiService)
         {
+            _uiService = uiService;
             _settingsService = settingsService;
         }
         
@@ -76,12 +82,13 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
         
         private void CloseWindow()
         {
-            Destroy(gameObject);
+            _uiService.CloseWindow(WindowId.SettingsWindow);
         }
         
         private void ApplySettings()
         {
             _settingsService.ApplyOverrides();
         }
+
     }
 }

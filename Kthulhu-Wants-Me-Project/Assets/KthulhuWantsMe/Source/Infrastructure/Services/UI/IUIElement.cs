@@ -2,7 +2,7 @@
 {
     public interface IUIElement
     {
-        void Show();
+        void Init();
         void Hide();
     }
 }

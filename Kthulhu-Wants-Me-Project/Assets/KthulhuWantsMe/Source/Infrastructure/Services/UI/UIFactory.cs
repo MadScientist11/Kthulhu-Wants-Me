@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
+using KthulhuWantsMe.Source.UI.MainMenu.Settings;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
 using KthulhuWantsMe.Source.UI.PlayerHUD.TooltipSystem;
 using QFSW.QC;
@@ -24,6 +25,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         UpgradeWindow CreateUpgradeWindow();
         PauseWindow CreatePauseWindow();
         TryAgainWindow CreateDefeatWindow();
+        SettingsWindow CreateSettingsWindow();
         Tooltip CreateTooltip();
         QuantumConsole CreateConsoleUI();
     }
@@ -35,6 +37,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         public const string UpgradeWindowPath = "UpgradeWindow";
         public const string PauseWindowPath = "PauseWindow";
         public const string TryAgainWindowPath = "TryAgainWindow";
+        public const string SettingsWindowPath = "SettingsWindow";
         public const string TooltipPath = "Tooltip";
         public const string ConsolePath = "InGameConsole";
 
@@ -46,6 +49,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private UpgradeWindow _upgradeWindowPrefab;
         private PauseWindow _pauseWindowPrefab;
         private TryAgainWindow _tryAgainWindowPrefab;
+        private SettingsWindow _settingsWindowPrefab;
         private Tooltip _tooltipPrefab;
         private QuantumConsole _consolePrefab;
 
@@ -75,6 +79,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _tryAgainWindowPrefab = await _resourceManager.ProvideAssetAsync<TryAgainWindow>(TryAgainWindowPath);
             _tooltipPrefab = await _resourceManager.ProvideAssetAsync<Tooltip>(TooltipPath);
             _consolePrefab = await _resourceManager.ProvideAssetAsync<QuantumConsole>(ConsolePath);
+            _settingsWindowPrefab = await _resourceManager.ProvideAssetAsync<SettingsWindow>(SettingsWindowPath);
         }
 
         public void EnqueueParent(LifetimeScope parent)
@@ -116,6 +121,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             TryAgainWindow tryAgainWindow = _instantiator.Instantiate(_tryAgainWindowPrefab);
             SceneManager.MoveGameObjectToScene(tryAgainWindow.gameObject, _uiScene);
             return tryAgainWindow;
+        }
+
+        public SettingsWindow CreateSettingsWindow()
+        {
+            EnqueueParent(LifetimeScope.Find<MainMenuScope>());
+            SettingsWindow settingsWindow = _instantiator.Instantiate(_settingsWindowPrefab);
+            return settingsWindow;
         }
 
         public Tooltip CreateTooltip()

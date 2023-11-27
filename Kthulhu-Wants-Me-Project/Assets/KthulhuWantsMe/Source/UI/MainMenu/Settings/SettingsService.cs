@@ -63,10 +63,11 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
         }
     }
 
+    [Serializable]
     public class Settings
     {
         public IReadOnlyDictionary<SettingId, Enum> Table => _settings;
-        private Dictionary<SettingId, Enum> _settings = new();
+        [OdinSerialize] private Dictionary<SettingId, Enum> _settings = new();
 
         public Enum this[SettingId i]
         {
@@ -98,12 +99,12 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
         }
     }
 
-    public class SettingsService : IInitializableService
+    public class SettingsService
     {
         private readonly Dictionary<SettingId, ISettingCommand> _commands = new();
 
         private Settings _current;
-        
+
         private readonly Settings _defaultSettings = new();
 
         private readonly Settings _sessionOverrides = new();
@@ -122,27 +123,25 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
             _defaultSettings[SettingId.BGMVolume] = SettingGradation.Hundred;
 
             _commands.Add(SettingId.WindowMode, new WindowModeSettingCommand());
-            
-            _current = _defaultSettings.Clone();
-            Debug.Log("ctor");
 
+            _current = _defaultSettings.Clone();
         }
-        
+
         public bool IsInitialized { get; set; }
-        
-        public  UniTask Initialize()
+
+        public async UniTask Initialize()
         {
+            Settings loaded = await ReadAsync();
+            
+            foreach ((SettingId settingId, Enum value) in loaded.Table)
+            {
+                ApplySetting(settingId, value);
+            }
             IsInitialized = true;
-            _current = null;
-            Debug.Log("Init");
-            return UniTask.CompletedTask;
         }
-        
 
         public Enum Get(SettingId settingId)
         {
-            Debug.Log("Get");
-
             return _current[settingId];
         }
 
@@ -160,9 +159,9 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
                     ApplySetting(settingId, value);
                 }
             }
-            
+
             _sessionOverrides.Clear();
-            
+
             WriteAsync(_current);
         }
 
@@ -195,25 +194,13 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
             _current[settingId] = value;
         }
 
-        public static string SavesFolder
-        {
-            get { return Path.Combine(Application.persistentDataPath, "CthulhuWantsMe"); }
-        }
-
-        public static string SaveName
+        public static string SavePath
         {
             get { return Path.Combine(Application.persistentDataPath, "settings.save"); }
         }
 
-        public static string SavePath
-        {
-            get { return Path.Combine(SavesFolder, SaveName); }
-        }
-
         public async void WriteAsync(Settings settings)
         {
-            Directory.CreateDirectory(SavesFolder);
-
             byte[] saveData = SerializationUtility.SerializeValue(settings, DataFormat.JSON);
 
             try
@@ -238,7 +225,5 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
             Settings settings = SerializationUtility.DeserializeValue<Settings>(buffer, DataFormat.JSON);
             return settings;
         }
-
-      
     }
 }

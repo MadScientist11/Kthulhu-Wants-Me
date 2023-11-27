@@ -36,7 +36,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
         public async UniTask StartAsync(CancellationToken cancellation)
         {
             await _dataProvider.Initialize();
-            await _settingsService.Initialize();
             List<UniTask> initializationTasks = Enumerable.Select(_services, service =>
             {
                 service.IsInitialized = true;
@@ -44,6 +43,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             }).ToList();
             
             await UniTask.WhenAll(initializationTasks);
+            await _settingsService.Initialize();
             
             await _sceneLoader
                 .LoadSceneInjected("MainMenu", LoadSceneMode.Additive, _appLifetimeScope);

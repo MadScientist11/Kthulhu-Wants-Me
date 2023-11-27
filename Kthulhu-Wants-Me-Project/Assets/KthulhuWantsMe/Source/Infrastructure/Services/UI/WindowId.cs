@@ -5,5 +5,6 @@
         UpgradeWindow = 0,
         PauseWindow = 1,
         DefeatWindow = 2,
+        SettingsWindow = 3,
     }
 }

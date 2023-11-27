@@ -60,7 +60,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 
         }
 
-        public void Show()
+        public void Init()
         {
             _indicatorsUI.Enable();
             _playerHpBar.SetValue(_player.PlayerStats.CurrentHp, _player.PlayerStats.MainStats[StatType.MaxHealth]);
@@ -68,6 +68,7 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
 
         public void Hide()
         {
+            gameObject.SwitchOff();
         }
 
         private void OnWaveStarted()

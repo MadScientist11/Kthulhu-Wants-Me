@@ -15,7 +15,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI.Window
             _uiService = uiService;
         }
         
-        public void Show()
+        public void Init()
         {
             
         }

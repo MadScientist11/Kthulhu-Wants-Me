@@ -35,15 +35,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
 
             builder
                 .Register<SettingsService>(Lifetime.Singleton)
-                .AsSelf()
-                .As<IInitializableService>();
-            
+                .AsSelf();
             
             builder
                 .RegisterComponentOnNewGameObject<InGameConsoleService>(Lifetime.Singleton, "InGameConsoleService")
                 .AsSelf();
 
-            
             builder
                 .Register<BackgroundMusicPlayer>(Lifetime.Singleton)
                 .AsImplementedInterfaces();

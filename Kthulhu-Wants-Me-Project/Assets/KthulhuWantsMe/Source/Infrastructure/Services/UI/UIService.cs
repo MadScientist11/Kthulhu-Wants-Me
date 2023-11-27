@@ -7,6 +7,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
+using KthulhuWantsMe.Source.UI.MainMenu.Settings;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
 using KthulhuWantsMe.Source.UI.PlayerHUD.TooltipSystem;
 using UnityEngine;
@@ -21,12 +22,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         MiscUI MiscUI { get; }
         PlayerHUD PlayerHUD { get; }
         Tooltip Tooltip { get; }
+        void InitHUD();
         BaseWindow OpenWindow(WindowId windowId);
         void CloseWindow(WindowId windowId);
 
         bool IsOpen(WindowId windowId);
-        void HideHUD();
-        void ShowHUD();
         void ClearUI();
     }
 
@@ -83,11 +83,13 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private IUIFactory _uiFactory;
         private IPauseService _pauseService;
         private IInputService _inputService;
+        private SettingsService _settingsService;
 
 
         [Inject]
-        public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory, IPauseService pauseService, IInputService inputService)
+        public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory, IPauseService pauseService, IInputService inputService, SettingsService settingsService)
         {
+            _settingsService = settingsService;
             _pauseService = pauseService;
             _uiFactory = uiFactory;
             _sceneLoader = sceneLoader;
@@ -101,6 +103,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
                 WindowId.UpgradeWindow => _uiFactory.CreateUpgradeWindow(),
                 WindowId.PauseWindow => _uiFactory.CreatePauseWindow(),
                 WindowId.DefeatWindow => _uiFactory.CreateDefeatWindow(),
+                WindowId.SettingsWindow => _uiFactory.CreateSettingsWindow(),
                 _ => throw new ArgumentOutOfRangeException(nameof(windowId), windowId, null)
             };
             RenderOnTop(window);
@@ -146,7 +149,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
         public void ClearUI()
         {
-            Object.Destroy(_playerHUD.gameObject);
+            if(_playerHUD.gameObject != null)
+                Object.Destroy(_playerHUD.gameObject);
             
             foreach (WindowId windowId in Enum.GetValues(typeof(WindowId)).Cast<WindowId>())
             {
@@ -155,19 +159,18 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
         }
 
-        public void ShowHUD()
+        public void InitHUD()
         {
             if (_playerHUD == null)
             {
                 _playerHUD = _uiFactory.CreatePlayerHUD();
             }
+            _playerHUD.Init();
 
-            _playerHUD.Show();
-        }
-
-        public void HideHUD()
-        {
-            _playerHUD?.Hide();
+            if ((SettingOnOff)_settingsService.Get(SettingId.HudSetting) == SettingOnOff.Off)
+            {
+                _playerHUD.Hide();
+            }
         }
         
         private void RenderOnTop(BaseWindow window)
