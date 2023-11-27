@@ -6,5 +6,9 @@
         HudSetting,
         WindowMode,
         VSync,
+        MasterVolume,
+        UIVolume,
+        SFXVolume,
+        BGMVolume,
     }
 }

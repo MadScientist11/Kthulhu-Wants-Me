@@ -1,22 +1,29 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using Freya;
+using KthulhuWantsMe.Source.UI.MainMenu.Settings;
 using MoreMountains.Tools;
 using UnityEngine;
+using UnityEngine.Audio;
 using VContainer;
 using VContainer.Unity;
+using Random = Freya.Random;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
 {
     public interface IAudioService
     {
+        void SetVolume(string key, int value);
     }
 
     public class AudioService : IAudioService, IInitializableService
     {
         public bool IsInitialized { get; set; }
-        
+
+        private AudioMixer _mixer;
         private MMSoundManager _sfxPlayer;
-        
+
         private readonly IResourceManager _resourceManager;
         private readonly IBackgroundMusicPlayer _backgroundMusicPlayer;
         private readonly IObjectResolver _instantiator;
@@ -31,7 +38,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
         public async UniTask Initialize()
         {
             MMSoundManager _sfxPlayerPrefab =  await _resourceManager.ProvideAssetAsync<MMSoundManager>("AudioPlayer");
+            _mixer =  await _resourceManager.ProvideAssetAsync<AudioMixer>("GameAudioMixer");
             _sfxPlayer = _instantiator.Instantiate(_sfxPlayerPrefab);
+        }
+
+        public void SetVolume(string key, int value)
+        {
+            float remapped = Mathfs.Remap(0, 100, -80, 20, value);
+            _mixer.SetFloat(key, remapped);
         }
     }
 }

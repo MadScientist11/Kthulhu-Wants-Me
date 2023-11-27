@@ -34,7 +34,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
 
             builder
-                .Register<SettingsService>(Lifetime.Scoped);
+                .Register<SettingsService>(Lifetime.Singleton)
+                .AsSelf()
+                .As<IInitializableService>();
             
             
             builder
