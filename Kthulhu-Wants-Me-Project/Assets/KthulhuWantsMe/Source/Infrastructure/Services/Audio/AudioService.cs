@@ -44,7 +44,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
 
         public void SetVolume(string key, int value)
         {
-            float remapped = Mathfs.Remap(0, 100, -80, 20, value);
+            float remapped = Mathfs.Remap(0, 100, -80, 0, value);
             _mixer.SetFloat(key, remapped);
         }
     }
