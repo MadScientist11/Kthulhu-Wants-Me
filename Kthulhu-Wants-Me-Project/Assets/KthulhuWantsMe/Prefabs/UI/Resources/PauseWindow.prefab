@@ -368,7 +368,8 @@ MonoBehaviour:
         MaxPitch: 1
         MmSoundManagerTrack: 0
         ID: 0
-        AudioGroup: {fileID: 0}
+        AudioGroup: {fileID: -8813988122263433838, guid: c86a5b26263820c40a40808d057c16f3,
+          type: 2}
         RecycleAudioSource: {fileID: 0}
         Loop: 0
         Persistent: 0
@@ -808,7 +809,8 @@ MonoBehaviour:
         MaxPitch: 1
         MmSoundManagerTrack: 0
         ID: 0
-        AudioGroup: {fileID: 0}
+        AudioGroup: {fileID: -8813988122263433838, guid: c86a5b26263820c40a40808d057c16f3,
+          type: 2}
         RecycleAudioSource: {fileID: 0}
         Loop: 0
         Persistent: 0

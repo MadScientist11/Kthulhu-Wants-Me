@@ -18,14 +18,6 @@ namespace KthulhuWantsMe.Source.UI
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _quitButton;
         
-        private IPauseService _pauseService;
-
-        [Inject]
-        public void Construct(IPauseService pauseService)
-        {
-            _pauseService = pauseService;
-        }
-        
         private void Start()
         {
             _quitButton.onClick.AddListener(QuitGame);
