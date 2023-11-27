@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using MoreMountains.Feedbacks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +20,8 @@ namespace KthulhuWantsMe.Source.UI.MainMenu
         [SerializeField] private Button _startGameButton;
         [SerializeField] private Button _optionsButton;
         [SerializeField] private Button _quitButton;
+
+        [SerializeField] private MMFeedbacks _clickFeedback;
 
         private IUIService _uiService;
         private ISceneLoader _sceneLoader;
@@ -48,21 +52,28 @@ namespace KthulhuWantsMe.Source.UI.MainMenu
             _quitButton.onClick.RemoveListener(Quit);
         }
 
+        [SuppressMessage("ReSharper", "Unity.NoNullPropagation")]
         private void StartGame()
         {
+            _clickFeedback?.PlayFeedbacks();
             _sceneLoader.UnloadSceneAsync("MainMenu");
             _sceneLoader
                 .LoadSceneInjected(_dataProvider.GameConfig.MainScene, LoadSceneMode.Additive, _appLifetimeScope)
                 .Forget();
         }
-
+        
+        [SuppressMessage("ReSharper", "Unity.NoNullPropagation")]
         private void OpenSettings()
         {
+            _clickFeedback?.PlayFeedbacks();
             _uiService.OpenWindow(WindowId.SettingsWindow);
         }
-
+        
+        [SuppressMessage("ReSharper", "Unity.NoNullPropagation")]
         private void Quit()
         {
+            _clickFeedback?.PlayFeedbacks();
+
 #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();
 #else
