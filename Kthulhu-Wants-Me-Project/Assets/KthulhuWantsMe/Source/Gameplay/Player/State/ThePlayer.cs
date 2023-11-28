@@ -55,7 +55,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         private float _regenAccumulation;
         
-        private IWaveSystemDirector _waveSystemDirector;
+        private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly PlayerConfiguration _playerConfiguration;
 
         public ThePlayer(IDataProvider dataProvider, IWaveSystemDirector waveSystemDirector)

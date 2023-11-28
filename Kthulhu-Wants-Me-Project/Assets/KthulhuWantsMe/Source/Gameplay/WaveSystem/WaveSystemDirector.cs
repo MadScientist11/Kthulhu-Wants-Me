@@ -171,7 +171,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _spawnLoopToken = new CancellationTokenSource();
             _spawnLoopToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
 
-            // Spawn first wave
+            // Spawn first batch
             _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
 
             while (!_spawnLoopToken.IsCancellationRequested)

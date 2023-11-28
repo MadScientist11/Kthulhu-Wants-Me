@@ -115,7 +115,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             return enemyHealth;
         }
 
-        private List<Health> _batchEnemiesCache = new();
+        private readonly List<Health> _batchEnemiesCache = new();
         private IEnumerable<Health> SpawnBatch(Batch batch)
         {
             List<Health> batchEnemies = new();
@@ -124,7 +124,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                 _batchEnemiesCache.AddRange(SpawnEnemyPack(enemyPack));
             }
             _spawnedCountAt.Clear();
-            return batchEnemies;
+            return _batchEnemiesCache;
         }
 
         private readonly Dictionary<EnemySpawner, int> _spawnedCountAt = new();
