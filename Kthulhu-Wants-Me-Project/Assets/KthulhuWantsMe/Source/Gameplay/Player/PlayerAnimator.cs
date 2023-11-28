@@ -40,8 +40,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private void Start() =>
             _defaultAnimatorController = _animator.runtimeAnimatorController;
 
-      
-
         public void Move()
         {
             _animator.SetBool(IsRunning, true);
@@ -96,6 +94,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _animator.ResetTrigger(Attack);
             StopMoving();
             _animator.SetTrigger(Impact);
+            _animator.SetBool(LungeCharge, false);
         }
 
         public void PlayDie()
@@ -131,12 +130,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 state = AnimatorState.Evade;
             else
                 state = AnimatorState.Unknown;
-
-            if (state == AnimatorState.Evade)
-            {
-                Debug.Log("Please?");
-            }
-
             return state;
         }
     }
