@@ -47,7 +47,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             UpgradeWindow window = (UpgradeWindow)_uiService.OpenWindow(WindowId.UpgradeWindow);
             window.Init(OnUpgradePicked);
             
-            _sceneDataProvider.MapNavMesh.BuildNavMesh();
         }
 
         public void Exit()

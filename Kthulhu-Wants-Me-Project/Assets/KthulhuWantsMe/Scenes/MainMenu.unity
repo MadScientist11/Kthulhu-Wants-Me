@@ -375,6 +375,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 8144219039721392221, guid: 4326a44a8be971048a8865b3eded8d66,
+        type: 3}
+      propertyPath: managedReferences[5175187458084831232].Sfx
+      value: 
+      objectReference: {fileID: 8300000, guid: 351943849f19b6d4bb27f5ba39749fc9, type: 3}
+    - target: {fileID: 8144219039721392221, guid: 4326a44a8be971048a8865b3eded8d66,
+        type: 3}
+      propertyPath: managedReferences[5175187458084831232].RandomSfx.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8144219039721392221, guid: 4326a44a8be971048a8865b3eded8d66,
+        type: 3}
+      propertyPath: managedReferences[5175187458084831232].RandomSfx.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: d0248fbcb7e8de649a979e17f994c699, type: 3}
+    - target: {fileID: 8144219039721392221, guid: 4326a44a8be971048a8865b3eded8d66,
+        type: 3}
+      propertyPath: managedReferences[5175187458084831232].RandomSfx.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: d0248fbcb7e8de649a979e17f994c699, type: 3}
+    - target: {fileID: 8144219039721392221, guid: 4326a44a8be971048a8865b3eded8d66,
+        type: 3}
+      propertyPath: managedReferences[5175187458084831232].RandomSfx.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: d0248fbcb7e8de649a979e17f994c699, type: 3}
     - target: {fileID: 8602451854375002357, guid: 4326a44a8be971048a8865b3eded8d66,
         type: 3}
       propertyPath: m_AnchorMax.y
