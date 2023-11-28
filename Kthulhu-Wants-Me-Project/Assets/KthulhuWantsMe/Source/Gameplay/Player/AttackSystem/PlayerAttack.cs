@@ -152,7 +152,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.AttackSystem
             ResetAttackState(false);
             _playerLocomotion.StopToAttack();
             _playerAnimator.PlayAttack(_comboAttackIndex);
-            _playerDashAbility.ResetEvade();
             _isAttacking = true;
         }
 

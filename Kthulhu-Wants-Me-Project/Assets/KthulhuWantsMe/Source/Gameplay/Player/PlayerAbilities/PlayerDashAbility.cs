@@ -41,11 +41,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             _playerConfig = dataProvider.PlayerConfig;
             _thePlayer = player;
             _inputService.GameplayScenario.Dash += PerformDash;
+
+            _playerAnimator.OnStateExited += OnExitState;
         }
 
         private void OnDestroy()
         {
             _inputService.GameplayScenario.Dash -= PerformDash;
+            _playerAnimator.OnStateExited -= OnExitState;
         }
 
         private void OnAnimatorMove()
@@ -84,9 +87,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
             ResetEvade();
         }
 
-        public void ResetEvade()
+        private void OnExitState(AnimatorState state)
         {
-            _inputService.GameplayScenario.Enable();
+            if (state == AnimatorState.Evade)
+            {
+                ResetEvade();
+            }
+        }
+
+        private void ResetEvade()
+        {
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
             _stopDashMovement = true;
             PlayerLocomotion.MovementController.ResetInputs();
@@ -106,11 +116,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         private void Dash()
         {
             _stopDashMovement = false;
-            //_inputService.GameplayScenario.Disable();
             PlayerLocomotion.MovementController.ResetInputs();
             PlayerLocomotion.MovementController.OverrideMoveSpeed(_playerConfig.DashSpeed);
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.PlayerRoll));
-
             _playerAnimator.PlayEvade();
             _thePlayer.ModifyCurrentStamina(-1000);
             _thePlayer.SetPlayerInvincibleAfterDamageFor(.8f).Forget();

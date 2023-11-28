@@ -145,7 +145,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _playerAnimator.PlayImpact();
             _playerAttack.ResetAttackState();
-            _playerDashAbility.ResetEvade();
             _invincibilityFeedback?.PlayFeedbacks();
             AddKnockback(damageProvider.DamageDealer);
             _movementController.KillVelocity();

@@ -30,6 +30,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         private static readonly int _impactStateHash = Animator.StringToHash("Impact");
         private static readonly int _specialAttackStateHash = Animator.StringToHash("SpecialAttack");
+        private static readonly int _evadeStateHash = Animator.StringToHash("Evade");
 
         private RuntimeAnimatorController _defaultAnimatorController;
 
@@ -111,8 +112,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             OnStateEntered?.Invoke(CurrentState);
         }
 
-        public void ExitedState(int stateHash) =>
-            OnStateExited?.Invoke(CurrentState);
+        public void ExitedState(int stateHash)
+        {
+            AnimatorState exitedState = StateFor(stateHash);
+            OnStateExited?.Invoke(exitedState);
+        }
 
 
         private AnimatorState StateFor(int stateHash)
@@ -123,8 +127,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 state = AnimatorState.Impact;
             else if (stateHash == _specialAttackStateHash)
                 state = AnimatorState.SpecialAttack;
+            else if (stateHash == _evadeStateHash)
+                state = AnimatorState.Evade;
             else
                 state = AnimatorState.Unknown;
+
+            if (state == AnimatorState.Evade)
+            {
+                Debug.Log("Please?");
+            }
 
             return state;
         }
@@ -138,6 +149,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         Impact = 3,
         Die = 4,
         SpecialAttack = 5,
+        Evade = 6,
         Unknown = 100,
     }
 }
