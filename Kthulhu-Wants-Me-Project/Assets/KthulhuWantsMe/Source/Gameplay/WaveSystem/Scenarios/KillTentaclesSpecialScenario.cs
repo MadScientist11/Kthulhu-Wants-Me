@@ -87,6 +87,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private async UniTaskVoid StartWaveLossTimer()
         {
             _timerToken = new CancellationTokenSource();
+            _timerToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
 
             TimeSpan tick = TimeSpan.FromSeconds(1);
 
@@ -94,7 +95,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 
             while (!_timerToken.IsCancellationRequested)
             {
-                await UniTask.Delay(tick, false, PlayerLoopTiming.Update, _gameFactory.Player.destroyCancellationToken);
+                await UniTask.Delay(tick, false, PlayerLoopTiming.Update, _timerToken.Token);
                 countdown--;
 
                 OnWaveLossTimerTick(countdown);

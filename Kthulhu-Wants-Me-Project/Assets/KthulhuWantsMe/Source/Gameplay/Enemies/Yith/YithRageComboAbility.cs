@@ -37,6 +37,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private NavMeshPath _navMeshPath;
         private Vector3 _target;
 
+        private Coroutine _comboCoroutine;
+
         private PlayerFacade _player;
 
         [Inject]
@@ -80,7 +82,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         public void PerformCombo()
         {
-            StartCoroutine(DoCombo());
+            _comboCoroutine = StartCoroutine(DoCombo());
         }
 
         private IEnumerator DoCombo()
@@ -166,6 +168,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             _movementMotor.Agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
             GetComponent<Collider>().enabled = true;
             
+            if(_comboCoroutine != null) StopCoroutine(_comboCoroutine);
             if(_secondComboAttack != null) StopCoroutine(_secondComboAttack);
             if(_thirdComboAttack != null) StopCoroutine(_thirdComboAttack);
             _comboCount = 1;

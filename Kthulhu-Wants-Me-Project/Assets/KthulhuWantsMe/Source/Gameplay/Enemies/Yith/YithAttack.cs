@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
@@ -27,6 +28,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private float _attackDelayTime;
         private bool _isAttacking;
 
+        private CancellationTokenSource _cancelAttackToken;
+
         private YithConfiguration _yithConfiguration;
 
         private void Start()
@@ -39,15 +42,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 
         public async UniTaskVoid PerformAttack()
         {
+            _cancelAttackToken = new();
+            _cancelAttackToken.RegisterRaiseCancelOnDestroy(gameObject);
+            
             _isAttacking = true;
             _yithAnimator.PlayStance(2);
             _attackPrepareFeedback?.PlayFeedbacks();
 
-            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), false, PlayerLoopTiming.Update, destroyCancellationToken);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), false, PlayerLoopTiming.Update, _cancelAttackToken.Token);
 
             _yithAnimator.PlayAttack();
 
-            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), false, PlayerLoopTiming.Update, destroyCancellationToken);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f), false, PlayerLoopTiming.Update, _cancelAttackToken.Token);
 
             if (!PhysicsUtility.HitFirst(
                     transform,
@@ -67,8 +73,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             ResetAttackState();
         }
 
-        private void ResetAttackState()
+        public void ResetAttackState()
         {
+            _cancelAttackToken?.Cancel();
             _isAttacking = false;
             ResetCountdowns();
         }

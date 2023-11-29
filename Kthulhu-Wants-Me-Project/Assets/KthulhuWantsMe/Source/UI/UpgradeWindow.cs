@@ -44,7 +44,7 @@ namespace KthulhuWantsMe.Source.UI
         {
             foreach (BranchTemplate branchTemplate in _dataProvider.SkillTree.SkillTree.Branches)
             {
-                BranchView branchView = _gameFactory.CreatePrefabInjected(branchViewPrefab, _upgradesParent);
+                BranchView branchView = _gameFactory.CreateInjected(branchViewPrefab, _upgradesParent);
                 branchView.Init(branchTemplate.Branch, this);
             }
         }

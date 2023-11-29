@@ -21,6 +21,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         [SerializeField] private MMFeedbacks _hitFeedbacks;
 
         [SerializeField] private YithAnimator _yithAnimator;
+        [SerializeField] private YithAttack _yithAttack;
+        
         private YithConfiguration _yithConfiguration;
         
         private void Start()
@@ -50,6 +52,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             
             
             _hitFeedbacks?.PlayFeedbacks();
+            _yithAttack.ResetAttackState();
         }
 
         private void HandleDeath()

@@ -582,6 +582,7 @@ MonoBehaviour:
   _movementMotor: {fileID: 855018551297982499}
   _hitFeedbacks: {fileID: 7172276037332111135}
   _yithAnimator: {fileID: 5777217987381979659}
+  _yithAttack: {fileID: 6624409593950422001}
 --- !u!114 &1819279801094360365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,7 +692,6 @@ MonoBehaviour:
   _movementMotor: {fileID: 855018551297982499}
   _yithAnimator: {fileID: 5777217987381979659}
   _navigationElement: {fileID: 2545568645281062649}
-  _comboCount: 1
 --- !u!114 &3316429485802251377
 MonoBehaviour:
   m_ObjectHideFlags: 0

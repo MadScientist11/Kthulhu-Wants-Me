@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
@@ -25,16 +26,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         private readonly SpellConfiguration _spellConfiguration;
         private readonly IBuffDebuffFactory _buffDebuffFactory;
         private readonly IBuffDebuffService _buffDebuffService;
+        private IGameFactory _gameFactory;
 
         public BasicAttackSpell(TentacleSpellCastingAbility spellCastingAbility, SpellConfiguration spellConfiguration,
-            PlayerFacade player, ThePlayer playerModel, IBuffDebuffFactory buffDebuffFactory, IBuffDebuffService buffDebuffService)
+            IGameFactory gameFactory, ThePlayer playerModel, IBuffDebuffFactory buffDebuffFactory, IBuffDebuffService buffDebuffService)
         {
+            _gameFactory = gameFactory;
             _buffDebuffService = buffDebuffService;
             _buffDebuffFactory = buffDebuffFactory;
             _spellConfiguration = spellConfiguration;
             _spellCastingAbility = spellCastingAbility;
             _playerModel = playerModel;
-            _player = player;
+            _player = gameFactory.Player;
+            _gameFactory = gameFactory;
         }
 
         public async UniTask Cast()
@@ -45,7 +49,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             
             _spellCastingAbility.CastingSpell = true;
             Vector3 spellCastPosition = _player.transform.position.AddY(.05f);
-            _spellInstance = Object.Instantiate(_spellConfiguration.Prefab, spellCastPosition, _spellConfiguration.Prefab.transform.rotation);
+            _spellInstance = _gameFactory.CreateInjected(_spellConfiguration.Prefab, spellCastPosition, _spellConfiguration.Prefab.transform.rotation);
             Active = true;
             await UniTask.Delay(Mathf.FloorToInt(_spellConfiguration.ActivationTime * 1000),false , PlayerLoopTiming.Update, _spellCastToken.Token);
             _spellCastingAbility.CastingSpell = false;

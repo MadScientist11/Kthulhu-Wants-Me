@@ -120,7 +120,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
                 = new SpawnMinionsSpell(_gameFactory, this);
 
             BasicAttackSpell basicAttackSpell
-                = new BasicAttackSpell(this, allSpells[TentacleSpell.BasicAttackSpell], _gameFactory.Player,
+                = new BasicAttackSpell(this, allSpells[TentacleSpell.BasicAttackSpell], _gameFactory,
                     _playerModel, _buffDebuffFactory, _buffDebuffService);
 
             BuffSpell buffSpell
