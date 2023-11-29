@@ -32,11 +32,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
         public void Install(IContainerBuilder builder)
         {
             builder
-                .Register<GameFactory>(Lifetime.Scoped)
+                .Register<GameFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
             builder
-                .Register<EnemiesAIBrainService>(Lifetime.Scoped)
+                .Register<EnemiesAIBrainService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
 
 
@@ -45,57 +45,57 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
 
 
-            builder.Register<ThePlayer>(Lifetime.Scoped)
+            builder.Register<ThePlayer>(Lifetime.Singleton)
                 .As<IInitializable>()
                 .As<ITickable>()
                 .AsSelf();
             
             builder
-                .Register<LootService>(Lifetime.Scoped)
+                .Register<LootService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
             builder
-                .Register<RoomOverseer>(Lifetime.Scoped)
-                .AsImplementedInterfaces();
-            
-
-            
-            builder
-                .Register<UpgradeService>(Lifetime.Scoped)
+                .Register<RoomOverseer>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
 
+            
             builder
-                .Register<PortalFactory>(Lifetime.Scoped)
+                .Register<UpgradeService>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
+
+            builder
+                .Register<PortalFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
             builder
-                .Register<BuffDebuffService>(Lifetime.Scoped)
+                .Register<BuffDebuffService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
             builder
-                .Register<BuffDebuffFactory>(Lifetime.Scoped)
+                .Register<BuffDebuffFactory>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
             builder
-                .Register<EnemyStatsScalingService>(Lifetime.Scoped)
+                .Register<EnemyStatsScalingService>(Lifetime.Singleton)
                 .AsSelf();
             
             builder
-                .Register<GameApp>(Lifetime.Scoped)
+                .Register<GameApp>(Lifetime.Singleton)
                 .AsSelf()
                 .AsImplementedInterfaces();
             
             builder
-                .Register<EnemyStatsProvider>(Lifetime.Scoped)
+                .Register<EnemyStatsProvider>(Lifetime.Singleton)
                 .AsSelf();
             
             builder
-                .Register<WaveSystemDirector>(Lifetime.Scoped)
+                .Register<WaveSystemDirector>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             
             builder
-                .Register<ProjectileArcFactory>(Lifetime.Scoped)
+                .Register<ProjectileArcFactory>(Lifetime.Singleton)
                 .AsSelf();
             
             RegisterGameplayFsm(builder);

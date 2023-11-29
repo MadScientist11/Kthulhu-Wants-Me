@@ -45287,7 +45287,7 @@ GameObject:
   - component: {fileID: 1970423738}
   - component: {fileID: 1970423737}
   - component: {fileID: 1970423736}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: NavMeshNonWalkableAreasRestrictor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

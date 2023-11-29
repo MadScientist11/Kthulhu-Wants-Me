@@ -45,6 +45,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         {
             _spellCastToken = new();
             _spellCastToken.RegisterRaiseCancelOnDestroy(_spellCastingAbility.gameObject);
+            _spellCastToken.Token.Register(CancelSpell);
             InCooldown = true;
             
             _spellCastingAbility.CastingSpell = true;
@@ -75,7 +76,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
                 }
             }
 
+            CancelSpell();
+        }
+
+        private void CancelSpell()
+        {
             _spellCastingAbility.CancelSpell(TentacleSpell.BasicAttackSpell).Forget();
+
         }
 
         public UniTask Undo()
