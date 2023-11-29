@@ -1,5 +1,172 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &700150758847946436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5885720155932786066}
+  m_Layer: 0
+  m_Name: 'Cyaegha: SlimeLeftBackward'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5885720155932786066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700150758847946436}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.6384328, y: 0.30397955, z: 0.30397955, w: 0.6384328}
+  m_LocalPosition: {x: -0.24163447, y: 0.049999997, z: -0.19418946}
+  m_LocalScale: {x: 1, y: 1, z: 1.0000001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8553429472634210733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1724726935135315882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8553429472634210733}
+  m_Layer: 0
+  m_Name: Cyaegha:Root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8553429472634210733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724726935135315882}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00000003774895, y: 1.110223e-16, z: -1.110223e-16, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7206230015066641507}
+  - {fileID: 5885720155932786066}
+  - {fileID: 2059926194909395296}
+  - {fileID: 4292487745765511336}
+  - {fileID: 9064332938323897102}
+  - {fileID: 3686262075453855114}
+  - {fileID: 8170426478867658487}
+  - {fileID: 4448600103833255716}
+  - {fileID: 6137875634018870993}
+  m_Father: {fileID: 7096488840017532776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3132557241537088659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6137875634018870993}
+  m_Layer: 0
+  m_Name: Cyaegha:Hips
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6137875634018870993
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3132557241537088659}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -3.9443045e-31, w: 1}
+  m_LocalPosition: {x: 2.9122023e-25, y: 0.18, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5606809623951995467}
+  m_Father: {fileID: 8553429472634210733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3552877515484884134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9064332938323897102}
+  m_Layer: 0
+  m_Name: 'Cyaegha: SlimeRightBackward'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9064332938323897102
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3552877515484884134}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.6954774, y: -0.12771496, z: -0.12771492, w: 0.6954775}
+  m_LocalPosition: {x: 0.10336726, y: 0.049999997, z: -0.28103468}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8553429472634210733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3746501023085757071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7096488840017532776}
+  m_Layer: 0
+  m_Name: Skeleton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7096488840017532776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3746501023085757071}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000003774895, y: -1.110223e-16, z: 1.110223e-16, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8553429472634210733}
+  - {fileID: 4555433769988794828}
+  m_Father: {fileID: 2164092771247736844}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3900409656979045455
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,8 +209,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7617297822207177343}
-  - {fileID: 8850312754671318344}
+  - {fileID: 4872720694120713913}
+  - {fileID: 7096488840017532776}
   - {fileID: 616920794484114220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -141,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53964dce8d854f25bee212ffcf14bd9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CyaeghaWiggle>k__BackingField: {fileID: 8208260402178362640}
+  <CyaeghaWiggle>k__BackingField: {fileID: 0}
   _cyaeghaAIBrain: {fileID: 1528546947026360114}
   _movementMotor: {fileID: 4185908553111193425}
   _cyaeghaAttack: {fileID: 6832438006561834181}
@@ -723,7 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e4f1df479a4fbc94d6dd3ed2060614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4001451047165580392
+--- !u!1 &4058697804941218247
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -731,9 +898,134 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7617297822207177343}
-  - component: {fileID: 3344001800786583130}
-  - component: {fileID: 8208260402178362640}
+  - component: {fileID: 3686262075453855114}
+  m_Layer: 0
+  m_Name: 'Cyaegha: TailBack1'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3686262075453855114
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058697804941218247}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.62838256, y: 0.041980226, z: 0.04186123, w: 0.77564216}
+  m_LocalPosition: {x: -0.066029474, y: 0.13285601, z: -0.31852472}
+  m_LocalScale: {x: 1, y: 0.9999999, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 21870713044226491}
+  m_Father: {fileID: 8553429472634210733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4707612357696233559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6593754964892697044}
+  m_Layer: 0
+  m_Name: 'Cyaegha: TailBack3'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6593754964892697044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4707612357696233559}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.077718474, y: 0.0005159711, z: 0.031003088, w: 0.99649304}
+  m_LocalPosition: {x: 0.000000006519258, y: 0.13952595, z: 0.000000038184226}
+  m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 21870713044226491}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4849002822046661524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8170426478867658487}
+  m_Layer: 0
+  m_Name: 'Cyaegha: TailLeft1'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8170426478867658487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4849002822046661524}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.45113268, y: 0.5452052, z: 0.42930532, w: 0.56118405}
+  m_LocalPosition: {x: -0.33114144, y: 0.124398656, z: -0.005447002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 234730595485180031}
+  m_Father: {fileID: 8553429472634210733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4867712351022328276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5606809623951995467}
+  m_Layer: 0
+  m_Name: Cyaegha:Eye
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5606809623951995467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4867712351022328276}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -3.9443045e-31, w: 1}
+  m_LocalPosition: {x: 2.3824122e-24, y: 0.089999974, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6137875634018870993}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4931141209032283220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4872720694120713913}
+  - component: {fileID: 1165785888331837209}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -741,28 +1033,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7617297822207177343
+--- !u!4 &4872720694120713913
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4001451047165580392}
+  m_GameObject: {fileID: 4931141209032283220}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -6.617445e-24, z: 3.9443045e-31, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2164092771247736844}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &3344001800786583130
+--- !u!137 &1165785888331837209
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4001451047165580392}
+  m_GameObject: {fileID: 4931141209032283220}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -803,335 +1095,31 @@ SkinnedMeshRenderer:
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: -5523277661179574252, guid: 510381d26c625e9458c1f4448dde03f6, type: 3}
   m_Bones:
-  - {fileID: 209447466241249020}
-  - {fileID: 8273377552559463428}
+  - {fileID: 8553429472634210733}
+  - {fileID: 7206230015066641507}
+  - {fileID: 2059926194909395296}
+  - {fileID: 5885720155932786066}
+  - {fileID: 9064332938323897102}
+  - {fileID: 4292487745765511336}
+  - {fileID: 6137875634018870993}
+  - {fileID: 5606809623951995467}
+  - {fileID: 3686262075453855114}
+  - {fileID: 21870713044226491}
+  - {fileID: 6593754964892697044}
+  - {fileID: 8170426478867658487}
+  - {fileID: 234730595485180031}
+  - {fileID: 2311733882149975749}
+  - {fileID: 4448600103833255716}
+  - {fileID: 5385527923329395532}
+  - {fileID: 703674570177028928}
+  - {fileID: 4555433769988794828}
   m_BlendShapeWeights: []
-  m_RootBone: {fileID: 209447466241249020}
+  m_RootBone: {fileID: 8553429472634210733}
   m_AABB:
-    m_Center: {x: -0.06633139, y: 0.2605359, z: -0.049175978}
-    m_Extent: {x: 0.7538992, y: 0.26065522, z: 0.7227751}
+    m_Center: {x: -0.06542134, y: 0.2605357, z: -0.023156822}
+    m_Extent: {x: 0.8573974, y: 0.26065543, z: 0.8974508}
   m_DirtyAABB: 0
---- !u!114 &8208260402178362640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4001451047165580392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 347013242dca7c44fb5001793033ea59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UpdateMode: 0
-  PositionActive: 0
-  RotationActive: 0
-  ScaleActive: 1
-  PositionWiggleProperties:
-    WigglePermitted: 1
-    WiggleType: 1
-    UseUnscaledTime: 0
-    StartWigglingAutomatically: 1
-    SmoothPingPong: 1
-    UseSpeedCurve: 0
-    SpeedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    FrequencyMin: 0
-    FrequencyMax: 1
-    AmplitudeMin: {x: 0, y: 0, z: 0}
-    AmplitudeMax: {x: 1, y: 1, z: 1}
-    RelativeAmplitude: 1
-    UniformValues: 0
-    Curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
-    RemapCurveZeroMax: {x: 0, y: 0, z: 0}
-    RemapCurveOneMin: {x: 1, y: 1, z: 1}
-    RemapCurveOneMax: {x: 1, y: 1, z: 1}
-    RelativeCurveAmplitude: 1
-    CurvePingPong: 0
-    PauseMin: 0
-    PauseMax: 0
-    LimitedTime: 0
-    LimitedTimeTotal: 0
-    LimitedTimeFalloff:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: -1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    LimitedTimeResetValue: 1
-    LimitedTimeLeft: 0
-    NoiseFrequencyMin: {x: 0, y: 0, z: 0}
-    NoiseFrequencyMax: {x: 1, y: 1, z: 1}
-    NoiseShiftMin: {x: 0, y: 0, z: 0}
-    NoiseShiftMax: {x: 0, y: 0, z: 0}
-  RotationWiggleProperties:
-    WigglePermitted: 1
-    WiggleType: 1
-    UseUnscaledTime: 0
-    StartWigglingAutomatically: 1
-    SmoothPingPong: 1
-    UseSpeedCurve: 0
-    SpeedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    FrequencyMin: 0
-    FrequencyMax: 1
-    AmplitudeMin: {x: 0, y: 0, z: 0}
-    AmplitudeMax: {x: 1, y: 1, z: 1}
-    RelativeAmplitude: 1
-    UniformValues: 0
-    Curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
-    RemapCurveZeroMax: {x: 0, y: 0, z: 0}
-    RemapCurveOneMin: {x: 1, y: 1, z: 1}
-    RemapCurveOneMax: {x: 1, y: 1, z: 1}
-    RelativeCurveAmplitude: 1
-    CurvePingPong: 0
-    PauseMin: 0
-    PauseMax: 0
-    LimitedTime: 0
-    LimitedTimeTotal: 0
-    LimitedTimeFalloff:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: -1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    LimitedTimeResetValue: 1
-    LimitedTimeLeft: 0
-    NoiseFrequencyMin: {x: 0, y: 0, z: 0}
-    NoiseFrequencyMax: {x: 1, y: 1, z: 1}
-    NoiseShiftMin: {x: 0, y: 0, z: 0}
-    NoiseShiftMax: {x: 0, y: 0, z: 0}
-  ScaleWiggleProperties:
-    WigglePermitted: 1
-    WiggleType: 3
-    UseUnscaledTime: 0
-    StartWigglingAutomatically: 1
-    SmoothPingPong: 1
-    UseSpeedCurve: 0
-    SpeedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    FrequencyMin: 0
-    FrequencyMax: 1
-    AmplitudeMin: {x: 0, y: 0.1, z: 0}
-    AmplitudeMax: {x: 0, y: 0.1, z: 0}
-    RelativeAmplitude: 1
-    UniformValues: 0
-    Curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    RemapCurveZeroMin: {x: 0, y: 0, z: 0}
-    RemapCurveZeroMax: {x: 0, y: 0, z: 0}
-    RemapCurveOneMin: {x: 1, y: 1, z: 1}
-    RemapCurveOneMax: {x: 1, y: 1, z: 1}
-    RelativeCurveAmplitude: 1
-    CurvePingPong: 0
-    PauseMin: 0
-    PauseMax: 0
-    LimitedTime: 1
-    LimitedTimeTotal: 0
-    LimitedTimeFalloff:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: -1
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -1
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    LimitedTimeResetValue: 1
-    LimitedTimeLeft: 0
-    NoiseFrequencyMin: {x: 0, y: 5, z: 0}
-    NoiseFrequencyMax: {x: 1, y: 5, z: 1}
-    NoiseShiftMin: {x: 0, y: 0, z: 0}
-    NoiseShiftMax: {x: 0, y: 0, z: 0}
-  DebugWiggleDuration: 2
---- !u!1 &5525675099028523185
+--- !u!1 &5597676419464502305
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1139,62 +1127,30 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 209447466241249020}
+  - component: {fileID: 703674570177028928}
   m_Layer: 0
-  m_Name: Cyaegha:Root
+  m_Name: 'Cyaegha: TailRight3'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &209447466241249020
+--- !u!4 &703674570177028928
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5525675099028523185}
+  m_GameObject: {fileID: 5597676419464502305}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000003774895, y: 1.110223e-16, z: -1.110223e-16, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8273377552559463428}
-  m_Father: {fileID: 8850312754671318344}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6147730308291636927
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8273377552559463428}
-  m_Layer: 0
-  m_Name: Cyaegha:Eye
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8273377552559463428
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6147730308291636927}
-  serializedVersion: 2
-  m_LocalRotation: {x: 3.5527137e-15, y: 3.9443045e-31, z: 0, w: 1}
-  m_LocalPosition: {x: 1.923553e-24, y: 0.28, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.053860385, y: -0.0005941919, z: 0.014128845, w: 0.9984484}
+  m_LocalPosition: {x: -0.0000000020954758, y: 0.13190362, z: 0.000000022351742}
+  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.9999998}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 209447466241249020}
+  m_Father: {fileID: 5385527923329395532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6594487096651338359
+--- !u!1 &5923852672726957078
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1202,29 +1158,91 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8850312754671318344}
+  - component: {fileID: 7206230015066641507}
   m_Layer: 0
-  m_Name: Skeleton
+  m_Name: 'Cyaegha: SlimeForward'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8850312754671318344
+--- !u!4 &7206230015066641507
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6594487096651338359}
+  m_GameObject: {fileID: 5923852672726957078}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.08920711, y: 0.7014572, z: 0.70145696, w: -0.08920784}
+  m_LocalPosition: {x: 0.08863677, y: 0.049999997, z: 0.31037152}
+  m_LocalScale: {x: 1, y: 0.9999998, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8553429472634210733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6213973683696991768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4448600103833255716}
+  m_Layer: 0
+  m_Name: 'Cyaegha: TailRight1'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4448600103833255716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6213973683696991768}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5262658, y: -0.4194178, z: -0.31326336, w: 0.6700739}
+  m_LocalPosition: {x: 0.29955962, y: 0.132856, z: -0.07021828}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 209447466241249020}
-  m_Father: {fileID: 2164092771247736844}
+  - {fileID: 5385527923329395532}
+  m_Father: {fileID: 8553429472634210733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6472322928585330987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2311733882149975749}
+  m_Layer: 0
+  m_Name: 'Cyaegha: TailLeft3'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2311733882149975749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6472322928585330987}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.09848234, y: -0.0011525115, z: 0.023976801, w: 0.99484926}
+  m_LocalPosition: {x: 5.820766e-10, y: 0.16127865, z: -0.000000018364517}
+  m_LocalScale: {x: 1, y: 1.0000001, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 234730595485180031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6856347499884575769
 GameObject:
@@ -1259,6 +1277,37 @@ Transform:
   - {fileID: 5861763254945953131}
   - {fileID: 1295768503986402880}
   m_Father: {fileID: 2164092771247736844}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6876050850184494063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2059926194909395296}
+  m_Layer: 0
+  m_Name: 'Cyaegha: SlimeLeftForward'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2059926194909395296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6876050850184494063}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.32290536, y: 0.62907237, z: 0.62907237, w: 0.32290572}
+  m_LocalPosition: {x: -0.2758504, y: 0.049999997, z: 0.19109678}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8553429472634210733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6923499852982747503
 GameObject:
@@ -1460,7 +1509,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 5877846525254510561}
         DebugActive: 0
-        BoundRenderer: {fileID: 3344001800786583130}
+        BoundRenderer: {fileID: 0}
         Mode: 1
         PropertyName: _1st_ShadeColor
         FlickerDuration: 0.2
@@ -1537,7 +1586,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 5877846525254510561}
         DebugActive: 0
-        BoundRenderer: {fileID: 3344001800786583130}
+        BoundRenderer: {fileID: 0}
         Mode: 1
         PropertyName: _BaseColor
         FlickerDuration: 0.2
@@ -1844,6 +1893,102 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+--- !u!1 &7324422911028648030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 21870713044226491}
+  m_Layer: 0
+  m_Name: 'Cyaegha: TailBack2'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &21870713044226491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7324422911028648030}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.17835987, y: 0.018022865, z: 0.003643577, w: 0.9837935}
+  m_LocalPosition: {x: 6.9849193e-10, y: 0.1964776, z: 0.000000003259629}
+  m_LocalScale: {x: 0.9999999, y: 0.9999999, z: 0.99999994}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6593754964892697044}
+  m_Father: {fileID: 3686262075453855114}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7486117198576061181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 234730595485180031}
+  m_Layer: 0
+  m_Name: 'Cyaegha: TailLeft2'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &234730595485180031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486117198576061181}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.15597028, y: -0.0022828109, z: 0.021471092, w: 0.9875257}
+  m_LocalPosition: {x: -0.0000000026775524, y: 0.22380656, z: 0.000000009489668}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2311733882149975749}
+  m_Father: {fileID: 8170426478867658487}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7532075683305341402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5385527923329395532}
+  m_Layer: 0
+  m_Name: 'Cyaegha: TailRight2'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5385527923329395532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7532075683305341402}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.16916801, y: 0.02635558, z: 0.014438337, w: 0.985129}
+  m_LocalPosition: {x: 0.000000012572855, y: 0.19175643, z: 0.0000000121071935}
+  m_LocalScale: {x: 1.0000001, y: 0.99999994, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 703674570177028928}
+  m_Father: {fileID: 4448600103833255716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7889927012311711698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,7 +2121,7 @@ MonoBehaviour:
     - rid: 1778437633243086848
       type: {class: MMF_Scale, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: -1661506969
         Label: Scale
         ChannelMode: 0
@@ -2183,6 +2328,37 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+--- !u!1 &8066221672320266026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4292487745765511336}
+  m_Layer: 0
+  m_Name: 'Cyaegha: SlimeRight'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4292487745765511336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066221672320266026}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.52952945, y: -0.46861342, z: -0.468614, w: 0.529529}
+  m_LocalPosition: {x: 0.34561202, y: 0.049999997, z: 0.038649723}
+  m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8553429472634210733}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8608304278819304912
 GameObject:
   m_ObjectHideFlags: 0
@@ -2385,7 +2561,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 8487010109735059623}
         DebugActive: 0
-        BoundRenderer: {fileID: 3344001800786583130}
+        BoundRenderer: {fileID: 0}
         Mode: 1
         PropertyName: _1st_ShadeColor
         FlickerDuration: 0.75
@@ -2462,7 +2638,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 8487010109735059623}
         DebugActive: 0
-        BoundRenderer: {fileID: 3344001800786583130}
+        BoundRenderer: {fileID: 0}
         Mode: 1
         PropertyName: _BaseColor
         FlickerDuration: 0.75
@@ -2760,7 +2936,7 @@ MonoBehaviour:
     - rid: 1778437472070926341
       type: {class: MMF_Scale, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: -825235195
         Label: Scale
         ChannelMode: 0
@@ -2970,7 +3146,7 @@ MonoBehaviour:
     - rid: 1778437472070926342
       type: {class: MMF_Scale, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: 1325457634
         Label: Scale
         ChannelMode: 0
@@ -3177,3 +3353,34 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+--- !u!1 &9154151390923780599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4555433769988794828}
+  m_Layer: 0
+  m_Name: Cyaegha:Rotation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4555433769988794828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154151390923780599}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1, y: 2.2983608e-15, z: 0.00000004371139, w: -0.00000013315805}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7096488840017532776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
