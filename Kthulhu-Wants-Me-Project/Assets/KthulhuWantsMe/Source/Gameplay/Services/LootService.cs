@@ -32,14 +32,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         private readonly NavMeshSurface _navMeshSurface;
         private readonly IRoomOverseer _roomOverseer;
         private readonly IWaveSystemDirector _waveSystemDirector;
+        private readonly ProgressService _progressService;
 
-        private const float _flameSoulSpawnInterval = 10;
+        private const float FlameSoulSpawnInterval = 10;
+        private const int StartSpawnFlameSoulAfterWave = 3;
         private float _flameSoulLastSpawnTime;
 
         private readonly List<BuffItem> _loot = new();
 
-        public LootService(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, IRoomOverseer roomOverseer, IWaveSystemDirector waveSystemDirector)
+        public LootService(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, 
+            IRoomOverseer roomOverseer, IWaveSystemDirector waveSystemDirector, ProgressService progressService)
         {
+            _progressService = progressService;
             _waveSystemDirector = waveSystemDirector;
             _roomOverseer = roomOverseer;
             _gameFactory = gameFactory;
@@ -49,12 +53,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         public void Tick()
         {
 
-            if (!_waveSystemDirector.WaveOngoing)
+            if (!_waveSystemDirector.WaveOngoing || _progressService.ProgressData.CompletedWaveIndex < StartSpawnFlameSoulAfterWave - 1)
             {
                 return;
             }
             
-            if (_flameSoulLastSpawnTime + _flameSoulSpawnInterval <= Time.time)
+            if (_flameSoulLastSpawnTime + FlameSoulSpawnInterval <= Time.time)
             {
                 _flameSoulLastSpawnTime = Time.time;
 
