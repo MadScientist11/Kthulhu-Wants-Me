@@ -8,6 +8,7 @@ using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Rooms;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using MoreMountains.Tools;
 using Unity.AI.Navigation;
@@ -30,14 +31,16 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         private readonly IGameFactory _gameFactory;
         private readonly NavMeshSurface _navMeshSurface;
         private readonly IRoomOverseer _roomOverseer;
+        private readonly IWaveSystemDirector _waveSystemDirector;
 
         private const float _flameSoulSpawnInterval = 10;
         private float _flameSoulLastSpawnTime;
 
         private readonly List<BuffItem> _loot = new();
 
-        public LootService(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, IRoomOverseer roomOverseer)
+        public LootService(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, IRoomOverseer roomOverseer, IWaveSystemDirector waveSystemDirector)
         {
+            _waveSystemDirector = waveSystemDirector;
             _roomOverseer = roomOverseer;
             _gameFactory = gameFactory;
             _navMeshSurface = sceneDataProvider.MapNavMesh;
@@ -45,6 +48,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
         public void Tick()
         {
+
+            if (!_waveSystemDirector.WaveOngoing)
+            {
+                return;
+            }
+            
             if (_flameSoulLastSpawnTime + _flameSoulSpawnInterval <= Time.time)
             {
                 _flameSoulLastSpawnTime = Time.time;
