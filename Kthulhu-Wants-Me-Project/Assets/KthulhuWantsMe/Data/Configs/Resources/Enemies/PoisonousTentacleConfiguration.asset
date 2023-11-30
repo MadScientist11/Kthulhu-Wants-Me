@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 7
+      Data: 6
     - Name: 
       Entry: 8
       Data: 
@@ -74,21 +74,20 @@ MonoBehaviour:
   EnemyType: 1
   Prefab: {fileID: 7040502946091595901, guid: fa6485ad9671b57469481f88c6d60ee2, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
-  Knockback: 10
-  KnockbackTime: 0.25
   MoveSpeed: {x: 3, y: 4}
   StunWearOffTime: 3
   TentacleGrabDamage: 100
   GrabAbilityChance: 0.1
-  AggroRange: 10
-  AttackRange: 3
   ReconsiderationTime: 2
+  AttackActivationDistance: 3
   AttackRadius: 1
   AttackEffectiveDistance: 1
   AttackCooldownTime: 1
+  SpellAttackActivationDistance: 3
   ChaseCooldown: 15
   ChaseAfterSeconds: 15
   RotationSpeed: 100
+  AggroRange: 10
   PoisonDamagePerSecond: 3
   PoisonEffectDuration: 6
   PoisonEffectPrefab: {fileID: 7163259385320301113, guid: 6cc1df5af8285d84481515a5ec44bdf4,

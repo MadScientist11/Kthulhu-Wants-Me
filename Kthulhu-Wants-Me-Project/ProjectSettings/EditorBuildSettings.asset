@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/KthulhuWantsMe/Scenes/StartUp.unity
     guid: ffbe00834d165814c8ff890787dfef71
   - enabled: 1
+    path: Assets/KthulhuWantsMe/Scenes/MainMenu.unity
+    guid: 42b478364a9994b49bf4e8b2a9f86ce7
+  - enabled: 1
     path: Assets/KthulhuWantsMe/Scenes/MainGame.unity
     guid: cdc53027e61fa774b903ab6ac38ea00d
   - enabled: 1
     path: Assets/KthulhuWantsMe/Scenes/GameUI.unity
     guid: 0f862fd50488a4b419ebdf14dc54bafe
-  - enabled: 1
-    path: Assets/KthulhuWantsMe/Scenes/MainMenu.unity
-    guid: 42b478364a9994b49bf4e8b2a9f86ce7
   m_configObjects: {}
