@@ -22,6 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
 
         [SerializeField] private CyaeghaFacade _cyaeghaFacade;
         [SerializeField] private MovementMotor _movementMotor;
+        [SerializeField] private CyaeghaAnimator _cyaeghaAnimator;
         [SerializeField] private AnimationCurve _knockbackCurve;
 
         private CyaeghaConfiguration _cyaeghaConfiguration;
@@ -57,9 +58,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private IEnumerator Death()
         {
             _collider.enabled = false;
-            _cyaeghaFacade.CyaeghaWiggle.SwitchOff();
+            _cyaeghaFacade.CyaeghaWiggle?.SwitchOff();
             _deathFeedback?.PlayFeedbacks();
             GetComponent<IStoppable>().StopEntityLogic();
+            _cyaeghaAnimator.PlayDie();
             yield return new WaitForSeconds(.2f);
             Destroy(gameObject, 1f);
         }

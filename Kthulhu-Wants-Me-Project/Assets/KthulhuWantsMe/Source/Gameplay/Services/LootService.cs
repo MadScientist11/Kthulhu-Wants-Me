@@ -32,7 +32,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         private readonly NavMeshSurface _navMeshSurface;
         private readonly IRoomOverseer _roomOverseer;
         private readonly IWaveSystemDirector _waveSystemDirector;
-        private readonly ProgressService _progressService;
+        private readonly IProgressService _progressService;
 
         private const float FlameSoulSpawnInterval = 10;
         private const int StartSpawnFlameSoulAfterWave = 3;
@@ -41,7 +41,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
         private readonly List<BuffItem> _loot = new();
 
         public LootService(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, 
-            IRoomOverseer roomOverseer, IWaveSystemDirector waveSystemDirector, ProgressService progressService)
+            IRoomOverseer roomOverseer, IWaveSystemDirector waveSystemDirector, IProgressService progressService)
         {
             _progressService = progressService;
             _waveSystemDirector = waveSystemDirector;

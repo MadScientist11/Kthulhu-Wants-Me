@@ -177,11 +177,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2164092771247736844}
   - component: {fileID: 7342667127769428846}
+  - component: {fileID: -7748841025858952460}
   - component: {fileID: 4302006736190205134}
   - component: {fileID: 2074288089250755570}
   - component: {fileID: -6736657406163995852}
   - component: {fileID: -5520324125612971702}
   - component: {fileID: 1528546947026360114}
+  - component: {fileID: 4626293653599882361}
+  - component: {fileID: 8004065569407118126}
   - component: {fileID: 2031074355959050545}
   - component: {fileID: 6835703763880801073}
   - component: {fileID: 1805378254231291091}
@@ -241,6 +244,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &-7748841025858952460
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900409656979045455}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 63a6c03fd72e7694d83c660e4c0bc717, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &4302006736190205134
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -327,7 +351,35 @@ MonoBehaviour:
   _enemyStatsContainer: {fileID: -6736657406163995852}
   _cyaeghaHealth: {fileID: 1805378254231291091}
   _cyaeghaAttack: {fileID: 6832438006561834181}
+  _cyaeghaMovement: {fileID: 8004065569407118126}
   _patrolBehaviour: {fileID: 6835703763880801073}
+  _followPlayerBehaviour: {fileID: 2031074355959050545}
+--- !u!114 &4626293653599882361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900409656979045455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ddddd81946e49ad9dea956a124ee5ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: -7748841025858952460}
+--- !u!114 &8004065569407118126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900409656979045455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8bf0631188404aae51e669770f4b6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cyaeghaAnimator: {fileID: 4626293653599882361}
   _followPlayerBehaviour: {fileID: 2031074355959050545}
 --- !u!114 &2031074355959050545
 MonoBehaviour:
@@ -379,6 +431,7 @@ MonoBehaviour:
   _deathFeedback: {fileID: 6300466960411464641}
   _cyaeghaFacade: {fileID: -5520324125612971702}
   _movementMotor: {fileID: 4185908553111193425}
+  _cyaeghaAnimator: {fileID: 4626293653599882361}
   _knockbackCurve:
     serializedVersion: 2
     m_Curve:
@@ -850,6 +903,7 @@ MonoBehaviour:
   _enemyStatsContainer: {fileID: -6736657406163995852}
   _attackPrepareFeedback: {fileID: 8487010109735059623}
   _cyaeghaNavMesh: {fileID: 2074288089250755570}
+  _cyaeghaAnimator: {fileID: 4626293653599882361}
   _jumpEasing: 0
   _landEasing: 0
 --- !u!114 &4185908553111193425
@@ -1509,7 +1563,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 5877846525254510561}
         DebugActive: 0
-        BoundRenderer: {fileID: 0}
+        BoundRenderer: {fileID: 1165785888331837209}
         Mode: 1
         PropertyName: _1st_ShadeColor
         FlickerDuration: 0.2
@@ -1586,7 +1640,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 5877846525254510561}
         DebugActive: 0
-        BoundRenderer: {fileID: 0}
+        BoundRenderer: {fileID: 1165785888331837209}
         Mode: 1
         PropertyName: _BaseColor
         FlickerDuration: 0.2
@@ -1686,7 +1740,7 @@ MonoBehaviour:
     - rid: 1778437417314811911
       type: {class: MMF_Scale, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: 1624137346
         Label: Scale
         ChannelMode: 0
@@ -2561,7 +2615,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 8487010109735059623}
         DebugActive: 0
-        BoundRenderer: {fileID: 0}
+        BoundRenderer: {fileID: 1165785888331837209}
         Mode: 1
         PropertyName: _1st_ShadeColor
         FlickerDuration: 0.75
@@ -2638,7 +2692,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 8487010109735059623}
         DebugActive: 0
-        BoundRenderer: {fileID: 0}
+        BoundRenderer: {fileID: 1165785888331837209}
         Mode: 1
         PropertyName: _BaseColor
         FlickerDuration: 0.75
@@ -2650,7 +2704,7 @@ MonoBehaviour:
     - rid: 1778437472070926339
       type: {class: MMF_Scale, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: 1209127397
         Label: Scale
         ChannelMode: 0
@@ -2860,7 +2914,7 @@ MonoBehaviour:
     - rid: 1778437472070926340
       type: {class: MMF_HoldingPause, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: 2144550041
         Label: Holding Pause
         ChannelMode: 0

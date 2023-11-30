@@ -18,6 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
         [SerializeField] private CyaeghaHealth _cyaeghaHealth;
         [SerializeField] private CyaeghaAttack _cyaeghaAttack;
+        [SerializeField] private CyaeghaMovement _cyaeghaMovement;
 
         [SerializeField] private Patrol _patrolBehaviour;
         [SerializeField] private FollowPlayer _followPlayerBehaviour;
@@ -84,7 +85,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             if (_aiService.AllowedChasingPlayer(gameObject))
             {
                 _patrolBehaviour.CancelPatrol();
-                _followPlayerBehaviour.MoveToPlayer(_aiService.EnemiesCount < 10 ? 1 : -1);
+                _cyaeghaMovement.FollowPlayer();
             }
             else
             {

@@ -25,11 +25,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private MMFeedbacks _attackPrepareFeedback;
 
         [SerializeField] private NavMeshAgent _cyaeghaNavMesh;
+        [SerializeField] private CyaeghaAnimator _cyaeghaAnimator;
 
         [Header("Jump")] [SerializeField] private Ease _jumpEasing;
-
-      
-
         [Header("Landing")] [SerializeField] private Ease _landEasing;
 
 
@@ -77,7 +75,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             SetAttackState();
 
             _attackPrepareFeedback?.PlayFeedbacks();
+            _cyaeghaAnimator.PlayAttack();
             yield return new WaitForSeconds(_cyaeghaConfiguration.DelayBeforeJump);
+            
 
             Vector3 jumpStartPos = transform.position;
             Vector3 dest = lastPlayerPosition;
