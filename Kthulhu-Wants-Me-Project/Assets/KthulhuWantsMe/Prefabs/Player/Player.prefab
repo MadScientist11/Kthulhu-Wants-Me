@@ -2291,7 +2291,7 @@ MonoBehaviour:
   StableGroundLayers:
     serializedVersion: 2
     m_Bits: 8192
-  DiscreteCollisionEvents: 0
+  DiscreteCollisionEvents: 1
   StepHandling: 0
   MaxStepHeight: 0.5
   AllowSteppingWithoutStableGrounding: 0

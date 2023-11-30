@@ -1,6 +1,7 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VContainer;
@@ -14,6 +15,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [FormerlySerializedAs("_enemy")] [SerializeField] private EnemyStatsContainer enemyStatsContainer;
         [SerializeField] private TentacleAnimator _tentacleAnimator;
         [SerializeField] private TentacleRetreat _tentacleRetreat;
+        [SerializeField] private MMFeedbacks _deathFeedbacks;
 
         private void Start()
         {
@@ -37,6 +39,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private void OnDie()
         {
             _tentacleRetreat.RetreatDefeated();
+            _deathFeedbacks?.PlayFeedbacks();
         }
     }
 }
