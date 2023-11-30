@@ -82,7 +82,8 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
                                            && !_waveState.PendingEnemies.ContainsKey(spawnerId)));
         }
 
-        public void RespawnClosest(EnemySpawnerId currentSpawner, Health entity)
+        public void RespawnClosest(EnemySpawnerId currentSpawner, Health entity,
+            EnemyType enemyType)
         {
             if (_waveState.PendingEnemies.ContainsValue(entity))
                 return;
@@ -99,7 +100,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             {
                 retreatBehaviour.Retreat(false, () =>
                 {
-                    desired.Spawn(entity, EnemyType.Tentacle, () =>
+                    desired.Spawn(entity, enemyType, () =>
                     {
                         _waveState.DeregisterEnemyAsPending(desired.Id, entity);
                         _waveState.RegisterEnemy(desired.Id, entity);

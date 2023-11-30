@@ -69,9 +69,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
                     return;
                 }
                 
-                IRoom[] roomsByDistance = _roomOverseer.UnlockedRooms
-                    .OrderByDescending(room =>
-                        Vector3.Distance(room.Transform.position, playerCurrentRoom.Transform.position))
+                IRoom[] roomsByDistance = _roomOverseer
+                    .UnlockedRooms
+                    .OrderByDescending(room => Vector3.Distance(room.Transform.position, playerCurrentRoom.Transform.position))
                     .Where(r => r != playerCurrentRoom)
                     .ToArray()
                     .MMShuffle();

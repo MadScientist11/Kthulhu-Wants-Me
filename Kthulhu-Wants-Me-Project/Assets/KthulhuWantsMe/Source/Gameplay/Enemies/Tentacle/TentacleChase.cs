@@ -52,7 +52,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
             if (_waveSpawner.ClosestSpawner.Id != _spawnBehaviour.SpawnedAt && _waveSpawner.IsSpawnerVacant(_waveSpawner.ClosestSpawner.Id))
             {
                 _chaseCooldown = _tentacleConfiguration.ChaseCooldown;
-                _waveSpawner.RespawnClosest(_spawnBehaviour.SpawnedAt, GetComponent<Health>());
+                _waveSpawner.RespawnClosest(_spawnBehaviour.SpawnedAt, GetComponent<Health>(), _tentacleConfiguration.EnemyType);
                 return true;
             }
 
