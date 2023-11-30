@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 6
+      Data: 8
     - Name: 
       Entry: 8
       Data: 
@@ -74,9 +74,9 @@ MonoBehaviour:
   EnemyType: 10
   Prefab: {fileID: 1468870110707573897, guid: ba2d76104389f324f8ed4bae2815ba7a, type: 3}
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
+  MoveSpeed: {x: 6, y: 8}
   Knockback: 10
   KnockbackTime: 0.15
-  MoveSpeed: {x: 6, y: 8}
   AttackCooldown: 0.8
   DelayBeforeJump: 0.6
   JumpSpeed: 3
