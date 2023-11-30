@@ -77,7 +77,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             _attackPrepareFeedback?.PlayFeedbacks();
             _cyaeghaAnimator.PlayAttack();
             yield return new WaitForSeconds(_cyaeghaConfiguration.DelayBeforeJump);
-            
+
 
             Vector3 jumpStartPos = transform.position;
             Vector3 dest = lastPlayerPosition;
@@ -89,7 +89,8 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
             for (float t = 0; t < 1; t += Time.deltaTime * _cyaeghaConfiguration.JumpSpeed)
             {
                 transform.position = Vector3.Lerp(jumpStartPos, dest, t)
-                                     + Vector3.up * DOVirtual.EasedValue(0, _cyaeghaConfiguration.JumpHeight, t, _jumpEasing);
+                                     + Vector3.up * DOVirtual.EasedValue(0, _cyaeghaConfiguration.JumpHeight, t,
+                                         _jumpEasing);
 
                 if (t > 0.25f && TryDamage(.4f, out IDamageable player))
                 {
@@ -98,6 +99,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
                     damaged = true;
                     break;
                 }
+
 
                 yield return null;
             }

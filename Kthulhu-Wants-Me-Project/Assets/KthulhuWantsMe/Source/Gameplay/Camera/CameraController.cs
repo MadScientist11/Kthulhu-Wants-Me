@@ -24,7 +24,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
 
         private IGameFactory _gameFactory;
         [SerializeField] private float _offset = 1f;
-        [SerializeField] private float _radius = 0.5f;
+        [SerializeField] private float _radius = 1f;
 
         [Inject]
         public void Construct(IGameFactory gameFactory)
@@ -52,14 +52,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
 
         private void FadeObjectsInView()
         {
-            Vector3 dir = _gameFactory.Player.transform.position - (transform.position - transform.up * _offset);
+            Vector3 dir = _gameFactory.Player.transform.position.AddY(2) - (transform.position - transform.up * _offset);
             Ray ray = new Ray(transform.position - transform.up * _offset, dir.normalized);
+            int playerLayer = LayerMask.NameToLayer(GameConstants.Layers.Player);
+            RaycastHit[] hits = new RaycastHit[12];
+            int hitCount = DrawPhysics.SphereCastNonAlloc(ray, _radius, hits, dir.magnitude, playerLayer);
 
-            if (DrawPhysics.SphereCast(ray, _radius, out RaycastHit hit, dir.magnitude, LayerMask.NameToLayer(GameConstants.Layers.Player)))
+            if (hitCount > 0)
             {
-                if (hit.transform.TryGetComponent(out FadeableObject fadeableObject))
+                for (int i = 0; i < hits.Length; i++)
                 {
-                    fadeableObject.RequestFade();
+                    RaycastHit hit = hits[i];
+                    if (hit.transform != null)
+                    {
+                        if (hit.transform.TryGetComponent(out FadeableObject fadeableObject))
+                        {
+                            fadeableObject.RequestFade();
+                        }
+                    }
                 }
             }
         }
