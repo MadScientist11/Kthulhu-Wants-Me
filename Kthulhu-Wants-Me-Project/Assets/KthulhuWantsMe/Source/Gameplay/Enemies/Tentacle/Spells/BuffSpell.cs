@@ -54,7 +54,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
                     if (enemy.TryGetComponent(out EntityBuffDebuffContainer container))
                     {
-                        InstaHealBuff instaHealBuff = _buffDebuffFactory.CreateEffect<InstaHealBuff>().Init(10);
+                        InstaHealBuff instaHealBuff = _buffDebuffFactory.CreateEffect<InstaHealBuff>().Init(16);
                         instaHealBuff.ApplyEffect(container);
                     }
                 }

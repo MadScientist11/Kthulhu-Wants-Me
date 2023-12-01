@@ -12,6 +12,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
     public interface IProgressService
     {
         ProgressData ProgressData { get; }
+        void Reset();
     }
 
     public class ProgressService : IProgressService, IInitializableService
@@ -22,9 +23,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         public UniTask Initialize()
         {
             IsInitialized = true;
+            Reset();
+            return UniTask.CompletedTask;
+        }
+
+        public void Reset()
+        {
             ProgressData.CompletedWaveIndex = -1;
             ProgressData.CompletedSkillBranchStages = new();
-            return UniTask.CompletedTask;
         }
     }
 }
