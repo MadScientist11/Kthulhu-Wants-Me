@@ -46,26 +46,32 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
         private IEnumerator DoFadeObject(Renderer rendererComponent)
         {
             _inProcess = true;
-            rendererComponent.material.SetFloat(DitherThreshold, 1);
-            for (float t = 1; t > .29f; t -= Time.deltaTime * 2f)
+            for (int i = 0; i < rendererComponent.materials.Length; i++)
             {
-                rendererComponent.material.SetFloat(DitherThreshold, t);
-                yield return null;
+                rendererComponent.materials[i].SetFloat(DitherThreshold, 1);
+                for (float t = 1; t > .29f; t -= Time.deltaTime * 2f)
+                {
+                    rendererComponent.materials[i].SetFloat(DitherThreshold, t);
+                    yield return null;
+                }
             }
+          
             _inProcess = false;
         }
 
         private IEnumerator DoUnFadeObject(Renderer rendererComponent)
         {
             _inProcess = true;
-
-            for (float t = rendererComponent.material.GetFloat(DitherThreshold); t < 1; t += Time.deltaTime * 4f)
+            for (int i = 0; i < rendererComponent.materials.Length; i++)
             {
-                rendererComponent.material.SetFloat(DitherThreshold, t);
-                yield return null;
+                for (float t = rendererComponent.materials[i].GetFloat(DitherThreshold); t < 1; t += Time.deltaTime * 4f)
+                {
+                    rendererComponent.materials[i].SetFloat(DitherThreshold, t);
+                    yield return null;
+                }
+                rendererComponent.materials[i].SetFloat(DitherThreshold, 1);
             }
 
-            rendererComponent.material.SetFloat(DitherThreshold, 1);
             _inProcess = false;
         }
     }
