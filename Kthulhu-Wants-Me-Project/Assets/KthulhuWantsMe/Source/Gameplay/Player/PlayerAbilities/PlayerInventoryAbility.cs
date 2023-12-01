@@ -1,11 +1,8 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
-using KthulhuWantsMe.Source.Gameplay.DamageSystem;
+﻿using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
-using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
 
@@ -21,6 +18,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
     public class PlayerInventoryAbility : MonoBehaviour, IAbility
     {
+        [SerializeField] private MMFeedbacks _equipFeedback;
         [field: SerializeField] public Transform ItemParent { get; private set; }
 
         public Transform DamageSourceObject { get; }
@@ -66,6 +64,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         private void Equip(IPickable item)
         {
             CurrentAction = InventoryAction.Equip;
+            _equipFeedback?.PlayFeedbacks();
             item.RespondTo(this);
         }
 

@@ -26,5 +26,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         public double ChaseDistance = 4;
         public float Knockback = 10;
         public float KnockbackTime = .25f;
+        public float StunDuration = 1.5f;
     }
 }

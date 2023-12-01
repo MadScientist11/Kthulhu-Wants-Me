@@ -66,7 +66,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
             if(_yithHealth.IsDead || BlockProcessing)
                 return;
 
-            if (_lastStunTime + 2f > Time.time)
+            if (_lastStunTime + _yithConfiguration.StunDuration > Time.time)
             {
                 return;
             }
