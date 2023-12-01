@@ -95,11 +95,11 @@ MonoBehaviour:
   AttackStep: 18
   LungeBaseDamage: 75
   LungeRadius: 2
-  HealthRegenRate: 0.175
+  HealthRegenRate: 0.2
   StableMovementSharpness: 17
   OrientationSharpness: 35
   MaxAirMoveSpeed: 10
   AirAccelerationSpeed: 5
   Drag: 0.1
   InvinciblityAfterAttackTime: 1.5
-  UnlockAllSkills: 0
+  UnlockAllSkills: 1

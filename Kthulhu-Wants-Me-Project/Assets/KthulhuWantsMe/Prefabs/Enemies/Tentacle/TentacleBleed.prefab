@@ -18,6 +18,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TentacleBleed
       objectReference: {fileID: 0}
+    - target: {fileID: 4640143058864623152, guid: b2a1390fa35be8c4c9e850651ae965b2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 4.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5174028308077087162, guid: b2a1390fa35be8c4c9e850651ae965b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -96,5 +101,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageModifierId: 2
-  _poisonVFXPrefab: {fileID: 8635476861556294345, guid: cac0c86d34aedc449b3f1f83195840e5,
+  _effectVfxPrefab: {fileID: 8635476861556294345, guid: cac0c86d34aedc449b3f1f83195840e5,
     type: 3}
