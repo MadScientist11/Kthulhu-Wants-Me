@@ -7,7 +7,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI.Window
     {
         public abstract WindowId Id { get; }
         
-        private IUIService _uiService;
+        protected IUIService _uiService;
 
         [Inject]
         public void Construct(IUIService uiService)

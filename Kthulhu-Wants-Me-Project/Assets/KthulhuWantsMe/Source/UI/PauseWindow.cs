@@ -14,7 +14,6 @@ namespace KthulhuWantsMe.Source.UI
         public override WindowId Id => WindowId.PauseWindow;
         
         [SerializeField] private Button _continueButton;
-        [SerializeField] private Button _howToPlayButton;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _quitButton;
         
@@ -22,12 +21,19 @@ namespace KthulhuWantsMe.Source.UI
         {
             _quitButton.onClick.AddListener(QuitGame);
             _continueButton.onClick.AddListener(ContinueGame);
+            _settingsButton.onClick.AddListener(OpenSettings);
         }
 
         private void OnDestroy()
         {
             _quitButton.onClick.RemoveListener(ContinueGame);
+            _quitButton.onClick.RemoveListener(OpenSettings);
             _quitButton.onClick.RemoveListener(QuitGame);
+        }
+        
+        private void OpenSettings()
+        {
+            _uiService.OpenWindow(WindowId.SettingsWindow);
         }
 
         private void ContinueGame()
