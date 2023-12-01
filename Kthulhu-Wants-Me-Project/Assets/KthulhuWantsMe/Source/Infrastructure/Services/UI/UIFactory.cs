@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
@@ -56,6 +57,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private Scene _uiScene;
 
         private IObjectResolver _instantiator;
+        private IObjectResolver _defaultResolver;
 
         private readonly IResourceManager _resourceManager;
         private readonly ISceneLoader _sceneLoader;
@@ -66,6 +68,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _sceneLoader = sceneLoader;
             _resourceManager = resourceManager;
             _instantiator = instantiator;
+            _defaultResolver = instantiator;
         }
 
         public async UniTask Initialize()
@@ -126,7 +129,21 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
         public SettingsWindow CreateSettingsWindow()
         {
-            SettingsWindow settingsWindow = _instantiator.Instantiate(_settingsWindowPrefab);
+            if (_instantiator == null)
+            {
+                _instantiator = _defaultResolver;
+            }
+
+            SettingsWindow settingsWindow;
+            try
+            {
+                settingsWindow  = _instantiator.Instantiate(_settingsWindowPrefab);
+
+            }
+            catch (Exception e)
+            {
+                settingsWindow = _defaultResolver.Instantiate(_settingsWindowPrefab);
+            }
             SceneManager.MoveGameObjectToScene(settingsWindow.gameObject, _uiScene);
             return settingsWindow;
         }
