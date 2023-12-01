@@ -50,8 +50,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
                 _yithAIBrain.Stunned = true;
             }
             
+            if(_hitFeedbacks != null)
+                _hitFeedbacks.PlayFeedbacks();
             
-            _hitFeedbacks?.PlayFeedbacks();
             _yithAttack.ResetAttackState();
         }
 

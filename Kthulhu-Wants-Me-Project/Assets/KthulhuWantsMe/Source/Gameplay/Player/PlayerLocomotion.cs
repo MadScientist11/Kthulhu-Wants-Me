@@ -173,7 +173,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private bool CanMove()
         {
-            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement;
+            return (!_playerAttack.IsAttacking || _playerAttack.InRecoveryPhase) && !_blockMovement && !_playerLungeAbility.IsInLunge;
         }
 
         private bool MovementInputDetected()

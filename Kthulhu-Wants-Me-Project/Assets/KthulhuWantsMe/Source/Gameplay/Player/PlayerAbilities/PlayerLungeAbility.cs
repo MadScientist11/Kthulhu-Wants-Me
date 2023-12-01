@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Freya;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
@@ -7,6 +8,7 @@ using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
 
@@ -19,11 +21,12 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerLocomotion _playerLocomotion;
         [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private MMFeedbacks _lungeFeedback;
         
         [SerializeField] private Canvas _abilityCanvas;
 
         private const float LungeChargeTime = 1f;
-        private const float LungeChargeMaxVelocity = 100f;
+        private const float MaxLungeChargeVelocity = 100f;
         private const float MinLungeChargeVelocity = 30;
 
         private bool _lungeCharge;
@@ -58,7 +61,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private void Start()
         {
-            _chargeVelocityStep = LungeChargeMaxVelocity / LungeChargeTime;
+            _chargeVelocityStep = MaxLungeChargeVelocity / LungeChargeTime;
         }
 
         private void Update()
@@ -76,6 +79,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
             if (_lunge) 
                 ProcessLunge();
+        }
+
+        private void OnLuneAnim()
+        {
+            _lungeFeedback?.PlayFeedbacks();
         }
 
         private void OnLungeInitiated()
@@ -125,7 +133,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         }
 
         private void ApplyLungeVelocity() =>
-            _playerLocomotion.MovementController.AddVelocity(transform.forward * _chargedVelocity);
+            _playerLocomotion.MovementController.AddVelocity(transform.forward * Mathfs.Min(_chargedVelocity, MaxLungeChargeVelocity));
 
         private void CancelLungeCharge()
         {
