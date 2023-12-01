@@ -2965,7 +2965,7 @@ MonoBehaviour:
         RecycleAudioSource: {fileID: 0}
         Loop: 0
         Persistent: 0
-        DoNotPlayIfClipAlreadyPlaying: 0
+        DoNotPlayIfClipAlreadyPlaying: 1
         StopSoundOnFeedbackStop: 0
         Fade: 0
         FadeInitialVolume: 0
@@ -4014,8 +4014,14 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 3743268344251599665}
         DebugActive: 0
-        Sfx: {fileID: 8300000, guid: 699355115a980a146a5549860bbb3a86, type: 3}
-        RandomSfx: []
+        Sfx: {fileID: 0}
+        RandomSfx:
+        - {fileID: 8300000, guid: dac299e6c730c674eaf6e9c4315efebc, type: 3}
+        - {fileID: 8300000, guid: f62b8f72651bd6642aa2bcd35767558c, type: 3}
+        - {fileID: 8300000, guid: 24189f3ee8d20c2409133830965de416, type: 3}
+        - {fileID: 8300000, guid: 3b6e87814ca324b4cae426d4a3a460b2, type: 3}
+        - {fileID: 8300000, guid: 699355115a980a146a5549860bbb3a86, type: 3}
+        - {fileID: 8300000, guid: b794312efef5ccd49863147579cbdd09, type: 3}
         SequentialOrder: 0
         SequentialOrderHoldLast: 0
         SequentialOrderHoldCooldownDuration: 2
@@ -4032,7 +4038,7 @@ MonoBehaviour:
         RecycleAudioSource: {fileID: 0}
         Loop: 0
         Persistent: 0
-        DoNotPlayIfClipAlreadyPlaying: 0
+        DoNotPlayIfClipAlreadyPlaying: 1
         StopSoundOnFeedbackStop: 0
         Fade: 0
         FadeInitialVolume: 0
