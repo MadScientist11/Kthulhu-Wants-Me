@@ -61,10 +61,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private readonly ISceneLoader _sceneLoader;
 
 
-        public UIFactory(IResourceManager resourceManager, ISceneLoader sceneLoader)
+        public UIFactory(IResourceManager resourceManager, ISceneLoader sceneLoader, IObjectResolver instantiator)
         {
             _sceneLoader = sceneLoader;
             _resourceManager = resourceManager;
+            _instantiator = instantiator;
         }
 
         public async UniTask Initialize()
@@ -125,8 +126,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
         public SettingsWindow CreateSettingsWindow()
         {
-            EnqueueParent(LifetimeScope.Find<MainMenuScope>());
             SettingsWindow settingsWindow = _instantiator.Instantiate(_settingsWindowPrefab);
+            SceneManager.MoveGameObjectToScene(settingsWindow.gameObject, _uiScene);
             return settingsWindow;
         }
 

@@ -87,7 +87,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
 
         [Inject]
-        public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory, IPauseService pauseService, IInputService inputService, SettingsService settingsService)
+        public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory, IPauseService pauseService, 
+            IInputService inputService, SettingsService settingsService)
         {
             _settingsService = settingsService;
             _pauseService = pauseService;

@@ -1,4 +1,6 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 
 namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
@@ -14,9 +16,10 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _backgroundMusicPlayer = backgroundMusicPlayer;
         }
         
-        public void Enter()
+        public async void Enter()
         {
             _backgroundMusicPlayer.PlayDefeatMusic();
+            await UniTask.Delay(TimeSpan.FromSeconds(3), false, PlayerLoopTiming.Update);
             _uiService.OpenWindow(WindowId.DefeatWindow);
 
         }
