@@ -3,7 +3,12 @@ guid: a0663e77fb84c694fa37947c2b4dadeb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: YithSkin
+    second: {fileID: 2100000, guid: 6505fabe85904534384e1ecd48719a33, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
