@@ -49,7 +49,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 4
-      Data: 170
+      Data: 180
     - Name: 
       Entry: 8
       Data: 
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 12
+      Data: 15
     - Name: 
       Entry: 8
       Data: 
@@ -76,8 +76,8 @@ MonoBehaviour:
   EnemyScaling: {fileID: 11400000, guid: 3304d807466b8b441bd424ebd738c5f9, type: 2}
   MoveSpeed: {x: 1, y: 3}
   AttackRadius: 1.15
-  AttackCooldown: 1
-  AttackDelay: 1
+  AttackCooldown: 0.9
+  AttackDelay: 0.9
   ComboCount: 3
   ComboAttackCooldown: 5
   DelayBetweenComboAttacks: 0.5
@@ -87,5 +87,5 @@ MonoBehaviour:
   ComboAttackTriggerDistance: {x: 4, y: 18}
   ReconsiderationTime: 2
   ChaseDistance: 4
-  Knockback: 5
-  KnockbackTime: 0.25
+  Knockback: 6
+  KnockbackTime: 0.35

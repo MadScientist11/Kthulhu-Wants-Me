@@ -87,5 +87,5 @@ MonoBehaviour:
   ComboAttackTriggerDistance: {x: 4, y: 15}
   ReconsiderationTime: 2
   ChaseDistance: 4
-  Knockback: 5
-  KnockbackTime: 0.25
+  Knockback: 6
+  KnockbackTime: 0.35

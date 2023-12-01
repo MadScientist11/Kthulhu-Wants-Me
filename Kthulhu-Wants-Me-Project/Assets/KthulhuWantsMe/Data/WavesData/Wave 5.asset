@@ -46,8 +46,8 @@ MonoBehaviour:
       - EnemyType: 0
         Quantity: 1
         SpawnAt: 0
-      WaitForBatchClearance: 1
-      NextBatchDelay: 9
+      WaitForBatchClearance: 0
+      NextBatchDelay: 15
     - EnemyPack:
       - EnemyType: 4
         Quantity: 12
@@ -62,7 +62,7 @@ MonoBehaviour:
         Quantity: 1
         SpawnAt: 0
       WaitForBatchClearance: 0
-      NextBatchDelay: 11
+      NextBatchDelay: 30
     TimeConstraint: 25
     SpawnEnemyDelay: 3
     EnemyType: 4

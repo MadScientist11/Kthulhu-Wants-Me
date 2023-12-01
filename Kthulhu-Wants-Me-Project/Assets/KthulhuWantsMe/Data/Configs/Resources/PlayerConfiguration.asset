@@ -93,7 +93,7 @@ MonoBehaviour:
   AttackRadius: 1.5
   AttackEffectiveDistance: 1
   AttackStep: 18
-  LungeBaseDamage: 100
+  LungeBaseDamage: 75
   LungeRadius: 2
   HealthRegenRate: 0.175
   StableMovementSharpness: 17

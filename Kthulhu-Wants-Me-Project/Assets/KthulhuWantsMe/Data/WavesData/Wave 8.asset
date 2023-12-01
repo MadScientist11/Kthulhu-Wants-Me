@@ -21,10 +21,10 @@ MonoBehaviour:
         SpawnAt: 12
       - EnemyType: 300
         Quantity: 1
-        SpawnAt: 23
+        SpawnAt: 22
       - EnemyType: 300
         Quantity: 1
-        SpawnAt: 8
+        SpawnAt: 9
       WaitForBatchClearance: 0
       NextBatchDelay: 5
     - EnemyPack:
