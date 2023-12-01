@@ -22,6 +22,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerAttack _playerAttack;
         [SerializeField] private TentacleGrabAbilityResponse _grabAbilityResponse;
+        [SerializeField] private PlayerLungeAbility _playerLungeAbility;
 
         private PlayerLocomotion PlayerLocomotion => _player.PlayerLocomotion;
 
@@ -127,7 +128,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 
         private bool CanDash()
         {
-            return !_grabAbilityResponse.Grabbed && IsStaminaFull();
+            return !_grabAbilityResponse.Grabbed && IsStaminaFull() && !_playerLungeAbility.IsInLunge;
         }
 
         private bool IsStaminaFull()

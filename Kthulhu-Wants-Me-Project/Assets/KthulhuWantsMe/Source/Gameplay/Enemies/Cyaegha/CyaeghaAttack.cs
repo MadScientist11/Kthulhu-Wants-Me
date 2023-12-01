@@ -74,7 +74,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         {
             SetAttackState();
 
-            _attackPrepareFeedback?.PlayFeedbacks();
+            if(_attackPrepareFeedback != null)
+                _attackPrepareFeedback.PlayFeedbacks();
+            
             _cyaeghaAnimator.PlayAttack();
             yield return new WaitForSeconds(_cyaeghaConfiguration.DelayBeforeJump);
 
