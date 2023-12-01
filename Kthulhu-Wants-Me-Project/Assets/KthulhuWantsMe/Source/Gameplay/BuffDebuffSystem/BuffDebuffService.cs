@@ -106,6 +106,11 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
             if (effect is IUpdatableEffect updatableEffect)
                 updatableEffect.CancelEffect(onEffectReceiver);
 
+            if (onEffectReceiver == null)
+            {
+                return;
+            }
+
             ActiveEffectReceivers[onEffectReceiver].Remove(effect);
 
             if (ActiveEffectReceivers[onEffectReceiver] == null || ActiveEffectReceivers[onEffectReceiver].Count == 0)
