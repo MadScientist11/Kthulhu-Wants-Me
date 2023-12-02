@@ -19,11 +19,9 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
         
         [SerializeField] private Button _audioButton;
         [SerializeField] private Button _displayButton;
-        [SerializeField] private Button _controlsButton;
         
         [SerializeField] private Transform _audioSettings;
         [SerializeField] private Transform _displaySettings;
-        [SerializeField] private Transform _constrolsSettings;
 
         private readonly List<Transform> _allTabs = new();
         private SettingsService _settingsService;
@@ -40,11 +38,9 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
         {
             _allTabs.Add(_audioSettings);
             _allTabs.Add(_displaySettings);
-            _allTabs.Add(_constrolsSettings);
             
             _audioButton.onClick.AddListener(OpenAudioSettings);
             _displayButton.onClick.AddListener(OpenDisplaySettings);
-            _controlsButton.onClick.AddListener(OpenControlsSettings);
             
             _applyButton.onClick.AddListener(ApplySettings);
             _backButton.onClick.AddListener(CloseWindow);
@@ -54,7 +50,6 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
         {
             _audioButton.onClick.RemoveListener(OpenAudioSettings);
             _displayButton.onClick.RemoveListener(OpenDisplaySettings);
-            _controlsButton.onClick.RemoveListener(OpenControlsSettings);
             
             _applyButton.onClick.RemoveListener(ApplySettings);
             _backButton.onClick.RemoveListener(CloseWindow);
@@ -65,9 +60,6 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
         
         private void OpenDisplaySettings()
             => SwitchTab(1);
-
-        private void OpenControlsSettings() 
-            => SwitchTab(2);
 
         private void SwitchTab(int index)
         {
