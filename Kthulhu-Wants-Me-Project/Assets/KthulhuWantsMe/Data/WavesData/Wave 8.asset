@@ -40,13 +40,13 @@ MonoBehaviour:
       WaitForBatchClearance: 0
       NextBatchDelay: 15
     - EnemyPack:
-      - EnemyType: 4
+      - EnemyType: 10
         Quantity: 4
         SpawnAt: 0
       WaitForBatchClearance: 0
       NextBatchDelay: 20
     - EnemyPack:
-      - EnemyType: 4
+      - EnemyType: 10
         Quantity: 4
         SpawnAt: 0
       WaitForBatchClearance: 0

@@ -102,4 +102,4 @@ MonoBehaviour:
   AirAccelerationSpeed: 5
   Drag: 0.1
   InvinciblityAfterAttackTime: 1.5
-  UnlockAllSkills: 1
+  UnlockAllSkills: 0

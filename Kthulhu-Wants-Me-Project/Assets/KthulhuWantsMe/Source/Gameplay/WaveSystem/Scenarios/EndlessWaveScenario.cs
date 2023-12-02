@@ -17,7 +17,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
     {
         public event Action BatchCleared;
 
-        private readonly EnemyType[] _allowedEnemies = { EnemyType.Cyeagha, EnemyType.YithCombo1, EnemyType.Tentacle };
+        private readonly EnemyType[] _allowedEnemies = { EnemyType.CyeaghaElite, EnemyType.YithCombo3, EnemyType.TentacleElite };
 
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly WaveSpawner _waveSpawner;

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillId: 3
   Name: 
-  Description: Regenerate [+1%] Health
+  Description: 'SKILL: Regenerate [+2%] Health every 5 seconds'
   Sprite: {fileID: 21300000, guid: bb67b03c2969d104caba950c446f8c8d, type: 3}

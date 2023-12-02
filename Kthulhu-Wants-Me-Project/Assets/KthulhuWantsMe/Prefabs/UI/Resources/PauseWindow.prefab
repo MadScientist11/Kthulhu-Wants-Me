@@ -39,7 +39,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 820, y: 650}
+  m_SizeDelta: {x: 900, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5217141762330157342
 CanvasRenderer:
@@ -1236,9 +1236,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Quit
-
-'
+  m_text: Exit To Main Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2bf0496ed4442d040a76a5be13436382, type: 2}
   m_sharedMaterial: {fileID: 719523777553638022, guid: 2bf0496ed4442d040a76a5be13436382,
@@ -1615,7 +1613,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 424.9739, y: 424.97}
+  m_SizeDelta: {x: 500, y: 424.97}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7106734223089979545
 MonoBehaviour:
@@ -1773,7 +1771,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _continueButton: {fileID: 4595495799101808921}
-  _howToPlayButton: {fileID: 0}
   _settingsButton: {fileID: 2431402149374247542}
   _quitButton: {fileID: 3879237568806422376}
 --- !u!1 &6402291194692182050

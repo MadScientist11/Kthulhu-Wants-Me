@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 100
     - Name: $v
       Entry: 4
-      Data: 20
+      Data: 26
     - Name: 
       Entry: 8
       Data: 
@@ -81,12 +81,12 @@ MonoBehaviour:
   ReconsiderationTime: 2
   AttackActivationDistance: 3
   AttackRadius: 1
-  AttackEffectiveDistance: 0.8
+  AttackEffectiveDistance: 1
   AttackCooldownTime: 4
   SpellAttackActivationDistance: 3
   ChaseCooldown: 8
   ChaseAfterSeconds: 8
-  RotationSpeed: 120
+  RotationSpeed: 125
   AggroRange: 12
   PoisonDamagePerSecond: 0
   PoisonEffectDuration: 0
