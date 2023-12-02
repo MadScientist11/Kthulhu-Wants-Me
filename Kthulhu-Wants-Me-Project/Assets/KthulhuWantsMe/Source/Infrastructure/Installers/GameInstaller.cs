@@ -113,6 +113,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
             builder.Register<WaitForNextWaveState>(Lifetime.Singleton);
             builder.Register<PlayerDeathState>(Lifetime.Singleton);
             builder.Register<RestartGameState>(Lifetime.Singleton);
+            builder.Register<ReturnToMenuState>(Lifetime.Singleton);
         }
     }
 }

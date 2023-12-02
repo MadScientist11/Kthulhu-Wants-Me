@@ -1,4 +1,6 @@
 ﻿using System;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
+using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
@@ -18,21 +20,19 @@ namespace KthulhuWantsMe.Source.UI
     public class PauseWindow : BaseWindow
     {
         public override WindowId Id => WindowId.PauseWindow;
-        
+
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _quitButton;
-        
-        private ISceneLoader _sceneLoader;
-        private IProgressService _progressService;
+
+        private GameplayStateMachine _gameplayStateMachine;
 
         [Inject]
-        public void Construct(ISceneLoader sceneLoader, IProgressService progressService)
+        public void Construct(GameplayStateMachine gameplayStateMachine)
         {
-            _progressService = progressService;
-            _sceneLoader = sceneLoader;
+            _gameplayStateMachine = gameplayStateMachine;
         }
-        
+
         private void Start()
         {
             _quitButton.onClick.AddListener(ReturnToMenu);
@@ -46,7 +46,7 @@ namespace KthulhuWantsMe.Source.UI
             _quitButton.onClick.RemoveListener(OpenSettings);
             _quitButton.onClick.RemoveListener(ReturnToMenu);
         }
-        
+
         private void OpenSettings()
         {
             _uiService.OpenWindow(WindowId.SettingsWindow);
@@ -57,14 +57,9 @@ namespace KthulhuWantsMe.Source.UI
             Hide();
         }
 
-        private async void ReturnToMenu()
+        private void ReturnToMenu()
         {
-            await _sceneLoader.UnloadSceneAsync(GameConstants.Scenes.GameSceneName);
-            _uiService.ClearUI();
-            LifetimeScope lifetimeScope = LifetimeScope.Find<AppLifetimeScope>();
-            _progressService.Reset();
-            await _sceneLoader.LoadSceneInjected("MainMenu", LoadSceneMode.Additive, lifetimeScope);
+            _gameplayStateMachine.SwitchState<ReturnToMenuState>();
         }
-
     }
 }

@@ -43,11 +43,7 @@ namespace KthulhuWantsMe.Source.UI
 
         private void Quit()
         {
-#if UNITY_EDITOR
-            EditorApplication.ExitPlaymode();
-#else
-            Application.Quit();
-#endif
+            _gameplayStateMachine.SwitchState<ReturnToMenuState>();
         }
 
     }

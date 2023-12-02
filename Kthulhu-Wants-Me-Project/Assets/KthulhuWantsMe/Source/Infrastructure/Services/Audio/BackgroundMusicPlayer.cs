@@ -11,6 +11,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
         void PlayBattleMusic();
         void PlayDefeatMusic();
         void PlayConcernMusic();
+        void StopMusic();
     }
 
     public class BackgroundMusicPlayer : IBackgroundMusicPlayer, IInitializableService
@@ -33,6 +34,11 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.Audio
         {
             Manager bgmPlayerPrefab = await _resourceManager.ProvideAssetAsync<Manager>(BgmPlayerPath);
             _simpleAudioManager = _instantiator.Instantiate(bgmPlayerPrefab);
+        }
+
+        public void StopMusic()
+        {
+            _simpleAudioManager.StopSong(1);
         }
 
         public void PlayBattleMusic() => 
