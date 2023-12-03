@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 
@@ -14,13 +15,15 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly GameplayStateMachine _gameplayStateMachine;
         private readonly IBackgroundMusicPlayer _backgroundMusicPlayer;
         private readonly ILootService _lootService;
+        private readonly IGameFactory _gameFactory;
 
         public WaitForNextWaveState(
             GameplayStateMachine gameplayStateMachine,
             IUIService uiService, 
             IBackgroundMusicPlayer backgroundMusicPlayer,
-            ILootService lootService)
+            ILootService lootService, IGameFactory gameFactory)
         {
+            _gameFactory = gameFactory;
             _lootService = lootService;
             _backgroundMusicPlayer = backgroundMusicPlayer;
             _gameplayStateMachine = gameplayStateMachine;
@@ -32,12 +35,13 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _backgroundMusicPlayer.PlayConcernMusic();
             _lootService.DespawnAllLoot();
             _counterToken = new CancellationTokenSource();
+            _counterToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
             StartNextWaveCounter(_counterToken).Forget();
         }
 
         public void Exit()
         {
-            //_counterToken?.Cancel();
+            _counterToken?.Cancel();
         }
         
         private async UniTaskVoid StartNextWaveCounter(CancellationTokenSource cancellationToken)
