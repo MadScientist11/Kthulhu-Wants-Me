@@ -34,6 +34,9 @@ namespace KthulhuWantsMe.Source.Gameplay.InGameConsole
 
         private void Start()
         {
+            if (!Debug.isDebugBuild)
+                return;
+            
             Scene startUp = SceneManager.GetSceneByPath(GameConstants.Scenes.StartUpPath);
             SceneManager.MoveGameObjectToScene(gameObject, startUp);
             _console = _uiFactory.CreateConsoleUI();
