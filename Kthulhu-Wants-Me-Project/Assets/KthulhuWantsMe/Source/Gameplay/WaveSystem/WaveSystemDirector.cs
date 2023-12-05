@@ -134,7 +134,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             if (!_waveOngoing)
                 return;
 
-            Debug.Log("Failure");
             _gameplayStateMachine.SwitchState<WaveFailState>();
             CompleteWave();
         }
@@ -143,7 +142,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         {
             if (!_waveOngoing)
                 return;
-
 
             _gameplayStateMachine.SwitchState<WaveVictoryState>();
             CompleteWave();
@@ -171,6 +169,9 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
             _spawnLoopToken = new CancellationTokenSource();
             _spawnLoopToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
 
+            TimeSpan universalWaveStartDelay = TimeSpan.FromSeconds(_dataProvider.Waves.WaveStartDelay);
+            await UniTask.Delay(universalWaveStartDelay, false, PlayerLoopTiming.Update, _spawnLoopToken.Token);
+            
             // Spawn first batch
             _waveSpawner.SpawnBatchNotified(_currentWaveState.CurrentBatchData);
 
