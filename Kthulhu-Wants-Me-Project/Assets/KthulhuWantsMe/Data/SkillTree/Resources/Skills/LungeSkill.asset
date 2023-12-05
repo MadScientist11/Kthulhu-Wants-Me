@@ -15,4 +15,4 @@ MonoBehaviour:
   SkillId: 2
   Name: 
   Description: 'SKILL: Lunge Strike (MOUSE BUTTON 2)'
-  Sprite: {fileID: 21300000, guid: 6960c6bd5088317429f7e0e033bee813, type: 3}
+  Sprite: {fileID: 21300000, guid: c67fbf9375ad5c34399c2849430ca7f7, type: 3}

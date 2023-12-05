@@ -32,7 +32,7 @@ MonoBehaviour:
         Quantity: 4
         SpawnAt: 0
       WaitForBatchClearance: 0
-      NextBatchDelay: 5
+      NextBatchDelay: 0
     TimeConstraint: 4
     SpawnEnemyDelay: 3
     EnemyType: 4
