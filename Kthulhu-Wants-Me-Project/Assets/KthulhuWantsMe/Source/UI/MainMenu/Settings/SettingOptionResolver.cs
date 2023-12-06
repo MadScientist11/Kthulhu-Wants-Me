@@ -34,7 +34,7 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
 
         private void Awake()
         {
-            IObjectResolver container = LifetimeScope.Find<MainMenuScope>().Container;
+            IObjectResolver container = LifetimeScope.Find<LifetimeScope>().Container;
             container.Inject(gameObject);
         }
 

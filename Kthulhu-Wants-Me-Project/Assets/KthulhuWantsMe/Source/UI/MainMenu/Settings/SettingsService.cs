@@ -6,10 +6,13 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using KthulhuWantsMe.Source.Gameplay;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
+using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
@@ -109,9 +112,11 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
 
         private readonly Settings _sessionOverrides = new();
         private readonly IAudioService _audioService;
+        private readonly IUIService _uiService;
 
-        public SettingsService(IAudioService audioService)
+        public SettingsService(IAudioService audioService, IUIService uiService)
         {
+            _uiService = uiService;
             _audioService = audioService;
 
             _defaultSettings[SettingId.WindowMode] = SettingWindowMode.Fullscreen;
@@ -172,6 +177,18 @@ namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
                 case SettingId.None:
                     break;
                 case SettingId.HudSetting:
+                    if (SceneManager.GetSceneByName("MainGame").isLoaded)
+                    {
+                        SettingOnOff playerHud = (SettingOnOff)value;
+                        if (playerHud == SettingOnOff.On)
+                        {
+                            _uiService.PlayerHUD.SwitchOnGameObject();
+                        }
+                        else
+                        {
+                            _uiService.PlayerHUD.SwitchOffGameObject();
+                        }
+                    }
                     break;
                 case SettingId.WindowMode:
                     WindowModeSettingCommand windowModeSettingCommand =

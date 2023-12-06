@@ -38,7 +38,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             IPauseService pauseService,
             SettingsService settingsService)
         {
-            _settingsService = settingsService;
             _pauseService = pauseService;
             _backgroundMusicPlayer = backgroundMusicPlayer;
             _player = player;
@@ -48,6 +47,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _inputService = inputService;
             _gameFactory = gameFactory;
             _gameplayStateMachine = gameplayStateMachine;
+            _settingsService = settingsService;
         }
 
         public void Enter()
@@ -65,6 +65,11 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
 
          
             _uiService.InitHUD();
+            if ((SettingOnOff)_settingsService.Get(SettingId.HudSetting) == SettingOnOff.Off)
+            {
+                _uiService.PlayerHUD.Hide();
+            }
+            
             
             _backgroundMusicPlayer.PlayConcernMusic();            
             _player.Inventory.OnItemAdded += StartWaveOnWeaponEquip;
