@@ -83,14 +83,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private IUIFactory _uiFactory;
         private IPauseService _pauseService;
         private IInputService _inputService;
-        private SettingsService _settingsService;
 
 
         [Inject]
         public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory, IPauseService pauseService, 
-            IInputService inputService, SettingsService settingsService)
+            IInputService inputService)
         {
-            _settingsService = settingsService;
             _pauseService = pauseService;
             _uiFactory = uiFactory;
             _sceneLoader = sceneLoader;
@@ -168,10 +166,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             }
             _playerHUD.Init();
 
-            if ((SettingOnOff)_settingsService.Get(SettingId.HudSetting) == SettingOnOff.Off)
-            {
-                _playerHUD.Hide();
-            }
+            
         }
         
         private void RenderOnTop(BaseWindow window)
