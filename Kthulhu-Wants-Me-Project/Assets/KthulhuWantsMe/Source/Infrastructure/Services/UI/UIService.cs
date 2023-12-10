@@ -19,7 +19,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
     public interface IUIService
     {
-        MiscUI MiscUI { get; }
         PlayerHUD PlayerHUD { get; }
         Tooltip Tooltip { get; }
         void InitHUD();
@@ -33,19 +32,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
     public class UIService : IUIService
     {
         public bool IsInitialized { get; set; }
-
-        public MiscUI MiscUI
-        {
-            get
-            {
-                if (_miscUI == null)
-                {
-                    _miscUI = _uiFactory.CreateMiscUI();
-                }
-
-                return _miscUI;
-            }
-        }
 
         public PlayerHUD PlayerHUD
         {
@@ -74,7 +60,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         }
 
         private PlayerHUD _playerHUD;
-        private MiscUI _miscUI;
         private Tooltip _tooltip;
         private readonly List<BaseWindow> _activeWindows = new();
         private WindowId _activeWindowId;
@@ -165,8 +150,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
                 _playerHUD = _uiFactory.CreatePlayerHUD();
             }
             _playerHUD.Init();
-
-            
         }
         
         private void RenderOnTop(BaseWindow window)

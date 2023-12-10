@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.027997602, g: 0.0017127622, b: 0.31216416, a: 1}
+  m_IndirectSpecularColor: {r: 0.027995426, g: 0.0017123974, b: 0.3121623, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -16550,28 +16550,28 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 788303805}
-  - {fileID: 2100449621}
-  - {fileID: 960000180}
-  - {fileID: 479428507}
-  - {fileID: 2105054796}
-  - {fileID: 1371782885}
-  - {fileID: 2147617507620039048}
-  - {fileID: 1584782606}
   - {fileID: 129901415}
-  - {fileID: 837474314}
-  - {fileID: 1950883245}
-  - {fileID: 830098450}
-  - {fileID: 483284040}
-  - {fileID: 1409027410}
   - {fileID: 391901773}
   - {fileID: 423939265}
+  - {fileID: 479428507}
+  - {fileID: 483284040}
+  - {fileID: 788303805}
+  - {fileID: 830098450}
+  - {fileID: 837474314}
   - {fileID: 894406051}
+  - {fileID: 960000180}
   - {fileID: 1241516023}
+  - {fileID: 1371782885}
+  - {fileID: 1409027410}
   - {fileID: 1493890367}
+  - {fileID: 1584782606}
   - {fileID: 1697235193}
+  - {fileID: 1950883245}
   - {fileID: 1956981057}
   - {fileID: 2025044148}
+  - {fileID: 2100449621}
+  - {fileID: 2105054796}
+  - {fileID: 2147617507620039048}
   _sceneDataProvider: {fileID: 1523681595}
 --- !u!1001 &906058693
 PrefabInstance:
