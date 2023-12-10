@@ -60,12 +60,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private IObjectResolver _defaultResolver;
 
         private readonly IResourceManager _resourceManager;
-        private readonly ISceneLoader _sceneLoader;
+        private readonly ISceneService _sceneService;
 
 
-        public UIFactory(IResourceManager resourceManager, ISceneLoader sceneLoader, IObjectResolver instantiator)
+        public UIFactory(IResourceManager resourceManager, ISceneService sceneService, IObjectResolver instantiator)
         {
-            _sceneLoader = sceneLoader;
+            _sceneService = sceneService;
             _resourceManager = resourceManager;
             _instantiator = instantiator;
             _defaultResolver = instantiator;
@@ -73,7 +73,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
         public async UniTask Initialize()
         {
-            await _sceneLoader.LoadScene("GameUI", LoadSceneMode.Additive);
+            await _sceneService.LoadScene("GameUI", LoadSceneMode.Additive);
             _uiScene = SceneManager.GetSceneByName("GameUI");
 
             _playerHUDPrefab = await _resourceManager.ProvideAssetAsync<PlayerHUD>(PlayerHUDPath);

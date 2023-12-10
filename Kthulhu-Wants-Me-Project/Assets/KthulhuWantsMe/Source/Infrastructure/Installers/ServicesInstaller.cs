@@ -20,7 +20,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .Register<ResourcesManager>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             builder
-                .Register<SceneLoader>(Lifetime.Singleton)
+                .Register<SceneService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
             builder
                 .Register<InputService>(Lifetime.Singleton)

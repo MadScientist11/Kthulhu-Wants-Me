@@ -26,14 +26,14 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
         private readonly IInputService _inputService;
         private readonly ISceneDataProvider _sceneDataProvider;
         private readonly IUIService _uiService;
-        private readonly ISceneLoader _sceneLoader;
+        private readonly ISceneService _sceneService;
         private readonly ThePlayer _player;
         private readonly IBackgroundMusicPlayer _backgroundMusicPlayer;
         private IPauseService _pauseService;
         private SettingsService _settingsService;
 
         public StartGameState(GameplayStateMachine gameplayStateMachine, IGameFactory gameFactory, IInputService inputService,
-            ISceneDataProvider sceneDataProvider, IUIService uiService, ISceneLoader sceneLoader, ThePlayer player,
+            ISceneDataProvider sceneDataProvider, IUIService uiService, ISceneService sceneService, ThePlayer player,
             IBackgroundMusicPlayer backgroundMusicPlayer,
             IPauseService pauseService,
             SettingsService settingsService)
@@ -41,7 +41,7 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             _pauseService = pauseService;
             _backgroundMusicPlayer = backgroundMusicPlayer;
             _player = player;
-            _sceneLoader = sceneLoader;
+            _sceneService = sceneService;
             _uiService = uiService;
             _sceneDataProvider = sceneDataProvider;
             _inputService = inputService;

@@ -24,17 +24,17 @@ namespace KthulhuWantsMe.Source.UI.MainMenu
         [SerializeField] private MMFeedbacks _clickFeedback;
 
         private IUIService _uiService;
-        private ISceneLoader _sceneLoader;
+        private ISceneService _sceneService;
         private IDataProvider _dataProvider;
         private AppLifetimeScope _appLifetimeScope;
 
         [Inject]
-        public void Construct(IUIService uiService, ISceneLoader sceneLoader, IDataProvider dataProvider,
+        public void Construct(IUIService uiService, ISceneService sceneService, IDataProvider dataProvider,
             AppLifetimeScope appLifetimeScope)
         {
             _appLifetimeScope = appLifetimeScope;
             _dataProvider = dataProvider;
-            _sceneLoader = sceneLoader;
+            _sceneService = sceneService;
             _uiService = uiService;
         }
 
@@ -56,8 +56,8 @@ namespace KthulhuWantsMe.Source.UI.MainMenu
         private void StartGame()
         {
             _clickFeedback?.PlayFeedbacks();
-            _sceneLoader.UnloadSceneAsync("MainMenu");
-            _sceneLoader
+            _sceneService.UnloadSceneAsync("MainMenu");
+            _sceneService
                 .LoadSceneInjected(_dataProvider.GameConfig.MainScene, LoadSceneMode.Additive, _appLifetimeScope)
                 .Forget();
         }

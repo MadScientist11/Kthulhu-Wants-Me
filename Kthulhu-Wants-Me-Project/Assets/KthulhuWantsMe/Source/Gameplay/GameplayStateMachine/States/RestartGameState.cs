@@ -13,28 +13,28 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
     public class RestartGameState : IGameplayState
     {
         private readonly AppLifetimeScope _appLifetimeScope;
-        private readonly ISceneLoader _sceneLoader;
+        private readonly ISceneService _sceneService;
         private readonly IDataProvider _dataProvider;
         private readonly IUIService _uiService;
         private IProgressService _progressService;
 
-        public RestartGameState(AppLifetimeScope appLifetimeScope, ISceneLoader sceneLoader, IDataProvider dataProvider, IUIService uiService,
+        public RestartGameState(AppLifetimeScope appLifetimeScope, ISceneService sceneService, IDataProvider dataProvider, IUIService uiService,
             IProgressService progressService)
         {
             _progressService = progressService;
             _uiService = uiService;
             _dataProvider = dataProvider;
-            _sceneLoader = sceneLoader;
+            _sceneService = sceneService;
             _appLifetimeScope = appLifetimeScope;
         }
         
         public async void Enter()
         {
             _uiService.ClearUI();
-            await _sceneLoader.UnloadSceneAsync(GameConstants.Scenes.GameSceneName);
+            await _sceneService.UnloadSceneAsync(GameConstants.Scenes.GameSceneName);
             LifetimeScope lifetimeScope = LifetimeScope.Find<AppLifetimeScope>();
             _progressService.Reset();
-            await _sceneLoader.LoadSceneInjected(GameConstants.Scenes.GameSceneName, LoadSceneMode.Additive, lifetimeScope);
+            await _sceneService.LoadSceneInjected(GameConstants.Scenes.GameSceneName, LoadSceneMode.Additive, lifetimeScope);
             
         }
 

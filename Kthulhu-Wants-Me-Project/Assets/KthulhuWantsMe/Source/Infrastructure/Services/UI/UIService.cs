@@ -79,19 +79,19 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private readonly List<BaseWindow> _activeWindows = new();
         private WindowId _activeWindowId;
 
-        private ISceneLoader _sceneLoader;
+        private ISceneService _sceneService;
         private IUIFactory _uiFactory;
         private IPauseService _pauseService;
         private IInputService _inputService;
 
 
         [Inject]
-        public void Construct(ISceneLoader sceneLoader, IUIFactory uiFactory, IPauseService pauseService, 
+        public void Construct(ISceneService sceneService, IUIFactory uiFactory, IPauseService pauseService, 
             IInputService inputService)
         {
             _pauseService = pauseService;
             _uiFactory = uiFactory;
-            _sceneLoader = sceneLoader;
+            _sceneService = sceneService;
             _inputService = inputService;
         }
 

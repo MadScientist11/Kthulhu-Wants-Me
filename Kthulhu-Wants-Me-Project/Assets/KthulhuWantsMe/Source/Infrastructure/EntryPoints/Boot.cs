@@ -18,18 +18,18 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
     public class Boot : IAsyncStartable
     {
         private readonly IReadOnlyList<IInitializableService> _services;
-        private readonly ISceneLoader _sceneLoader;
+        private readonly ISceneService _sceneService;
         private readonly AppLifetimeScope _appLifetimeScope;
         private readonly IDataProvider _dataProvider;
         private SettingsService _settingsService;
 
         public Boot(AppLifetimeScope appLifetimeScope, IReadOnlyList<IInitializableService> services,
-            ISceneLoader sceneLoader, IDataProvider dataProvider, SettingsService settingsService)
+            ISceneService sceneService, IDataProvider dataProvider, SettingsService settingsService)
         {
             _settingsService = settingsService;
             _dataProvider = dataProvider;
             _appLifetimeScope = appLifetimeScope;
-            _sceneLoader = sceneLoader;
+            _sceneService = sceneService;
             _services = services;
         }
 
@@ -45,7 +45,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             await UniTask.WhenAll(initializationTasks);
             await _settingsService.Initialize();
             
-            await _sceneLoader
+            await _sceneService
                 .LoadSceneInjected("MainMenu", LoadSceneMode.Additive, _appLifetimeScope);
         }
     }

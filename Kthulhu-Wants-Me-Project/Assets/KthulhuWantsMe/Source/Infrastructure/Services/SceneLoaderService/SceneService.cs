@@ -4,14 +4,18 @@ using UnityEngine.SceneManagement;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService
 {
-    public interface ISceneLoader
+    public interface ISceneService
     {
         UniTask LoadScene(string path, LoadSceneMode loadSceneMode);
         UniTask UnloadSceneAsync(string path);
     }
 
-    public class SceneLoader : ISceneLoader
+    public class SceneService : ISceneService
     {
+        
+        
+        
+        
         public async UniTask LoadScene(string path, LoadSceneMode loadSceneMode)
         {
             await SceneManager.LoadSceneAsync(path, loadSceneMode);
