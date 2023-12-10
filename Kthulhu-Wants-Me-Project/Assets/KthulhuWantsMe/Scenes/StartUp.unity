@@ -212,6 +212,9 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  mySceneReference:
+    asset: {fileID: 0}
+    guid: 00000000000000000000000000000000
 --- !u!1 &1572298372
 GameObject:
   m_ObjectHideFlags: 0
