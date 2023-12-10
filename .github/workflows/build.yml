@@ -1,0 +1,37 @@
+name: Build-Debug
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  build-unity:
+    strategy:
+      matrix:
+        unity: ["2022.3.5f1"]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library
+          
+      - name: Build (Linux64, mono)
+        uses: game-ci/unity-builder@v2
+        env:
+           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+           targetPlatform: StandaloneWindows64         
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: build
