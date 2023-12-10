@@ -20,7 +20,7 @@ jobs:
         
       - uses: actions/cache@v2
         with:
-          path: Library
+          path: Kthulhu-Wants-Me-Project/Library
           key: Library
           
       - name: Build (Linux64, mono)

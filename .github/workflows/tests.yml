@@ -20,8 +20,8 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          path: Kthulhu-Wants-Me-Project/Library
+          key: Library-${{ hashFiles('Kthulhu-Wants-Me-Project/Assets/**', 'Kthulhu-Wants-Me-Project/Packages/**', 'Kthulhu-Wants-Me-Project/ProjectSettings/**') }}
           restore-keys: |
             Library-
 
