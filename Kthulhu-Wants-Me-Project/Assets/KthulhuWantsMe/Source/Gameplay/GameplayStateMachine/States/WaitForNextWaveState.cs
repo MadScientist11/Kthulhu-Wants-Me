@@ -51,7 +51,6 @@ namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
             {
                 await UniTask.Delay(1000);
                 countdown--;
-                //_uiService.MiscUI.UpdateWaveCountdownText(countdown);
                 if (countdown == 0)
                 {
                     cancellationToken.Cancel();
