@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;

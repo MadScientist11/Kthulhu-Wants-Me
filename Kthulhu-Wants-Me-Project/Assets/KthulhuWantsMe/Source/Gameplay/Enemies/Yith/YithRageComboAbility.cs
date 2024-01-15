@@ -4,6 +4,7 @@ using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using MoreMountains.Feedbacks;
 using SickscoreGames.HUDNavigationSystem;
 using UnityEngine;

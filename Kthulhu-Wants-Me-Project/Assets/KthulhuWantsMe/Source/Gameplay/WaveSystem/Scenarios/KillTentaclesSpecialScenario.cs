@@ -9,6 +9,7 @@ using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using Sirenix.Utilities;
 using Random = UnityEngine.Random;
 

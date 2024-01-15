@@ -9,6 +9,7 @@ using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios

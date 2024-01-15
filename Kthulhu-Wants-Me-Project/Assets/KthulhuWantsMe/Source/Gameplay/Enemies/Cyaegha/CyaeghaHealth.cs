@@ -2,6 +2,7 @@
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.Stats;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;

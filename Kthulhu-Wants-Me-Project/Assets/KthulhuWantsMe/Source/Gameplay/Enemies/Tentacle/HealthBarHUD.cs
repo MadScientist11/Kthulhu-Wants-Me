@@ -3,6 +3,7 @@ using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Stats;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.UI;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
 using VContainer;
 

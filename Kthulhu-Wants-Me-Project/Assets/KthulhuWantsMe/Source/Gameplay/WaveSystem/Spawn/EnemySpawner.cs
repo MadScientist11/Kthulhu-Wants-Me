@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

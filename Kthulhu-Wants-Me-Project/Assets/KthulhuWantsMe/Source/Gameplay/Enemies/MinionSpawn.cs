@@ -5,6 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
 using VContainer;
 

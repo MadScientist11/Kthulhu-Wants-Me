@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
 using VContainer;
 using Vertx.Debugging;
