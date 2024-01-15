@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
+﻿using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn;
 using UnityEngine;

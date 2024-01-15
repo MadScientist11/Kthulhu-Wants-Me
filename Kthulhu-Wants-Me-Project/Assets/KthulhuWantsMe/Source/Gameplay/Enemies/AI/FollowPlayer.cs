@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using Freya;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
+﻿using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using Sirenix.OdinInspector;

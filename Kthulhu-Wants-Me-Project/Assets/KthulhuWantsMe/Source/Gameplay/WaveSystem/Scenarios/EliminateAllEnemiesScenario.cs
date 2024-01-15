@@ -1,8 +1,8 @@
 ﻿using System;
-using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 
-namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
 {
     public class EliminateAllEnemiesScenario : IWaveScenario
     {

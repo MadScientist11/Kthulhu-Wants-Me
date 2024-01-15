@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService

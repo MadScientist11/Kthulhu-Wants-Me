@@ -1,4 +1,4 @@
-﻿namespace KthulhuWantsMe.Source.Infrastructure.Scopes
+﻿namespace KthulhuWantsMe.Source.Infrastructure
 {
     public interface IInjectable
     {

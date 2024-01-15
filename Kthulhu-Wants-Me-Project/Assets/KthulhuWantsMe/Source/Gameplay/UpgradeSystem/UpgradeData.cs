@@ -1,6 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using Sirenix.OdinInspector;
 
 namespace KthulhuWantsMe.Source.Gameplay.UpgradeSystem

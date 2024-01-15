@@ -1,9 +1,9 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
-using KthulhuWantsMe.Source.Gameplay.StaterResetter;
+using KthulhuWantsMe.Source.Gameplay.StaterReset;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies
+namespace KthulhuWantsMe.Source.Gameplay.Entity
 {
     public interface IHealable
     {

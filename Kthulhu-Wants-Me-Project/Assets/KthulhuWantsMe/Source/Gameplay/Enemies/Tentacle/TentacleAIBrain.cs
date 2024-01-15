@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
-using VContainer;
 using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle

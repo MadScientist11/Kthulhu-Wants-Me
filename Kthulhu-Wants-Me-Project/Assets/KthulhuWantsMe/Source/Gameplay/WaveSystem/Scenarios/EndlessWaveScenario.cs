@@ -11,7 +11,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using Random = UnityEngine.Random;
 
-namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
 {
     public class EndlessWaveScenario : IWaveScenario
     {

@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Gameplay.Enemies;
-using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using UnityEngine;

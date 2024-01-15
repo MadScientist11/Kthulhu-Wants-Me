@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.Weapons
+namespace KthulhuWantsMe.Source.Gameplay.Interactables.Weapons
 {
     [CreateAssetMenu(menuName = GameConstants.MenuPath + "Create WeaponMoveSet", fileName = "WeaponMoveSet", order = 0)]
     public class WeaponMoveSet : ScriptableObject

@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.Services;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
-using KthulhuWantsMe.Source.UI;
-using KthulhuWantsMe.Source.UI.MainMenu.Settings;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
 using KthulhuWantsMe.Source.UI.PlayerHUD.TooltipSystem;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using VContainer;
 using Object = UnityEngine.Object;
 

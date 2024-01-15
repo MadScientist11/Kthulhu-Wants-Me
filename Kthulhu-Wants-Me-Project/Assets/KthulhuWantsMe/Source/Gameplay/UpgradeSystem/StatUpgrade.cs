@@ -1,6 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.UpgradeSystem

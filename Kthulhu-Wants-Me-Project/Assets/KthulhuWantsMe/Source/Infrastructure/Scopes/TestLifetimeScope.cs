@@ -1,5 +1,3 @@
-using KthulhuWantsMe.Source.Gameplay.Locations;
-using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Infrastructure.EntryPoints;
 using KthulhuWantsMe.Source.Infrastructure.Installers;
 using VContainer;

@@ -1,9 +1,9 @@
-﻿using KthulhuWantsMe.Source.Gameplay.WavesLogic;
-using KthulhuWantsMe.Source.Gameplay.WaveSystem;
+﻿using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 
-namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
+namespace KthulhuWantsMe.Source.Gameplay.StateMachine.States
 {
     public class WaveStartState : IGameplayState
     {

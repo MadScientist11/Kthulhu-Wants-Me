@@ -1,7 +1,7 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.Stats
 {
     public class EnemyStatsProvider
     {

@@ -9,7 +9,6 @@ using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 using VContainer;
-using Vertx.Debugging;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {

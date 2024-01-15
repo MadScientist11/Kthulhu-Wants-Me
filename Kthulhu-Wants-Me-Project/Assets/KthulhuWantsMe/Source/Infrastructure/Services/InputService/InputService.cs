@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Utilities;
-using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.InputService
 {

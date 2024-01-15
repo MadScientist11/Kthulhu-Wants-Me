@@ -1,8 +1,6 @@
 using System;
-using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using TMPro;
 using UnityEngine;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.UI.PlayerHUD
 {

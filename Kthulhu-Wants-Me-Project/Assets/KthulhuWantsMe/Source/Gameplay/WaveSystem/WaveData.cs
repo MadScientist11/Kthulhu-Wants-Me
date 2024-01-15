@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
-using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using Sirenix.OdinInspector;
-using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {

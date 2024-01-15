@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Threading;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Enemies
+namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {
     public interface ISpawnBehaviour
     {

@@ -1,10 +1,8 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.Services;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+﻿using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {

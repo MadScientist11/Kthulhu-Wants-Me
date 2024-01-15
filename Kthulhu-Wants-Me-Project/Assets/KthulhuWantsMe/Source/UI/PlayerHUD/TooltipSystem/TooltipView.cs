@@ -1,4 +1,3 @@
-using System;
 using KthulhuWantsMe.Source.Gameplay;
 using TMPro;
 using UnityEngine;

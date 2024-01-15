@@ -1,5 +1,4 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using UnityEngine;
 using VContainer;
 

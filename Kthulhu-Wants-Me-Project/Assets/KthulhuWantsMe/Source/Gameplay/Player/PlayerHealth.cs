@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Threading;
-using Cysharp.Threading.Tasks;
+﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
-using KthulhuWantsMe.Source.Gameplay.Enemies;
-using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
-using KthulhuWantsMe.Source.Gameplay.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
+using KthulhuWantsMe.Source.Gameplay.StateMachine;
+using KthulhuWantsMe.Source.Gameplay.StateMachine.States;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using MoreMountains.Feedbacks;
 using UnityEngine;
@@ -30,9 +25,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         public Transform DamageDealer { get; }
 
-        public float ProvideDamage() => 
+        public float ProvideDamage() =>
             _damage;
     }
+
     public class PlayerHealth : Health
     {
         public override float MaxHealth => _thePlayer.MaxHealth;
@@ -49,21 +45,20 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         [SerializeField] private MMFeedbacks _invincibilityFeedback;
 
         private PlayerMovementController _movementController;
-        
+
         private IInputService _inputService;
         private ThePlayer _thePlayer;
-        private ICoroutineRunner _coroutineRunner;
-        private GameplayStateMachine.GameplayStateMachine _gameplayStateMachine;
+        private GameplayStateMachine _gameplayStateMachine;
 
 
         [Inject]
-        public void Construct(GameplayStateMachine.GameplayStateMachine gameplayStateMachine, IInputService inputService, ThePlayer thePlayer, ICoroutineRunner coroutineRunner)
+        public void Construct(GameplayStateMachine gameplayStateMachine,
+            IInputService inputService, ThePlayer thePlayer)
         {
             _gameplayStateMachine = gameplayStateMachine;
-            _coroutineRunner = coroutineRunner;
             _thePlayer = thePlayer;
             _inputService = inputService;
-            
+
             _thePlayer.TookDamage += OnTookDamage;
             _thePlayer.HealthChanged += OnHealthChanged;
             _thePlayer.Died += OnDied;
@@ -80,7 +75,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         {
             _movementController = _playerLocomotion.MovementController;
         }
-        
+
         public override void TakeDamage(float damage, IDamageProvider damageProvider)
         {
             _thePlayer.TakeDamage(damageProvider);
@@ -105,7 +100,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void OnImpactEnd()
         {
-          
         }
 
         private IEnumerator DoImpactEnd()
@@ -115,11 +109,11 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             yield return Utilities.WaitForSeconds.Wait(1.5f);
             _player.ChangePlayerLayer(LayerMask.NameToLayer(GameConstants.Layers.Player));
         }
-        
+
         private void OnTookDamage(IDamageProvider damageProvider)
         {
             RaiseTookDamageEvent();
-            
+
             if (damageProvider is IBuffDebuff)
                 return;
             ReceiveDamageVisual(damageProvider);
@@ -140,7 +134,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             Die();
             _gameplayStateMachine.SwitchState<PlayerDeathState>();
         }
-        
+
         private void ReceiveDamageVisual(IDamageProvider damageProvider)
         {
             _playerAnimator.PlayImpact();
@@ -152,7 +146,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private void AddKnockback(Transform damageDealer)
         {
-            if(damageDealer != null)
+            if (damageDealer != null)
                 _movementController.AddVelocity(damageDealer.forward * 30f);
         }
 
@@ -161,7 +155,5 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             _playerAnimator.PlayDie();
             _movementController.ToggleMotor(false);
         }
-
-        
     }
 }

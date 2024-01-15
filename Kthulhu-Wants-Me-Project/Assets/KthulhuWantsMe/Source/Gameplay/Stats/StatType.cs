@@ -1,4 +1,4 @@
-﻿namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+﻿namespace KthulhuWantsMe.Source.Gameplay.Stats
 {
     public enum StatType
     {

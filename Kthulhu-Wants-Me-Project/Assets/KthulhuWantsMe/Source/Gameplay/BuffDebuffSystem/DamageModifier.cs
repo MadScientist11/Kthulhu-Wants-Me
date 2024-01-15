@@ -1,7 +1,6 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VContainer;

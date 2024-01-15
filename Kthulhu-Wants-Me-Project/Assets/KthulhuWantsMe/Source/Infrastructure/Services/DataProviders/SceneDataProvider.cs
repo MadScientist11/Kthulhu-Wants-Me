@@ -2,7 +2,7 @@ using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using Unity.AI.Navigation;
 using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Infrastructure.Services
+namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders
 {
     public interface ISceneDataProvider
     {

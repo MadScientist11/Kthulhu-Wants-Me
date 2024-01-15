@@ -5,14 +5,14 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
+using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using Sirenix.Utilities;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
 {
     public class KillTentaclesSpecialScenario : IWaveScenario
     {

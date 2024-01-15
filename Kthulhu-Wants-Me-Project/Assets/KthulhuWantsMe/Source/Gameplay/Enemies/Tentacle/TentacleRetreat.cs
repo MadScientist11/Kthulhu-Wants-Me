@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;

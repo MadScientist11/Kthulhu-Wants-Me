@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Infrastructure;
+﻿using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -8,7 +7,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
-namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
+namespace KthulhuWantsMe.Source.Gameplay.StateMachine.States
 {
     public class RestartGameState : IGameplayState
     {

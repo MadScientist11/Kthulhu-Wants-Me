@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.Stats
 {
     public class EnemyStats
     {

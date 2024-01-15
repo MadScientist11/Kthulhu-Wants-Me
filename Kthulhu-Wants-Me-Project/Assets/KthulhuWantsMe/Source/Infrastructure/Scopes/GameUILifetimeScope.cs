@@ -1,5 +1,3 @@
-using KthulhuWantsMe.Source.Infrastructure.Installers;
-using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using VContainer;
 using VContainer.Unity;
 

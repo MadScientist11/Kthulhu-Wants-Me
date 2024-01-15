@@ -1,6 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.SOData;
-using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using UnityEngine;
 

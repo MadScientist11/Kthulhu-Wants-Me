@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 
-namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
+namespace KthulhuWantsMe.Source.Gameplay.StateMachine.States
 {
     public class PlayerDeathState : IGameplayState
     {

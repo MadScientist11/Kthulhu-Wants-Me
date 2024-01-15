@@ -5,7 +5,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 
-namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
+namespace KthulhuWantsMe.Source.Gameplay.StateMachine.States
 {
     public class WaitForNextWaveState : IGameplayState
     {

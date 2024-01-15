@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Services;
-using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.UI;
 
-namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
+namespace KthulhuWantsMe.Source.Gameplay.StateMachine.States
 {
     public class WaveVictoryState : IGameplayState
     {

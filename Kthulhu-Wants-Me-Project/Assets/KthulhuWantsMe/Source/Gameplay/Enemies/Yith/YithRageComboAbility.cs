@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using MoreMountains.Feedbacks;
 using SickscoreGames.HUDNavigationSystem;
 using UnityEngine;
 using UnityEngine.AI;
 using VContainer;
-using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {

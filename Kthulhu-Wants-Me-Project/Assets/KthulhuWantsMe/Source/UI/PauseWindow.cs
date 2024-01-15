@@ -1,19 +1,10 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
-using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
-using KthulhuWantsMe.Source.Gameplay.Services;
-using KthulhuWantsMe.Source.Infrastructure;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
+﻿using KthulhuWantsMe.Source.Gameplay.StateMachine;
+using KthulhuWantsMe.Source.Gameplay.StateMachine.States;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using VContainer;
-using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.UI
 {

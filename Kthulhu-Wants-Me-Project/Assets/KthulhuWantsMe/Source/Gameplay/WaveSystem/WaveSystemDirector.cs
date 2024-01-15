@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Gameplay.Enemies;
-using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
-using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
-using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
+using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.StateMachine;
+using KthulhuWantsMe.Source.Gameplay.StateMachine.States;
+using KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
@@ -74,7 +72,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private readonly IGameFactory _gameFactory;
         private readonly ISceneDataProvider _sceneDataProvider;
         private readonly IDataProvider _dataProvider;
-        private readonly GameplayStateMachine.GameplayStateMachine _gameplayStateMachine;
+        private readonly GameplayStateMachine _gameplayStateMachine;
         private readonly IUIService _uiService;
         private CancellationTokenSource _spawnLoopToken;
 
@@ -82,7 +80,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         public WaveSystemDirector(ISceneDataProvider sceneDataProvider, IDataProvider dataProvider,
             IGameFactory gameFactory,
             IUIService uiService,
-            GameplayStateMachine.GameplayStateMachine gameplayStateMachine)
+            GameplayStateMachine gameplayStateMachine)
         {
             _uiService = uiService;
             _gameplayStateMachine = gameplayStateMachine;

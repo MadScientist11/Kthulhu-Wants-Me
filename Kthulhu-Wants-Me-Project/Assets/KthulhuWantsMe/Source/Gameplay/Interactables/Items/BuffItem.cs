@@ -1,7 +1,6 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Interfaces.AutoInteractables;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
-using KthulhuWantsMe.Source.Gameplay.Services;
 using UnityEngine;
 using VContainer;
 

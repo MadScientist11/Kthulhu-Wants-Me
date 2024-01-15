@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player.State

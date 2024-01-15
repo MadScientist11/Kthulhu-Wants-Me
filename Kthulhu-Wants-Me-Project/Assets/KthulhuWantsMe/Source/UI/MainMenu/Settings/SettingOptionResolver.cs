@@ -1,6 +1,5 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Infrastructure;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

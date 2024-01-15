@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Freya;
+﻿using Freya;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
-using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.InputService;
-using Sirenix.Utilities;
 using UnityEngine;
 using VContainer;
 

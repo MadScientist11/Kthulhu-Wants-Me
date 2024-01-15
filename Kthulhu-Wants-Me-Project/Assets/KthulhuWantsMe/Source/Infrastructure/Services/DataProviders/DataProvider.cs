@@ -1,12 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
-using KthulhuWantsMe.Source.Gameplay.Locations;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders

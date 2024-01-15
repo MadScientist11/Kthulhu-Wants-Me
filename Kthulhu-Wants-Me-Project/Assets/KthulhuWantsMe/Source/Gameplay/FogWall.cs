@@ -1,6 +1,5 @@
-using System;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
+using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;

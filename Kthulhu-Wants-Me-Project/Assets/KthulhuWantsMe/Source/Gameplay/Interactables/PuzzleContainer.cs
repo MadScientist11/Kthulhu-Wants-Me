@@ -5,8 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items.Story;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
-using KthulhuWantsMe.Source.Gameplay.Services;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
+using KthulhuWantsMe.Source.Infrastructure;
 using UnityEngine;
 using VContainer;
 

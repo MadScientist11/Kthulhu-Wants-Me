@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.EffectsData
+namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
 {
     [CreateAssetMenu(menuName = "Create EffectData", fileName = "EffectData", order = 0)]
     public class EffectData : ScriptableObject

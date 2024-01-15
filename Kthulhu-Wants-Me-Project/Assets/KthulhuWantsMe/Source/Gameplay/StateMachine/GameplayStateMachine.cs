@@ -1,7 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+﻿using KthulhuWantsMe.Source.Gameplay.StateMachine.States;
 
-namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine
+namespace KthulhuWantsMe.Source.Gameplay.StateMachine
 {
     public class GameplayStateMachine
     {

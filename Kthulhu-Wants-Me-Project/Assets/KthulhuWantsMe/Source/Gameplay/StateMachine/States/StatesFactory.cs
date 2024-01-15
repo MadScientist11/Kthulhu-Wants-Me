@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States
+namespace KthulhuWantsMe.Source.Gameplay.StateMachine.States
 {
     public class StatesFactory
     {

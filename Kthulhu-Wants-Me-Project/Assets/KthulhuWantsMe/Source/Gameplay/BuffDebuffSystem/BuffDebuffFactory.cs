@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
-using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Interactables.Items
+namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
 {
     public interface IBuffDebuffFactory
     {

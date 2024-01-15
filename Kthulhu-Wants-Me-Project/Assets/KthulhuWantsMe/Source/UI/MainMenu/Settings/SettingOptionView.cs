@@ -1,4 +1,4 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Scopes;
+﻿using KthulhuWantsMe.Source.Infrastructure;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

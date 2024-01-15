@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using UnityEngine;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Cinemachine;
-using KthulhuWantsMe.Source.Gameplay.Player;
+﻿using Cinemachine;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
