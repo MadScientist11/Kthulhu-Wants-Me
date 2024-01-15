@@ -19,7 +19,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         PlayerFacade CreatePlayer(Vector3 position, Quaternion rotation);
         GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
         T CreateInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object;
-        MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation);
         GameObject CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
         T CreateInjected<T>(T prefab, Transform parent) where T : Object;
         BuffItem CreateBuffItem<T>(Vector3 position, Quaternion rotation) where T : BuffItem;
@@ -32,11 +31,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         private readonly IObjectResolver _instantiator;
         private readonly IDataProvider _dataProvider;
         private IPortalFactory _portalFactory;
-        private EnemyStatsProvider _enemyStatsProvider;
-        private IProgressService _progressService;
+        private readonly EnemyStatsProvider _enemyStatsProvider;
+        private readonly IProgressService _progressService;
 
-        public GameFactory(IObjectResolver instantiator, IDataProvider dataProvider, IPortalFactory portalFactory,
-            EnemyStatsProvider enemyStatsProvider, IProgressService progressService)
+        public GameFactory(IObjectResolver instantiator, 
+                           DataProvider dataProvider,
+                           IPortalFactory portalFactory,
+                           EnemyStatsProvider enemyStatsProvider,
+                           IProgressService progressService)
         {
             _progressService = progressService;
             _enemyStatsProvider = enemyStatsProvider;
@@ -62,9 +64,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         public GameObject CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
         {
             GameObject enemy = CreateEnemy(position, rotation, enemyType);
-
-        
-
             return enemy;
         }
 
@@ -82,14 +81,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
             return instance;
         }
-
-        public MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation)
-        {
-            //MinionsSpawnSpell instance = _instantiator.Instantiate(null, position, rotation);
-
-            return null;
-        }
-
+        
         public BuffItem CreateBuffItem<T>(Vector3 position, Quaternion rotation) where T : BuffItem
         {
             BuffItem instance =

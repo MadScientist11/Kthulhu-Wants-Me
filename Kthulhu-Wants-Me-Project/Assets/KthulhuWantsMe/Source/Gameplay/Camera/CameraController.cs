@@ -37,15 +37,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Camera
             FadeObjectsInView();
         }
 
-        public void PullFocusOn(ICinemachineCamera cinemachineCamera)
-        {
-            if (cinemachineCamera == ActiveVCam)
-                return;
-
-            ActiveVCam.VirtualCameraGameObject.SetActive(false);
-            cinemachineCamera.VirtualCameraGameObject.SetActive(true);
-        }
-
         private void FadeObjectsInView()
         {
             Vector3 dir = _gameFactory.Player.transform.position.AddY(2) - (transform.position - transform.up * _offset);

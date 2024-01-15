@@ -5,9 +5,7 @@ using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Rooms;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using MoreMountains.Tools;
-using Unity.AI.Navigation;
 using UnityEngine;
 using VContainer.Unity;
 using Object = UnityEngine.Object;
@@ -23,7 +21,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
     public class LootService : ILootService, ITickable
     {
         private readonly IGameFactory _gameFactory;
-        private readonly NavMeshSurface _navMeshSurface;
         private readonly IRoomOverseer _roomOverseer;
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly IProgressService _progressService;
@@ -34,19 +31,19 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
         private readonly List<BuffItem> _loot = new();
 
-        public LootService(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, 
-            IRoomOverseer roomOverseer, IWaveSystemDirector waveSystemDirector, IProgressService progressService)
+        public LootService(IGameFactory gameFactory, 
+                           IRoomOverseer roomOverseer, 
+                           IWaveSystemDirector waveSystemDirector,
+                           IProgressService progressService)
         {
             _progressService = progressService;
             _waveSystemDirector = waveSystemDirector;
             _roomOverseer = roomOverseer;
             _gameFactory = gameFactory;
-            _navMeshSurface = sceneDataProvider.MapNavMesh;
         }
 
         public void Tick()
         {
-
             if (!_waveSystemDirector.WaveOngoing || _progressService.ProgressData.CompletedWaveIndex < StartSpawnFlameSoulAfterWave - 1)
             {
                 return;

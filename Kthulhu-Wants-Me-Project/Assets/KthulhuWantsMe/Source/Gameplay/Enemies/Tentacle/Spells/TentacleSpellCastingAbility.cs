@@ -115,8 +115,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             ProhibitHealthItemsUsageSpell prohibitHealthItemsUsageSpell
                 = new ProhibitHealthItemsUsageSpell(_gameFactory.Player, this);
 
-            SpawnMinionsSpell spawnMinionsSpell
-                = new SpawnMinionsSpell(_gameFactory, this);
+         
 
             BasicAttackSpell basicAttackSpell
                 = new BasicAttackSpell(this, allSpells[TentacleSpell.BasicAttackSpell], _gameFactory,
@@ -129,7 +128,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             _tentacleSpells = new()
             {
                 { TentacleSpell.PlayerCantUseHealthItems, prohibitHealthItemsUsageSpell },
-                { TentacleSpell.MinionsSpawnSpell, spawnMinionsSpell },
                 { TentacleSpell.BasicAttackSpell, basicAttackSpell },
                 { TentacleSpell.Buff, buffSpell },
             };

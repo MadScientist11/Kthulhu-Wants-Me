@@ -73,9 +73,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public void Tick()
         {
+            if (Time.timeScale == 0)
+            {
+                return;
+            }
+            
             ModifyCurrentStamina(RegenRate * Time.deltaTime);
             
-            if (Time.timeScale == 0 || !_waveSystemDirector.WaveOngoing)
+            if (!_waveSystemDirector.WaveOngoing)
             {
                 return;
             }

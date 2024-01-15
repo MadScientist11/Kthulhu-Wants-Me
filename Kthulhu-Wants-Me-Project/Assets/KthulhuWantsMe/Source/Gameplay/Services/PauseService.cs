@@ -1,5 +1,4 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Services
 {
@@ -11,8 +10,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Services
 
     public class PauseService : IPauseService
     {
-        private BaseWindow _settingsWindow;
-        
         public void PauseGame()
         {
             Time.timeScale = 0;
