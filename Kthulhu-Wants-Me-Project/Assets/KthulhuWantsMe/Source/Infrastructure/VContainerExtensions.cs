@@ -12,12 +12,12 @@ namespace KthulhuWantsMe.Source.Infrastructure
             installer.Install(builder);
 
         public static async UniTask LoadSceneInjected(this ISceneService sceneService,
-            string path, LoadSceneMode loadSceneMode,
+            SceneId sceneId, LoadSceneMode loadSceneMode,
             LifetimeScope sceneParentScope)
         {
             using (LifetimeScope.EnqueueParent(sceneParentScope))
             {
-                await sceneService.LoadScene(path, loadSceneMode);
+                await sceneService.LoadScene(sceneId, loadSceneMode);
             }
         }
     }

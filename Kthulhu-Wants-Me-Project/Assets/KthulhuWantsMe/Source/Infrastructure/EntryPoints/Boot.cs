@@ -44,7 +44,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             await _settingsService.Initialize();
             
             await _sceneService
-                .LoadSceneInjected("MainMenu", LoadSceneMode.Additive, _appLifetimeScope);
+                .LoadSceneInjected(SceneId.MainMenu, LoadSceneMode.Additive, _appLifetimeScope);
         }
     }
 }

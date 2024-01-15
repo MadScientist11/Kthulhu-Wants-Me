@@ -15,7 +15,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
     public interface IUIFactory : IInitializableService
     {
-        Scene UIScene { get; }
         BaseWindow Create(WindowId windowId);
         void UseContainer(IObjectResolver container);
         PlayerHUD CreatePlayerHUD();
@@ -26,7 +25,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
     public class UIFactory : IUIFactory
     {
         public const string PlayerHUDPath = "PlayerHUD";
-        public const string MiscUIPath = "MiscUI";
         public const string UpgradeWindowPath = "UpgradeWindow";
         public const string PauseWindowPath = "PauseWindow";
         public const string TryAgainWindowPath = "TryAgainWindow";
@@ -62,8 +60,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
         public async UniTask Initialize()
         {
-            await _sceneService.LoadScene("GameUI", LoadSceneMode.Additive);
-            _uiScene = SceneManager.GetSceneByName("GameUI");
+            await _sceneService.LoadScene(SceneId.UI, LoadSceneMode.Additive);
+            _uiScene = SceneManager.GetSceneByBuildIndex((int)SceneId.UI);
 
             _playerHUDPrefab = await _resourceManager.ProvideAssetAsync<PlayerHUD>(PlayerHUDPath);
             _upgradeWindowPrefab = await _resourceManager.ProvideAssetAsync<UpgradeWindow>(UpgradeWindowPath);
