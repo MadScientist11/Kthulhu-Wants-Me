@@ -21,7 +21,6 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
         private CancellationTokenSource _timerToken;
 
         private int _remainingTentacles;
-        private readonly int _waitForEnemiesRetreatDelay = 3;
 
         private readonly EnemyType[] _additionalEnemies = { EnemyType.Cyeagha, EnemyType.YithCombo1 };
         private int _additionalEnemiesCounter;

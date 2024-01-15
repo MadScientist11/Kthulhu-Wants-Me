@@ -46,7 +46,7 @@ namespace KthulhuWantsMe.Source.Gameplay.InGameConsole
             _inputService.GameScenario.ToggleConsole -= ToggleConsole;
         }
 
-        public void Enqueue(IObjectResolver objectResolver)
+        public void UseContainer(IObjectResolver objectResolver)
         {
             _resolver = objectResolver;
         }

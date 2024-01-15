@@ -34,7 +34,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
     {
         public event Action WaveStarted;
         public event Action WaveCompleted;
-        public event Action<IEnumerable<Health>> BatchSpawned;
+        //public event Action<IEnumerable<Health>> BatchSpawned;
 
         public bool WaveOngoing
         {

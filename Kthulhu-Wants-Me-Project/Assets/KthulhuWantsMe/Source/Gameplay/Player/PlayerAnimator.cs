@@ -32,7 +32,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private RuntimeAnimatorController _defaultAnimatorController;
 
-        private bool _enableRootMotion;
 
 
         private void Start() =>
@@ -55,7 +54,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         public void PlayEvade()
         {
-            _enableRootMotion = true;
             _animator.SetTrigger(Evade);
         }
 

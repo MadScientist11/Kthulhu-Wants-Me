@@ -16,8 +16,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
 
-        private float _speed = 90;
-        
         private PlayerFacade _player;
         private TentacleConfiguration _tentacleConfiguration;
 

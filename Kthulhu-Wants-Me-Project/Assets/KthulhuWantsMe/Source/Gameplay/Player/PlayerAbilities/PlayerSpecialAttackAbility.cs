@@ -18,8 +18,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         [SerializeField] private PlayerAttack _playerAttack;
         [SerializeField] private MMFeedbacks _specialAttackFeedback;
 
-        private float _attackCooldown = 0.6f;
-        
         private WeaponItem _currentWeapon;
 
         private IInputService _inputService;
@@ -43,7 +41,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
         {
             _currentWeapon.GetComponent<ISpecialAttack>().RespondTo(this);
         }
- 
 
         private void PerformSpecialAttack()
         {

@@ -20,15 +20,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         void InitHUD();
         BaseWindow OpenWindow(WindowId windowId);
         void CloseWindow(WindowId windowId);
-
         bool IsOpen(WindowId windowId);
         void ClearUI();
     }
 
     public class UIService : IUIService
     {
-        public bool IsInitialized { get; set; }
-
         public PlayerHUD PlayerHUD
         {
             get
@@ -60,32 +57,20 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private readonly List<BaseWindow> _activeWindows = new();
         private WindowId _activeWindowId;
 
-        private ISceneService _sceneService;
         private IUIFactory _uiFactory;
         private IPauseService _pauseService;
-        private IInputService _inputService;
 
 
         [Inject]
-        public void Construct(ISceneService sceneService, IUIFactory uiFactory, IPauseService pauseService, 
-            IInputService inputService)
+        public void Construct(IUIFactory uiFactory, IPauseService pauseService)
         {
             _pauseService = pauseService;
             _uiFactory = uiFactory;
-            _sceneService = sceneService;
-            _inputService = inputService;
         }
 
         public BaseWindow OpenWindow(WindowId windowId)
         {
-            BaseWindow window = windowId switch
-            {
-                WindowId.UpgradeWindow => _uiFactory.CreateUpgradeWindow(),
-                WindowId.PauseWindow => _uiFactory.CreatePauseWindow(),
-                WindowId.DefeatWindow => _uiFactory.CreateDefeatWindow(),
-                WindowId.SettingsWindow => _uiFactory.CreateSettingsWindow(),
-                _ => throw new ArgumentOutOfRangeException(nameof(windowId), windowId, null)
-            };
+            BaseWindow window = _uiFactory.Create(windowId);
             RenderOnTop(window);
             _activeWindows.Add(window);
             
@@ -107,7 +92,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 
             if (windowToClose == null)
             {
-                Debug.LogWarning("Window you're trying to clo9se, doesn't exist.");
+                Debug.LogWarning("Window you're trying to close, doesn't exist.");
                 return;
             }
             _activeWindows.Remove(windowToClose);
@@ -134,7 +119,8 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             
             foreach (WindowId windowId in Enum.GetValues(typeof(WindowId)).Cast<WindowId>())
             {
-                CloseWindow(windowId);
+                if(IsOpen(windowId))
+                    CloseWindow(windowId);
             }
 
         }
