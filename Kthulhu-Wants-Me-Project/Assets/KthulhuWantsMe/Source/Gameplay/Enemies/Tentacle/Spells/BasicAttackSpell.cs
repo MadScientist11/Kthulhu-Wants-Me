@@ -4,6 +4,7 @@ using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
@@ -26,10 +27,15 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         private readonly SpellConfiguration _spellConfiguration;
         private readonly IBuffDebuffFactory _buffDebuffFactory;
         private readonly IBuffDebuffService _buffDebuffService;
-        private IGameFactory _gameFactory;
+        private readonly IGameFactory _gameFactory;
 
-        public BasicAttackSpell(TentacleSpellCastingAbility spellCastingAbility, SpellConfiguration spellConfiguration,
-            IGameFactory gameFactory, ThePlayer playerModel, IBuffDebuffFactory buffDebuffFactory, IBuffDebuffService buffDebuffService)
+        public BasicAttackSpell(TentacleSpellCastingAbility spellCastingAbility, 
+                                SpellConfiguration spellConfiguration,
+                                IGameFactory gameFactory, 
+                                ThePlayer playerModel, 
+                                IBuffDebuffFactory buffDebuffFactory, 
+                                IBuffDebuffService buffDebuffService,
+                                IPlayerProvider playerProvider)
         {
             _gameFactory = gameFactory;
             _buffDebuffService = buffDebuffService;
@@ -37,7 +43,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             _spellConfiguration = spellConfiguration;
             _spellCastingAbility = spellCastingAbility;
             _playerModel = playerModel;
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
             _gameFactory = gameFactory;
         }
 

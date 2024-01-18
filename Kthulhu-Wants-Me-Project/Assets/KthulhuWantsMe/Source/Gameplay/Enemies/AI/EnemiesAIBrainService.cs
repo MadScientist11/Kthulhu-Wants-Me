@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
@@ -28,17 +29,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         private List<GameObject> _chasingPlayerEnemies;
         private float _behaviourRevaluationCooldown;
 
-        private readonly IGameFactory _gameFactory;
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly IResourceManager _resourceManager;
         private GlobalAIConfiguration _globalAIConfiguration;
+        private IPlayerProvider _playerProvider;
 
-        public EnemiesAIBrainService(IGameFactory gameFactory, IResourceManager resourceManager,
-            IWaveSystemDirector waveSystemDirector)
+        public EnemiesAIBrainService(IPlayerProvider playerProvider, 
+                                     IResourceManager resourceManager,
+                                     IWaveSystemDirector waveSystemDirector)
         {
+            _playerProvider = playerProvider;
             _resourceManager = resourceManager;
             _waveSystemDirector = waveSystemDirector;
-            _gameFactory = gameFactory;
         }
 
         public async void Initialize()
@@ -81,7 +83,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             _chasingPlayerEnemies.RemoveAll(item => item == null);
 
             GameObject furthestEnemy = _chasingPlayerEnemies.OrderBy(enemyHealth =>
-                    Vector3.Distance(enemyHealth.transform.position, _gameFactory.Player.transform.position))
+                    Vector3.Distance(enemyHealth.transform.position, _playerProvider.Player.transform.position))
                 .LastOrDefault();
 
             if (furthestEnemy != null)
@@ -98,7 +100,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             IEnumerable<GameObject> closestEnemies = _waveSystemDirector.CurrentWaveState.AliveEnemies
                 .Where(enemyHealth => !_chasingPlayerEnemies.Contains(enemyHealth.gameObject))
                 .OrderBy(enemyHealth =>
-                    Vector3.Distance(enemyHealth.transform.position, _gameFactory.Player.transform.position))
+                    Vector3.Distance(enemyHealth.transform.position, _playerProvider.Player.transform.position))
                 .Take(_globalAIConfiguration.MaxChasingEnemies - _chasingPlayerEnemies.Count)
                 .Select(enemy => enemy.gameObject);
 
@@ -110,7 +112,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
             for (var i = 0; i < _chasingPlayerEnemies.Count; i++)
             {
                 if (Vector3.Distance(_chasingPlayerEnemies[i].transform.position,
-                        _gameFactory.Player.transform.position) > _globalAIConfiguration.EnemiesFallBehindDistance)
+                        _playerProvider.Player.transform.position) > _globalAIConfiguration.EnemiesFallBehindDistance)
                 {
                     _chasingPlayerEnemies.RemoveAt(i);
                 }

@@ -6,6 +6,7 @@ using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
@@ -24,10 +25,10 @@ namespace KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem
         private ThePlayer _thePlayer;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, ThePlayer thePlayer)
+        public void Construct(IPlayerProvider playerProvider, ThePlayer thePlayer)
         {
             _thePlayer = thePlayer;
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
         }
 
         private async void Start()

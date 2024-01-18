@@ -16,14 +16,16 @@ namespace KthulhuWantsMe.Source.Gameplay.StateMachine.States
         private readonly IBackgroundMusicPlayer _backgroundMusicPlayer;
         private readonly ILootService _lootService;
         private readonly IGameFactory _gameFactory;
+        private IPlayerProvider _playerProvider;
 
         public WaitForNextWaveState(
             GameplayStateMachine gameplayStateMachine,
             IUIService uiService, 
             IBackgroundMusicPlayer backgroundMusicPlayer,
-            ILootService lootService, IGameFactory gameFactory)
+            ILootService lootService, 
+            IPlayerProvider playerProvider)
         {
-            _gameFactory = gameFactory;
+            _playerProvider = playerProvider;
             _lootService = lootService;
             _backgroundMusicPlayer = backgroundMusicPlayer;
             _gameplayStateMachine = gameplayStateMachine;
@@ -35,7 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.StateMachine.States
             _backgroundMusicPlayer.PlayConcernMusic();
             _lootService.DespawnAllLoot();
             _counterToken = new CancellationTokenSource();
-            _counterToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
+            _counterToken.RegisterRaiseCancelOnDestroy(_playerProvider.Player);
             StartNextWaveCounter(_counterToken).Forget();
         }
 

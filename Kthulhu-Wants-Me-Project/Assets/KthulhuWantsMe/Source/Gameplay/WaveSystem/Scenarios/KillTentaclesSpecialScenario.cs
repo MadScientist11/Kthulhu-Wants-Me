@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
@@ -28,11 +29,13 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
         
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly IUIService _uiService;
-        private readonly IGameFactory _gameFactory;
+        private readonly IPlayerProvider _playerProvider;
 
-        public KillTentaclesSpecialScenario(IWaveSystemDirector waveSystemDirector, IUIService uiService, IGameFactory gameFactory)
+        public KillTentaclesSpecialScenario(IWaveSystemDirector waveSystemDirector, 
+                                            IUIService uiService, 
+                                            IPlayerProvider playerProvider)
         {
-            _gameFactory = gameFactory;
+            _playerProvider = playerProvider;
             _uiService = uiService;
             _waveSystemDirector = waveSystemDirector;
         }
@@ -87,7 +90,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
         private async UniTaskVoid StartWaveLossTimer()
         {
             _timerToken = new CancellationTokenSource();
-            _timerToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
+            _timerToken.RegisterRaiseCancelOnDestroy(_playerProvider.Player);
 
             TimeSpan tick = TimeSpan.FromSeconds(1);
 

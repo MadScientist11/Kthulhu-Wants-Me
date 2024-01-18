@@ -34,6 +34,10 @@ namespace KthulhuWantsMe.Source.Infrastructure.Installers
                 .AsImplementedInterfaces();
             
             builder
+                .Register<PlayerProvider>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
+            
+            builder
                 .Register<EnemiesAIBrainService>(Lifetime.Singleton)
                 .AsImplementedInterfaces();
 

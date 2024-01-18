@@ -1,4 +1,4 @@
-﻿using KthulhuWantsMe.Source.Infrastructure.Services;
+﻿using KthulhuWantsMe.Source.Gameplay.Services;
 using SickscoreGames.HUDNavigationSystem;
 using UnityEngine;
 using VContainer;
@@ -10,17 +10,17 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         [SerializeField] private HUDNavigationSystem _hudNavigationSystem;
         [SerializeField] private HUDNavigationCanvas _hudNavigationCanvas;
         
-        private IGameFactory _gameFactory;
+        private IPlayerProvider _playerProvider;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IPlayerProvider playerProvider)
         {
-            _gameFactory = gameFactory;
+            _playerProvider = playerProvider;
         }
         
         public void Enable()
         {
-            HUDNavigationSystem.Instance.ChangePlayerController(_gameFactory.Player.transform);
+            HUDNavigationSystem.Instance.ChangePlayerController(_playerProvider.Player.transform);
             HUDNavigationSystem.Instance.EnableSystem(true);
         }
     }   

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.StateMachine;
 using KthulhuWantsMe.Source.Gameplay.StateMachine.States;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios;
@@ -74,28 +75,33 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private readonly IDataProvider _dataProvider;
         private readonly GameplayStateMachine _gameplayStateMachine;
         private readonly IUIService _uiService;
+        private readonly IPlayerProvider _playerProvider;
+        
         private CancellationTokenSource _spawnLoopToken;
 
-
-        public WaveSystemDirector(ISceneDataProvider sceneDataProvider, IDataProvider dataProvider,
+        public WaveSystemDirector(
+            ISceneDataProvider sceneDataProvider, 
             IGameFactory gameFactory,
+            IDataProvider dataProvider,
+            IPlayerProvider playerProvider,
             IUIService uiService,
             GameplayStateMachine gameplayStateMachine)
         {
+            _playerProvider = playerProvider;
             _uiService = uiService;
             _gameplayStateMachine = gameplayStateMachine;
             _sceneDataProvider = sceneDataProvider;
-            _gameFactory = gameFactory;
             _dataProvider = dataProvider;
+            _gameFactory = gameFactory;
         }
 
         public void Initialize()
         {
-            _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider, _dataProvider);
+            _waveSpawner = new WaveSpawner(_gameFactory, _sceneDataProvider, _dataProvider, _playerProvider);
 
             IWaveScenario eliminateAllEnemiesScenario = new EliminateAllEnemiesScenario(this);
-            IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService, _gameFactory);
-            IWaveScenario endlessWaveScenario = new EndlessWaveScenario(this, _gameFactory, _uiService, _waveSpawner);
+            IWaveScenario killTentaclesSpecial = new KillTentaclesSpecialScenario(this, _uiService, _playerProvider);
+            IWaveScenario endlessWaveScenario = new EndlessWaveScenario(this, _playerProvider, _uiService, _waveSpawner);
 
             _waveScenarios = new()
             {
@@ -165,7 +171,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private async UniTaskVoid SpawnBatchLoop()
         {
             _spawnLoopToken = new CancellationTokenSource();
-            _spawnLoopToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
+            _spawnLoopToken.RegisterRaiseCancelOnDestroy(_playerProvider.Player);
 
             TimeSpan universalWaveStartDelay = TimeSpan.FromSeconds(_dataProvider.Waves.WaveStartDelay);
             await UniTask.Delay(universalWaveStartDelay, false, PlayerLoopTiming.Update, _spawnLoopToken.Token);

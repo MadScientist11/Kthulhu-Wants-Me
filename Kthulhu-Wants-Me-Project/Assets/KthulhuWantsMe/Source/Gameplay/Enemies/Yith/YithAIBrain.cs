@@ -1,6 +1,7 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
@@ -32,10 +33,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private IAIService _aiService;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IAIService aiService, IRandomService randomService)
+        public void Construct(IPlayerProvider playerProvider, IAIService aiService, IRandomService randomService)
         {
             _aiService = aiService;
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
             
             randomService.ProvideRandomValue(value => _rageComboRandom = value, ComboAttackReavaluationTime);
         }

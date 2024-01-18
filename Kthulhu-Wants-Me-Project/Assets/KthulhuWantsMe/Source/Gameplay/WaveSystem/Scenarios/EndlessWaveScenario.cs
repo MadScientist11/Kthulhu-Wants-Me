@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -22,17 +23,19 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
 
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly WaveSpawner _waveSpawner;
-        private readonly IGameFactory _gameFactory;
         private readonly IUIService _uiService;
+        private IPlayerProvider _playerProvider;
 
         private CancellationTokenSource _spawnLoopToken;
 
 
-        public EndlessWaveScenario(IWaveSystemDirector waveSystemDirector, IGameFactory gameFactory,
-            IUIService uiService, WaveSpawner waveSpawner)
+        public EndlessWaveScenario(IWaveSystemDirector waveSystemDirector, 
+                                   IPlayerProvider playerProvider,
+                                   IUIService uiService, 
+                                   WaveSpawner waveSpawner)
         {
+            _playerProvider = playerProvider;
             _uiService = uiService;
-            _gameFactory = gameFactory;
             _waveSpawner = waveSpawner;
             _waveSystemDirector = waveSystemDirector;
         }
@@ -58,7 +61,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
         private async UniTaskVoid SpawnBatchLoop()
         {
             _spawnLoopToken = new();
-            _spawnLoopToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
+            _spawnLoopToken.RegisterRaiseCancelOnDestroy(_playerProvider.Player);
             while (!_spawnLoopToken.IsCancellationRequested)
             {
                 TimeSpan nextBatchDelay =
@@ -76,7 +79,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
 
             while (true)
             {
-                await UniTask.Delay(tick, false, PlayerLoopTiming.Update, _gameFactory.Player.destroyCancellationToken);
+                await UniTask.Delay(tick, false, PlayerLoopTiming.Update, _playerProvider.Player.destroyCancellationToken);
                 countUp++;
                 _uiService.PlayerHUD._timerUI.UpdateTImerText(countUp);
             }

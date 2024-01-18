@@ -3,6 +3,7 @@ using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.Spell;
 using KthulhuWantsMe.Source.Gameplay.Stats;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -15,7 +16,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
     public interface IGameFactory
     {
-        PlayerFacade Player { get; }
         PlayerFacade CreatePlayer(Vector3 position, Quaternion rotation);
         GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
         T CreateInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object;
@@ -26,23 +26,21 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
     public class GameFactory : IGameFactory
     {
-        public PlayerFacade Player { get; private set; }
-
         private readonly IObjectResolver _instantiator;
         private readonly IDataProvider _dataProvider;
-        private IPortalFactory _portalFactory;
         private readonly EnemyStatsProvider _enemyStatsProvider;
         private readonly IProgressService _progressService;
+        private readonly IPlayerProvider _playerProvider;
 
-        public GameFactory(IObjectResolver instantiator, 
-                           DataProvider dataProvider,
-                           IPortalFactory portalFactory,
+        public GameFactory(IObjectResolver instantiator,
+                           IPlayerProvider playerProvider, 
+                           IDataProvider dataProvider,
                            EnemyStatsProvider enemyStatsProvider,
                            IProgressService progressService)
         {
+            _playerProvider = playerProvider;
             _progressService = progressService;
             _enemyStatsProvider = enemyStatsProvider;
-            _portalFactory = portalFactory;
             _dataProvider = dataProvider;
             _instantiator = instantiator;
         }
@@ -52,12 +50,12 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         {
             PlayerFacade playerFacade =
                 _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerPrefab, position, rotation);
-            Player = playerFacade;
             CinemachineVirtualCamera playerVirtualCamera =
                 _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerCameraPrefab);
             playerVirtualCamera.Follow = playerFacade.CameraFollowTarget;
             playerFacade.PlayerVirtualCamera = playerVirtualCamera;
 
+            _playerProvider.Set(playerFacade);
             return playerFacade;
         }
 
