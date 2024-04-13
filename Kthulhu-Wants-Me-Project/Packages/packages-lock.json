@@ -28,7 +28,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "d210e3d76adc0cce77f4ad2af1ade88dad6b1d5a"
+      "hash": "88ecfa2992d4f7247aaad0322921aa3fb929aeee"
     },
     "com.febucci.custom-hierarchy": {
       "version": "https://github.com/febucci/unitypackage-custom-hierarchy.git",
@@ -42,7 +42,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e77fc341a4e186c7ab2e463b467cc2d7eb1e5fb1"
+      "hash": "12574c32f658fa23c194357141abc3fc157ea362"
     },
     "com.inspiaaa.unityhfsm": {
       "version": "https://github.com/Inspiaaa/UnityHFSM.git#upm",
