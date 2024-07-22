@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

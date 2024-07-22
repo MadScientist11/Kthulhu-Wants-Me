@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.WaveSystem.EnemyScaling;
+﻿using KthulhuWantsMe.Source.Gameplay.WaveSystem.EnemyScaling;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

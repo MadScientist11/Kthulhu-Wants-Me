@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
+using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services;
@@ -21,7 +23,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
             {
                 return _enemySpawners
                     .Select(spawner => spawner.Value)
-                    .OrderBy(spawner => Vector3.Distance(spawner.Position, _gameFactory.Player.transform.position));
+                    .OrderBy(spawner => Vector3.Distance(spawner.Position, _playerProvider.Player.transform.position));
             }
         }
 
@@ -38,11 +40,16 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Spawn
         private WaveState _waveState;
 
         private readonly IGameFactory _gameFactory;
+        private readonly IPlayerProvider _playerProvider;
         private readonly ISceneDataProvider _sceneDataProvider;
         private readonly IDataProvider _dataProvider;
 
-        public WaveSpawner(IGameFactory gameFactory, ISceneDataProvider sceneDataProvider, IDataProvider dataProvider)
+        public WaveSpawner(IGameFactory gameFactory, 
+                           ISceneDataProvider sceneDataProvider, 
+                           IDataProvider dataProvider,
+                           IPlayerProvider playerProvider)
         {
+            _playerProvider = playerProvider;
             _dataProvider = dataProvider;
             _sceneDataProvider = sceneDataProvider;
             _gameFactory = gameFactory;

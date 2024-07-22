@@ -1,8 +1,7 @@
-﻿using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine;
-using KthulhuWantsMe.Source.Gameplay.GameplayStateMachine.States;
+﻿using KthulhuWantsMe.Source.Gameplay.StateMachine;
+using KthulhuWantsMe.Source.Gameplay.StateMachine.States;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;

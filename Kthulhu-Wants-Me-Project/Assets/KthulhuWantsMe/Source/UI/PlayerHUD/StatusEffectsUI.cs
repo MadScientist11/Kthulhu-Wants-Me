@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
-using UnityEngine.UIElements;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.UI.PlayerHUD
@@ -20,10 +18,10 @@ namespace KthulhuWantsMe.Source.UI.PlayerHUD
         private IBuffDebuffService _buffDebuffService;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IBuffDebuffService buffDebuffService)
+        public void Construct(IPlayerProvider playerProvider, IBuffDebuffService buffDebuffService)
         {
+            _player = playerProvider.Player;
             _buffDebuffService = buffDebuffService;
-            _player = gameFactory.Player;
         }
 
         private void Start()

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Camera
 {

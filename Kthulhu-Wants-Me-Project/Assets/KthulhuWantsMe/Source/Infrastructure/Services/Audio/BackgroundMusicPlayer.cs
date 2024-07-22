@@ -1,6 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
 using SimpleAudioManager;
-using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 

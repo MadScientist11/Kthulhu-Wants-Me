@@ -1,6 +1,4 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 

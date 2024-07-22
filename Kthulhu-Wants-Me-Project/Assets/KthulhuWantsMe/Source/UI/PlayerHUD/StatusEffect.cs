@@ -1,4 +1,4 @@
-﻿using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.EffectsData;
+﻿using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using UnityEngine;
 using UnityEngine.UI;
 

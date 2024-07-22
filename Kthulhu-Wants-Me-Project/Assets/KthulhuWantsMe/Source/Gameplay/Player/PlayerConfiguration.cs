@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Cinemachine;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
 {

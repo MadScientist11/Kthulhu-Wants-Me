@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {

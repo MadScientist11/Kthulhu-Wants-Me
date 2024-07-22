@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI.Window;
 using KthulhuWantsMe.Source.UI;
@@ -10,7 +7,6 @@ using KthulhuWantsMe.Source.UI.MainMenu.Settings;
 using KthulhuWantsMe.Source.UI.PlayerHUD;
 using KthulhuWantsMe.Source.UI.PlayerHUD.TooltipSystem;
 using QFSW.QC;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
@@ -19,14 +15,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
 {
     public interface IUIFactory : IInitializableService
     {
-        Scene UIScene { get; }
-        void EnqueueParent(LifetimeScope parent);
+        BaseWindow Create(WindowId windowId);
+        void UseContainer(IObjectResolver container);
         PlayerHUD CreatePlayerHUD();
-        MiscUI CreateMiscUI();
-        UpgradeWindow CreateUpgradeWindow();
-        PauseWindow CreatePauseWindow();
-        TryAgainWindow CreateDefeatWindow();
-        SettingsWindow CreateSettingsWindow();
         Tooltip CreateTooltip();
         QuantumConsole CreateConsoleUI();
     }
@@ -34,7 +25,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
     public class UIFactory : IUIFactory
     {
         public const string PlayerHUDPath = "PlayerHUD";
-        public const string MiscUIPath = "MiscUI";
         public const string UpgradeWindowPath = "UpgradeWindow";
         public const string PauseWindowPath = "PauseWindow";
         public const string TryAgainWindowPath = "TryAgainWindow";
@@ -46,7 +36,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         public Scene UIScene => _uiScene;
 
         private PlayerHUD _playerHUDPrefab;
-        private MiscUI _miscUIPrefab;
         private UpgradeWindow _upgradeWindowPrefab;
         private PauseWindow _pauseWindowPrefab;
         private TryAgainWindow _tryAgainWindowPrefab;
@@ -57,7 +46,6 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
         private Scene _uiScene;
 
         private IObjectResolver _instantiator;
-        private IObjectResolver _defaultResolver;
 
         private readonly IResourceManager _resourceManager;
         private readonly ISceneService _sceneService;
@@ -68,16 +56,14 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _sceneService = sceneService;
             _resourceManager = resourceManager;
             _instantiator = instantiator;
-            _defaultResolver = instantiator;
         }
 
         public async UniTask Initialize()
         {
-            await _sceneService.LoadScene("GameUI", LoadSceneMode.Additive);
-            _uiScene = SceneManager.GetSceneByName("GameUI");
+            await _sceneService.LoadScene(SceneId.UI, LoadSceneMode.Additive);
+            _uiScene = SceneManager.GetSceneByBuildIndex((int)SceneId.UI);
 
             _playerHUDPrefab = await _resourceManager.ProvideAssetAsync<PlayerHUD>(PlayerHUDPath);
-            _miscUIPrefab = await _resourceManager.ProvideAssetAsync<MiscUI>(MiscUIPath);
             _upgradeWindowPrefab = await _resourceManager.ProvideAssetAsync<UpgradeWindow>(UpgradeWindowPath);
             _pauseWindowPrefab = await _resourceManager.ProvideAssetAsync<PauseWindow>(PauseWindowPath);
             _tryAgainWindowPrefab = await _resourceManager.ProvideAssetAsync<TryAgainWindow>(TryAgainWindowPath);
@@ -86,9 +72,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             _settingsWindowPrefab = await _resourceManager.ProvideAssetAsync<SettingsWindow>(SettingsWindowPath);
         }
 
-        public void EnqueueParent(LifetimeScope parent)
+        public void UseContainer(IObjectResolver container)
         {
-            _instantiator = parent.Container;
+            _instantiator = container;
         }
 
         public PlayerHUD CreatePlayerHUD()
@@ -98,54 +84,19 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services.UI
             playerHUD.Initialize();
             return playerHUD;
         }
-
-        public MiscUI CreateMiscUI()
+        
+        public BaseWindow Create(WindowId windowId)
         {
-            MiscUI miscUI = _instantiator.Instantiate(_miscUIPrefab);
-            SceneManager.MoveGameObjectToScene(miscUI.gameObject, _uiScene);
-            return miscUI;
-        }
-
-        public UpgradeWindow CreateUpgradeWindow()
-        {
-            UpgradeWindow upgradeWindow = _instantiator.Instantiate(_upgradeWindowPrefab);
-            SceneManager.MoveGameObjectToScene(upgradeWindow.gameObject, _uiScene);
-            return upgradeWindow;
-        }
-
-        public PauseWindow CreatePauseWindow()
-        {
-            PauseWindow pauseWindow = _instantiator.Instantiate(_pauseWindowPrefab);
-            SceneManager.MoveGameObjectToScene(pauseWindow.gameObject, _uiScene);
-            return pauseWindow;
-        }
-
-        public TryAgainWindow CreateDefeatWindow()
-        {
-            TryAgainWindow tryAgainWindow = _instantiator.Instantiate(_tryAgainWindowPrefab);
-            SceneManager.MoveGameObjectToScene(tryAgainWindow.gameObject, _uiScene);
-            return tryAgainWindow;
-        }
-
-        public SettingsWindow CreateSettingsWindow()
-        {
-            if (_instantiator == null)
+            BaseWindow window = windowId switch
             {
-                _instantiator = _defaultResolver;
-            }
-
-            SettingsWindow settingsWindow;
-            try
-            {
-                settingsWindow  = _instantiator.Instantiate(_settingsWindowPrefab);
-
-            }
-            catch (Exception e)
-            {
-                settingsWindow = _defaultResolver.Instantiate(_settingsWindowPrefab);
-            }
-            SceneManager.MoveGameObjectToScene(settingsWindow.gameObject, _uiScene);
-            return settingsWindow;
+                WindowId.UpgradeWindow =>    _instantiator.Instantiate(_upgradeWindowPrefab), 
+                WindowId.PauseWindow => _instantiator.Instantiate(_pauseWindowPrefab),
+                WindowId.DefeatWindow => _instantiator.Instantiate(_tryAgainWindowPrefab),
+                WindowId.SettingsWindow => _instantiator.Instantiate(_settingsWindowPrefab),
+                _ => throw new Exception("Unidentified window type!")
+            };
+            SceneManager.MoveGameObjectToScene(window.gameObject, _uiScene);
+            return window;
         }
 
         public Tooltip CreateTooltip()

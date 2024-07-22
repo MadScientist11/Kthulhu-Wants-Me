@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
 {
     public interface IWaveScenario
     {

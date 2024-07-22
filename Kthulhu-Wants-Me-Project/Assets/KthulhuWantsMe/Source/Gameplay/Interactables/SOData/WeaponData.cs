@@ -1,6 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.Effects;
-using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Gameplay.Weapons;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Interactables.SOData

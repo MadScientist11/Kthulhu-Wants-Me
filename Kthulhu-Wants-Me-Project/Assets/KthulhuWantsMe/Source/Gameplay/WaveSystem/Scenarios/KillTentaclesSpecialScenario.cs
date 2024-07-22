@@ -5,14 +5,16 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
+using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using Sirenix.Utilities;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
+namespace KthulhuWantsMe.Source.Gameplay.WaveSystem.Scenarios
 {
     public class KillTentaclesSpecialScenario : IWaveScenario
     {
@@ -21,18 +23,19 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private CancellationTokenSource _timerToken;
 
         private int _remainingTentacles;
-        private readonly int _waitForEnemiesRetreatDelay = 3;
 
         private readonly EnemyType[] _additionalEnemies = { EnemyType.Cyeagha, EnemyType.YithCombo1 };
         private int _additionalEnemiesCounter;
         
         private readonly IWaveSystemDirector _waveSystemDirector;
         private readonly IUIService _uiService;
-        private readonly IGameFactory _gameFactory;
+        private readonly IPlayerProvider _playerProvider;
 
-        public KillTentaclesSpecialScenario(IWaveSystemDirector waveSystemDirector, IUIService uiService, IGameFactory gameFactory)
+        public KillTentaclesSpecialScenario(IWaveSystemDirector waveSystemDirector, 
+                                            IUIService uiService, 
+                                            IPlayerProvider playerProvider)
         {
-            _gameFactory = gameFactory;
+            _playerProvider = playerProvider;
             _uiService = uiService;
             _waveSystemDirector = waveSystemDirector;
         }
@@ -87,7 +90,7 @@ namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
         private async UniTaskVoid StartWaveLossTimer()
         {
             _timerToken = new CancellationTokenSource();
-            _timerToken.RegisterRaiseCancelOnDestroy(_gameFactory.Player);
+            _timerToken.RegisterRaiseCancelOnDestroy(_playerProvider.Player);
 
             TimeSpan tick = TimeSpan.FromSeconds(1);
 

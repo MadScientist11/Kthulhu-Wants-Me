@@ -1,5 +1,4 @@
-using System;
-using KthulhuWantsMe.Source.Gameplay;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

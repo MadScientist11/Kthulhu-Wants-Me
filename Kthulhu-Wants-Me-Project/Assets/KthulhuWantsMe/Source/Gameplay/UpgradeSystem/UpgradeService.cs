@@ -1,8 +1,7 @@
 ﻿using System;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
-using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 
-namespace KthulhuWantsMe.Source.Gameplay.Services
+namespace KthulhuWantsMe.Source.Gameplay.UpgradeSystem
 {
     public interface IUpgradeService
     {

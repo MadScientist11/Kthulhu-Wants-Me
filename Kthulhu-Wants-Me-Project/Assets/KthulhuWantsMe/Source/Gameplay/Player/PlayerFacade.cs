@@ -2,9 +2,7 @@
 using System.Linq;
 using Cinemachine;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
-using KthulhuWantsMe.Source.Gameplay.Camera;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
-using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
@@ -48,10 +46,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
                 }
             }
         }
-
-        public CinemachineCameraPanning GetCameraPanningLogic() =>
-            PlayerVirtualCamera.GetComponent<CinemachineCameraPanning>();
-
 
         public void ChangePlayerLayer(int layer)
         {

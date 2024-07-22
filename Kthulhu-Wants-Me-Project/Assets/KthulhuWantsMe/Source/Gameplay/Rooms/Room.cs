@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Utilities;
 using UnityEngine;
 using VContainer;
 using Freya;
-using UnityEngine.Serialization;
+using KthulhuWantsMe.Source.Infrastructure;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using Vertx.Debugging;
 using Random = Freya.Random;
 

@@ -1,4 +1,4 @@
-using KthulhuWantsMe.Source.Gameplay;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.UI.PlayerHUD.TooltipSystem

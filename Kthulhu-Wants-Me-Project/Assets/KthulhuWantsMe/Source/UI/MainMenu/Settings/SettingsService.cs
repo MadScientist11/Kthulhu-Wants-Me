@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security;
-using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay;
-using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.Audio;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.UI.MainMenu.Settings
 {

@@ -1,4 +1,4 @@
-﻿namespace KthulhuWantsMe.Source.Gameplay.StaterResetter
+﻿namespace KthulhuWantsMe.Source.Gameplay.StaterReset
 {
     public interface IStateReset
     {

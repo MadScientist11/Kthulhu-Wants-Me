@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
 using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using MoreMountains.Feedbacks;
 using SickscoreGames.HUDNavigationSystem;
 using UnityEngine;
 using UnityEngine.AI;
 using VContainer;
-using Random = UnityEngine.Random;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
 {
@@ -43,9 +41,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Yith
         private PlayerFacade _player;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IPlayerProvider playerProvider)
         {
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
         }
 
         private void Start()

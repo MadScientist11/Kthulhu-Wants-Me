@@ -1,8 +1,7 @@
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer;
 
@@ -36,10 +35,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Cyaegha
         private IAIService _aiService;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, IAIService aiService)
+        public void Construct(IPlayerProvider playerProvider, IAIService aiService)
         {
             _aiService = aiService;
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
         }
 
         private void Start()

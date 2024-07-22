@@ -1,5 +1,3 @@
-using System;
-using KthulhuWantsMe.Source.Gameplay.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

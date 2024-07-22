@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Services;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -24,10 +25,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies
         private NavMeshAgent _navMeshAgent;
 
         [Inject]
-        public void Construct(IDataProvider dataProvider, IGameFactory gameFactory)
+        public void Construct(IDataProvider dataProvider, IPlayerProvider playerProvider)
         {
             _dataProvider = dataProvider;
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
         }
 
         private void Start()

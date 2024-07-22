@@ -1,12 +1,11 @@
 ﻿using Cinemachine;
-using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
 using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.PortalsLogic;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.Spell;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer;
@@ -17,11 +16,9 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 {
     public interface IGameFactory
     {
-        PlayerFacade Player { get; }
         PlayerFacade CreatePlayer(Vector3 position, Quaternion rotation);
         GameObject CreateEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
         T CreateInjected<T>(T prefab, Vector3 position, Quaternion rotation) where T : Object;
-        MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation);
         GameObject CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType);
         T CreateInjected<T>(T prefab, Transform parent) where T : Object;
         BuffItem CreateBuffItem<T>(Vector3 position, Quaternion rotation) where T : BuffItem;
@@ -29,20 +26,21 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
     public class GameFactory : IGameFactory
     {
-        public PlayerFacade Player { get; private set; }
-
         private readonly IObjectResolver _instantiator;
         private readonly IDataProvider _dataProvider;
-        private IPortalFactory _portalFactory;
-        private EnemyStatsProvider _enemyStatsProvider;
-        private IProgressService _progressService;
+        private readonly EnemyStatsProvider _enemyStatsProvider;
+        private readonly IProgressService _progressService;
+        private readonly IPlayerProvider _playerProvider;
 
-        public GameFactory(IObjectResolver instantiator, IDataProvider dataProvider, IPortalFactory portalFactory,
-            EnemyStatsProvider enemyStatsProvider, IProgressService progressService)
+        public GameFactory(IObjectResolver instantiator,
+                           IPlayerProvider playerProvider, 
+                           IDataProvider dataProvider,
+                           EnemyStatsProvider enemyStatsProvider,
+                           IProgressService progressService)
         {
+            _playerProvider = playerProvider;
             _progressService = progressService;
             _enemyStatsProvider = enemyStatsProvider;
-            _portalFactory = portalFactory;
             _dataProvider = dataProvider;
             _instantiator = instantiator;
         }
@@ -52,21 +50,18 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
         {
             PlayerFacade playerFacade =
                 _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerPrefab, position, rotation);
-            Player = playerFacade;
             CinemachineVirtualCamera playerVirtualCamera =
                 _instantiator.Instantiate(_dataProvider.PlayerConfig.PlayerCameraPrefab);
             playerVirtualCamera.Follow = playerFacade.CameraFollowTarget;
             playerFacade.PlayerVirtualCamera = playerVirtualCamera;
 
+            _playerProvider.Set(playerFacade);
             return playerFacade;
         }
 
         public GameObject CreatePortalWithEnemy(Vector3 position, Quaternion rotation, EnemyType enemyType)
         {
             GameObject enemy = CreateEnemy(position, rotation, enemyType);
-
-        
-
             return enemy;
         }
 
@@ -84,14 +79,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.Services
 
             return instance;
         }
-
-        public MinionsSpawnSpell CreateMinionsSpawnSpell(Vector3 position, Quaternion rotation)
-        {
-            //MinionsSpawnSpell instance = _instantiator.Instantiate(null, position, rotation);
-
-            return null;
-        }
-
+        
         public BuffItem CreateBuffItem<T>(Vector3 position, Quaternion rotation) where T : BuffItem
         {
             BuffItem instance =

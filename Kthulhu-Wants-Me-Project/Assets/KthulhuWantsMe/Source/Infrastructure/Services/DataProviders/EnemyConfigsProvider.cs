@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Infrastructure.Services.DataProviders

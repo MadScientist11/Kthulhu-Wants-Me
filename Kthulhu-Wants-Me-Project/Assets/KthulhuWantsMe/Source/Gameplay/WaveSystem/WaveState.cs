@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using KthulhuWantsMe.Source.Gameplay.Enemies;
+using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Gameplay.SpawnSystem;
 using KthulhuWantsMe.Source.Infrastructure;
-using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.WaveSystem
 {

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells;
 using UnityEngine;
 

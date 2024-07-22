@@ -1,6 +1,4 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
-
-namespace KthulhuWantsMe.Source.Gameplay
+﻿namespace KthulhuWantsMe.Source.Gameplay.Enemies
 {
     public static class EnemiesExtensions
     {

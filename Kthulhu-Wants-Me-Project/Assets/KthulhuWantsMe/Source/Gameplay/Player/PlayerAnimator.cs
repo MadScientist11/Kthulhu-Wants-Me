@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
-using Freya;
 using KthulhuWantsMe.Source.Gameplay.AnimatorHelpers;
-using KthulhuWantsMe.Source.Gameplay.Weapons;
+using KthulhuWantsMe.Source.Gameplay.Interactables.Weapons;
 using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.Player
@@ -34,7 +32,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
 
         private RuntimeAnimatorController _defaultAnimatorController;
 
-        private bool _enableRootMotion;
 
 
         private void Start() =>
@@ -57,7 +54,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
         
         public void PlayEvade()
         {
-            _enableRootMotion = true;
             _animator.SetTrigger(Evade);
         }
 
@@ -116,7 +112,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Player
             AnimatorState exitedState = StateFor(stateHash);
             OnStateExited?.Invoke(exitedState);
         }
-
 
         private AnimatorState StateFor(int stateHash)
         {

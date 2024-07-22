@@ -1,8 +1,7 @@
-using System;
 using KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells;
 using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer;
 
@@ -18,15 +17,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         [SerializeField] private EnemyStatsContainer _enemyStatsContainer;
         [SerializeField] private TentacleAIBrain _tentacleAIBrain;
 
-        private float _speed = 90;
-        
         private PlayerFacade _player;
         private TentacleConfiguration _tentacleConfiguration;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IPlayerProvider playerProvider)
         {
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
         }
 
         private void Start()

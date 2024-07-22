@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Rooms
 {
@@ -30,17 +30,17 @@ namespace KthulhuWantsMe.Source.Gameplay.Rooms
         {
             get
             {
-                return UnlockedRooms.FirstOrDefault(current => current.Contains(_gameFactory.Player.transform.position));
+                return UnlockedRooms.FirstOrDefault(current => current.Contains(_playerProvider.Player.transform.position));
             }
         }
         
         private readonly List<IRoom> _rooms = new();
         
-        private readonly IGameFactory _gameFactory;
+        private readonly IPlayerProvider _playerProvider;
 
-        public RoomOverseer(IGameFactory gameFactory)
+        public RoomOverseer(IPlayerProvider playerProvider)
         {
-            _gameFactory = gameFactory;
+            _playerProvider = playerProvider;
         }
 
         public void Register(IRoom room) => 

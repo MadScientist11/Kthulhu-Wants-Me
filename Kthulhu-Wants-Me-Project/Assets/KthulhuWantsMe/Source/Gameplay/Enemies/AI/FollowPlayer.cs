@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using Freya;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
+﻿using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
@@ -47,13 +43,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.AI
         [Range(0f, 5f)] [SerializeField] private float _reachDistance = 3f;
 
         private int _pathfindingMethod;
-
+        
         private PlayerFacade _player;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IPlayerProvider playerProvider)
         {
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
         }
 
         private void Awake()

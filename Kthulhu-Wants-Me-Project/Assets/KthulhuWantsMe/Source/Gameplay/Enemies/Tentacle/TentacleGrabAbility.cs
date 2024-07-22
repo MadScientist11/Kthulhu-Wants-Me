@@ -1,9 +1,5 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
-using KthulhuWantsMe.Source.Gameplay.DamageSystem;
-using KthulhuWantsMe.Source.Infrastructure.Services;
-using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
 {

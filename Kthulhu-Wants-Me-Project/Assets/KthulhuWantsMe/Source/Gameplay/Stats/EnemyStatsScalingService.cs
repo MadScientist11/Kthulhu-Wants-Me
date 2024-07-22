@@ -1,9 +1,8 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.Enemies;
+﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem.EnemyScaling;
 using org.matheval;
 
-namespace KthulhuWantsMe.Source.Gameplay.WavesLogic
+namespace KthulhuWantsMe.Source.Gameplay.Stats
 {
     public class EnemyStatsScalingService
     {

@@ -8,9 +8,7 @@ using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.SceneLoaderService;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
 using KthulhuWantsMe.Source.UI.MainMenu.Settings;
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using VContainer;
 using VContainer.Unity;
 
 namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
@@ -21,7 +19,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
         private readonly ISceneService _sceneService;
         private readonly AppLifetimeScope _appLifetimeScope;
         private readonly IDataProvider _dataProvider;
-        private SettingsService _settingsService;
+        private readonly SettingsService _settingsService;
 
         public Boot(AppLifetimeScope appLifetimeScope, IReadOnlyList<IInitializableService> services,
             ISceneService sceneService, IDataProvider dataProvider, SettingsService settingsService)
@@ -46,7 +44,7 @@ namespace KthulhuWantsMe.Source.Infrastructure.EntryPoints
             await _settingsService.Initialize();
             
             await _sceneService
-                .LoadSceneInjected("MainMenu", LoadSceneMode.Additive, _appLifetimeScope);
+                .LoadSceneInjected(SceneId.MainMenu, LoadSceneMode.Additive, _appLifetimeScope);
         }
     }
 }

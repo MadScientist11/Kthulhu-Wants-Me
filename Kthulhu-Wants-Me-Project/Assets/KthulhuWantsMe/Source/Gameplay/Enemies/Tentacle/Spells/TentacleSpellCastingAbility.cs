@@ -2,8 +2,8 @@
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
@@ -30,11 +30,18 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         private ThePlayer _playerModel;
         private IBuffDebuffFactory _buffDebuffFactory;
         private IBuffDebuffService _buffDebuffService;
+        private IPlayerProvider _playerProvider;
 
         [Inject]
-        public void Construct(IDataProvider dataProvider, IGameFactory gameFactory, ThePlayer playerModel,
-            IBuffDebuffFactory buffDebuffFactory, IBuffDebuffService buffDebuffService)
+        public void Construct(
+                              IGameFactory gameFactory, 
+                              ThePlayer playerModel, 
+                              IBuffDebuffFactory buffDebuffFactory, 
+                              IBuffDebuffService buffDebuffService,
+                              IPlayerProvider playerProvider
+                              )
         {
+            _playerProvider = playerProvider;
             _buffDebuffService = buffDebuffService;
             _buffDebuffFactory = buffDebuffFactory;
             _playerModel = playerModel;
@@ -71,7 +78,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public bool CanCastSpell(TentacleSpell spell)
         {
             bool common = !CastingSpell && !IsActive(spell) && IsNotOnCooldown(spell) &&
-                          !_gameFactory.Player.TentacleSpellResponse.IsActiveDebuff(
+                          !_playerProvider.Player.TentacleSpellResponse.IsActiveDebuff(
                               spell);
 
             if (!common)
@@ -114,14 +121,13 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 
 
             ProhibitHealthItemsUsageSpell prohibitHealthItemsUsageSpell
-                = new ProhibitHealthItemsUsageSpell(_gameFactory.Player, this);
+                = new ProhibitHealthItemsUsageSpell(_playerProvider.Player, this);
 
-            SpawnMinionsSpell spawnMinionsSpell
-                = new SpawnMinionsSpell(_gameFactory, this);
+         
 
             BasicAttackSpell basicAttackSpell
                 = new BasicAttackSpell(this, allSpells[TentacleSpell.BasicAttackSpell], _gameFactory,
-                    _playerModel, _buffDebuffFactory, _buffDebuffService);
+                    _playerModel, _buffDebuffFactory, _buffDebuffService, _playerProvider);
 
             BuffSpell buffSpell
                 = new BuffSpell(this, allSpells[TentacleSpell.Buff], _buffDebuffFactory);
@@ -130,7 +136,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             _tentacleSpells = new()
             {
                 { TentacleSpell.PlayerCantUseHealthItems, prohibitHealthItemsUsageSpell },
-                { TentacleSpell.MinionsSpawnSpell, spawnMinionsSpell },
                 { TentacleSpell.BasicAttackSpell, basicAttackSpell },
                 { TentacleSpell.Buff, buffSpell },
             };

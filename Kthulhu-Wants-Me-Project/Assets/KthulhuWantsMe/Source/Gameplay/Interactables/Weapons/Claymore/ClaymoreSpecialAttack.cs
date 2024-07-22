@@ -1,8 +1,8 @@
 ﻿using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
-using KthulhuWantsMe.Source.Gameplay.Player;
+using KthulhuWantsMe.Source.Gameplay.Player.AttackSystem;
 using KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities;
-using KthulhuWantsMe.Source.Infrastructure.Scopes;
+using KthulhuWantsMe.Source.Infrastructure;
 using UnityEngine;
 using VContainer;
 
@@ -15,12 +15,9 @@ namespace KthulhuWantsMe.Source.Gameplay.Interactables.Weapons.Claymore
     public class ClaymoreSpecialAttack : MonoBehaviour, ISpecialAttack, IInjectable, IDamageProvider
     {
         [SerializeField] private ProjectileArc _projectileArcPrefab;
-        [SerializeField] private Attack _specialAttackData;
-        
         
         private ProjectileArc _projectileArc;
         private float _disappearDelay;
-        private float _disappearTime = 4;
         
         private ProjectileArcFactory _projectileArcFactory;
 

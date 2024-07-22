@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.DamageSystem;
 using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
-using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using UnityEngine;
 using VContainer.Unity;
@@ -75,9 +73,14 @@ namespace KthulhuWantsMe.Source.Gameplay.Player.State
 
         public void Tick()
         {
+            if (Time.timeScale == 0)
+            {
+                return;
+            }
+            
             ModifyCurrentStamina(RegenRate * Time.deltaTime);
             
-            if (Time.timeScale == 0 || !_waveSystemDirector.WaveOngoing)
+            if (!_waveSystemDirector.WaveOngoing)
             {
                 return;
             }

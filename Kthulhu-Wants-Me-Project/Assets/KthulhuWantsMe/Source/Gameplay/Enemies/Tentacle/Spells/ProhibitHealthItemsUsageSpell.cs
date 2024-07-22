@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.Player;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells

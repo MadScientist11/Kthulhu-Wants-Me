@@ -2,7 +2,6 @@
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
 using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem.BuffsDebuffs;
-using KthulhuWantsMe.Source.Gameplay.Interactables.Items;
 using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
 using UnityEngine;
@@ -11,24 +10,24 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
 {
     public class BuffSpell : ITentacleSpell
     {
-       public bool Active { get; private set; }
+        public bool Active { get; private set; }
         public bool InCooldown { get; private set; }
 
-        
+
         private GameObject _spellInstance;
 
 
-        private float _spellEffectiveRadius = 3f;
-        private float _spellCastCooldown = 3f;
+        private readonly float _spellEffectiveRadius = 3f;
 
-        
+
         private readonly PlayerFacade _player;
         private readonly ThePlayer _playerModel;
         private readonly TentacleSpellCastingAbility _spellCastingAbility;
         private readonly SpellConfiguration _spellConfiguration;
         private IBuffDebuffFactory _buffDebuffFactory;
 
-        public BuffSpell(TentacleSpellCastingAbility spellCastingAbility, SpellConfiguration spellConfiguration, IBuffDebuffFactory buffDebuffFactory)
+        public BuffSpell(TentacleSpellCastingAbility spellCastingAbility, SpellConfiguration spellConfiguration,
+            IBuffDebuffFactory buffDebuffFactory)
         {
             _buffDebuffFactory = buffDebuffFactory;
             _spellConfiguration = spellConfiguration;
@@ -38,7 +37,7 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
         public async UniTask Cast()
         {
             InCooldown = true;
-            
+
             _spellCastingAbility.CastingSpell = true;
             Vector3 spellCastPosition = _spellCastingAbility.transform.position;
             _spellInstance = Object.Instantiate(_spellConfiguration.Prefab, spellCastPosition, Quaternion.identity);
@@ -51,7 +50,6 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle.Spells
             {
                 foreach (EnemyStatsContainer enemy in enemies)
                 {
-
                     if (enemy.TryGetComponent(out EntityBuffDebuffContainer container))
                     {
                         InstaHealBuff instaHealBuff = _buffDebuffFactory.CreateEffect<InstaHealBuff>().Init(16);

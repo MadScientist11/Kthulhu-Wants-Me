@@ -1,12 +1,9 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
-using KthulhuWantsMe.Source.Gameplay.AnimatorHelpers;
+﻿using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Gameplay.Player;
-using KthulhuWantsMe.Source.Gameplay.StaterResetter;
+using KthulhuWantsMe.Source.Gameplay.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using UnityEngine.Serialization;
 using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
@@ -48,11 +45,10 @@ namespace KthulhuWantsMe.Source.Gameplay.Enemies.Tentacle
         private PlayerFacade _player;
 
         [Inject]
-        public void Construct(IGameFactory gameFactory)
+        public void Construct(IPlayerProvider playerProvider)
         {
-            _player = gameFactory.Player;
+            _player = playerProvider.Player;
         }
-
     
         public void PlayGrabPlayerAnimation(Transform playerFollowTarget)
         {

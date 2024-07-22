@@ -1,11 +1,10 @@
 using KthulhuWantsMe.Source.Gameplay;
-using KthulhuWantsMe.Source.Gameplay.BuffDebuffSystem;
-using KthulhuWantsMe.Source.Gameplay.Player;
 using KthulhuWantsMe.Source.Gameplay.Player.State;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Stats;
 using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using TMPro;
 using UnityEngine;
 using VContainer;

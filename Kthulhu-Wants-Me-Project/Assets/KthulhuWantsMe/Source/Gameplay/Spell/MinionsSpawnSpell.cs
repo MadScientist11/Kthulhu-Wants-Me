@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 using Freya;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
 using VContainer;
 using WaitForSeconds = KthulhuWantsMe.Source.Utilities.WaitForSeconds;

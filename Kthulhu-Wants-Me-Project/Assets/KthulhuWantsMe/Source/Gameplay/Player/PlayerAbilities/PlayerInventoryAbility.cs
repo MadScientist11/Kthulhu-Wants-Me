@@ -6,7 +6,7 @@ using MoreMountains.Feedbacks;
 using UnityEngine;
 using VContainer;
 
-namespace KthulhuWantsMe.Source.Gameplay.Player
+namespace KthulhuWantsMe.Source.Gameplay.Player.PlayerAbilities
 {
     public enum InventoryAction
     {

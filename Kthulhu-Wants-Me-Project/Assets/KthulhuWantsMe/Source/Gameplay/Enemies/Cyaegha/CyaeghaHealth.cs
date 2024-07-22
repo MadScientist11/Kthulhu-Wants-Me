@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using KthulhuWantsMe.Source.Gameplay.Enemies.AI;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Minion;
-using KthulhuWantsMe.Source.Gameplay.Enemies.Yith;
-using KthulhuWantsMe.Source.Gameplay.WavesLogic;
+using KthulhuWantsMe.Source.Gameplay.Entity;
+using KthulhuWantsMe.Source.Gameplay.Stats;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.Serialization;

@@ -1,6 +1,4 @@
-﻿using System;
-using KthulhuWantsMe.Source.Gameplay.StaterResetter;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace KthulhuWantsMe.Source.Gameplay.StaterReset
 {

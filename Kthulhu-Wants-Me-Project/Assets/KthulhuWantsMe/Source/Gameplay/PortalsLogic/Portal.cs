@@ -1,9 +1,8 @@
 ﻿using System;
-using KthulhuWantsMe.Source.Gameplay.AbilitySystem;
 using KthulhuWantsMe.Source.Gameplay.Enemies;
 using KthulhuWantsMe.Source.Infrastructure.Services;
+using KthulhuWantsMe.Source.Utilities.Extensions;
 using UnityEngine;
-using VContainer;
 
 namespace KthulhuWantsMe.Source.Gameplay.PortalsLogic
 {

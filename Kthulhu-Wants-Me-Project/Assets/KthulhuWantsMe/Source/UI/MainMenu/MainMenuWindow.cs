@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Cysharp.Threading.Tasks;
 using KthulhuWantsMe.Source.Infrastructure;
 using KthulhuWantsMe.Source.Infrastructure.Scopes;
@@ -25,15 +24,14 @@ namespace KthulhuWantsMe.Source.UI.MainMenu
 
         private IUIService _uiService;
         private ISceneService _sceneService;
-        private IDataProvider _dataProvider;
         private AppLifetimeScope _appLifetimeScope;
 
         [Inject]
-        public void Construct(IUIService uiService, ISceneService sceneService, IDataProvider dataProvider,
-            AppLifetimeScope appLifetimeScope)
+        public void Construct(IUIService uiService, 
+                              ISceneService sceneService,
+                              AppLifetimeScope appLifetimeScope)
         {
             _appLifetimeScope = appLifetimeScope;
-            _dataProvider = dataProvider;
             _sceneService = sceneService;
             _uiService = uiService;
         }
@@ -56,9 +54,9 @@ namespace KthulhuWantsMe.Source.UI.MainMenu
         private void StartGame()
         {
             _clickFeedback?.PlayFeedbacks();
-            _sceneService.UnloadSceneAsync("MainMenu");
+            _sceneService.UnloadSceneAsync(SceneId.MainMenu);
             _sceneService
-                .LoadSceneInjected(_dataProvider.GameConfig.MainScene, LoadSceneMode.Additive, _appLifetimeScope)
+                .LoadSceneInjected(SceneId.Game, LoadSceneMode.Additive, _appLifetimeScope)
                 .Forget();
         }
         

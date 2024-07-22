@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using KthulhuWantsMe.Source.Gameplay.SkillTreeSystem;
 using KthulhuWantsMe.Source.Gameplay.UpgradeSystem;
-using KthulhuWantsMe.Source.Gameplay.WaveSystem;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using KthulhuWantsMe.Source.Infrastructure.Services.DataProviders;
 using KthulhuWantsMe.Source.Infrastructure.Services.UI;

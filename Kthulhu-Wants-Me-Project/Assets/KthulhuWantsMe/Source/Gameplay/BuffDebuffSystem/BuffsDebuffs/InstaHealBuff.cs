@@ -1,4 +1,4 @@
-﻿using KthulhuWantsMe.Source.Gameplay.Enemies;
+﻿using KthulhuWantsMe.Source.Gameplay.Entity;
 using KthulhuWantsMe.Source.Infrastructure.Services;
 using UnityEngine;
 using VContainer;
